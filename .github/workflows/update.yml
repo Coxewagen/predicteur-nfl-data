@@ -1,0 +1,42 @@
+name: Mise à jour des prévisions NFL
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupère le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installe Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Installe Node.js (pour model.js)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installe les dépendances Python
+        run: pip install -r requirements.txt
+
+      - name: Complète l'historique si une semaine jouée manque au journal (backtest.py)
+        run: python backtest.py
+
+      - name: Lance la mise à jour (update.py)
+        run: python update.py
+
+      - name: Publie les fichiers mis à jour
+        run: |
+          git config user.name "predicteur-nfl-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add app-data.json index.html state.json rapport.json
+          git diff --cached --quiet && echo "Rien de nouveau à publier." || (git commit -m "Mise à jour automatique des prévisions NFL" && git push)
