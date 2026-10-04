@@ -998,7 +998,7 @@
    "pAway": 0.1972,
    "expHome": 24,
    "expAway": 10,
-   "computedAt": "2026-10-04T19:20:15Z",
+   "computedAt": "2026-10-04T19:46:23Z",
    "frozen": false
   },
   "2026_04_KC_LV": {
@@ -1010,7 +1010,7 @@
    "pAway": 0.4844,
    "expHome": 23,
    "expAway": 22,
-   "computedAt": "2026-10-04T19:20:15Z",
+   "computedAt": "2026-10-04T19:46:23Z",
    "frozen": false
   },
   "2026_04_LAC_SEA": {
@@ -1022,7 +1022,7 @@
    "pAway": 0.219,
    "expHome": 25,
    "expAway": 12,
-   "computedAt": "2026-10-04T19:20:15Z",
+   "computedAt": "2026-10-04T19:46:23Z",
    "frozen": false
   },
   "2026_04_DEN_SF": {
@@ -1034,7 +1034,7 @@
    "pAway": 0.3528,
    "expHome": 28,
    "expAway": 21,
-   "computedAt": "2026-10-04T19:20:15Z",
+   "computedAt": "2026-10-04T19:46:23Z",
    "frozen": false
   },
   "2026_04_DET_CAR": {
@@ -1046,7 +1046,7 @@
    "pAway": 0.4788,
    "expHome": 31,
    "expAway": 30,
-   "computedAt": "2026-10-04T19:20:15Z",
+   "computedAt": "2026-10-04T19:46:23Z",
    "frozen": false
   },
   "2026_04_ATL_NO": {
@@ -1058,7 +1058,7 @@
    "pAway": 0.4483,
    "expHome": 26,
    "expAway": 24,
-   "computedAt": "2026-10-04T19:20:15Z",
+   "computedAt": "2026-10-04T19:46:23Z",
    "frozen": false
   },
   "2026_02_DET_BUF": {
