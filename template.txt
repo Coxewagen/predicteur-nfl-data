@@ -184,8 +184,6 @@ td{border-bottom:1px solid var(--line);padding:8px 8px 8px 0;vertical-align:top}
 
 /* --- fiche détaillée --- */
 .mwhen{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
-.bigpct{display:flex;align-items:baseline;justify-content:center;gap:14px;font-family:var(--cond);font-size:38px;font-weight:700;font-variant-numeric:tabular-nums}
-.bigpct .fav{color:var(--field)}
 .dim{color:var(--muted);font-size:15px;font-weight:500;font-family:var(--sans)}
 .verdict{margin:0;display:flex;gap:8px;align-items:flex-start;font-size:16px;font-weight:700}
 .modal-panel h3{font-family:var(--cond);font-size:19px;margin:4px 0 0}
@@ -195,6 +193,21 @@ table.cmp td:first-child{color:var(--muted);font-size:15px}
 .absgrid>div{min-width:0}
 ul.abs{margin:4px 0 0;padding-left:18px} ul.abs li{margin:3px 0;font-size:15px}
 @media (max-width:420px){.absgrid{grid-template-columns:1fr}}
+
+/* --- pastilles de pourcentage (mêmes couleurs que le prédicteur : bleu = domicile, rouge = extérieur) --- */
+.pright{display:flex;align-items:center;gap:10px;flex:none}
+.pbadge{font-family:Consolas,"Courier New",monospace;font-weight:800;font-size:22px;color:#fff;border-radius:8px;
+  padding:6px 11px;min-width:76px;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35)}
+.pbadge.home{background:#1d3a6e} .pbadge.away{background:#7a1f1f}
+.pbadge.fav{box-shadow:0 0 0 3px var(--gold)}
+.pbadge.big{font-size:34px;padding:10px 18px;min-width:118px}
+.pbadge.big i{display:block;font-style:normal;font-family:var(--sans);font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;opacity:.9;margin-bottom:2px}
+.bigbadges{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.pright .pct{min-width:2ch;text-align:right}
+@media (max-width:460px){.pbadge{font-size:19px;min-width:64px;padding:5px 7px}.pright{gap:7px}.pbadge.big{font-size:30px;min-width:104px;padding:9px 14px}}
+
+/* Un élément avec l'attribut hidden doit vraiment disparaître, même si sa classe lui donne un display (bandeau hors-ligne, etc.). */
+[hidden]{display:none !important;}
 
 .site-shell{max-width:760px;margin:0 auto;min-height:100%}
 </style>
@@ -321,18 +334,16 @@ const D = __DATA__;
       const showPct = unlocked && p;
       const prob = side === "home" ? p && p.pHome : p && p.pAway;
       const fav = showPct && (side === "home" ? favHome === true : favHome === false);
-      const right = done ? side === "home" ? g.homeScore : g.awayScore : showPct ? pct(prob) : "\u2013";
-      return '<div class="team">' + shield(D2, name) + '<span class="tname' + (fav ? " fav" : "") + '"><span class="long">' + esc(name) + '</span><span class="short">' + esc(nick(D2, name)) + '</span><span class="role" title="' + (side === "home" ? "\xC0 domicile" : "\xC0 l\u2019ext\xE9rieur") + '">' + ic(side === "home" ? "home" : "plane") + "</span>" + chips(g.abs[side]) + '</span><span class="pct' + (fav ? " fav" : "") + '">' + right + "</span></div>";
+      const badge = showPct ? '<span class="pbadge ' + side + (fav ? " fav" : "") + '">' + pct(prob) + "</span>" : "";
+      const right = done ? badge + '<span class="pct' + (fav ? " fav" : "") + '">' + (side === "home" ? g.homeScore : g.awayScore) + "</span>" : showPct ? badge : '<span class="pct">\u2013</span>';
+      return '<div class="team">' + shield(D2, name) + '<span class="tname' + (fav ? " fav" : "") + '"><span class="long">' + esc(name) + '</span><span class="short">' + esc(nick(D2, name)) + '</span><span class="role" title="' + (side === "home" ? "\xC0 domicile" : "\xC0 l\u2019ext\xE9rieur") + '">' + ic(side === "home" ? "home" : "plane") + "</span>" + chips(g.abs[side]) + '</span><span class="pright">' + right + "</span></div>";
     };
-    const colorOf = (s) => ((D2.teams || {})[g[s]] || {}).c1 || "#445566";
-    let bar = "";
-    if (p && unlocked) bar = '<div class="split"><i style="width:' + (p.pHome * 100).toFixed(1) + "%;background:" + colorOf("home") + '"></i><i style="flex:1;background:' + colorOf("away") + '"></i></div>';
     const foot = [];
     if (done) foot.push("R\xE9sultat : <b>" + g.homeScore + " \u2013 " + g.awayScore + "</b>");
     if (p && unlocked) foot.push("Score attendu : <b>" + p.expHome + " \u2013 " + p.expAway + "</b>");
     if (!p && !done) foot.push("Pr\xE9vision indisponible (pas encore assez de matchs jou\xE9s)");
     const lock = p && !unlocked ? ctx.lockRow(g) : "";
-    return '<div class="game' + (net && !done ? " net" : "") + (isBet(g.id) ? " betted" : "") + ' clickable" data-idx="' + idx + '" data-id="' + esc(g.id) + '"><div class="ghead"><span class="when">' + ic("clock") + when(g.kickoff) + '</span><span class="gtags">' + validated() + tag + "</span></div>" + line("home") + line("away") + bar + lock + (foot.length ? '<div class="gfoot">' + foot.map((f) => "<span>" + f + "</span>").join("") + "</div>" : "") + betRow(g) + "</div>";
+    return '<div class="game' + (net && !done ? " net" : "") + (isBet(g.id) ? " betted" : "") + ' clickable" data-idx="' + idx + '" data-id="' + esc(g.id) + '"><div class="ghead"><span class="when">' + ic("clock") + when(g.kickoff) + '</span><span class="gtags">' + validated() + tag + "</span></div>" + line("home") + line("away") + lock + (foot.length ? '<div class="gfoot">' + foot.map((f) => "<span>" + f + "</span>").join("") + "</div>" : "") + betRow(g) + "</div>";
   }
   function absBlockHtml(D2, name) {
     const items = ((D2.absences || []).find((a) => a.team === name) || { items: [] }).items;
@@ -353,7 +364,7 @@ const D = __DATA__;
     if (unlocked && p) {
       const favHome = p.pHome >= p.pAway, ecart = Math.abs(p.expHome - p.expAway);
       const verdict = done && g.homeScore !== g.awayScore ? '<p class="verdict ' + (g.homeScore > g.awayScore === favHome ? "yes" : "no") + '">' + ic(g.homeScore > g.awayScore === favHome ? "check" : "x") + (g.homeScore > g.awayScore === favHome ? "Pr\xE9vision juste" : "Pr\xE9vision fausse") + " \u2014 r\xE9sultat " + g.homeScore + " \u2013 " + g.awayScore + " (pr\xE9vu " + p.expHome + " \u2013 " + p.expAway + ")</p>" : "";
-      pred = '<div class="bigpct"><span class="' + (favHome ? "fav" : "") + '">' + pct(p.pHome) + '</span><span class="dim">contre</span><span class="' + (!favHome ? "fav" : "") + '">' + pct(p.pAway) + '</span></div><div class="split" style="height:14px"><i style="width:' + (p.pHome * 100).toFixed(1) + "%;background:" + ((D2.teams[g.home] || {}).c1 || "#445566") + '"></i><i style="flex:1;background:' + ((D2.teams[g.away] || {}).c1 || "#445566") + '"></i></div><div class="gfoot"><span>Score attendu : <b>' + p.expHome + " \u2013 " + p.expAway + "</b></span><span>\xC9cart attendu : <b>" + (ecart ? esc(nick(D2, favHome ? g.home : g.away)) + " de " + ecart + " pt" + (ecart > 1 ? "s" : "") : "aucun") + "</b></span></div>" + verdict + (g.prov ? '<p class="meta">Pr\xE9vision provisoire : recalcul\xE9e \xE0 chaque mise \xE0 jour avec les stats et les absences du moment.</p>' : "");
+      pred = '<div class="bigbadges"><span class="pbadge big home' + (favHome ? " fav" : "") + '"><i>Domicile</i>' + pct(p.pHome) + '</span><span class="pbadge big away' + (!favHome ? " fav" : "") + '"><i>Ext\xE9rieur</i>' + pct(p.pAway) + '</span></div><div class="gfoot"><span>Score attendu : <b>' + p.expHome + " \u2013 " + p.expAway + "</b></span><span>\xC9cart attendu : <b>" + (ecart ? esc(nick(D2, favHome ? g.home : g.away)) + " de " + ecart + " pt" + (ecart > 1 ? "s" : "") : "aucun") + "</b></span></div>" + verdict + (g.prov ? '<p class="meta">Pr\xE9vision provisoire : recalcul\xE9e \xE0 chaque mise \xE0 jour avec les stats et les absences du moment.</p>' : "");
     } else if (p) {
       pred = ctx.gateCard();
     } else {
