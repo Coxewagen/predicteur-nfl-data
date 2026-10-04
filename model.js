@@ -1,4 +1,4 @@
-// Moteur de calcul copié tel quel depuis predicteur-nfl.html (version du 04/10/2026, 15h25) :
+// Moteur de calcul copié tel quel depuis predicteur-nfl.html (version du 04/10/2026, 20h49 : malus d absence recalibrés, couche passe/course retirée, pourcentages calibrés (écart-type 17,5)) :
 // absences dégressives/plafonnées/selon le style de jeu, terrain neutre, bonus de série 0,15.
 // À RESYNCHRONISER à chaque évolution du modèle dans predicteur-nfl.html (voir README).
 let TEAMS = [];
@@ -17,7 +17,7 @@ function isNeutralGame(homeName, awayName){
   }
   return false;
 }
-const SPREAD_STD_DEV = 13.5;   // écart-type de l'écart de points final, valeur usuelle en analytics NFL
+const SPREAD_STD_DEV = 17.5;   // écart-type utilisé pour passer de l'écart de points attendu à un pourcentage. 13,5 (valeur usuelle) rendait le modèle trop confiant : calibré le 04/10 sur 1 549 matchs rejoués (optimum 18,25 sur 2020-24, 16-17 sur 2025-26, courbe plate de 16,5 à 19,5). Ne change JAMAIS le favori, seulement le pourcentage.
 const TIE_PROB = 0.004;        // les nuls sont très rares en NFL (prolongation à mort subite)
 const SHRINKAGE_GAMES = 4;     // poids de la moyenne ligue, exprimé en "matchs virtuels" — s'estompe à mesure que la saison avance
 
@@ -94,7 +94,9 @@ function streakImpact(teamName){
 // dans un même "nombre d'absents" comme en Ligue 1.
 // Malus pondéré par l'importance du joueur (contrat + statut), pas un chiffre fixe pour tout le monde.
 // "titulaire" = valeur par défaut (comportement identique à l'ancien malus fixe) si le poste n'a pas de niveau précisé.
-const QB_OUT_MALUS = { elite: 9, titulaire: 6.5, limite: 4 };
+// RECALIBRAGE DU 04/10 (20h04) : malus d'absence ramenés à ~60 % (QB) / 30-50 % (hors QB) des anciennes valeurs,
+// après rejeu de 1 553 matchs 2020-2026 (Brier 0,2354 -> 0,2318). Ancien jeu : QB 9/6,5/4, hors QB 4/2,5/1,2, remplaçant QB 3/1,5/0, plafond 6,5.
+const QB_OUT_MALUS = { elite: 5.5, titulaire: 4, limite: 2.5 };
 // KEY_SKILL_MALUS / DEFENSE_KEY_MALUS : malus par titulaire absent, à N'IMPORTE QUEL POSTE
 // (receveur, coureur, ligne offensive, cornerback, safety, linebacker, ligne défensive...).
 // Le poste exact importe moins que son NIVEAU d'importance pour l'attaque ou la défense :
@@ -103,7 +105,7 @@ const QB_OUT_MALUS = { elite: 9, titulaire: 6.5, limite: 4 };
 // "titulaire" = titulaire solide standard, "rotation" = joueur de profondeur/rotation dont
 // l'absence pèse mais reste absorbable. Ce n'est donc PAS limité aux postes "stars" (WR1/RB1/CB1) :
 // perdre 2 titulaires de ligne offensive peut peser autant qu'un WR1, juste réparti différemment.
-const KEY_SKILL_MALUS = { elite: 4, titulaire: 2.5, rotation: 1.2 };
+const KEY_SKILL_MALUS = { elite: 3, titulaire: 1.25, rotation: 0.6 };
 // Si le remplaçant (2e QB) est LUI AUSSI absent (blessure/protocole commotion...), on ne peut plus
 // se baser sur le niveau du titulaire : l'équipe se retrouve avec un 3e choix / joueur de practice
 // squad, ce qui est toujours pire que la pire absence "simple" (tier "elite" = malus max, -9 pts).
@@ -113,7 +115,7 @@ const KEY_SKILL_MALUS = { elite: 4, titulaire: 2.5, rotation: 1.2 };
 // critère objectif et vérifiable : le nombre de départs en carrière en saison régulière NFL du
 // remplaçant qui prend effectivement les snaps. Ce malus s'AJOUTE au malus de base du titulaire absent
 // (qbReplacementTier), sauf si qbBackupOut est vrai (cas encore pire, qui prime et plafonne à "elite").
-const QB_REPLACEMENT_MALUS = { aucune_experience: 3, limite: 1.5, standard: 0 }; // par nb de départs carrière du remplaçant : 0 / 1-5 / 6+
+const QB_REPLACEMENT_MALUS = { aucune_experience: 1.8, limite: 0.9, standard: 0 }; // par nb de départs carrière du remplaçant : 0 / 1-5 / 6+
 // ===================== STYLE DE JEU : le malus d'une absence dépend de la spécialisation de l'équipe (ajout du 04/10) =====================
 // styleFactor(offTeam, lane) : multiplicateur (0,6 à 1,4) selon la part de jeu au sol de l'équipe qui a le ballon.
 //  - Absence DÉFENSIVE taguée pass/rush : on regarde l'ATTAQUE ADVERSE (offTeam = adversaire). Un défenseur contre la passe
@@ -182,7 +184,7 @@ function qbMalus(team){
 const ADAPT_DECAY = 0.08;  // réduction du malus par match déjà manqué
 const ADAPT_FLOOR = 0.55;  // le malus ne descend jamais sous 55 % de sa valeur après correction d'adaptation
 // 3) ABSENCE_CAP : plafond du cumul des absences hors QB, par côté (attaque / défense) = malus d'un QB titulaire absent.
-const ABSENCE_CAP = 6.5;
+const ABSENCE_CAP = 4;
 function baselineDiscount(team, ab){
   if(!ab || ab.gp === undefined) return 1;
   const p = (team && team.played) || 0;
@@ -219,7 +221,7 @@ function offUnitMalus(team, opponent){
 // l'équipe elle-même — elle rend sa défense plus perméable, donc c'est l'ADVERSAIRE qui marque
 // davantage. Mêmes paliers que KEY_SKILL_MALUS (même ordre de grandeur d'impact pour un titulaire
 // clé absent, attaque ou défense), mais le malus est AJOUTÉ au score attendu de l'adversaire.
-const DEFENSE_KEY_MALUS = { elite: 4, titulaire: 2.5, rotation: 1.2 };
+const DEFENSE_KEY_MALUS = { elite: 3, titulaire: 1.25, rotation: 0.6 };
 // defAbsences : même principe que offAbsences, côté défense — liste de {tier, pos, lane?}, malus
 // sommé, modulé par la tendance de l'ADVERSAIRE (celui qui affronte cette défense) si "lane" est
 // renseigné : un défenseur "rush" absent pèse plus lourd face à une attaque qui court beaucoup.
@@ -248,7 +250,7 @@ const LEAGUE_AVG_RUSH_EPA = -1.6;  // moyenne ligue EPA course par match, idem
 const LEAGUE_AVG_RUSH_RATE = 0.45; // part moyenne d'actions au sol dans la ligue
 const PASS_EPA_POINT_FACTOR = 0.82; // conversion EPA passe -> points, calibrée sur régression réelle 2021-2024 (2174 matchs, r=0.63)
 const RUSH_EPA_POINT_FACTOR = 0.54; // idem pour la course
-const PASSRUSH_CAP = 3;             // plafond par secteur (passe OU course), en points — prudence tant que la calibration pré-match n'est pas validée sur plusieurs semaines
+const PASSRUSH_CAP = 0;             // COUCHE PASSE/COURSE DÉSACTIVÉE le 04/10 (rejeu de 1 553 matchs : la retirer fait passer le Brier de 0,2319 à 0,2249, gain 0,0070 IC95 [0,0042 ; 0,0101] ; la part passe dégrade, la part course est neutre). Les points marqués/encaissés contiennent déjà cette information. Remettre 3 pour la réactiver.
 const TENDENCY_RANGE = { min: 0.75, max: 1.25 }; // bornes du multiplicateur de tendance adverse
 const TENDENCY_SENSITIVITY = 2.5; // sensibilité du multiplicateur à l'écart de tendance adverse (borné par TENDENCY_RANGE de toute façon)
 

@@ -153,6 +153,12 @@ def main():
     # ---------- 5. contrôle des absences ----------
     rapport = controle_absences(absences, T, cur_week)
     rapport['absencesAuto'] = journal_abs
+    # arrivées en cours de saison (signatures, échanges, promotions) : information seulement, le calcul ne s'en sert pas
+    # (rejeu 2020-2026 : ni la profondeur d'effectif ni un crédit de remplaçant n'améliorent les prévisions).
+    try:
+        rapport['arrivees'] = arrivees_effectif()
+    except Exception as e:
+        rapport['arrivees'] = [f"calcul indisponible : {e}"]
 
     # ---------- 6. page ----------
     # "weeks" couvre chaque semaine jouée jusqu'à la semaine en cours (pas les semaines futures,
@@ -198,9 +204,38 @@ def main():
     print(f"Semaine {cur_week} : {len(todo)} matchs à venir calculés, {len(journal)} prévisions au journal.")
     print(f"Bilan : {bilan['correct']}/{bilan['total']} ; favoris nets : {bilan['safeCorrect']}/{bilan['safeTotal']}.")
     print(f"Absences à vérifier : {len(rapport['nouveaux'])} nouvelles possibles, {len(rapport['revenus'])} retours possibles, {len(rapport['qb'])} alertes QB.")
-    for k in ('qb', 'nouveaux', 'revenus'):
-        for r in rapport[k]:
+    for k in ('qb', 'nouveaux', 'revenus', 'arrivees'):
+        for r in rapport.get(k, []):
             print(f"  [{k}] {r}")
+
+def arrivees_effectif():
+    """Joueurs apparus dans l'effectif actif (hors équipe d'entraînement) depuis la semaine 1, par équipe, avec leur
+    équipe précédente la saison dernière quand elle est connue. Sert à repérer les signatures/échanges qui changent
+    la valeur d'un remplaçant (ex. un vétéran qui arrive quand un titulaire se blesse)."""
+    ros = [r for r in nfl.load_rosters_weekly(SEASON).to_dicts() if r['game_type'] == 'REG' and r['gsis_id']]
+    wk = sorted({r['week'] for r in ros})
+    if len(wk) < 2:
+        return []
+    first, last = wk[0], wk[-1]
+    base = {(r['team'], r['gsis_id']) for r in ros if r['week'] == first}
+    prev = {}
+    try:
+        for r in nfl.load_rosters_weekly(SEASON - 1).to_dicts():
+            if r['game_type'] == 'REG':
+                prev[r['gsis_id']] = r['team']
+    except Exception:
+        pass
+    out = []
+    for r in ros:
+        if r['week'] != last or r['team'] not in NAMES or (r['team'], r['gsis_id']) in base:
+            continue
+        if r['status'] not in ('ACT', 'RES', 'INA') or r['position'] in ('K', 'P', 'LS'):
+            continue
+        old = prev.get(r['gsis_id'])
+        origine = f", ex-{NAMES[old]}" if old in NAMES and old != r['team'] else ''
+        out.append(f"{NAMES[r['team']]} : {r['full_name']} ({r['position']}){origine}")
+    return sorted(out)
+
 
 def lambda_reg():
     import polars as pl

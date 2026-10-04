@@ -11,7 +11,7 @@ defAbsences lus par model.js) à partir des données officielles nflverse, sans 
                       joueurs du même poste) et le temps de jeu ;
   - secteur         : passe / course / ligne selon le poste (module de style de jeu de model.js) ;
   - matchs joués    : « gp » = matchs joués cette saison par le joueur (sert à la dégressivité) ;
-  - quarterback     : qbOut, niveau d'après le contrat, expérience du remplaçant d'après son nombre de
+  - quarterback     : qbOut, niveau d'après le rendement (EPA par passe) ET le contrat, expérience du remplaçant d'après son nombre de
                       départs en carrière (qbReplacementTier), qbGp = matchs joués par le titulaire.
 
 Corrections manuelles facultatives : fichier overrides.json (voir overrides.example.json).
@@ -33,6 +33,10 @@ ELITE_PCT = 0.96          # salaire annuel dans les 4 % les mieux payés du post
 ROTATION_SHARE = 0.60     # moins de 60 % des snaps -> « rotation »
 QB_ELITE_PCT = 0.93       # quarterback : parmi les 7 % les mieux payés -> « élite »
 QB_LIMITE_PCT = 0.35      # quarterback : sous ce niveau de salaire -> « limite »
+QB_MIN_ATT = 150          # passes minimum (saison précédente + saison en cours) pour juger le rendement
+QB_PROD_ELITE = 0.67      # rendement dans le meilleur tiers des quarterbacks ET gros salaire -> « élite »
+QB_PROD_STAR = 0.88       # rendement dans les 12 % meilleurs -> « élite » même sans gros salaire
+QB_PROD_LIMITE = 0.25     # rendement dans le quart le plus faible -> « limite »
 OUT_STATUSES = ('Out', 'Doubtful')
 
 GROUP = {'WR': 'WR', 'CB': 'CB', 'ED': 'ED', 'IDL': 'IDL', 'LB': 'LB', 'S': 'S', 'TE': 'TE', 'RB': 'RB', 'FB': 'RB',
@@ -96,8 +100,36 @@ class Donnees:
                     self.starts[g[k]] += 1
                     if g['season'] == season and names.get(g[tk]) and names[g[tk]] not in self.opening_qb:
                         self.opening_qb[names[g[tk]]] = g[k]
+        # rendement des quarterbacks : points attendus ajoutés (EPA) par passe, saison précédente + en cours
+        self.qb_perf = self._qb_perf(season)
         # statut courant des joueurs sur la liste des blessés (IR)
         self.ir = {r['gsis_id']: r for r in self.roster if r['status'] == 'RES' and r['gsis_id']}
+
+    def _qb_perf(self, season):
+        """gsis_id -> (EPA par passe, passes) sur la saison précédente + la saison en cours.
+        Renvoie {} si les statistiques sont indisponibles (le niveau retombe alors sur le seul salaire)."""
+        acc = {}
+        for yr in (season - 2, season - 1, season):
+            try:
+                rows = nfl.load_player_stats(yr).to_dicts()
+            except Exception:
+                continue
+            for r in rows:
+                if r.get('season_type') != 'REG' or r.get('position') != 'QB':
+                    continue
+                a = acc.setdefault(r['player_id'], [0.0, 0])
+                a[0] += r.get('passing_epa') or 0.0
+                a[1] += r.get('attempts') or 0
+        return {g: (e / n, n) for g, (e, n) in acc.items() if n >= QB_MIN_ATT}
+
+    def qb_prod_pct(self, gid):
+        """Rang centile (0 = pire, 1 = meilleur) du rendement du quarterback, ou None s'il manque de données."""
+        me = self.qb_perf.get(gid)
+        if not me or len(self.qb_perf) < 10:
+            return None
+        vals = sorted(v[0] for v in self.qb_perf.values())
+        below = sum(1 for v in vals if v < me[0])
+        return below / (len(vals) - 1)
 
     def _snap_table(self, season):
         """gsis_id -> dict(n=matchs joués, share=part moyenne de snaps, qb_snaps=snaps offensifs)."""
@@ -155,6 +187,25 @@ def niveau(d, gid, group, share):
     if share is not None and share < ROTATION_SHARE:
         return 'rotation', pct
     return 'titulaire', pct
+
+
+def qb_tier(pay, prod):
+    """Niveau du quarterback : le rendement (EPA par passe) compte autant que le salaire.
+    - élite    : rendement dans les 12 % meilleurs, ou (gros salaire ET rendement dans le meilleur tiers)
+    - limite   : rendement dans le quart le plus faible, ou (petit salaire ET rendement sous la médiane)
+    - titulaire : tous les autres (un gros salaire seul ne fait pas un élite)
+    Sans statistiques, on retombe sur le seul salaire."""
+    if prod is None:
+        if pay is not None and pay >= QB_ELITE_PCT:
+            return 'elite'
+        if pay is not None and pay < QB_LIMITE_PCT:
+            return 'limite'
+        return 'titulaire'
+    if prod >= QB_PROD_STAR or (pay is not None and pay >= QB_ELITE_PCT and prod >= QB_PROD_ELITE):
+        return 'elite'
+    if prod < QB_PROD_LIMITE or (pay is not None and pay < QB_LIMITE_PCT and prod < 0.5):
+        return 'limite'
+    return 'titulaire'
 
 
 def raison(r):
@@ -239,11 +290,8 @@ def construire(season, names, played, overrides=None):
         nm = name_of.get(starter, starter)
         c = d.contract.get(starter)
         pct = d.pct('QB', c['apy']) if c else None
-        tier = 'titulaire'
-        if pct is not None and pct >= QB_ELITE_PCT:
-            tier = 'elite'
-        elif pct is not None and pct < QB_LIMITE_PCT:
-            tier = 'limite'
+        prod = d.qb_prod_pct(starter)
+        tier = qb_tier(pct, prod)
         tier = forced.get(norm(nm), tier)
         others = [g for g in qbs if g != starter]
         healthy = [g for g in others if g not in unavailable]
@@ -260,7 +308,10 @@ def construire(season, names, played, overrides=None):
             n = d.starts.get(rep, 0)
             entry['qbReplacementTier'] = 'aucune_experience' if n == 0 else ('limite' if n <= 5 else 'standard')
             journal.append(f"{team} : remplaçant {name_of.get(rep, rep)}, {n} départ(s) en carrière")
-        journal.append(f"{team} : QB {nm} ({why_of(unavailable, starter)}) -> {tier}, {entry['qbGp']} match(s) joué(s)")
+        journal.append(f"{team} : QB {nm} ({why_of(unavailable, starter)}) -> {tier}, "
+                       + (f"salaire top {100 - round(pct * 100)} % des QB, " if pct is not None else '')
+                       + (f"rendement {round(prod * 100)}e centile, " if prod is not None else 'rendement inconnu, ')
+                       + f"{entry['qbGp']} match(s) joué(s)")
 
     # --- corrections manuelles : ajouts
     for team, extra in overrides.get('ajouts', {}).items():

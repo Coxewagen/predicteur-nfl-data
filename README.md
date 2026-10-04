@@ -11,8 +11,7 @@ Fichiers :
 - `update.py` : télécharge les données NFL (nflreadpy), recalcule les stats, lance `model.js`,
   tient le journal des prévisions et leur bilan, et écrit `app-data.json` + `index.html`.
 - `model.js` : moteur de calcul (copie exacte de celui de `predicteur-nfl.html`).
-  **À resynchroniser à chaque évolution du modèle dans `predicteur-nfl.html`** (dernière synchro : 04/10/2026,
-  15 h 25 — absences dégressives/plafonnées/selon le style de jeu, terrain neutre, bonus de série 0,15).
+  **À resynchroniser à chaque évolution du modèle dans `predicteur-nfl.html`** (dernière synchro : 04/10/2026, 20 h 49 — malus d'absence recalibrés (QB 4 / 5,5 / 2,5, hors QB 3 / 1,25 / 0,6, plafond 4), couche passe/course retirée (PASSRUSH_CAP = 0), pourcentages calibrés (écart-type 17,5 au lieu de 13,5), le tout après rejeu de 1 549 matchs ; avant : absences dégressives/plafonnées/selon le style de jeu, terrain neutre, bonus de série 0,15).
   Les absences de `state.json` portent désormais `gp` (matchs joués par le joueur cette saison, pour la
   dégressivité ; sans `gp` = absence récente, aucune réduction) et `lane` (passe/course).
 - `absences_auto.py` : calcule TOUT SEUL, à chaque passage du robot, les absences de chaque équipe
@@ -31,6 +30,8 @@ Fichiers :
   reprend les mêmes données en version "site".
 - `rapport.json` : écarts entre tes absences retenues et les données officielles (mêmes
   vérifications que celles déjà utilisées pour `predicteur-nfl.html`).
+  Contient aussi la liste `arrivees` : joueurs apparus dans l'effectif actif depuis la semaine 1 (signatures,
+  échanges), avec leur ancienne équipe. Information seulement : elle n'entre pas dans le calcul (testé : aucun gain).
 - `backtest.py` : complète le journal pour les semaines déjà jouées que `update.py` n'a jamais
   suivies en direct (il ne suit que la semaine en cours au moment où il tourne). Pour chaque
   semaine manquante, calcule ce que le modèle aurait pronostiqué avec UNIQUEMENT les statistiques
@@ -42,3 +43,5 @@ Fichiers :
 
 Pour relancer une mise à jour immédiatement sans attendre le prochain horaire : onglet
 **Actions** du dépôt sur GitHub → **Mise à jour des prévisions NFL** → **Run workflow**.
+
+**Mise en ligne d'une nouvelle version :** remplace seulement les fichiers de code (`model.js`, `update.py`, `absences_auto.py`, `backtest.py`, `template.txt`, `README.md`, `.github/`). Ne remplace PAS `state.json`, `app-data.json`, `index.html` et `rapport.json` du dépôt : ce sont les fichiers du robot (journal des prévisions figées au coup d'envoi). Ceux de ce zip sont une copie de 15 h 27, déjà périmée.
