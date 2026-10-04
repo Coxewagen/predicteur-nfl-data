@@ -218,7 +218,20 @@ def main():
     # "rapport" (contrôle des absences) en est délibérément exclu : il détaille des noms de joueurs
     # et les raisons des écarts retenus/ignorés, bien plus parlant sur la méthode que le reste —
     # il n'a rien à faire dans un fichier public. Il reste dans rapport.json, à ton seul usage.
-    (HERE/'app-data.json').write_text(json.dumps(app_data, ensure_ascii=False), encoding='utf-8')
+    # Section lue par le bouton "Mettre à jour" de predicteur-nfl.html : équipes (stats + absences) et calendrier/
+    # résultats, dans le format même du prédicteur. Elle est ajoutée au seul fichier app-data.json (déjà publié
+    # par le robot : aucun changement du workflow GitHub). Les noms de joueurs sont retirés (fichier public).
+    def sans_nom(lst):
+        return [dict(x, pos=re.sub(r' \(.*\)$', '', x.get('pos', ''))) for x in (lst or [])]
+    equipes_pub = []
+    for t in teams:
+        t2 = dict(t)
+        for k in ('offAbsences', 'defAbsences'):
+            if k in t2:
+                t2[k] = sans_nom(t2[k])
+        equipes_pub.append(t2)
+    app_file = dict(app_data, predicteur=dict(week=cur_week, updatedAt=data['updatedAt'], teams=equipes_pub, weeksHistory=weeks))
+    (HERE/'app-data.json').write_text(json.dumps(app_file, ensure_ascii=False), encoding='utf-8')
     (HERE/'state.json').write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding='utf-8')
     (HERE/'rapport.json').write_text(json.dumps(rapport, ensure_ascii=False, indent=1), encoding='utf-8')
     for f in ('_in.json', '_out.json'):
