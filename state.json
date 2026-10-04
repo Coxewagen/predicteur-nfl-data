@@ -702,7 +702,7 @@
    "qbOut": true,
    "qbTier": "titulaire",
    "qbGp": 3,
-   "qbReplacementTier": "aucune_experience"
+   "qbReplacementTier": "limite"
   },
   "Washington Commanders": {
    "offAbsences": [
@@ -903,7 +903,10 @@
    "expHome": 24,
    "expAway": 16,
    "computedAt": "2026-10-04T16:43:17Z",
-   "frozen": true
+   "frozen": true,
+   "homeScore": 24,
+   "awayScore": 18,
+   "correct": true
   },
   "2026_04_NE_BUF": {
    "week": 4,
@@ -915,7 +918,10 @@
    "expHome": 36,
    "expAway": 11,
    "computedAt": "2026-10-04T16:43:17Z",
-   "frozen": true
+   "frozen": true,
+   "homeScore": 26,
+   "awayScore": 29,
+   "correct": false
   },
   "2026_04_NYJ_CHI": {
    "week": 4,
@@ -927,7 +933,10 @@
    "expHome": 20,
    "expAway": 17,
    "computedAt": "2026-10-04T16:43:17Z",
-   "frozen": true
+   "frozen": true,
+   "homeScore": 23,
+   "awayScore": 12,
+   "correct": true
   },
   "2026_04_JAX_CIN": {
    "week": 4,
@@ -939,7 +948,10 @@
    "expHome": 17,
    "expAway": 28,
    "computedAt": "2026-10-04T16:43:17Z",
-   "frozen": true
+   "frozen": true,
+   "homeScore": 17,
+   "awayScore": 22,
+   "correct": true
   },
   "2026_04_DAL_HOU": {
    "week": 4,
@@ -951,7 +963,10 @@
    "expHome": 28,
    "expAway": 31,
    "computedAt": "2026-10-04T16:43:17Z",
-   "frozen": true
+   "frozen": true,
+   "homeScore": 30,
+   "awayScore": 34,
+   "correct": true
   },
   "2026_04_ARI_NYG": {
    "week": 4,
@@ -963,7 +978,10 @@
    "expHome": 20,
    "expAway": 25,
    "computedAt": "2026-10-04T16:43:17Z",
-   "frozen": true
+   "frozen": true,
+   "homeScore": 36,
+   "awayScore": 24,
+   "correct": false
   },
   "2026_04_LA_PHI": {
    "week": 4,
@@ -975,7 +993,10 @@
    "expHome": 19,
    "expAway": 27,
    "computedAt": "2026-10-04T16:43:17Z",
-   "frozen": true
+   "frozen": true,
+   "homeScore": 20,
+   "awayScore": 24,
+   "correct": true
   },
   "2026_04_GB_TB": {
    "week": 4,
@@ -987,7 +1008,10 @@
    "expHome": 12,
    "expAway": 17,
    "computedAt": "2026-10-04T16:43:17Z",
-   "frozen": true
+   "frozen": true,
+   "homeScore": 14,
+   "awayScore": 17,
+   "correct": true
   },
   "2026_04_MIA_MIN": {
    "week": 4,
@@ -999,7 +1023,7 @@
    "expHome": 24,
    "expAway": 10,
    "computedAt": "2026-10-04T19:46:23Z",
-   "frozen": false
+   "frozen": true
   },
   "2026_04_KC_LV": {
    "week": 4,
@@ -1011,7 +1035,7 @@
    "expHome": 23,
    "expAway": 22,
    "computedAt": "2026-10-04T19:46:23Z",
-   "frozen": false
+   "frozen": true
   },
   "2026_04_LAC_SEA": {
    "week": 4,
@@ -1023,7 +1047,7 @@
    "expHome": 25,
    "expAway": 12,
    "computedAt": "2026-10-04T19:46:23Z",
-   "frozen": false
+   "frozen": true
   },
   "2026_04_DEN_SF": {
    "week": 4,
@@ -1035,7 +1059,7 @@
    "expHome": 28,
    "expAway": 21,
    "computedAt": "2026-10-04T19:46:23Z",
-   "frozen": false
+   "frozen": true
   },
   "2026_04_DET_CAR": {
    "week": 4,
@@ -1046,7 +1070,7 @@
    "pAway": 0.4788,
    "expHome": 31,
    "expAway": 30,
-   "computedAt": "2026-10-04T19:46:23Z",
+   "computedAt": "2026-10-04T20:52:23Z",
    "frozen": false
   },
   "2026_04_ATL_NO": {
@@ -1058,7 +1082,7 @@
    "pAway": 0.4483,
    "expHome": 26,
    "expAway": 24,
-   "computedAt": "2026-10-04T19:46:23Z",
+   "computedAt": "2026-10-04T20:52:23Z",
    "frozen": false
   },
   "2026_02_DET_BUF": {
