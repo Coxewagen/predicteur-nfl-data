@@ -112,6 +112,20 @@ def main():
     for n, ab in absences.items():
         T[n].update({k: v for k, v in ab.items() if not (v is None or v is False or v == [])})  # (0 doit rester valide : qbGp, gp)
     teams = sorted(T.values(), key=lambda t: t['name'])
+    # Infos pour la fiche détaillée d'un match : bilan, points par match, 3 derniers résultats.
+    closed_by_team = {n: [] for n in T}
+    for g in games:
+        if g['status'] == 'closed':
+            for me, opp, pf, pa in ((g['home'], g['away'], g['homeScore'], g['awayScore']),
+                                    (g['away'], g['home'], g['awayScore'], g['homeScore'])):
+                closed_by_team[me].append((g['kickoff'], 'V' if pf > pa else 'D' if pf < pa else 'N', opp, pf, pa))
+    fiche = {}
+    for n, t in T.items():
+        r = sorted(closed_by_team[n])
+        fiche[n] = dict(rec=f"{t['wins']}-{t['losses']}" + (f"-{t['ties']}" if t['ties'] else ''),
+                        pf=round(t['pointsFor']/t['played'], 1) if t['played'] else None,
+                        pa=round(t['pointsAgainst']/t['played'], 1) if t['played'] else None,
+                        form=[dict(r=x[1], opp=x[2], s=f"{x[3]}-{x[4]}") for x in r[-3:]][::-1])
 
     # ---------- 3. prévisions ----------
     todo = [g for g in games if g['status'] == 'scheduled' and g['kickoff'] > now.strftime('%Y-%m-%dT%H:%M:%SZ')
@@ -171,10 +185,17 @@ def main():
         out = []
         for g in week_games:
             j = journal.get(g['id'])
-            out.append(dict(g, pred=j and {k: j[k] for k in ('pHome', 'pAway', 'expHome', 'expAway')},
-                             abs={s: resume_abs(T[g[s]]) for s in ('home', 'away')}))
+            pred = j and {k: j[k] for k in ('pHome', 'pAway', 'expHome', 'expAway')}
+            row = dict(g, pred=pred, abs={s: resume_abs(T[g[s]]) for s in ('home', 'away')})
+            if not pred and g['status'] == 'scheduled' and g['id'] in preds:   # semaine à venir : prévision provisoire
+                p = preds[g['id']]
+                row['pred'] = dict(pHome=round(p['pHome'], 4), pAway=round(p['pAway'], 4), expHome=p['expHome'], expAway=p['expAway'])
+                row['prov'] = True
+            out.append(row)
         return out
-    weeks_available = sorted(int(w) for w in weeks if int(w) <= cur_week)
+    # toutes les semaines du calendrier : passées (journal/historique), en cours, et à venir (prévisions provisoires,
+    # recalculées à chaque passage du robot avec les absences et statistiques du moment)
+    weeks_available = sorted(int(w) for w in weeks)
     all_weeks_games = {str(w): build_week_games(weeks[str(w)]) for w in weeks_available}
     page_games = all_weeks_games[str(cur_week)]
     lp = now.astimezone(ZoneInfo('Europe/Paris'))
@@ -183,18 +204,20 @@ def main():
     label = f"{jours[lp.weekday()]} {lp.day} {mois[lp.month-1]} {lp.year} à {lp.hour} h {lp.minute:02d}"
     data = dict(updatedAt=lp.strftime('%Y-%m-%dT%H:%M'), updatedLabel=label,
                 season=SEASON, week=cur_week, weeksAvailable=weeks_available, weeks=all_weeks_games,
-                teams=infos_equipes(), safe=SAFE, games=page_games, bilan=bilan,
+                teams=infos_equipes(), fiche=fiche, safe=SAFE, games=page_games, bilan=bilan,
                 absences=[dict(team=t['name'], items=liste_abs(t)) for t in teams if liste_abs(t)],
                 rapport=rapport)
+    app_data = {k: v for k, v in data.items() if k != 'rapport'}
     tpl = (HERE/'template.txt').read_text(encoding='utf-8')
-    (HERE/'index.html').write_text(tpl.replace('__DATA__', json.dumps(data, ensure_ascii=False).replace('</', '<\\/')), encoding='utf-8')
+    # La page web n'embarque plus le "rapport" (contrôle des absences, noms de joueurs) : elle ne l'affiche plus
+    # et index.html est public. Il reste dans rapport.json, à ton seul usage.
+    (HERE/'index.html').write_text(tpl.replace('__DATA__', json.dumps(app_data, ensure_ascii=False).replace('</', '<\\/')), encoding='utf-8')
     # Même dict "data" que celui injecté dans la page web, publié à part en JSON brut : c'est le
     # fichier que l'appli mobile télécharge (voir www/app.js, DATA_URL) pour rester à jour sans
     # nouvelle version d'appli à chaque mise à jour des stats/blessures.
     # "rapport" (contrôle des absences) en est délibérément exclu : il détaille des noms de joueurs
     # et les raisons des écarts retenus/ignorés, bien plus parlant sur la méthode que le reste —
     # il n'a rien à faire dans un fichier public. Il reste dans rapport.json, à ton seul usage.
-    app_data = {k: v for k, v in data.items() if k != 'rapport'}
     (HERE/'app-data.json').write_text(json.dumps(app_data, ensure_ascii=False), encoding='utf-8')
     (HERE/'state.json').write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding='utf-8')
     (HERE/'rapport.json').write_text(json.dumps(rapport, ensure_ascii=False, indent=1), encoding='utf-8')

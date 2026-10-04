@@ -26,8 +26,10 @@ Fichiers :
   ignorer un joueur, forcer son niveau, ou ajouter une absence que les données officielles ne montrent pas.
 - `state.json` : le journal des prévisions (figées au coup d'envoi puis comparées au résultat) et les
   absences calculées. Ne se modifie plus à la main.
-- `template.txt` : la page web (optionnelle, pas utilisée par l'appli mobile elle-même) qui
-  reprend les mêmes données en version "site".
+- `template.txt` : la page web (le site), avec les mêmes cartes, la même fiche au clic, les semaines passées et à venir
+  et la case « J'ai parié » que l'appli. **Ce fichier est généré** : ne le modifie pas à la main, il vient de `src/ui.js`,
+  `src/site.js`, `src/site-shell.html` et `www/app.css` (dossier de l'appli) par la commande `node build_site.js`.
+  Les semaines à venir portent des prévisions provisoires, recalculées à chaque passage du robot.
 - `rapport.json` : écarts entre tes absences retenues et les données officielles (mêmes
   vérifications que celles déjà utilisées pour `predicteur-nfl.html`).
   Contient aussi la liste `arrivees` : joueurs apparus dans l'effectif actif depuis la semaine 1 (signatures,

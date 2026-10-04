@@ -1,97 +1,202 @@
 <title>Prédicteur NFL 2026</title>
+<meta name="theme-color" content="#0d2818">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap">
 <style>
-/* Layout : une colonne pensée d'abord pour le téléphone. Bandeau de titre coloré, cartes de match compactes
-   (blason aux couleurs de l'équipe, pourcentage, barre partagée), bilan, puis annexes repliées. */
+/* Même identité que le Prédicteur NFL (page web) : terrain vert nuit en fond, blanc "craie" pour
+   le texte, ambre pour les accents/CTA, bleu marine en structure — un seul thème fixe (comme la
+   page web elle-même, qui n'a pas de variante claire), pas de bascule clair/sombre ici. */
 :root{
-  --bg:#EEF2F7; --surface:#FFFFFF; --ink:#0D1B2A; --muted:#42536B; --line:#C5CEDA;
-  --navy:#12305A; --on-navy:#FFFFFF; --navy-soft:#C9D8EE;
-  --field:#0B6B3A; --on-field:#FFFFFF; --field-bg:#E2F3E9;
-  --bad:#A3201D; --bad-bg:#FBE6E5; --warn:#7A4B00; --warn-bg:#FFF1D2; --track:#DCE2EA;
+  --pitch:#0d2818; --pitch2:#0a2013;
+  --surface:rgba(255,255,255,.055); --surface-solid:#15331f;
+  --ink:#f2f2f0; --muted:#9fb0a8; --line:rgba(255,255,255,.16); --track:rgba(255,255,255,.1);
+  --navy:#1d3a6e; --on-navy:#ffffff; --navy-soft:#b7c6e4;
+  --field:#3ddc84; --on-field:#04200f; --field-bg:rgba(61,220,132,.16);
+  --bad:#ff6b60; --bad-bg:rgba(255,107,96,.16);
+  --warn:#ffb020; --warn-bg:rgba(255,176,32,.16);
+  --gold:#ffb020; --gold-bg:rgba(255,176,32,.16);
   --sans:"IBM Plex Sans",Arial,Helvetica,sans-serif; --cond:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
 }
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#0A121E; --surface:#152032; --ink:#F1F4F8; --muted:#B3C0D1; --line:#35465E;
-  --navy:#1B3F75; --on-navy:#FFFFFF; --navy-soft:#C9D8EE;
-  --field:#3DBE78; --on-field:#04200F; --field-bg:#12301F;
-  --bad:#FF918C; --bad-bg:#3A1716; --warn:#FFC766; --warn-bg:#33270D; --track:#2A384C; color-scheme:dark } }
-:root[data-theme="dark"]{
-  --bg:#0A121E; --surface:#152032; --ink:#F1F4F8; --muted:#B3C0D1; --line:#35465E;
-  --navy:#1B3F75; --on-navy:#FFFFFF; --navy-soft:#C9D8EE;
-  --field:#3DBE78; --on-field:#04200F; --field-bg:#12301F;
-  --bad:#FF918C; --bad-bg:#3A1716; --warn:#FFC766; --warn-bg:#33270D; --track:#2A384C; color-scheme:dark }
 
-*{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.45}
-.wrap{max-width:760px;margin:0 auto;padding-inline:16px;padding-block:16px 48px;display:flex;flex-direction:column;gap:26px}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:linear-gradient(160deg,var(--pitch),var(--pitch2));color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.45;margin:0}
 svg.ic{width:1.15em;height:1.15em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-0.2em}
 
-header{background:var(--navy);color:var(--on-navy);border-radius:14px;padding:18px;display:flex;gap:14px;align-items:center;border-bottom:6px solid var(--field)}
-header .ball{width:54px;height:54px;flex:none}
-header .txt{display:flex;flex-direction:column;gap:2px;min-width:0}
-.eyebrow{font-family:var(--cond);font-size:16px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy-soft)}
-h1{font-family:var(--cond);font-size:34px;line-height:1.05;margin:0;font-weight:700}
-header .meta{color:var(--navy-soft);font-size:16px}
+.app{max-width:760px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
 
-h2{font-family:var(--cond);font-size:25px;margin:0;font-weight:700;display:flex;align-items:center;gap:10px}
-h2 .sq{width:36px;height:36px;border-radius:9px;background:var(--navy);color:var(--on-navy);display:grid;place-items:center;flex:none}
+/* --- barre du haut --- */
+/* Pas de bandeau bleu plein : ça détonnait avec le vert terrain du reste de l'appli. Le titre
+   reste sur le fond vert comme dans la page web d'origine (titre ambre, sous-titre craie), avec
+   juste un fin trait de séparation en bas — le bleu marine redevient un simple accent (comme sur
+   la page web), pas un bloc de couleur à lui tout seul. */
+.topbar{background:transparent;color:var(--ink);display:flex;gap:12px;align-items:center;
+  padding:calc(env(safe-area-inset-top,0px) + 14px) 16px 14px;border-bottom:1px solid var(--line)}
+.topbar .ball{width:40px;height:40px;flex:none}
+.topbar .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.eyebrow{font-family:var(--cond);font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.topbar h1{font-family:var(--cond);font-size:24px;margin:0;font-weight:700;color:var(--gold)}
+.refresh{background:rgba(255,255,255,0.1);border:1px solid var(--line);color:var(--ink);
+  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none}
+.refresh:active{background:rgba(255,255,255,0.28)}
+.refresh.spin svg{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.offline-banner{background:var(--warn-bg);color:var(--warn);display:flex;gap:8px;align-items:center;
+  font-size:14px;padding:8px 16px;font-weight:600}
+
+/* --- contenu --- */
+main{flex:1;padding:16px;padding-bottom:28px;display:flex;flex-direction:column;gap:16px}
+.view{display:flex;flex-direction:column;gap:14px}
+
+h2{font-family:var(--cond);font-size:22px;margin:0;font-weight:700;display:flex;align-items:center;gap:9px}
+h2 .sq{width:32px;height:32px;border-radius:9px;background:var(--navy);color:var(--on-navy);display:grid;place-items:center;flex:none}
 h2 .sq.g{background:var(--field);color:var(--on-field)}
-section{display:flex;flex-direction:column;gap:14px}
-.meta{color:var(--muted);font-size:16px;margin:0}
-.alert{background:var(--warn-bg);border-left:6px solid var(--warn);border-radius:10px;padding:12px 14px;font-size:17px;display:flex;gap:10px}
-.alert svg{color:var(--warn);margin-top:3px}
-.alert b{color:var(--warn)}
+h2 .sq.gold{background:var(--gold);color:#241a02}
+h2.week-head #weekTitle{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.week-pager{margin-left:auto;display:flex;gap:6px;flex:none}
+.pager-btn{width:30px;height:30px;border-radius:50%;background:var(--track);border:none;color:var(--ink);
+  font-size:18px;line-height:1;display:grid;place-items:center;font-family:var(--sans)}
+.pager-btn:disabled{opacity:.35}
+.meta{color:var(--muted);font-size:15px;margin:0}
+.alert{background:var(--warn-bg);border-left:6px solid var(--warn);border-radius:10px;padding:12px 14px;font-size:16px;display:flex;gap:10px}
+.alert svg{color:var(--warn);margin-top:3px;flex:none}
 
-.legend{display:flex;gap:6px 16px;flex-wrap:wrap;font-size:15px;color:var(--muted)}
+.legend{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
+
+/* --- cartes de match --- */
 .games{display:flex;flex-direction:column;gap:10px}
-.game{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:9px}
+.game{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;
+  display:flex;flex-direction:column;gap:9px}
 .game.net{border-color:var(--field);box-shadow:inset 5px 0 0 var(--field)}
 .ghead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
-.when{font-weight:600;color:var(--muted);font-size:16px;display:inline-flex;align-items:center;gap:6px}
-.tag{font-family:var(--cond);font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:5px;background:var(--track);color:var(--muted)}
+.when{font-weight:600;color:var(--muted);font-size:15px;display:inline-flex;align-items:center;gap:6px}
+.tag{font-family:var(--cond);font-size:14px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:3px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:5px;background:var(--track);color:var(--muted)}
 .tag.net{background:var(--field);color:var(--on-field)}
 .tag.ok{background:var(--field-bg);color:var(--field)} .tag.ko{background:var(--bad-bg);color:var(--bad)}
 .team{display:flex;align-items:center;gap:10px}
-.shield{width:38px;height:42px;flex:none}
-.tname{font-size:19px;font-weight:500;min-width:0;flex:1;display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap}
+.shield{width:36px;height:36px;flex:none}
+.tname{font-size:17px;font-weight:500;min-width:0;flex:1;display:flex;align-items:center;gap:6px 7px;flex-wrap:wrap}
 .tname.fav{font-weight:700}
 .tname .short{display:none}
 .role{color:var(--muted);display:inline-flex}
-.chip{font-size:14px;font-weight:700;padding:1px 8px;border-radius:999px;display:inline-flex;align-items:center;gap:4px;background:var(--warn-bg);color:var(--warn)}
+.chip{font-size:13px;font-weight:700;padding:1px 7px;border-radius:999px;display:inline-flex;align-items:center;gap:4px;background:var(--warn-bg);color:var(--warn)}
 .chip.qb{background:var(--bad-bg);color:var(--bad)}
-.pct{font-family:var(--cond);font-size:27px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pct{font-family:var(--cond);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
 .pct.fav{color:var(--field)}
-.split{display:flex;height:12px;border-radius:999px;overflow:hidden;gap:3px;background:var(--surface);outline:1px solid var(--line)}
+.split{display:flex;height:11px;border-radius:999px;overflow:hidden;gap:3px;background:var(--surface);outline:1px solid var(--line)}
 .split i{display:block;height:100%}
-.gfoot{font-size:16px;color:var(--muted);display:flex;gap:4px 16px;flex-wrap:wrap}
+.gfoot{font-size:15px;color:var(--muted);display:flex;gap:4px 14px;flex-wrap:wrap}
 .gfoot b{color:var(--ink);font-variant-numeric:tabular-nums}
+.game.clickable{cursor:pointer}
 
-.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.fig{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--navy);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+/* --- verrou abonnement : remplace les probabilités quand non-abonné --- */
+.lock-row{display:flex;align-items:center;gap:10px;background:var(--gold-bg);color:var(--gold);
+  border-radius:9px;padding:8px 11px;font-size:14.5px;font-weight:600}
+.lock-row svg{flex:none}
+.lock-row .go{margin-left:auto;background:var(--gold);color:#241a02;border:none;border-radius:999px;
+  font-size:13.5px;font-weight:700;padding:5px 12px;white-space:nowrap}
+.blur-fig{filter:blur(6px);user-select:none;pointer-events:none}
+
+/* --- bilan --- */
+.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.fig{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--navy);border-radius:12px;
+  padding:11px;display:flex;flex-direction:column;gap:2px;min-width:0}
 .fig.g{border-top-color:var(--field)}
-.fig .n{font-family:var(--cond);font-size:38px;line-height:1.1;font-weight:700;font-variant-numeric:tabular-nums}
-.fig .l{font-size:15px;color:var(--muted)}
+.fig .n{font-family:var(--cond);font-size:32px;line-height:1.1;font-weight:700;font-variant-numeric:tabular-nums}
+.fig .l{font-size:13.5px;color:var(--muted)}
 .tbl{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:17px;font-variant-numeric:tabular-nums}
-th{font-family:var(--cond);text-align:left;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--navy);padding:8px 10px 8px 0}
-td{border-bottom:1px solid var(--line);padding:9px 10px 9px 0;vertical-align:top}
+table{border-collapse:collapse;width:100%;font-size:15.5px;font-variant-numeric:tabular-nums}
+th{font-family:var(--cond);text-align:left;font-size:13.5px;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--muted);border-bottom:2px solid var(--navy);padding:7px 8px 7px 0}
+td{border-bottom:1px solid var(--line);padding:8px 8px 8px 0;vertical-align:top}
 .yes{color:var(--field);font-weight:700} .no{color:var(--bad);font-weight:700}
-details{background:var(--surface);border:1px solid var(--line);border-radius:12px}
-summary{cursor:pointer;padding:13px 14px;font-weight:600;font-size:18px}
-details .in{padding:0 14px 14px;display:flex;flex-direction:column;gap:12px}
-details h3{font-size:18px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
-details h3 .shield{width:26px;height:29px}
-details ul{margin:0;padding-left:20px}
-details li{margin:3px 0}
-:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
-footer{color:var(--muted);font-size:15px;border-top:1px solid var(--line);padding-top:14px}
-@media (max-width:560px){
-  .wrap{gap:22px}
-  h1{font-size:28px} header{padding:14px} header .ball{width:44px;height:44px}
+
+/* --- carte "verrou" pleine largeur (bilan complet, détail des absences) --- */
+.gate-card{background:var(--surface);border:1px dashed var(--gold);border-radius:12px;padding:18px 16px;
+  display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.gate-card svg.big{width:34px;height:34px;color:var(--gold)}
+.gate-card b{font-size:16px}
+.gate-card p{margin:0;color:var(--muted);font-size:14.5px}
+.btn-gold{background:var(--gold);color:#241a02;border:none;border-radius:999px;font-weight:700;
+  font-size:15.5px;padding:10px 20px;font-family:var(--sans)}
+
+/* --- écran Abonnement --- */
+.pro-hero{background:linear-gradient(160deg,var(--navy),#0a1f3d);color:#fff;border-radius:16px;
+  padding:22px 18px;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center}
+.pro-hero svg{width:40px;height:40px;color:var(--gold)}
+.pro-hero h3{margin:2px 0 0;font-family:var(--cond);font-size:23px}
+.pro-hero p{margin:0;color:var(--navy-soft);font-size:15px}
+.pro-list{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.pro-list li{display:flex;gap:10px;align-items:flex-start;font-size:15.5px}
+.pro-list svg{color:var(--field);flex:none;margin-top:2px}
+.plan{background:var(--surface);border:2px solid var(--gold);border-radius:14px;padding:14px 16px;
+  display:flex;flex-direction:column;gap:4px}
+.plan .price{font-family:var(--cond);font-size:26px;font-weight:700}
+.plan .sub{color:var(--muted);font-size:14px}
+.btn-main{background:var(--gold);color:#241a02;border:none;border-radius:12px;font-weight:700;
+  font-size:17px;padding:14px;font-family:var(--sans);width:100%}
+.btn-ghost{background:none;border:none;color:var(--muted);font-size:14px;text-decoration:underline;padding:8px}
+.pro-active{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:20px 0}
+.pro-active svg{width:46px;height:46px;color:var(--field)}
+.legal{font-size:12.5px;color:var(--muted);text-align:center;line-height:1.5}
+.legal a{color:var(--muted)}
+
+/* --- navigation par onglets --- */
+.tabbar{display:flex;border-top:1px solid var(--line);background:var(--surface-solid);
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+.tab{flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:9px 4px 8px;color:var(--muted);font-size:12.5px;font-family:var(--sans);font-weight:600}
+.tab.active{color:var(--gold)}
+.tab .ic{width:1.3em;height:1.3em}
+
+/* --- modale fiche de match --- */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1000;
+  align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-panel{position:relative;width:100%;max-width:760px;max-height:85vh;overflow-y:auto;
+  background:linear-gradient(160deg,var(--surface-solid),var(--pitch2));border-radius:18px 18px 0 0;
+  padding:18px 16px calc(env(safe-area-inset-bottom,0px) + 18px);
+  box-shadow:0 -10px 30px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:14px}
+.modal-panel .handle{width:40px;height:4px;border-radius:999px;background:var(--line);margin:0 auto}
+.modal-close{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;
+  background:var(--track);border:none;color:var(--ink);font-size:16px;line-height:1}
+
+@media (max-width:380px){
   .tname .long{display:none} .tname .short{display:inline}
-  .figs{gap:8px} .fig{padding:10px 8px} .fig .n{font-size:30px} .fig .l{font-size:14px}
+  .figs{gap:7px} .fig{padding:9px 7px} .fig .n{font-size:27px} .fig .l{font-size:12.5px}
 }
+
+/* --- case « J'ai parié » + badge « Validé » (mémorisés sur l'appareil) --- */
+.gtags{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.validated{display:none;font-family:var(--cond);font-size:14px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:3px 10px;border-radius:999px;align-items:center;gap:5px;background:var(--gold);color:#241a02}
+.betted .validated{display:inline-flex}
+.game.betted{border-color:var(--gold);box-shadow:inset 5px 0 0 var(--gold)}
+.bet{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:600;color:var(--ink);cursor:pointer;
+  padding:6px 0;align-self:flex-start;min-height:44px}
+.bet input{position:absolute;opacity:0;width:1px;height:1px}
+.bet .box{width:28px;height:28px;border-radius:8px;border:2px solid var(--muted);display:grid;place-items:center;flex:none;color:transparent}
+.bet .box svg{width:18px;height:18px;stroke-width:3}
+.bet input:checked + .box{background:var(--gold);border-color:var(--gold);color:#241a02}
+.bet input:focus-visible + .box{outline:3px solid var(--gold);outline-offset:2px}
+
+/* --- fiche détaillée --- */
+.mwhen{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+.bigpct{display:flex;align-items:baseline;justify-content:center;gap:14px;font-family:var(--cond);font-size:38px;font-weight:700;font-variant-numeric:tabular-nums}
+.bigpct .fav{color:var(--field)}
+.dim{color:var(--muted);font-size:15px;font-weight:500;font-family:var(--sans)}
+.verdict{margin:0;display:flex;gap:8px;align-items:flex-start;font-size:16px;font-weight:700}
+.modal-panel h3{font-family:var(--cond);font-size:19px;margin:4px 0 0}
+table.cmp{font-size:16px} table.cmp th:not(:first-child),table.cmp td:not(:first-child){text-align:center}
+table.cmp td:first-child{color:var(--muted);font-size:15px}
+.absgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.absgrid>div{min-width:0}
+ul.abs{margin:4px 0 0;padding-left:18px} ul.abs li{margin:3px 0;font-size:15px}
+@media (max-width:420px){.absgrid{grid-template-columns:1fr}}
+
+.site-shell{max-width:760px;margin:0 auto;min-height:100%}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -103,144 +208,228 @@ footer{color:var(--muted);font-size:15px;border-top:1px solid var(--line);paddin
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
   <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></symbol>
   <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></symbol>
-  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
-  <symbol id="i-data" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
-  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
 </svg>
 
-<div class="wrap">
-  <header>
+<div class="app">
+  <header class="topbar">
     <svg class="ball" viewBox="0 0 54 54" aria-hidden="true">
       <ellipse cx="27" cy="27" rx="24" ry="14.5" transform="rotate(-35 27 27)" fill="#8A4B22" stroke="#FFFFFF" stroke-width="2.5"/>
       <g stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" transform="rotate(-35 27 27)"><path d="M17 27h20M21 23v8M27 23v8M33 23v8"/></g>
     </svg>
     <div class="txt">
-      <span class="eyebrow" id="eyebrow"></span>
+      <span class="eyebrow" id="eyebrow">Saison —</span>
       <h1>Prédicteur NFL</h1>
-      <span class="meta" id="meta"></span>
     </div>
   </header>
-
-  <div class="alert" id="alert" hidden></div>
-
-  <section>
-    <h2><span class="sq"><svg class="ic"><use href="#i-cal"/></svg></span><span id="weekTitle"></span></h2>
-    <div class="legend">
-      <span><svg class="ic"><use href="#i-home"/></svg>à domicile</span>
-      <span><svg class="ic"><use href="#i-plane"/></svg>à l'extérieur</span>
-      <span><span class="chip qb"><svg class="ic"><use href="#i-cross"/></svg>QB</span>quarterback absent</span>
-      <span><span class="chip"><svg class="ic"><use href="#i-cross"/></svg>2</span>autres titulaires absents</span>
-    </div>
-    <div class="games" id="games"></div>
-  </section>
-
-  <section>
-    <h2><span class="sq g"><svg class="ic"><use href="#i-chart"/></svg></span>Bilan des prévisions</h2>
-    <div class="figs" id="figs"></div>
-    <p class="meta" id="bilanNote"></p>
-    <div class="tbl" id="bilanTbl"></div>
-  </section>
-
-  <section>
-    <h2><span class="sq"><svg class="ic"><use href="#i-data"/></svg></span>Données utilisées</h2>
-    <details id="absDetails"><summary id="absSum"></summary><div class="in" id="absList"></div></details>
-    <details id="ctlDetails"><summary id="ctlSum"></summary><div class="in" id="ctlList"></div></details>
-  </section>
-
-  <footer>
-    Probabilités calculées par un modèle statistique à partir des résultats, des statistiques d'attaque et de défense, des séries en cours et des absences retenues. Elles n'assurent aucun résultat. Blasons d'illustration aux couleurs des équipes, sans lien avec leurs logos officiels. Données : nflverse.
-  </footer>
+  <main id="views">
+    <section class="view" id="view-week">
+      <h2 class="week-head">
+        <span class="sq"><svg class="ic"><use href="#i-cal"/></svg></span>
+        <span id="weekTitle">Cette semaine</span>
+        <span class="week-pager">
+          <button type="button" id="weekPrev" class="pager-btn" aria-label="Semaine précédente">‹</button>
+          <button type="button" id="weekNext" class="pager-btn" aria-label="Semaine suivante">›</button>
+        </span>
+      </h2>
+      <p class="meta" id="updatedMeta"></p>
+      <div class="legend">
+        <span><svg class="ic"><use href="#i-home"/></svg>à domicile</span>
+        <span><svg class="ic"><use href="#i-plane"/></svg>à l'extérieur</span>
+        <span><span class="chip qb"><svg class="ic"><use href="#i-cross"/></svg>QB</span>absent</span>
+        <span><span class="chip"><svg class="ic"><use href="#i-cross"/></svg>2</span>autres titulaires absents</span>
+      </div>
+      <div class="games" id="games"></div>
+    </section>
+  </main>
 </div>
+<div class="modal-overlay" id="gameModalOverlay"><div class="modal-panel" id="gameModalPanel"></div></div>
 
 <script>
 const D = __DATA__;
-const $ = id => document.getElementById(id);
-const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const pct = p => Math.round(p*100) + ' %';
-const ic = n => '<svg class="ic" aria-hidden="true"><use href="#i-' + n + '"/></svg>';
-const P = {timeZone:'Europe/Paris'};
-function when(iso){
-  const d = new Date(iso);
-  return d.toLocaleDateString('fr-FR', {...P, weekday:'short', day:'numeric', month:'short'}) + ' · ' +
-         d.toLocaleTimeString('fr-FR', {...P, hour:'2-digit', minute:'2-digit'});
-}
-// Blason d'illustration : écu simple aux deux couleurs de l'équipe, avec son sigle.
-function lum(hex){ const n = parseInt(hex.slice(1), 16); return (0.299*(n>>16) + 0.587*((n>>8)&255) + 0.114*(n&255)) / 255; }
-function shield(name){
-  const t = D.teams[name] || {abbr:'?', c1:'#445566', c2:'#FFFFFF'};
-  const txt = lum(t.c1) > 0.6 ? '#0D1B2A' : '#FFFFFF';
-  const fs = t.abbr.length > 2 ? 12.5 : 15;
-  return '<svg class="shield" viewBox="0 0 38 42" role="img" aria-label="' + esc(name) + '">' +
-    '<path d="M3 3h32v19c0 9-7 14.5-16 17.5C10 36.5 3 31 3 22z" fill="none" stroke="#8795A8" stroke-width="4.6" stroke-linejoin="round"/>' +
-    '<path d="M3 3h32v19c0 9-7 14.5-16 17.5C10 36.5 3 31 3 22z" fill="' + t.c1 + '" stroke="' + t.c2 + '" stroke-width="3" stroke-linejoin="round"/>' +
-    '<text x="19" y="23" text-anchor="middle" font-family="Arial Narrow,Arial,sans-serif" font-weight="700" font-size="' + fs + '" fill="' + txt + '">' + esc(t.abbr) + '</text></svg>';
-}
-const nick = name => (D.teams[name] && D.teams[name].nick) || name;
+</script>
+<script>
+(() => {
+  // src/ui.js
+  var esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  var pct = (p) => Math.round(p * 100) + " %";
+  var ic = (n) => '<svg class="ic" aria-hidden="true"><use href="#i-' + n + '"/></svg>';
+  var PARIS = { timeZone: "Europe/Paris" };
+  function when(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString("fr-FR", { ...PARIS, weekday: "short", day: "numeric", month: "short" }) + " \xB7 " + d.toLocaleTimeString("fr-FR", { ...PARIS, hour: "2-digit", minute: "2-digit" });
+  }
+  function lum(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    return (0.299 * (n >> 16) + 0.587 * (n >> 8 & 255) + 0.114 * (n & 255)) / 255;
+  }
+  function shield(D2, name) {
+    const t = D2 && D2.teams && D2.teams[name] || { abbr: "?", c1: "#445566", c2: "#FFFFFF" };
+    const txt = lum(t.c1) > 0.6 ? "#0D1B2A" : "#FFFFFF";
+    const fs = t.abbr.length > 2 ? 12 : 15;
+    return '<svg class="shield" viewBox="0 0 48 48" role="img" aria-label="' + esc(name) + '"><circle cx="24" cy="24" r="22" fill="' + t.c1 + '"/><path d="M8.444 39.556A22 22 0 0 0 39.556 8.444Z" fill="' + t.c2 + '"/><circle cx="24" cy="24" r="21" fill="none" stroke="#f2f2f0" stroke-width="1.6" opacity=".92"/><circle cx="24" cy="24" r="22" fill="none" stroke="#10151c" stroke-width="2"/><text x="24" y="29.5" text-anchor="middle" font-family="Arial Narrow,Arial,sans-serif" font-weight="800" font-size="' + fs + '" fill="' + txt + '" stroke="rgba(0,0,0,.3)" stroke-width="2.2" style="paint-order:stroke fill">' + esc(t.abbr) + "</text></svg>";
+  }
+  var nick = (D2, name) => D2 && D2.teams && D2.teams[name] && D2.teams[name].nick || name;
+  var BETS_KEY = "nfl_bets_v1";
+  var bets = {};
+  try {
+    bets = JSON.parse(localStorage.getItem(BETS_KEY) || "{}") || {};
+  } catch (e) {
+    bets = {};
+  }
+  var isBet = (id) => !!bets[id];
+  function setBet(id, on) {
+    if (on) bets[id] = 1;
+    else delete bets[id];
+    try {
+      localStorage.setItem(BETS_KEY, JSON.stringify(bets));
+    } catch (e) {
+    }
+    document.querySelectorAll("[data-bet]").forEach((i) => {
+      if (i.dataset.bet === id) i.checked = !!on;
+    });
+    document.querySelectorAll(".game, .mwhen").forEach((c) => {
+      if (c.dataset.id === id) c.classList.toggle("betted", !!on);
+    });
+  }
+  var betRow = (g) => '<label class="bet"><input type="checkbox" data-bet="' + esc(g.id) + '"' + (isBet(g.id) ? " checked" : "") + '><span class="box">' + ic("check") + "</span><span>J\u2019ai pari\xE9</span></label>";
+  var validated = () => '<span class="validated">' + ic("check") + "Valid\xE9</span>";
+  function weekState(D2, selected) {
+    const avail = D2.weeksAvailable && D2.weeksAvailable.length ? D2.weeksAvailable : [D2.week];
+    const minWeek = Math.min(...avail), maxWeek = Math.max(...avail);
+    let w = selected === null || selected === void 0 ? D2.week : selected;
+    w = Math.max(minWeek, Math.min(maxWeek, w));
+    const title = w === D2.week ? "Matchs de la semaine " + w : w < D2.week ? "Semaine " + w + " (termin\xE9e)" : "Semaine " + w + " (\xE0 venir)";
+    const games = D2.weeks && D2.weeks[String(w)] || (w === D2.week ? D2.games : []) || [];
+    return { w, minWeek, maxWeek, title, games, future: w > D2.week };
+  }
+  function gameCard(D2, ctx, g, idx) {
+    const p = g.pred, done = g.status === "closed";
+    const favHome = p ? p.pHome >= p.pAway : null;
+    const top = p ? Math.max(p.pHome, p.pAway) : 0;
+    const unlocked = ctx.isUnlocked(g);
+    const net = p && unlocked && top >= D2.safe;
+    let tag = "";
+    if (done && p && unlocked) {
+      const ok = g.homeScore > g.awayScore === favHome;
+      tag = g.homeScore === g.awayScore ? '<span class="tag">Match nul</span>' : '<span class="tag ' + (ok ? "ok" : "ko") + '">' + ic(ok ? "check" : "x") + (ok ? "Pr\xE9vision juste" : "Pr\xE9vision fausse") + "</span>";
+    } else if (done) tag = '<span class="tag">Termin\xE9</span>';
+    else if (net) tag = '<span class="tag net">' + ic("star") + "Favori net</span>";
+    const chips = (a) => (a.qb ? '<span class="chip qb" title="Quarterback absent">' + ic("cross") + "QB</span>" : "") + (a.off + a.deff ? '<span class="chip" title="Autres titulaires absents">' + ic("cross") + (a.off + a.deff) + "</span>" : "");
+    const line = (side) => {
+      const name = g[side];
+      const showPct = unlocked && p;
+      const prob = side === "home" ? p && p.pHome : p && p.pAway;
+      const fav = showPct && (side === "home" ? favHome === true : favHome === false);
+      const right = done ? side === "home" ? g.homeScore : g.awayScore : showPct ? pct(prob) : "\u2013";
+      return '<div class="team">' + shield(D2, name) + '<span class="tname' + (fav ? " fav" : "") + '"><span class="long">' + esc(name) + '</span><span class="short">' + esc(nick(D2, name)) + '</span><span class="role" title="' + (side === "home" ? "\xC0 domicile" : "\xC0 l\u2019ext\xE9rieur") + '">' + ic(side === "home" ? "home" : "plane") + "</span>" + chips(g.abs[side]) + '</span><span class="pct' + (fav ? " fav" : "") + '">' + right + "</span></div>";
+    };
+    const colorOf = (s) => ((D2.teams || {})[g[s]] || {}).c1 || "#445566";
+    let bar = "";
+    if (p && unlocked) bar = '<div class="split"><i style="width:' + (p.pHome * 100).toFixed(1) + "%;background:" + colorOf("home") + '"></i><i style="flex:1;background:' + colorOf("away") + '"></i></div>';
+    const foot = [];
+    if (done) foot.push("R\xE9sultat : <b>" + g.homeScore + " \u2013 " + g.awayScore + "</b>");
+    if (p && unlocked) foot.push("Score attendu : <b>" + p.expHome + " \u2013 " + p.expAway + "</b>");
+    if (!p && !done) foot.push("Pr\xE9vision indisponible (pas encore assez de matchs jou\xE9s)");
+    const lock = p && !unlocked ? ctx.lockRow(g) : "";
+    return '<div class="game' + (net && !done ? " net" : "") + (isBet(g.id) ? " betted" : "") + ' clickable" data-idx="' + idx + '" data-id="' + esc(g.id) + '"><div class="ghead"><span class="when">' + ic("clock") + when(g.kickoff) + '</span><span class="gtags">' + validated() + tag + "</span></div>" + line("home") + line("away") + bar + lock + (foot.length ? '<div class="gfoot">' + foot.map((f) => "<span>" + f + "</span>").join("") + "</div>" : "") + betRow(g) + "</div>";
+  }
+  function absBlockHtml(D2, name) {
+    const items = ((D2.absences || []).find((a) => a.team === name) || { items: [] }).items;
+    if (!items.length) return '<p class="meta">Aucune absence notable retenue.</p>';
+    return '<ul class="abs">' + items.map((i) => "<li>" + esc(i.side) + " : " + esc(i.txt) + "</li>").join("") + "</ul>";
+  }
+  var formHtml = (D2, t) => {
+    const f = (D2.fiche || {})[t];
+    if (!f || !f.form || !f.form.length) return "\u2013";
+    return f.form.map((x) => '<span class="' + (x.r === "V" ? "yes" : x.r === "D" ? "no" : "") + '"><b>' + x.r + "</b></span> " + esc(x.s) + ' <span class="dim">vs ' + esc((D2.teams[x.opp] || {}).abbr || "?") + "</span>").join("<br>");
+  };
+  function modalHtml(D2, ctx, g) {
+    var _a, _b, _c, _d;
+    const p = g.pred, done = g.status === "closed";
+    const unlocked = ctx.isUnlocked(g);
+    const fh = (D2.fiche || {})[g.home] || {}, fa = (D2.fiche || {})[g.away] || {};
+    let pred;
+    if (unlocked && p) {
+      const favHome = p.pHome >= p.pAway, ecart = Math.abs(p.expHome - p.expAway);
+      const verdict = done && g.homeScore !== g.awayScore ? '<p class="verdict ' + (g.homeScore > g.awayScore === favHome ? "yes" : "no") + '">' + ic(g.homeScore > g.awayScore === favHome ? "check" : "x") + (g.homeScore > g.awayScore === favHome ? "Pr\xE9vision juste" : "Pr\xE9vision fausse") + " \u2014 r\xE9sultat " + g.homeScore + " \u2013 " + g.awayScore + " (pr\xE9vu " + p.expHome + " \u2013 " + p.expAway + ")</p>" : "";
+      pred = '<div class="bigpct"><span class="' + (favHome ? "fav" : "") + '">' + pct(p.pHome) + '</span><span class="dim">contre</span><span class="' + (!favHome ? "fav" : "") + '">' + pct(p.pAway) + '</span></div><div class="split" style="height:14px"><i style="width:' + (p.pHome * 100).toFixed(1) + "%;background:" + ((D2.teams[g.home] || {}).c1 || "#445566") + '"></i><i style="flex:1;background:' + ((D2.teams[g.away] || {}).c1 || "#445566") + '"></i></div><div class="gfoot"><span>Score attendu : <b>' + p.expHome + " \u2013 " + p.expAway + "</b></span><span>\xC9cart attendu : <b>" + (ecart ? esc(nick(D2, favHome ? g.home : g.away)) + " de " + ecart + " pt" + (ecart > 1 ? "s" : "") : "aucun") + "</b></span></div>" + verdict + (g.prov ? '<p class="meta">Pr\xE9vision provisoire : recalcul\xE9e \xE0 chaque mise \xE0 jour avec les stats et les absences du moment.</p>' : "");
+    } else if (p) {
+      pred = ctx.gateCard();
+    } else {
+      pred = '<p class="meta">Pas assez de matchs jou\xE9s pour g\xE9n\xE9rer une pr\xE9vision.</p>';
+    }
+    const stats = '<table class="cmp"><thead><tr><th></th><th>' + esc(nick(D2, g.home)) + "</th><th>" + esc(nick(D2, g.away)) + "</th></tr></thead><tbody><tr><td>Bilan</td><td>" + esc(fh.rec || "\u2013") + "</td><td>" + esc(fa.rec || "\u2013") + "</td></tr><tr><td>Points marqu\xE9s / match</td><td>" + ((_a = fh.pf) != null ? _a : "\u2013") + "</td><td>" + ((_b = fa.pf) != null ? _b : "\u2013") + "</td></tr><tr><td>Points encaiss\xE9s / match</td><td>" + ((_c = fh.pa) != null ? _c : "\u2013") + "</td><td>" + ((_d = fa.pa) != null ? _d : "\u2013") + "</td></tr><tr><td>3 derniers matchs</td><td>" + formHtml(D2, g.home) + "</td><td>" + formHtml(D2, g.away) + "</td></tr></tbody></table>";
+    const abs = unlocked && p ? '<h3>Absences retenues</h3><div class="absgrid"><div><b>' + esc(nick(D2, g.home)) + "</b>" + absBlockHtml(D2, g.home) + "</div><div><b>" + esc(nick(D2, g.away)) + "</b>" + absBlockHtml(D2, g.away) + "</div></div>" : "";
+    const notes = [];
+    if (g.neutral) notes.push("Match jou\xE9 \xE0 l\u2019\xE9tranger : pas d\u2019avantage du terrain.");
+    return '<div class="handle"></div><button class="modal-close" id="modalClose" aria-label="Fermer">\u2715</button><div class="mwhen' + (isBet(g.id) ? " betted" : "") + '" data-id="' + esc(g.id) + '"><span class="when">' + ic("clock") + when(g.kickoff) + "</span>" + validated() + '</div><div class="team">' + shield(D2, g.home) + '<span class="tname"><span class="long">' + esc(g.home) + '</span><span class="role">' + ic("home") + '</span></span></div><div class="team">' + shield(D2, g.away) + '<span class="tname"><span class="long">' + esc(g.away) + '</span><span class="role">' + ic("plane") + "</span></span></div>" + betRow(g) + pred + stats + abs + (notes.length ? '<p class="meta">' + notes.join(" ") + "</p>" : "");
+  }
+  function wireGames(gamesEl, getGames, open) {
+    gamesEl.addEventListener("change", (e) => {
+      const i = e.target.closest("input[data-bet]");
+      if (i) setBet(i.dataset.bet, i.checked);
+    });
+    gamesEl.addEventListener("click", (e) => {
+      if (e.target.closest(".bet") || e.target.closest("[data-go-pro]")) return;
+      const card = e.target.closest(".game");
+      if (!card) return;
+      const g = getGames()[+card.dataset.idx];
+      if (g) open(g);
+    });
+  }
+  function wirePanel(panelEl) {
+    panelEl.addEventListener("change", (e) => {
+      const i = e.target.closest("input[data-bet]");
+      if (i) setBet(i.dataset.bet, i.checked);
+    });
+  }
 
-$('eyebrow').textContent = 'Saison ' + D.season + ' · Semaine ' + D.week;
-$('meta').textContent = 'Mis à jour le ' + D.updatedLabel + ' (heure de Paris)';
-$('weekTitle').textContent = 'Matchs de la semaine ' + D.week;
+  // src/site.js
+  var $ = (id) => document.getElementById(id);
+  var CTX = { isUnlocked: () => true, lockRow: () => "", gateCard: () => "" };
+  var selectedWeek = null;
+  var shown = [];
+  function closeModal() {
+    $("gameModalOverlay").classList.remove("open");
+  }
+  function openModal(g) {
+    $("gameModalPanel").innerHTML = modalHtml(D, CTX, g);
+    $("modalClose").addEventListener("click", closeModal);
+    $("gameModalOverlay").classList.add("open");
+  }
+  function render() {
+    $("eyebrow").textContent = "Saison " + D.season + " \xB7 Semaine " + D.week;
+    const ws = weekState(D, selectedWeek);
+    selectedWeek = ws.w;
+    shown = ws.games;
+    $("weekTitle").textContent = ws.title;
+    $("updatedMeta").textContent = "Mis \xE0 jour le " + D.updatedLabel + " (heure de Paris)" + (ws.future ? " \xB7 pr\xE9visions provisoires" : "");
+    $("weekPrev").disabled = selectedWeek <= ws.minWeek;
+    $("weekNext").disabled = selectedWeek >= ws.maxWeek;
+    $("games").innerHTML = shown.length ? shown.map((g, i) => gameCard(D, CTX, g, i)).join("") : '<p class="meta">Aucun match enregistr\xE9 pour cette semaine.</p>';
+  }
+  $("weekPrev").addEventListener("click", () => {
+    if (!$("weekPrev").disabled) {
+      selectedWeek--;
+      render();
+    }
+  });
+  $("weekNext").addEventListener("click", () => {
+    if (!$("weekNext").disabled) {
+      selectedWeek++;
+      render();
+    }
+  });
+  wireGames($("games"), () => shown, openModal);
+  wirePanel($("gameModalPanel"));
+  $("gameModalOverlay").addEventListener("click", (e) => {
+    if (e.target.id === "gameModalOverlay") closeModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  });
+  render();
+})();
 
-const R = D.rapport, nCtl = R.nouveaux.length + R.revenus.length + R.qb.length;
-if(nCtl){
-  const nNew = R.nouveaux.length + R.qb.length, pl = (n, a, b) => n + ' ' + (n > 1 ? b : a);
-  $('alert').hidden = false;
-  $('alert').innerHTML = ic('warn') + '<span><b>Contrôle des absences :</b> ' +
-    (nNew ? pl(nNew, 'titulaire indisponible selon les données officielles n\'est pas pris', 'titulaires indisponibles selon les données officielles ne sont pas pris') + ' en compte dans le calcul' : '') +
-    (nNew && R.revenus.length ? ', et ' : '') +
-    (R.revenus.length ? pl(R.revenus.length, 'absence retenue semble terminée', 'absences retenues semblent terminées') : '') +
-    '. Probabilités à lire avec prudence. Détail en bas de page.</span>';
-}
-
-$('games').innerHTML = D.games.map(g => {
-  const p = g.pred, done = g.status === 'closed';
-  const favHome = p ? p.pHome >= p.pAway : null, top = p ? Math.max(p.pHome, p.pAway) : 0;
-  const net = p && top >= D.safe;
-  let tag = '';
-  if(done && p){
-    const ok = (g.homeScore > g.awayScore) === favHome;
-    tag = g.homeScore === g.awayScore ? '<span class="tag">Match nul</span>'
-        : '<span class="tag ' + (ok?'ok':'ko') + '">' + ic(ok?'check':'x') + (ok?'Prévision juste':'Prévision fausse') + '</span>';
-  } else if(done) tag = '<span class="tag">Terminé</span>';
-  else if(net) tag = '<span class="tag net">' + ic('star') + 'Favori net</span>';
-  const chips = a => (a.qb ? '<span class="chip qb" title="Quarterback absent">' + ic('cross') + 'QB</span>' : '') +
-    (a.off + a.deff ? '<span class="chip" title="Autres titulaires absents">' + ic('cross') + (a.off + a.deff) + '</span>' : '');
-  const line = (side, prob, fav) => { const name = g[side];
-    return '<div class="team">' + shield(name) + '<span class="tname' + (fav?' fav':'') + '"><span class="long">' + esc(name) + '</span><span class="short">' + esc(nick(name)) +
-      '</span><span class="role" title="' + (side==='home'?'À domicile':'À l\'extérieur') + '">' + ic(side==='home'?'home':'plane') + '</span>' + chips(g.abs[side]) + '</span>' +
-      '<span class="pct' + (fav?' fav':'') + '">' + (done && !p ? (side==='home'?g.homeScore:g.awayScore) : prob==null ? '–' : pct(prob)) + '</span></div>'; };
-  const c = s => (D.teams[g[s]] || {}).c1 || '#445566';
-  const bar = p ? '<div class="split"><i style="width:' + (p.pHome*100).toFixed(1) + '%;background:' + c('home') + '"></i><i style="flex:1;background:' + c('away') + '"></i></div>' : '';
-  const foot = [];
-  if(done && p) foot.push('Résultat : <b>' + g.homeScore + ' – ' + g.awayScore + '</b>');
-  if(p) foot.push('Score attendu : <b>' + p.expHome + ' – ' + p.expAway + '</b>');
-  else foot.push('Joué avant le début du suivi : pas de prévision enregistrée');
-  return '<div class="game' + (net && !done ? ' net' : '') + '"><div class="ghead"><span class="when">' + ic('clock') + when(g.kickoff) + '</span>' + tag + '</div>' +
-    line('home', p && p.pHome, favHome === true) + line('away', p && p.pAway, favHome === false) + bar +
-    '<div class="gfoot">' + foot.map(f => '<span>' + f + '</span>').join('') + '</div></div>';
-}).join('');
-
-const B = D.bilan, rate = (a,b) => b ? Math.round(a/b*100) + ' %' : '–';
-$('figs').innerHTML =
-  '<div class="fig"><span class="n">' + B.total + '</span><span class="l">prévisions vérifiées</span></div>' +
-  '<div class="fig g"><span class="n">' + rate(B.correct, B.total) + '</span><span class="l">justes au total (' + B.correct + ' sur ' + B.total + ')</span></div>' +
-  '<div class="fig g"><span class="n">' + rate(B.safeCorrect, B.safeTotal) + '</span><span class="l">justes en favoris nets (' + B.safeCorrect + ' sur ' + B.safeTotal + ')</span></div>';
-$('bilanNote').textContent = 'Chaque prévision est figée au coup d\'envoi, puis comparée au résultat réel. Un favori net est une équipe à ' +
-  Math.round(D.safe*100) + ' % ou plus.' + (B.total ? '' : ' Le suivi démarre avec la semaine ' + D.week + ' : les premiers résultats apparaîtront après les matchs.');
-if(B.total){
-  $('bilanTbl').innerHTML = '<table><thead><tr><th>Sem.</th><th>Match</th><th>Favori du modèle</th><th>Score</th><th>Verdict</th></tr></thead><tbody>' +
-    B.list.map(j => { const fh = j.pHome >= j.pAway;
-      return '<tr><td>' + j.week + '</td><td>' + esc(nick(j.home)) + ' – ' + esc(nick(j.away)) + '</td><td>' + esc(nick(fh ? j.home : j.away)) + ' (' + pct(Math.max(j.pHome, j.pAway)) +
-        ')</td><td>' + j.homeScore + ' – ' + j.awayScore + '</td><td class="' + (j.correct?'yes':'no') + '">' + (j.correct?'Juste':'Faux') + '</td></tr>'; }).join('') +
-    '</tbody></table>';
-}
-
-const nAbs = D.absences.reduce((s,t) => s + t.items.length, 0);
-$('absSum').textContent = 'Absences prises en compte dans le calcul (' + nAbs + ')';
-$('absList').innerHTML = D.absences.map(t => '<div><h3>' + shield(t.team) + esc(t.team) + '</h3><ul>' +
-  t.items.map(i => '<li>' + i.side + ' : ' + esc(i.txt) + (i.tier ? ' · niveau ' + esc(i.tier) : '') + '</li>').join('') + '</ul></div>').join('');
-$('ctlSum').textContent = 'Absences à vérifier (' + nCtl + ')';
-const block = (title, arr) => arr.length ? '<div><h3>' + title + '</h3><ul>' + arr.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul></div>' : '';
-$('ctlList').innerHTML = (block('Quarterbacks', R.qb) + block('Titulaires indisponibles non pris en compte', R.nouveaux) +
-  block('Absences retenues qui semblent terminées', R.revenus)) || '<p style="margin:0">Aucun écart entre les absences retenues et les données officielles.</p>';
 </script>
