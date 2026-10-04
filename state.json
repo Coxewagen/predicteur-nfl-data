@@ -1023,7 +1023,10 @@
    "expHome": 24,
    "expAway": 10,
    "computedAt": "2026-10-04T19:46:23Z",
-   "frozen": true
+   "frozen": true,
+   "homeScore": 15,
+   "awayScore": 10,
+   "correct": true
   },
   "2026_04_KC_LV": {
    "week": 4,
@@ -1059,7 +1062,10 @@
    "expHome": 28,
    "expAway": 21,
    "computedAt": "2026-10-04T19:46:23Z",
-   "frozen": true
+   "frozen": true,
+   "homeScore": 24,
+   "awayScore": 14,
+   "correct": true
   },
   "2026_04_DET_CAR": {
    "week": 4,
@@ -1070,7 +1076,7 @@
    "pAway": 0.4788,
    "expHome": 31,
    "expAway": 30,
-   "computedAt": "2026-10-04T21:41:20Z",
+   "computedAt": "2026-10-04T23:49:27Z",
    "frozen": false
   },
   "2026_04_ATL_NO": {
@@ -1082,7 +1088,7 @@
    "pAway": 0.4483,
    "expHome": 26,
    "expAway": 24,
-   "computedAt": "2026-10-04T21:41:20Z",
+   "computedAt": "2026-10-04T23:49:27Z",
    "frozen": false
   },
   "2026_02_DET_BUF": {
