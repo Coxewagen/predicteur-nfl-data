@@ -98,6 +98,17 @@ def main():
             T[n].update(offPassEPA=round(a['op']/a['n'], 2), offRushEPA=round(a['orr']/a['n'], 2),
                         defPassEPA=round(a['dp']/a['n'], 2), defRushEPA=round(a['dr']/a['n'], 2),
                         rushRate=round(a['car']/a['n'], 2))
+    # ---------- 2b. absences : calculées automatiquement (voir absences_auto.py) ----------
+    # Si le calcul échoue (données indisponibles ce jour-là), on garde les absences du passage précédent.
+    journal_abs = []
+    try:
+        import absences_auto
+        absences, journal_abs = absences_auto.construire(
+            SEASON, NAMES, {n: t['played'] for n, t in T.items()}, absences_auto.charger_overrides())
+        state['absences'] = absences
+    except Exception as e:  # noqa: BLE001
+        print(f"Absences automatiques indisponibles ({e}) : absences du passage précédent conservées.")
+        journal_abs = [f"calcul automatique indisponible : {e}"]
     for n, ab in absences.items():
         T[n].update({k: v for k, v in ab.items() if not (v is None or v is False or v == [])})  # (0 doit rester valide : qbGp, gp)
     teams = sorted(T.values(), key=lambda t: t['name'])
@@ -141,6 +152,7 @@ def main():
 
     # ---------- 5. contrôle des absences ----------
     rapport = controle_absences(absences, T, cur_week)
+    rapport['absencesAuto'] = journal_abs
 
     # ---------- 6. page ----------
     # "weeks" couvre chaque semaine jouée jusqu'à la semaine en cours (pas les semaines futures,

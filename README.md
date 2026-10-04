@@ -15,9 +15,18 @@ Fichiers :
   15 h 25 — absences dégressives/plafonnées/selon le style de jeu, terrain neutre, bonus de série 0,15).
   Les absences de `state.json` portent désormais `gp` (matchs joués par le joueur cette saison, pour la
   dégressivité ; sans `gp` = absence récente, aucune réduction) et `lane` (passe/course).
-- `state.json` : les absences que tu renseignes à la main, + le journal des prévisions. C'est le
-  seul fichier que tu dois éditer toi-même régulièrement (ouvre-le, modifie `absences`, enregistre
-  — le prochain passage du robot s'en servira).
+- `absences_auto.py` : calcule TOUT SEUL, à chaque passage du robot, les absences de chaque équipe
+  (titulaires « Out »/« Doubtful » au rapport officiel de blessures, ou sur la liste des blessés), leur niveau
+  (élite / titulaire / rotation, d'après le contrat comparé aux joueurs du même poste et le temps de jeu), leur
+  secteur (passe / course / ligne), les matchs joués par le joueur (pour la dégressivité) et, pour le
+  quarterback, son niveau et l'expérience du remplaçant. Plus aucune saisie hebdomadaire.
+  Limites connues : le rapport officiel n'est mis à jour qu'une fois par jour, donc les inactifs annoncés le
+  jour du match n'y sont pas ; le niveau repose sur le salaire (un joueur très bien payé mais moyen sur le
+  terrain sera classé « élite »).
+- `overrides.json` (facultatif, modèle : `overrides.example.json`) : pour corriger une erreur seulement —
+  ignorer un joueur, forcer son niveau, ou ajouter une absence que les données officielles ne montrent pas.
+- `state.json` : le journal des prévisions (figées au coup d'envoi puis comparées au résultat) et les
+  absences calculées. Ne se modifie plus à la main.
 - `template.txt` : la page web (optionnelle, pas utilisée par l'appli mobile elle-même) qui
   reprend les mêmes données en version "site".
 - `rapport.json` : écarts entre tes absences retenues et les données officielles (mêmes

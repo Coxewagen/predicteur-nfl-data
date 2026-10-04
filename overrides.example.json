@@ -1,0 +1,10 @@
+{
+  "_aide": "Facultatif. Renomme ce fichier en overrides.json pour l'activer. Tout est automatique par défaut ; ce fichier sert seulement à corriger une erreur.",
+  "ignorer": ["Nom Du Joueur"],
+  "niveau": {"Nom Du Joueur": "elite"},
+  "ajouts": {
+    "Kansas City Chiefs": {
+      "offAbsences": [{"tier": "titulaire", "pos": "receveur titulaire (Nom, raison)", "lane": "pass", "gp": 0}]
+    }
+  }
+}
