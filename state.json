@@ -128,7 +128,7 @@
    "qbOut": true,
    "qbTier": "titulaire",
    "qbGp": 2,
-   "qbReplacementTier": "standard"
+   "qbReplacementTier": "limite"
   },
   "Cincinnati Bengals": {
    "defAbsences": [
@@ -625,7 +625,7 @@
      "tier": "titulaire",
      "pos": "cornerback titulaire (Joey Porter Jr., not injury related - other)",
      "lane": "pass",
-     "gp": 0
+     "gp": 1
     },
     {
      "tier": "titulaire",
@@ -1097,7 +1097,7 @@
    "pAway": 0.4483,
    "expHome": 26,
    "expAway": 24,
-   "computedAt": "2026-10-05T04:05:21Z",
+   "computedAt": "2026-10-05T13:37:29Z",
    "frozen": false
   },
   "2026_02_DET_BUF": {
