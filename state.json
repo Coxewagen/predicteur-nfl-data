@@ -1038,7 +1038,10 @@
    "expHome": 23,
    "expAway": 22,
    "computedAt": "2026-10-04T19:46:23Z",
-   "frozen": true
+   "frozen": true,
+   "homeScore": 27,
+   "awayScore": 30,
+   "correct": false
   },
   "2026_04_LAC_SEA": {
    "week": 4,
@@ -1050,7 +1053,10 @@
    "expHome": 25,
    "expAway": 12,
    "computedAt": "2026-10-04T19:46:23Z",
-   "frozen": true
+   "frozen": true,
+   "homeScore": 30,
+   "awayScore": 23,
+   "correct": true
   },
   "2026_04_DEN_SF": {
    "week": 4,
@@ -1077,7 +1083,10 @@
    "expHome": 31,
    "expAway": 30,
    "computedAt": "2026-10-04T23:49:27Z",
-   "frozen": false
+   "frozen": true,
+   "homeScore": 32,
+   "awayScore": 26,
+   "correct": true
   },
   "2026_04_ATL_NO": {
    "week": 4,
@@ -1088,7 +1097,7 @@
    "pAway": 0.4483,
    "expHome": 26,
    "expAway": 24,
-   "computedAt": "2026-10-04T23:49:27Z",
+   "computedAt": "2026-10-05T04:05:21Z",
    "frozen": false
   },
   "2026_02_DET_BUF": {
