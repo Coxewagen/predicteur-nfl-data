@@ -1,428 +1,6 @@
 {
  "absences": {
-  "Arizona Cardinals": {
-   "defAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "safety titulaire (Dadrion Taylor-Demerson, back)",
-     "gp": 1
-    },
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Will Johnson, IR)",
-     "lane": "pass",
-     "gp": 2
-    }
-   ]
-  },
-  "Baltimore Ravens": {
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "centre titulaire (Ethan Pocic, knee)",
-     "lane": "line",
-     "gp": 1
-    },
-    {
-     "tier": "titulaire",
-     "pos": "centre titulaire (Jovaughn Gwyn, ankle)",
-     "lane": "line",
-     "gp": 3
-    }
-   ],
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "edge rusher titulaire (Trey Hendrickson, finger)",
-     "lane": "pass",
-     "gp": 3
-    }
-   ]
-  },
-  "Carolina Panthers": {
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "garde gauche titulaire (Damien Lewis, elbow)",
-     "lane": "line",
-     "gp": 3
-    },
-    {
-     "tier": "titulaire",
-     "pos": "receveur titulaire (Xavier Legette, knee)",
-     "lane": "pass",
-     "gp": 2
-    }
-   ]
-  },
-  "Chicago Bears": {
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Cam Lewis, hip)",
-     "lane": "pass",
-     "gp": 3
-    },
-    {
-     "tier": "rotation",
-     "pos": "linebacker titulaire (Noah Sewell, achilles)",
-     "gp": 0
-    },
-    {
-     "tier": "titulaire",
-     "pos": "safety titulaire (Coby Bryant, IR)",
-     "gp": 0
-    }
-   ],
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Braxton Jones, knee)",
-     "lane": "line",
-     "gp": 3
-    }
-   ],
-   "qbOut": true,
-   "qbTier": "titulaire",
-   "qbGp": 2,
-   "qbReplacementTier": "limite"
-  },
-  "Cincinnati Bengals": {
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "safety titulaire (Kyle Dugger, quadricep)",
-     "gp": 1
-    },
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Jalen Davis, IR)",
-     "lane": "pass",
-     "gp": 3
-    }
-   ],
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "receveur titulaire (Andrei Iosivas, IR)",
-     "lane": "pass",
-     "gp": 2
-    }
-   ]
-  },
-  "Cleveland Browns": {
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "garde gauche titulaire (Elgton Jenkins, concussion)",
-     "lane": "line",
-     "gp": 3
-    }
-   ],
-   "defAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "edge rusher titulaire (Alex Wright, IR)",
-     "lane": "pass",
-     "gp": 0
-    }
-   ]
-  },
-  "Dallas Cowboys": {
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Cobie Durant, hamstring)",
-     "lane": "pass",
-     "gp": 2
-    },
-    {
-     "tier": "titulaire",
-     "pos": "linebacker titulaire (DeMarvion Overshown, hamstring)",
-     "gp": 1
-    },
-    {
-     "tier": "titulaire",
-     "pos": "safety titulaire (Jalen Thompson, IR)",
-     "gp": 3
-    }
-   ],
-   "offAbsences": [
-    {
-     "tier": "elite",
-     "pos": "garde gauche titulaire (Tyler Smith, IR)",
-     "lane": "line",
-     "gp": 0
-    }
-   ]
-  },
-  "Detroit Lions": {
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Ben Bartch, foot)",
-     "lane": "line",
-     "gp": 2
-    },
-    {
-     "tier": "rotation",
-     "pos": "coureur titulaire (Isiah Pacheco, IR)",
-     "lane": "rush",
-     "gp": 0
-    },
-    {
-     "tier": "titulaire",
-     "pos": "centre titulaire (Cade Mays, IR)",
-     "lane": "line",
-     "gp": 0
-    }
-   ],
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Avonte Maddox, IR)",
-     "lane": "pass",
-     "gp": 2
-    },
-    {
-     "tier": "elite",
-     "pos": "safety titulaire (Kerby Joseph, IR)",
-     "gp": 0
-    },
-    {
-     "tier": "titulaire",
-     "pos": "safety titulaire (Brian Branch, IR)",
-     "gp": 0
-    },
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Thomas Harper, IR)",
-     "lane": "pass",
-     "gp": 2
-    }
-   ]
-  },
-  "Green Bay Packers": {
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "garde gauche titulaire (Aaron Banks, knee)",
-     "lane": "line",
-     "gp": 1
-    },
-    {
-     "tier": "titulaire",
-     "pos": "centre titulaire (Jacob Monk, quadricep)",
-     "lane": "line",
-     "gp": 3
-    },
-    {
-     "tier": "titulaire",
-     "pos": "ailier droit titulaire (Zach Bako-Bewele, IR)",
-     "lane": "line",
-     "gp": 2
-    }
-   ],
-   "defAbsences": [
-    {
-     "tier": "elite",
-     "pos": "edge rusher titulaire (Micah Parsons, IR)",
-     "lane": "pass",
-     "gp": 0
-    }
-   ]
-  },
-  "Houston Texans": {
-   "defAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "safety titulaire (M.J. Stewart, knee)",
-     "gp": 0
-    },
-    {
-     "tier": "elite",
-     "pos": "linebacker titulaire (Azeez Al-Shaair, groin)",
-     "gp": 3
-    },
-    {
-     "tier": "titulaire",
-     "pos": "linebacker titulaire (Henry To'oTo'o, IR)",
-     "gp": 1
-    }
-   ],
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "ailier droit titulaire (Braden Smith, IR)",
-     "lane": "line",
-     "gp": 0
-    },
-    {
-     "tier": "rotation",
-     "pos": "receveur titulaire (Jayden Higgins, IR)",
-     "lane": "pass",
-     "gp": 0
-    }
-   ]
-  },
-  "Kansas City Chiefs": {
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Josh Simmons, back)",
-     "lane": "line",
-     "gp": 0
-    }
-   ]
-  },
-  "Los Angeles Rams": {
-   "defAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "défenseur de ligne titulaire (Aaron Donald, back)",
-     "gp": 2
-    },
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Jaylen Watson, shoulder)",
-     "lane": "pass",
-     "gp": 3
-    },
-    {
-     "tier": "elite",
-     "pos": "edge rusher titulaire (Myles Garrett, IR)",
-     "lane": "pass",
-     "gp": 1
-    }
-   ],
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "centre titulaire (Justin Dedich, IR)",
-     "lane": "line",
-     "gp": 0
-    }
-   ]
-  },
-  "Los Angeles Chargers": {
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "ailier droit titulaire (Kayode Awosika, fibula)",
-     "lane": "line",
-     "gp": 2
-    },
-    {
-     "tier": "rotation",
-     "pos": "tight end titulaire (Charlie Kolar, forearm)",
-     "gp": 2
-    },
-    {
-     "tier": "titulaire",
-     "pos": "tight end titulaire (David Njoku, IR)",
-     "gp": 2
-    },
-    {
-     "tier": "titulaire",
-     "pos": "ailier droit titulaire (Trey Pipkins, IR)",
-     "lane": "line",
-     "gp": 1
-    },
-    {
-     "tier": "titulaire",
-     "pos": "centre titulaire (Tyler Biadasz, IR)",
-     "lane": "line",
-     "gp": 0
-    }
-   ],
-   "defAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "linebacker titulaire (Denzel Perryman, IR)",
-     "gp": 0
-    }
-   ]
-  },
-  "Las Vegas Raiders": {
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "garde droit titulaire (Jackson Powers-Johnson, groin)",
-     "lane": "line",
-     "gp": 3
-    }
-   ]
-  },
-  "Miami Dolphins": {
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "receveur titulaire (Caleb Douglas, ankle)",
-     "lane": "pass",
-     "gp": 2
-    },
-    {
-     "tier": "elite",
-     "pos": "coureur titulaire (De'Von Achane, IR)",
-     "lane": "rush",
-     "gp": 3
-    }
-   ],
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Darrell Baker Jr., IR)",
-     "lane": "pass",
-     "gp": 0
-    },
-    {
-     "tier": "rotation",
-     "pos": "défenseur de ligne titulaire (Kenneth Grant, IR)",
-     "gp": 0
-    }
-   ]
-  },
-  "Minnesota Vikings": {
-   "offAbsences": [
-    {
-     "tier": "elite",
-     "pos": "receveur titulaire (Justin Jefferson, ankle)",
-     "lane": "pass",
-     "gp": 3
-    },
-    {
-     "tier": "rotation",
-     "pos": "tight end titulaire (Josh Oliver, IR)",
-     "gp": 3
-    },
-    {
-     "tier": "rotation",
-     "pos": "centre titulaire (Michael Jurgens, IR)",
-     "lane": "line",
-     "gp": 0
-    }
-   ]
-  },
   "New England Patriots": {
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "défenseur de ligne titulaire (Christian Barmore, shoulder)",
-     "gp": 3
-    },
-    {
-     "tier": "elite",
-     "pos": "cornerback titulaire (Christian Gonzalez, shoulder)",
-     "lane": "pass",
-     "gp": 3
-    },
-    {
-     "tier": "titulaire",
-     "pos": "edge rusher titulaire (Harold Landry III, IR)",
-     "lane": "pass",
-     "gp": 0
-    }
-   ],
    "offAbsences": [
     {
      "tier": "titulaire",
@@ -447,239 +25,46 @@
      "pos": "tight end titulaire (Julian Hill, IR)",
      "gp": 0
     }
-   ]
-  },
-  "New Orleans Saints": {
+   ],
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "linebacker titulaire (Kaden Elliss, calf)",
-     "gp": 3
-    },
-    {
-     "tier": "titulaire",
-     "pos": "edge rusher titulaire (Carl Granderson, ankle)",
+     "pos": "edge rusher titulaire (Harold Landry III, IR)",
      "lane": "pass",
-     "gp": 3
-    },
+     "gp": 0
+    }
+   ]
+  },
+  "Los Angeles Chargers": {
+   "defAbsences": [
     {
-     "tier": "titulaire",
-     "pos": "défenseur de ligne titulaire (Bryan Bresee, IR)",
+     "tier": "rotation",
+     "pos": "linebacker titulaire (Denzel Perryman, IR)",
      "gp": 0
     }
    ],
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "ailier droit titulaire (Dillon Radunz, IR)",
-     "lane": "line",
-     "gp": 0
-    },
-    {
-     "tier": "titulaire",
-     "pos": "coureur titulaire (Travis Etienne, IR)",
-     "lane": "rush",
-     "gp": 3
-    },
-    {
-     "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Kelvin Banks Jr., IR)",
-     "lane": "line",
-     "gp": 2
-    }
-   ]
-  },
-  "New York Jets": {
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "garde gauche titulaire (Dylan Parham, knee)",
-     "lane": "line",
-     "gp": 3
-    },
-    {
-     "tier": "elite",
-     "pos": "coureur titulaire (Breece Hall, quadricep)",
-     "lane": "rush",
-     "gp": 3
-    },
-    {
-     "tier": "titulaire",
-     "pos": "receveur titulaire (Adonai Mitchell, finger)",
-     "lane": "pass",
+     "pos": "tight end titulaire (David Njoku, IR)",
      "gp": 2
     },
     {
      "tier": "titulaire",
-     "pos": "tight end titulaire (Mason Taylor, thumb)",
-     "gp": 2
-    }
-   ],
-   "defAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "défenseur de ligne titulaire (David Onyemata, IR)",
-     "gp": 2
-    }
-   ]
-  },
-  "Philadelphia Eagles": {
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "tight end titulaire (Dallas Goedert, knee)",
-     "gp": 2
-    },
-    {
-     "tier": "titulaire",
-     "pos": "garde droit titulaire (Fred Johnson, knee)",
-     "lane": "line",
-     "gp": 0
-    },
-    {
-     "tier": "rotation",
-     "pos": "receveur titulaire (Marquise Brown, ankle)",
-     "lane": "pass",
-     "gp": 1
-    },
-    {
-     "tier": "titulaire",
-     "pos": "receveur titulaire (DeVonta Smith, hamstring)",
-     "lane": "pass",
-     "gp": 3
-    },
-    {
-     "tier": "titulaire",
-     "pos": "garde gauche titulaire (Landon Dickerson, IR)",
+     "pos": "ailier droit titulaire (Trey Pipkins, IR)",
      "lane": "line",
      "gp": 1
-    }
-   ],
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "safety titulaire (Marcus Epps, groin)",
-     "gp": 3
-    },
-    {
-     "tier": "elite",
-     "pos": "linebacker titulaire (Zack Baun, concussion)",
-     "gp": 3
-    }
-   ]
-  },
-  "Pittsburgh Steelers": {
-   "offAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "coureur titulaire (Rico Dowdle, toe)",
-     "lane": "rush",
-     "gp": 2
-    }
-   ],
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Joey Porter Jr., not injury related - other)",
-     "lane": "pass",
-     "gp": 1
     },
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (DeShon Elliott, IR)",
-     "gp": 0
-    },
-    {
-     "tier": "rotation",
-     "pos": "défenseur de ligne titulaire (Derrick Harmon, IR)",
-     "gp": 4
-    }
-   ]
-  },
-  "San Francisco 49ers": {
-   "defAbsences": [
-    {
-     "tier": "elite",
-     "pos": "edge rusher titulaire (Nick Bosa, knee)",
-     "lane": "pass",
-     "gp": 2
-    },
-    {
-     "tier": "titulaire",
-     "pos": "edge rusher titulaire (Mykel Williams, knee)",
-     "lane": "pass",
-     "gp": 0
-    },
-    {
-     "tier": "rotation",
-     "pos": "edge rusher titulaire (Sam Okuayinonu, IR)",
-     "lane": "pass",
-     "gp": 0
-    }
-   ],
-   "offAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "ailier gauche titulaire (Brett Toth, IR)",
+     "pos": "centre titulaire (Tyler Biadasz, IR)",
      "lane": "line",
      "gp": 0
-    },
-    {
-     "tier": "titulaire",
-     "pos": "receveur titulaire (Ricky Pearsall, IR)",
-     "lane": "pass",
-     "gp": 0
     }
    ]
-  },
-  "Tampa Bay Buccaneers": {
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Benjamin Morrison, quadricep)",
-     "lane": "pass",
-     "gp": 3
-    },
-    {
-     "tier": "titulaire",
-     "pos": "edge rusher titulaire (Rueben Bain Jr., groin)",
-     "lane": "pass",
-     "gp": 2
-    }
-   ],
-   "offAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "receveur titulaire (David Sills, IR)",
-     "lane": "pass",
-     "gp": 0
-    },
-    {
-     "tier": "rotation",
-     "pos": "receveur titulaire (Jalen McMillan, IR)",
-     "lane": "pass",
-     "gp": 2
-    }
-   ],
-   "qbOut": true,
-   "qbTier": "titulaire",
-   "qbGp": 3,
-   "qbReplacementTier": "limite"
   },
   "Washington Commanders": {
    "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "garde droit titulaire (Sam Cosmi, concussion)",
-     "lane": "line",
-     "gp": 2
-    },
-    {
-     "tier": "rotation",
-     "pos": "coureur titulaire (Rachaad White, shoulder)",
-     "lane": "rush",
-     "gp": 3
-    },
     {
      "tier": "elite",
      "pos": "ailier gauche titulaire (Laremy Tunsil, IR)",
@@ -688,11 +73,6 @@
     }
    ],
    "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "safety titulaire (Nick Cross, illness)",
-     "gp": 2
-    },
     {
      "tier": "rotation",
      "pos": "linebacker titulaire (Leo Chenal, IR)",
@@ -704,11 +84,7 @@
      "lane": "pass",
      "gp": 0
     }
-   ],
-   "qbOut": true,
-   "qbTier": "titulaire",
-   "qbGp": 2,
-   "qbReplacementTier": "standard"
+   ]
   },
   "New York Giants": {
    "defAbsences": [
@@ -743,6 +119,91 @@
    "qbGp": 2,
    "qbReplacementTier": "standard"
   },
+  "New York Jets": {
+   "defAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "défenseur de ligne titulaire (David Onyemata, IR)",
+     "gp": 2
+    }
+   ]
+  },
+  "Los Angeles Rams": {
+   "defAbsences": [
+    {
+     "tier": "elite",
+     "pos": "edge rusher titulaire (Myles Garrett, IR)",
+     "lane": "pass",
+     "gp": 1
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "centre titulaire (Justin Dedich, IR)",
+     "lane": "line",
+     "gp": 0
+    }
+   ]
+  },
+  "Baltimore Ravens": {
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "centre titulaire (Ethan Pocic, IR)",
+     "lane": "line",
+     "gp": 1
+    },
+    {
+     "tier": "titulaire",
+     "pos": "centre titulaire (Jovaughn Gwyn, IR)",
+     "lane": "line",
+     "gp": 3
+    }
+   ]
+  },
+  "Pittsburgh Steelers": {
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "safety titulaire (DeShon Elliott, IR)",
+     "gp": 0
+    },
+    {
+     "tier": "rotation",
+     "pos": "défenseur de ligne titulaire (Derrick Harmon, IR)",
+     "gp": 4
+    }
+   ]
+  },
+  "Houston Texans": {
+   "defAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "safety titulaire (M.J. Stewart, IR)",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "linebacker titulaire (Henry To'oTo'o, IR)",
+     "gp": 1
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "ailier droit titulaire (Braden Smith, IR)",
+     "lane": "line",
+     "gp": 0
+    },
+    {
+     "tier": "rotation",
+     "pos": "receveur titulaire (Jayden Higgins, IR)",
+     "lane": "pass",
+     "gp": 0
+    }
+   ]
+  },
   "Atlanta Falcons": {
    "defAbsences": [
     {
@@ -771,6 +232,64 @@
     }
    ]
   },
+  "Detroit Lions": {
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Avonte Maddox, IR)",
+     "lane": "pass",
+     "gp": 2
+    },
+    {
+     "tier": "elite",
+     "pos": "safety titulaire (Kerby Joseph, IR)",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "safety titulaire (Brian Branch, IR)",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Thomas Harper, IR)",
+     "lane": "pass",
+     "gp": 2
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "coureur titulaire (Isiah Pacheco, IR)",
+     "lane": "rush",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "centre titulaire (Cade Mays, IR)",
+     "lane": "line",
+     "gp": 0
+    }
+   ]
+  },
+  "Cincinnati Bengals": {
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Jalen Davis, IR)",
+     "lane": "pass",
+     "gp": 3
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "receveur titulaire (Andrei Iosivas, IR)",
+     "lane": "pass",
+     "gp": 2
+    }
+   ]
+  },
   "Jacksonville Jaguars": {
    "offAbsences": [
     {
@@ -778,6 +297,207 @@
      "pos": "garde droit titulaire (Patrick Mekari, IR)",
      "lane": "line",
      "gp": 0
+    }
+   ]
+  },
+  "Minnesota Vikings": {
+   "offAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "tight end titulaire (Josh Oliver, IR)",
+     "gp": 3
+    },
+    {
+     "tier": "rotation",
+     "pos": "centre titulaire (Michael Jurgens, IR)",
+     "lane": "line",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "ailier gauche titulaire (Donovan Jackson, IR)",
+     "lane": "line",
+     "gp": 4
+    }
+   ]
+  },
+  "Tampa Bay Buccaneers": {
+   "offAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "receveur titulaire (David Sills, IR)",
+     "lane": "pass",
+     "gp": 0
+    },
+    {
+     "tier": "rotation",
+     "pos": "receveur titulaire (Jalen McMillan, IR)",
+     "lane": "pass",
+     "gp": 2
+    }
+   ]
+  },
+  "Dallas Cowboys": {
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "safety titulaire (Jalen Thompson, IR)",
+     "gp": 3
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "elite",
+     "pos": "garde gauche titulaire (Tyler Smith, IR)",
+     "lane": "line",
+     "gp": 0
+    }
+   ]
+  },
+  "San Francisco 49ers": {
+   "offAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "ailier gauche titulaire (Brett Toth, IR)",
+     "lane": "line",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "receveur titulaire (Ricky Pearsall, IR)",
+     "lane": "pass",
+     "gp": 0
+    }
+   ],
+   "defAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "edge rusher titulaire (Sam Okuayinonu, IR)",
+     "lane": "pass",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "edge rusher titulaire (Mykel Williams, IR)",
+     "lane": "pass",
+     "gp": 0
+    }
+   ]
+  },
+  "New Orleans Saints": {
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "ailier droit titulaire (Dillon Radunz, IR)",
+     "lane": "line",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "coureur titulaire (Travis Etienne, IR)",
+     "lane": "rush",
+     "gp": 3
+    },
+    {
+     "tier": "titulaire",
+     "pos": "ailier gauche titulaire (Kelvin Banks Jr., IR)",
+     "lane": "line",
+     "gp": 2
+    }
+   ],
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "défenseur de ligne titulaire (Bryan Bresee, IR)",
+     "gp": 0
+    }
+   ]
+  },
+  "Green Bay Packers": {
+   "defAbsences": [
+    {
+     "tier": "elite",
+     "pos": "edge rusher titulaire (Micah Parsons, IR)",
+     "lane": "pass",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "linebacker titulaire (Edgerrin Cooper, IR)",
+     "gp": 4
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "ailier droit titulaire (Zach Bako-Bewele, IR)",
+     "lane": "line",
+     "gp": 2
+    }
+   ]
+  },
+  "Philadelphia Eagles": {
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "garde gauche titulaire (Landon Dickerson, IR)",
+     "lane": "line",
+     "gp": 1
+    }
+   ]
+  },
+  "Chicago Bears": {
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "ailier gauche titulaire (Braxton Jones, IR)",
+     "lane": "line",
+     "gp": 3
+    }
+   ],
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "safety titulaire (Coby Bryant, IR)",
+     "gp": 0
+    },
+    {
+     "tier": "rotation",
+     "pos": "linebacker titulaire (Noah Sewell, IR)",
+     "gp": 0
+    }
+   ]
+  },
+  "Cleveland Browns": {
+   "defAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "edge rusher titulaire (Alex Wright, IR)",
+     "lane": "pass",
+     "gp": 0
+    }
+   ]
+  },
+  "Miami Dolphins": {
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Darrell Baker Jr., IR)",
+     "lane": "pass",
+     "gp": 0
+    },
+    {
+     "tier": "rotation",
+     "pos": "défenseur de ligne titulaire (Kenneth Grant, IR)",
+     "gp": 0
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "elite",
+     "pos": "coureur titulaire (De'Von Achane, IR)",
+     "lane": "rush",
+     "gp": 3
     }
    ]
   },
@@ -794,6 +514,24 @@
     {
      "tier": "rotation",
      "pos": "edge rusher titulaire (Micheal Clemons, IR)",
+     "lane": "pass",
+     "gp": 2
+    }
+   ]
+  },
+  "Arizona Cardinals": {
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "ailier droit titulaire (Paris Johnson Jr., IR)",
+     "lane": "line",
+     "gp": 4
+    }
+   ],
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Will Johnson, IR)",
      "lane": "pass",
      "gp": 2
     }
@@ -1598,11 +1336,11 @@
    "home": "Dallas Cowboys",
    "away": "Tampa Bay Buccaneers",
    "kickoff": "2026-10-09T00:15:00Z",
-   "pHome": 0.7224,
-   "pAway": 0.2736,
-   "expHome": 30,
-   "expAway": 19,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "pHome": 0.6173,
+   "pAway": 0.3787,
+   "expHome": 27,
+   "expAway": 22,
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_PHI_JAX": {
@@ -1610,11 +1348,11 @@
    "home": "Jacksonville Jaguars",
    "away": "Philadelphia Eagles",
    "kickoff": "2026-10-11T13:30:00Z",
-   "pHome": 0.831,
-   "pAway": 0.165,
-   "expHome": 29,
-   "expAway": 12,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "pHome": 0.7334,
+   "pAway": 0.2626,
+   "expHome": 25,
+   "expAway": 14,
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_CIN_MIA": {
@@ -1622,11 +1360,11 @@
    "home": "Miami Dolphins",
    "away": "Cincinnati Bengals",
    "kickoff": "2026-10-11T17:00:00Z",
-   "pHome": 0.3174,
-   "pAway": 0.6786,
+   "pHome": 0.3207,
+   "pAway": 0.6753,
    "expHome": 15,
    "expAway": 23,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_LV_NE": {
@@ -1634,11 +1372,11 @@
    "home": "New England Patriots",
    "away": "Las Vegas Raiders",
    "kickoff": "2026-10-11T17:00:00Z",
-   "pHome": 0.2982,
-   "pAway": 0.6978,
+   "pHome": 0.3501,
+   "pAway": 0.6459,
    "expHome": 16,
-   "expAway": 26,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "expAway": 23,
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_MIN_NO": {
@@ -1646,11 +1384,11 @@
    "home": "New Orleans Saints",
    "away": "Minnesota Vikings",
    "kickoff": "2026-10-11T17:00:00Z",
-   "pHome": 0.3203,
-   "pAway": 0.6757,
+   "pHome": 0.3419,
+   "pAway": 0.6541,
    "expHome": 18,
-   "expAway": 26,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "expAway": 25,
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_CLE_NYJ": {
@@ -1658,11 +1396,11 @@
    "home": "New York Jets",
    "away": "Cleveland Browns",
    "kickoff": "2026-10-11T17:00:00Z",
-   "pHome": 0.4669,
-   "pAway": 0.5291,
-   "expHome": 18,
-   "expAway": 19,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "pHome": 0.5343,
+   "pAway": 0.4617,
+   "expHome": 22,
+   "expAway": 20,
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_IND_PIT": {
@@ -1670,11 +1408,11 @@
    "home": "Pittsburgh Steelers",
    "away": "Indianapolis Colts",
    "kickoff": "2026-10-11T17:00:00Z",
-   "pHome": 0.4923,
-   "pAway": 0.5037,
-   "expHome": 23,
-   "expAway": 24,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "pHome": 0.5113,
+   "pAway": 0.4847,
+   "expHome": 24,
+   "expAway": 23,
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_HOU_TEN": {
@@ -1682,11 +1420,11 @@
    "home": "Tennessee Titans",
    "away": "Houston Texans",
    "kickoff": "2026-10-11T17:00:00Z",
-   "pHome": 0.5654,
-   "pAway": 0.4306,
-   "expHome": 22,
+   "pHome": 0.5106,
+   "pAway": 0.4854,
+   "expHome": 20,
    "expAway": 19,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_NYG_WAS": {
@@ -1694,11 +1432,11 @@
    "home": "Washington Commanders",
    "away": "New York Giants",
    "kickoff": "2026-10-11T17:00:00Z",
-   "pHome": 0.3829,
-   "pAway": 0.6131,
-   "expHome": 19,
-   "expAway": 24,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "pHome": 0.4856,
+   "pAway": 0.5104,
+   "expHome": 22,
+   "expAway": 23,
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_CHI_GB": {
@@ -1706,11 +1444,11 @@
    "home": "Green Bay Packers",
    "away": "Chicago Bears",
    "kickoff": "2026-10-11T17:00:00Z",
-   "pHome": 0.3615,
-   "pAway": 0.6345,
+   "pHome": 0.2948,
+   "pAway": 0.7012,
    "expHome": 18,
-   "expAway": 24,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "expAway": 28,
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_DEN_LAC": {
@@ -1718,11 +1456,11 @@
    "home": "Los Angeles Chargers",
    "away": "Denver Broncos",
    "kickoff": "2026-10-11T20:05:00Z",
-   "pHome": 0.4083,
-   "pAway": 0.5877,
-   "expHome": 17,
+   "pHome": 0.4352,
+   "pAway": 0.5608,
+   "expHome": 19,
    "expAway": 21,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_DET_ARI": {
@@ -1730,11 +1468,11 @@
    "home": "Arizona Cardinals",
    "away": "Detroit Lions",
    "kickoff": "2026-10-11T20:25:00Z",
-   "pHome": 0.5338,
-   "pAway": 0.4622,
-   "expHome": 30,
+   "pHome": 0.4903,
+   "pAway": 0.5057,
+   "expHome": 29,
    "expAway": 29,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_SF_SEA": {
@@ -1742,11 +1480,11 @@
    "home": "Seattle Seahawks",
    "away": "San Francisco 49ers",
    "kickoff": "2026-10-11T20:25:00Z",
-   "pHome": 0.5179,
-   "pAway": 0.4781,
-   "expHome": 24,
+   "pHome": 0.4754,
+   "pAway": 0.5206,
+   "expHome": 22,
    "expAway": 23,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_BAL_ATL": {
@@ -1754,11 +1492,11 @@
    "home": "Atlanta Falcons",
    "away": "Baltimore Ravens",
    "kickoff": "2026-10-12T00:20:00Z",
-   "pHome": 0.4965,
-   "pAway": 0.4995,
-   "expHome": 26,
+   "pHome": 0.4812,
+   "pAway": 0.5148,
+   "expHome": 25,
    "expAway": 26,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   },
   "2026_05_BUF_LA": {
@@ -1766,11 +1504,11 @@
    "home": "Los Angeles Rams",
    "away": "Buffalo Bills",
    "kickoff": "2026-10-13T00:15:00Z",
-   "pHome": 0.4238,
-   "pAway": 0.5722,
+   "pHome": 0.4567,
+   "pAway": 0.5393,
    "expHome": 25,
-   "expAway": 28,
-   "computedAt": "2026-10-07T00:21:51Z",
+   "expAway": 26,
+   "computedAt": "2026-10-07T09:48:54Z",
    "frozen": false
   }
  }
