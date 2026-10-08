@@ -1,5 +1,71 @@
 {
  "absences": {
+  "Dallas Cowboys": {
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Cobie Durant, hamstring)",
+     "lane": "pass",
+     "gp": 2
+    },
+    {
+     "tier": "titulaire",
+     "pos": "linebacker titulaire (DeMarvion Overshown, hamstring)",
+     "gp": 1
+    },
+    {
+     "tier": "titulaire",
+     "pos": "safety titulaire (Jalen Thompson, IR)",
+     "gp": 3
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "elite",
+     "pos": "garde gauche titulaire (Tyler Smith, IR)",
+     "lane": "line",
+     "gp": 0
+    }
+   ]
+  },
+  "Tampa Bay Buccaneers": {
+   "defAbsences": [
+    {
+     "tier": "elite",
+     "pos": "safety titulaire (Antoine Winfield Jr., rib)",
+     "gp": 4
+    },
+    {
+     "tier": "titulaire",
+     "pos": "linebacker titulaire (SirVocea Dennis, ankle)",
+     "gp": 4
+    },
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Benjamin Morrison, quadricep)",
+     "lane": "pass",
+     "gp": 3
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "receveur titulaire (David Sills, IR)",
+     "lane": "pass",
+     "gp": 0
+    },
+    {
+     "tier": "rotation",
+     "pos": "receveur titulaire (Jalen McMillan, IR)",
+     "lane": "pass",
+     "gp": 2
+    }
+   ],
+   "qbOut": true,
+   "qbTier": "titulaire",
+   "qbGp": 3,
+   "qbReplacementTier": "limite"
+  },
   "New England Patriots": {
    "offAbsences": [
     {
@@ -318,39 +384,6 @@
      "pos": "ailier gauche titulaire (Donovan Jackson, IR)",
      "lane": "line",
      "gp": 4
-    }
-   ]
-  },
-  "Tampa Bay Buccaneers": {
-   "offAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "receveur titulaire (David Sills, IR)",
-     "lane": "pass",
-     "gp": 0
-    },
-    {
-     "tier": "rotation",
-     "pos": "receveur titulaire (Jalen McMillan, IR)",
-     "lane": "pass",
-     "gp": 2
-    }
-   ]
-  },
-  "Dallas Cowboys": {
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "safety titulaire (Jalen Thompson, IR)",
-     "gp": 3
-    }
-   ],
-   "offAbsences": [
-    {
-     "tier": "elite",
-     "pos": "garde gauche titulaire (Tyler Smith, IR)",
-     "lane": "line",
-     "gp": 0
     }
    ]
   },
@@ -1336,11 +1369,11 @@
    "home": "Dallas Cowboys",
    "away": "Tampa Bay Buccaneers",
    "kickoff": "2026-10-09T00:15:00Z",
-   "pHome": 0.6173,
-   "pAway": 0.3787,
-   "expHome": 27,
-   "expAway": 22,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "pHome": 0.7543,
+   "pAway": 0.2417,
+   "expHome": 31,
+   "expAway": 19,
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_PHI_JAX": {
@@ -1352,7 +1385,7 @@
    "pAway": 0.2626,
    "expHome": 25,
    "expAway": 14,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_CIN_MIA": {
@@ -1364,7 +1397,7 @@
    "pAway": 0.6753,
    "expHome": 15,
    "expAway": 23,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_LV_NE": {
@@ -1376,7 +1409,7 @@
    "pAway": 0.6459,
    "expHome": 16,
    "expAway": 23,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_MIN_NO": {
@@ -1388,7 +1421,7 @@
    "pAway": 0.6541,
    "expHome": 18,
    "expAway": 25,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_CLE_NYJ": {
@@ -1400,7 +1433,7 @@
    "pAway": 0.4617,
    "expHome": 22,
    "expAway": 20,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_IND_PIT": {
@@ -1412,7 +1445,7 @@
    "pAway": 0.4847,
    "expHome": 24,
    "expAway": 23,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_HOU_TEN": {
@@ -1424,7 +1457,7 @@
    "pAway": 0.4854,
    "expHome": 20,
    "expAway": 19,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_NYG_WAS": {
@@ -1436,7 +1469,7 @@
    "pAway": 0.5104,
    "expHome": 22,
    "expAway": 23,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_CHI_GB": {
@@ -1448,7 +1481,7 @@
    "pAway": 0.7012,
    "expHome": 18,
    "expAway": 28,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_DEN_LAC": {
@@ -1460,7 +1493,7 @@
    "pAway": 0.5608,
    "expHome": 19,
    "expAway": 21,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_DET_ARI": {
@@ -1472,7 +1505,7 @@
    "pAway": 0.5057,
    "expHome": 29,
    "expAway": 29,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_SF_SEA": {
@@ -1484,7 +1517,7 @@
    "pAway": 0.5206,
    "expHome": 22,
    "expAway": 23,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_BAL_ATL": {
@@ -1496,7 +1529,7 @@
    "pAway": 0.5148,
    "expHome": 25,
    "expAway": 26,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   },
   "2026_05_BUF_LA": {
@@ -1508,7 +1541,7 @@
    "pAway": 0.5393,
    "expHome": 25,
    "expAway": 26,
-   "computedAt": "2026-10-08T00:42:35Z",
+   "computedAt": "2026-10-08T09:59:40Z",
    "frozen": false
   }
  }
