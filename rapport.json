@@ -88,7 +88,6 @@
   "Seattle Seahawks : Irvin Charles (WR, IR) ignoré — pas titulaire",
   "Detroit Lions : Isiah Pacheco (RB, IR) -> off rotation, salaire 1.8 M$ (top 28 % du poste), 52 % des snaps, 0 match(s) joué(s)",
   "New England Patriots : Brenden Schooler (DB, IR) ignoré — pas titulaire",
-  "Dallas Cowboys : Tyler Smith (OL, IR) -> off elite, salaire 24.0 M$ (top 3 % du poste), 98 % des snaps, 0 match(s) joué(s)",
   "Cleveland Browns : Alex Wright (DL, IR) -> def rotation, salaire 11.0 M$ (top 16 % du poste), 55 % des snaps, 0 match(s) joué(s)",
   "New Orleans Saints : Ty Chandler (RB, IR) ignoré — pas titulaire",
   "Detroit Lions : Damone Clark (LB, IR) ignoré — pas titulaire",
@@ -300,7 +299,7 @@
   "Los Angeles Rams : Daniel Rickert (LB, IR) ignoré — pas titulaire",
   "New York Giants : remplaçant Jameis Winston, 94 départ(s) en carrière",
   "New York Giants : QB Jaxson Dart (IR) -> titulaire, salaire top 37 % des QB, rendement 59e centile, 2 match(s) joué(s)",
-  "Tampa Bay Buccaneers : remplaçant Jalon Daniels, 1 départ(s) en carrière",
+  "Tampa Bay Buccaneers : remplaçant Jalon Daniels, 2 départ(s) en carrière",
   "Tampa Bay Buccaneers : QB Baker Mayfield (thumb) -> titulaire, salaire top 2 % des QB, rendement 64e centile, 3 match(s) joué(s)"
  ],
  "arrivees": [
@@ -309,6 +308,7 @@
   "Baltimore Ravens : Cam Jurgens (OL), ex-Philadelphia Eagles",
   "Cincinnati Bengals : Mitchell Tinsley (WR)",
   "Dallas Cowboys : Joey Porter Jr. (DB), ex-Pittsburgh Steelers",
+  "Dallas Cowboys : Juanyeh Thomas (DB)",
   "Dallas Cowboys : Tyler Goodson (RB), ex-Indianapolis Colts",
   "Detroit Lions : Bishop Fitzgerald (DB)",
   "Green Bay Packers : Kevin Zeitler (OL), ex-Tennessee Titans",
