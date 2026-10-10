@@ -227,6 +227,15 @@ ul.abs{margin:4px 0 0;padding-left:18px} ul.abs li{margin:3px 0;font-size:15px}
 .injbox.ok{background:var(--field-bg);border-left:6px solid var(--field)}
 .injbox.prov{background:var(--warn-bg);border-left:6px solid var(--warn)}
 
+/* scores en direct (10/10) */
+.tag.live{background:var(--bad);color:#fff;display:inline-flex;align-items:center;gap:6px}
+.tag.live .dot,.livebox .dot{width:9px;height:9px;border-radius:50%;background:#fff;display:inline-block;animation:livepulse 1.2s ease-in-out infinite}
+.livebox .dot{background:var(--bad);margin-right:6px}
+@keyframes livepulse{0%,100%{opacity:1}50%{opacity:.25}}
+.pct.livesc{color:var(--ink)}
+.livebox{margin:6px 0 10px;padding:10px 12px;border-radius:10px;background:var(--bad-bg);border-left:6px solid var(--bad);font-size:17px}
+.dim{color:var(--muted);font-weight:400}
+
 .site-shell{max-width:760px;margin:0 auto;min-height:100%}
 </style>
 
@@ -378,17 +387,94 @@ const D = __DATA__;
     const games = D2.weeks && D2.weeks[String(w)] || (w === D2.week ? D2.games : []) || [];
     return { w, minWeek, maxWeek, title, games, future: w > D2.week };
   }
+  var LIVE = {};
+  var ESPN_URL = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard";
+  function liveDetail(s) {
+    const d = s && s.type && (s.type.shortDetail || s.type.detail) || "";
+    if (/halftime/i.test(d)) return "Mi-temps";
+    if (/^end of (\d)/i.test(d)) return "Fin du " + d.match(/(\d)/)[1] + (d.match(/(\d)/)[1] === "1" ? "er" : "e") + " quart-temps";
+    if (/delayed/i.test(d)) return "Retard\xE9";
+    const m = d.match(/^(\d{1,2}:\d{2})\s*-\s*(\d)(?:st|nd|rd|th)/i);
+    if (m) return m[2] + "e QT \xB7 " + m[1];
+    const q = d.match(/^Q(\d)\s+(\d{1,2}:\d{2})/i);
+    if (q) return q[1] + "e QT \xB7 " + q[2];
+    if (/OT/.test(d)) return "Prolongation" + (s.displayClock ? " \xB7 " + s.displayClock : "");
+    return d;
+  }
+  function liveWindow(D2, now) {
+    const games = Object.values(D2 && D2.weeks || {}).flat();
+    return games.some((g) => g.status !== "closed" && g.kickoff && now >= Date.parse(g.kickoff) - 10 * 6e4 && now <= Date.parse(g.kickoff) + 5 * 36e5);
+  }
+  async function fetchLive(D2, fetchFn) {
+    const f = fetchFn || (typeof fetch !== "undefined" ? fetch : null);
+    if (!f || !D2) return false;
+    let j;
+    try {
+      const r = await f(ESPN_URL + "?_=" + Date.now(), { cache: "no-store" });
+      if (!r.ok) return false;
+      j = await r.json();
+    } catch (e) {
+      return false;
+    }
+    const games = Object.values(D2.weeks || {}).flat();
+    let changed = false;
+    for (const ev of j.events || []) {
+      const c = ev.competitions && ev.competitions[0];
+      if (!c) continue;
+      const H = c.competitors.find((x) => x.homeAway === "home"), A = c.competitors.find((x) => x.homeAway === "away");
+      if (!H || !A) continue;
+      const t = Date.parse(ev.date);
+      const g = games.find((x) => x.home === H.team.displayName && x.away === A.team.displayName && Math.abs(Date.parse(x.kickoff) - t) < 12 * 36e5);
+      if (!g) continue;
+      const st = ev.status && ev.status.type && ev.status.type.state;
+      const v = { state: st, hs: +H.score || 0, as: +A.score || 0, detail: st === "post" ? "Termin\xE9" : liveDetail(ev.status) };
+      const old = LIVE[g.id];
+      if (!old || old.state !== v.state || old.hs !== v.hs || old.as !== v.as || old.detail !== v.detail) {
+        LIVE[g.id] = v;
+        changed = true;
+      }
+    }
+    return changed;
+  }
+  function startLive(getD, rerender, opts) {
+    const o = Object.assign({ every: 3e4, fetchFn: null, now: () => Date.now() }, opts || {});
+    let busy = false;
+    const tick = async () => {
+      const D2 = getD();
+      if (busy || !D2 || typeof document !== "undefined" && document.hidden) return;
+      if (!liveWindow(D2, o.now())) return;
+      busy = true;
+      try {
+        if (await fetchLive(D2, o.fetchFn)) rerender();
+      } finally {
+        busy = false;
+      }
+    };
+    tick();
+    const id = setInterval(tick, o.every);
+    if (typeof document !== "undefined") document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) tick();
+    });
+    return () => clearInterval(id);
+  }
+  var liveOf = (g) => {
+    const v = LIVE[g.id];
+    return v && g.status !== "closed" && (v.state === "in" || v.state === "post") ? v : null;
+  };
   function gameCard(D2, ctx, g, idx) {
-    const p = g.pred, done = g.status === "closed";
+    const p = g.pred, lv = liveOf(g);
+    const done = g.status === "closed" || lv && lv.state === "post";
+    const hsc = g.status === "closed" ? g.homeScore : lv ? lv.hs : null, asc = g.status === "closed" ? g.awayScore : lv ? lv.as : null;
     const favHome = p ? p.pHome >= p.pAway : null;
     const top = p ? Math.max(p.pHome, p.pAway) : 0;
     const unlocked = ctx.isUnlocked(g);
     const mk = unlocked && p ? marketInfo(g) : null;
     const net = p && unlocked && top >= D2.safe && !(mk && mk.level === "contredit");
     let tag = "";
-    if (done && p && unlocked) {
-      const ok = g.homeScore > g.awayScore === favHome;
-      tag = g.homeScore === g.awayScore ? '<span class="tag">Match nul</span>' : '<span class="tag ' + (ok ? "ok" : "ko") + '">' + ic(ok ? "check" : "x") + (ok ? "Pr\xE9vision juste" : "Pr\xE9vision fausse") + "</span>";
+    if (lv && lv.state === "in") tag = '<span class="tag live"><i class="dot"></i>En direct \xB7 ' + esc(lv.detail) + "</span>";
+    else if (done && p && unlocked) {
+      const ok = hsc > asc === favHome;
+      tag = hsc === asc ? '<span class="tag">Match nul</span>' : '<span class="tag ' + (ok ? "ok" : "ko") + '">' + ic(ok ? "check" : "x") + (ok ? "Pr\xE9vision juste" : "Pr\xE9vision fausse") + "</span>";
     } else if (done) tag = '<span class="tag">Termin\xE9</span>';
     else if (net) tag = '<span class="tag net">' + ic("star") + "Favori net</span>";
     if (mk && mk.level === "contredit") tag += '<span class="tag warn-ko" title="Le mod\xE8le prend l\u2019autre favori que le march\xE9">' + ic("warn") + "Contredit le march\xE9</span>";
@@ -400,11 +486,11 @@ const D = __DATA__;
       const prob = side === "home" ? p && p.pHome : p && p.pAway;
       const fav = showPct && (side === "home" ? favHome === true : favHome === false);
       const badge = showPct ? '<span class="pbadge ' + side + (fav ? " fav" : "") + '">' + pct(prob) + "</span>" : "";
-      const right = done ? badge + '<span class="pct' + (fav ? " fav" : "") + '">' + (side === "home" ? g.homeScore : g.awayScore) + "</span>" : showPct ? badge : '<span class="pct">\u2013</span>';
+      const right = hsc !== null ? badge + '<span class="pct' + (fav ? " fav" : "") + (lv && lv.state === "in" ? " livesc" : "") + '">' + (side === "home" ? hsc : asc) + "</span>" : showPct ? badge : '<span class="pct">\u2013</span>';
       return '<div class="team">' + shield(D2, name) + '<span class="tname' + (fav ? " fav" : "") + '"><span class="long">' + esc(name) + '</span><span class="short">' + esc(nick(D2, name)) + '</span><span class="role" title="' + (side === "home" ? "\xC0 domicile" : "\xC0 l\u2019ext\xE9rieur") + '">' + ic(side === "home" ? "home" : "plane") + "</span>" + chips(g.abs[side]) + '</span><span class="pright">' + right + "</span></div>";
     };
     const foot = [];
-    if (done) foot.push("R\xE9sultat : <b>" + g.homeScore + " \u2013 " + g.awayScore + "</b>");
+    if (done) foot.push("R\xE9sultat : <b>" + hsc + " \u2013 " + asc + "</b>" + (g.status !== "closed" ? ' <span class="dim">(provisoire, ESPN)</span>' : ""));
     if (p && unlocked) foot.push("Score attendu : <b>" + p.expHome + " \u2013 " + p.expAway + "</b>");
     if (mk) foot.push("March\xE9 : <b>" + esc(nick(D2, mk.favMkt)) + " " + pct(mk.pMkt) + "</b>");
     if (!p && !done) foot.push("Pr\xE9vision indisponible (pas encore assez de matchs jou\xE9s)");
@@ -459,7 +545,9 @@ const D = __DATA__;
     const abs = unlocked && p ? '<h3>Absences retenues</h3><div class="absgrid"><div><b>' + esc(nick(D2, g.home)) + "</b>" + absBlockHtml(D2, g.home) + "</div><div><b>" + esc(nick(D2, g.away)) + "</b>" + absBlockHtml(D2, g.away) + "</div></div>" : "";
     const notes = [];
     if (g.neutral) notes.push("Match jou\xE9 \xE0 l\u2019\xE9tranger : pas d\u2019avantage du terrain.");
-    return '<div class="handle"></div><button class="modal-close" id="modalClose" aria-label="Fermer">\u2715</button><div class="mwhen' + (isBet(g.id) ? " betted" : "") + '" data-id="' + esc(g.id) + '"><span class="when">' + ic("clock") + when(g.kickoff) + "</span>" + validated() + '</div><div class="team">' + shield(D2, g.home) + '<span class="tname"><span class="long">' + esc(g.home) + '</span><span class="role">' + ic("home") + '</span></span></div><div class="team">' + shield(D2, g.away) + '<span class="tname"><span class="long">' + esc(g.away) + '</span><span class="role">' + ic("plane") + "</span></span></div>" + betRow(g) + pred + stats + abs + (notes.length ? '<p class="meta">' + notes.join(" ") + "</p>" : "");
+    const lv = liveOf(g);
+    const liveLine = lv ? '<p class="livebox">' + (lv.state === "in" ? '<i class="dot"></i><b>En direct</b> \xB7 ' + esc(lv.detail) : "<b>Termin\xE9</b> (score ESPN, le bilan sera valid\xE9 \xE0 la prochaine mise \xE0 jour)") + " \u2014 " + esc(nick(D2, g.home)) + " <b>" + lv.hs + "</b> \u2013 <b>" + lv.as + "</b> " + esc(nick(D2, g.away)) + "</p>" : "";
+    return '<div class="handle"></div><button class="modal-close" id="modalClose" aria-label="Fermer">\u2715</button>' + liveLine + '<div class="mwhen' + (isBet(g.id) ? " betted" : "") + '" data-id="' + esc(g.id) + '"><span class="when">' + ic("clock") + when(g.kickoff) + "</span>" + validated() + '</div><div class="team">' + shield(D2, g.home) + '<span class="tname"><span class="long">' + esc(g.home) + '</span><span class="role">' + ic("home") + '</span></span></div><div class="team">' + shield(D2, g.away) + '<span class="tname"><span class="long">' + esc(g.away) + '</span><span class="role">' + ic("plane") + "</span></span></div>" + betRow(g) + pred + stats + abs + (notes.length ? '<p class="meta">' + notes.join(" ") + "</p>" : "");
   }
   function wireGames(gamesEl, getGames, open) {
     gamesEl.addEventListener("change", (e) => {
@@ -526,6 +614,7 @@ const D = __DATA__;
     if (e.key === "Escape") closeModal();
   });
   render();
+  startLive(() => D, render);
 })();
 
 </script>

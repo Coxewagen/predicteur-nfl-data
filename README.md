@@ -61,3 +61,6 @@ Le poids de la saison précédente s'estompe avec la semaine (exp(-(semaine-1)/1
 `absences_auto.py` choisit le rapport de blessures **équipe par équipe** : le rapport final (statuts Out/Doubtful/Questionable) de la semaine du prochain match s'il est publié, sinon le dernier rapport final, en retirant les joueurs absents du nouveau rapport d'entraînement ou qui s'entraînent normalement. L'ancienne version ne lisait que la toute dernière semaine publiée : dès le mercredi (rapports d'entraînement sans statut), ou après une semaine de repos, les absents disparaissaient (vérifié le 10/10 : 79 titulaires absents au lieu de 109).
 Chaque match à venir porte `blessures: "final"` ou `"provisoire"` (affiché dans l'appli, le site et l'extension). Ligne offensive : un seul titulaire absent compté par poste.
 À remplacer sur GitHub : `update.py`, `absences_auto.py`, `template.txt` (et ce README).
+
+## Scores en direct (10/10)
+La page et l'appli lisent le tableau des scores public d'ESPN (sans clé) toutes les 30 secondes, seulement entre 10 minutes avant un coup d'envoi et 5 heures après. Une carte en cours affiche « En direct · 3e QT · 8:42 » et le score ; un match fini affiche le résultat « provisoire, ESPN » jusqu'au passage suivant du robot, qui reste la référence pour le bilan. Si ESPN ne répond pas, rien ne change.
