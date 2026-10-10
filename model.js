@@ -310,6 +310,24 @@ function passRushAdjustment(team, opponent){
   return passRushBonus(team, opponent, 'pass') + passRushBonus(team, opponent, 'rush');
 }
 
+// ===================== SAISON PRÉCÉDENTE (ajouté le 05/10) =====================
+// Rejeu 2020-2025 (validation en laissant chaque saison de côté) : en début de saison, les 4-5 premiers matchs
+// sont trop peu pour juger une équipe. On corrige l'écart brut avec : la marge moyenne de la saison précédente
+// (70 % N-1, 30 % N-2), un nouvel entraîneur (-3,1 pts), un nouveau QB recrue (-2,9 pts), l'écart de qualité des QB.
+// Le poids de ces éléments s'estompe (exp(-(semaine-1)/12)) et l'écart brut reprend la main (coef. 0,26 -> ~0,9).
+// Sans champ "prior" sur les équipes, on retombe sur l'ancienne formule (sigma 17,5).
+const PRIOR_TAU = 12, PRIOR_A0 = 0.255, PRIOR_A1 = 0.700, PRIOR_C = 0.645;
+const PRIOR_PM = 0.434, PRIOR_QBD = 0.214, PRIOR_QBROOK = -2.877, PRIOR_COACH = -3.146;
+const PRIOR_SIGMA = 12.86;     // écart-type résiduel du rejeu pour la marge corrigée
+let CUR_WEEK = null;
+function priorSpread(rawSpread, h, a, neutral){
+  if(!h.prior || !a.prior || !(CUR_WEEK >= 1)) return null;
+  const d = Math.exp(-(CUR_WEEK-1)/PRIOR_TAU);
+  const f = k => (h.prior[k]||0) - (a.prior[k]||0);
+  return (PRIOR_A0 + PRIOR_A1*(1-d))*rawSpread + (neutral ? 0 : PRIOR_C)
+    + d*(PRIOR_PM*f('pmb') + PRIOR_QBD*f('qbd') + PRIOR_QBROOK*f('qbrook') + PRIOR_COACH*f('coachnew'));
+}
+
 function predictQuick(homeName, awayName){
   const h=findTeam(homeName), a=findTeam(awayName);
   if(!h||!a) return null;
@@ -332,11 +350,17 @@ function predictQuick(homeName, awayName){
   expHome += streakImpact(h.name).points;
   expAway += streakImpact(a.name).points;
   expHome=Math.max(3,expHome); expAway=Math.max(3,expAway);
-  const spread = expHome-expAway;
-  let pHome = normalCDF(spread/SPREAD_STD_DEV);
+  let spread = expHome-expAway, sigma = SPREAD_STD_DEV;
+  const adj = priorSpread(spread, h, a, homeAdvQ === 0);
+  if(adj !== null){
+    const delta = adj - spread;
+    expHome = Math.max(0, expHome + delta/2); expAway = Math.max(0, expAway - delta/2);
+    spread = adj; sigma = PRIOR_SIGMA;
+  }
+  let pHome = normalCDF(spread/sigma);
   let pAway = 1-pHome;
   pHome -= TIE_PROB/2; pAway -= TIE_PROB/2;
-  return { expHome:Math.round(expHome), expAway:Math.round(expAway), pHome, pAway };
+  return { expHome:Math.round(expHome), expAway:Math.round(expAway), pHome, pAway, spread };
 }
 
 
@@ -344,9 +368,10 @@ function predictQuick(homeName, awayName){
 // Lit {teams, weeks, games} et renvoie la prévision de chaque match demandé.
 const fs = require('fs');
 const input = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
-TEAMS = input.teams; WEEKS_HISTORY = input.weeks;
+TEAMS = input.teams; WEEKS_HISTORY = input.weeks; CUR_WEEK = input.week || null;
 const out = {};
 for (const g of input.games) {
+  CUR_WEEK = g.week || input.week || null;   // la semaine du match lui-même (le poids de la saison précédente en dépend)
   const p = predictQuick(g.home, g.away);
   if (p) out[g.id] = p;
 }
