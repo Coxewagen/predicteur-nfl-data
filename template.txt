@@ -209,6 +209,24 @@ ul.abs{margin:4px 0 0;padding-left:18px} ul.abs li{margin:3px 0;font-size:15px}
 /* Un élément avec l'attribut hidden doit vraiment disparaître, même si sa classe lui donne un display (bandeau hors-ligne, etc.). */
 [hidden]{display:none !important;}
 
+/* Marché et avertissements (contredit / prudence) */
+.tag.warn-ko{background:var(--bad);color:#2a0805}
+.tag.warn-pru{background:var(--warn);color:#241a02}
+.mktbox{margin-top:10px;font-size:16px;color:var(--ink)}
+.warnbox{display:flex;gap:10px;align-items:flex-start;margin:10px 0 0;padding:10px 12px;border-radius:10px;font-size:16px;line-height:1.35}
+.warnbox svg{flex:none;margin-top:3px}
+.warnbox.ko{background:var(--bad-bg);border-left:6px solid var(--bad);color:var(--ink)}
+.warnbox.pru{background:var(--warn-bg);border-left:6px solid var(--warn);color:var(--ink)}
+
+/* fraîcheur des blessures (10/10) */
+.inj{display:inline-flex;align-items:center;gap:5px;font-weight:700}
+.inj.ok{color:var(--field)}
+.inj.prov{color:var(--warn)}
+.injbox{display:flex;gap:10px;align-items:flex-start;margin:10px 0 0;padding:10px 12px;border-radius:10px;font-size:16px;line-height:1.35;color:var(--ink)}
+.injbox svg{flex:none;margin-top:3px}
+.injbox.ok{background:var(--field-bg);border-left:6px solid var(--field)}
+.injbox.prov{background:var(--warn-bg);border-left:6px solid var(--warn)}
+
 .site-shell{max-width:760px;margin:0 auto;min-height:100%}
 </style>
 
@@ -217,6 +235,7 @@ ul.abs{margin:4px 0 0;padding-left:18px} ul.abs li{margin:3px 0;font-size:15px}
   <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/></symbol>
   <symbol id="i-plane" viewBox="0 0 24 24"><path d="M3 13l18-8-6 16-3-7z"/></symbol>
   <symbol id="i-cross" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
   <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></symbol>
@@ -307,6 +326,49 @@ const D = __DATA__;
   }
   var betRow = (g) => '<label class="bet"><input type="checkbox" data-bet="' + esc(g.id) + '"' + (isBet(g.id) ? " checked" : "") + '><span class="box">' + ic("check") + "</span><span>J\u2019ai pari\xE9</span></label>";
   var validated = () => '<span class="validated">' + ic("check") + "Valid\xE9</span>";
+  var SD_MKT = 13.86;
+  var CONTREDIT_GAP = 6;
+  var PRUDENCE_PROB = 0.75;
+  var PRUDENCE_GAP = 0.05;
+  function invNorm(p) {
+    let lo = -6, hi = 6;
+    const cdf = (x) => {
+      const t = 1 / (1 + 0.2316419 * Math.abs(x)), d = 0.3989423 * Math.exp(-x * x / 2);
+      let q = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+      return x > 0 ? 1 - q : q;
+    };
+    for (let i = 0; i < 60; i++) {
+      const m = (lo + hi) / 2;
+      if (cdf(m) < p) lo = m;
+      else hi = m;
+    }
+    return (lo + hi) / 2;
+  }
+  function marketInfo(g) {
+    const p = g.pred;
+    if (!p || g.status === "closed" || g.mkPH == null) return null;
+    if (g.kickoff && Date.parse(g.kickoff) <= Date.now()) return null;
+    const favHomeMkt = g.mkPH >= 0.5, favHomeMod = p.pHome >= p.pAway;
+    const modelMargin = p.spread != null ? p.spread : p.expHome - p.expAway;
+    const mktMargin = g.mkLine != null ? g.mkLine : SD_MKT * invNorm(g.mkPH);
+    const gap = modelMargin - mktMargin;
+    const pFav = Math.max(p.pHome, p.pAway), mFav = favHomeMod ? g.mkPH : 1 - g.mkPH;
+    let level = null;
+    if (favHomeMod !== favHomeMkt && Math.abs(gap) >= CONTREDIT_GAP) level = "contredit";
+    else if (pFav >= PRUDENCE_PROB && pFav - mFav >= PRUDENCE_GAP) level = "prudence";
+    return {
+      level,
+      gap,
+      mkPH: g.mkPH,
+      favMkt: favHomeMkt ? g.home : g.away,
+      pMkt: favHomeMkt ? g.mkPH : 1 - g.mkPH,
+      favMod: favHomeMod ? g.home : g.away,
+      pFav,
+      mFav,
+      line: g.mkLine
+    };
+  }
+  var fmtLine = (D2, g) => g.mkLine == null || g.mkLine === 0 ? "" : (g.mkLine > 0 ? nick(D2, g.home) : nick(D2, g.away)) + " \u2212" + String(Math.abs(g.mkLine)).replace(".", ",");
   function weekState(D2, selected) {
     const avail = D2.weeksAvailable && D2.weeksAvailable.length ? D2.weeksAvailable : [D2.week];
     const minWeek = Math.min(...avail), maxWeek = Math.max(...avail);
@@ -321,13 +383,16 @@ const D = __DATA__;
     const favHome = p ? p.pHome >= p.pAway : null;
     const top = p ? Math.max(p.pHome, p.pAway) : 0;
     const unlocked = ctx.isUnlocked(g);
-    const net = p && unlocked && top >= D2.safe;
+    const mk = unlocked && p ? marketInfo(g) : null;
+    const net = p && unlocked && top >= D2.safe && !(mk && mk.level === "contredit");
     let tag = "";
     if (done && p && unlocked) {
       const ok = g.homeScore > g.awayScore === favHome;
       tag = g.homeScore === g.awayScore ? '<span class="tag">Match nul</span>' : '<span class="tag ' + (ok ? "ok" : "ko") + '">' + ic(ok ? "check" : "x") + (ok ? "Pr\xE9vision juste" : "Pr\xE9vision fausse") + "</span>";
     } else if (done) tag = '<span class="tag">Termin\xE9</span>';
     else if (net) tag = '<span class="tag net">' + ic("star") + "Favori net</span>";
+    if (mk && mk.level === "contredit") tag += '<span class="tag warn-ko" title="Le mod\xE8le prend l\u2019autre favori que le march\xE9">' + ic("warn") + "Contredit le march\xE9</span>";
+    else if (mk && mk.level === "prudence") tag += '<span class="tag warn-pru" title="Mod\xE8le bien plus confiant que le march\xE9">' + ic("warn") + "Prudence</span>";
     const chips = (a) => (a.qb ? '<span class="chip qb" title="Quarterback absent">' + ic("cross") + "QB</span>" : "") + (a.off + a.deff ? '<span class="chip" title="Autres titulaires absents">' + ic("cross") + (a.off + a.deff) + "</span>" : "");
     const line = (side) => {
       const name = g[side];
@@ -341,9 +406,29 @@ const D = __DATA__;
     const foot = [];
     if (done) foot.push("R\xE9sultat : <b>" + g.homeScore + " \u2013 " + g.awayScore + "</b>");
     if (p && unlocked) foot.push("Score attendu : <b>" + p.expHome + " \u2013 " + p.expAway + "</b>");
+    if (mk) foot.push("March\xE9 : <b>" + esc(nick(D2, mk.favMkt)) + " " + pct(mk.pMkt) + "</b>");
     if (!p && !done) foot.push("Pr\xE9vision indisponible (pas encore assez de matchs jou\xE9s)");
+    const inj = injState(g);
+    if (inj && p && unlocked) foot.push(inj === "final" ? '<span class="inj ok" title="Rapport final de blessures publi\xE9 pour les deux \xE9quipes">' + ic("check") + "Blessures \xE0 jour</span>" : '<span class="inj prov" title="Rapport final pas encore publi\xE9 (vendredi pour un match du dimanche, mercredi pour le jeudi) : le mod\xE8le utilise le rapport pr\xE9c\xE9dent">' + ic("clock") + "Blessures provisoires</span>");
     const lock = p && !unlocked ? ctx.lockRow(g) : "";
     return '<div class="game' + (net && !done ? " net" : "") + (isBet(g.id) ? " betted" : "") + ' clickable" data-idx="' + idx + '" data-id="' + esc(g.id) + '"><div class="ghead"><span class="when">' + ic("clock") + when(g.kickoff) + '</span><span class="gtags">' + validated() + tag + "</span></div>" + line("home") + line("away") + lock + (foot.length ? '<div class="gfoot">' + foot.map((f) => "<span>" + f + "</span>").join("") + "</div>" : "") + betRow(g) + "</div>";
+  }
+  function injState(g) {
+    if (!g.blessures || g.status === "closed") return null;
+    const k = g.kickoff ? Date.parse(g.kickoff) : NaN;
+    if (!isNaN(k) && k <= Date.now()) return null;
+    return g.blessures === "final" ? "final" : "provisoire";
+  }
+  function marketModal(D2, g) {
+    const mk = marketInfo(g);
+    if (!mk) return "";
+    const ln = fmtLine(D2, g);
+    let html = '<div class="mktbox"><b>March\xE9</b> : ' + esc(nick(D2, g.home)) + " " + pct(mk.mkPH) + " \xB7 " + esc(nick(D2, g.away)) + " " + pct(1 - mk.mkPH) + (ln ? " \xB7 ligne " + esc(ln) : "") + "</div>";
+    if (mk.level === "contredit")
+      html += '<p class="warnbox ko">' + ic("warn") + "<span><b>Le mod\xE8le contredit le march\xE9.</b> Il voit " + esc(nick(D2, mk.favMod)) + " gagner, le march\xE9 pr\xE9f\xE8re " + esc(nick(D2, mk.favMkt)) + " (" + Math.round(Math.abs(mk.gap)) + " pts d\u2019\xE9cart). Sur 2020-2026, dans ce cas, le mod\xE8le a eu raison 34 % du temps et le march\xE9 66 %. Fais plut\xF4t confiance au march\xE9 : le \xAB pari rentable \xBB apparent est probablement une illusion.</span></p>";
+    else if (mk.level === "prudence")
+      html += '<p class="warnbox pru">' + ic("warn") + "<span><b>Prudence.</b> Le mod\xE8le donne " + pct(mk.pFav) + " \xE0 " + esc(nick(D2, mk.favMod)) + ", le march\xE9 " + pct(mk.mFav) + ". Sur 2020-2026, ces favoris ont gagn\xE9 environ 75 % du temps, contre environ 82 % quand mod\xE8le et march\xE9 sont d\u2019accord.</span></p>";
+    return html;
   }
   function absBlockHtml(D2, name) {
     const items = ((D2.absences || []).find((a) => a.team === name) || { items: [] }).items;
@@ -364,7 +449,7 @@ const D = __DATA__;
     if (unlocked && p) {
       const favHome = p.pHome >= p.pAway, ecart = Math.abs(p.expHome - p.expAway);
       const verdict = done && g.homeScore !== g.awayScore ? '<p class="verdict ' + (g.homeScore > g.awayScore === favHome ? "yes" : "no") + '">' + ic(g.homeScore > g.awayScore === favHome ? "check" : "x") + (g.homeScore > g.awayScore === favHome ? "Pr\xE9vision juste" : "Pr\xE9vision fausse") + " \u2014 r\xE9sultat " + g.homeScore + " \u2013 " + g.awayScore + " (pr\xE9vu " + p.expHome + " \u2013 " + p.expAway + ")</p>" : "";
-      pred = '<div class="bigbadges"><span class="pbadge big home' + (favHome ? " fav" : "") + '"><i>Domicile</i>' + pct(p.pHome) + '</span><span class="pbadge big away' + (!favHome ? " fav" : "") + '"><i>Ext\xE9rieur</i>' + pct(p.pAway) + '</span></div><div class="gfoot"><span>Score attendu : <b>' + p.expHome + " \u2013 " + p.expAway + "</b></span><span>\xC9cart attendu : <b>" + (ecart ? esc(nick(D2, favHome ? g.home : g.away)) + " de " + ecart + " pt" + (ecart > 1 ? "s" : "") : "aucun") + "</b></span></div>" + verdict + (g.prov ? '<p class="meta">Pr\xE9vision provisoire : recalcul\xE9e \xE0 chaque mise \xE0 jour avec les stats et les absences du moment.</p>' : "");
+      pred = '<div class="bigbadges"><span class="pbadge big home' + (favHome ? " fav" : "") + '"><i>Domicile</i>' + pct(p.pHome) + '</span><span class="pbadge big away' + (!favHome ? " fav" : "") + '"><i>Ext\xE9rieur</i>' + pct(p.pAway) + '</span></div><div class="gfoot"><span>Score attendu : <b>' + p.expHome + " \u2013 " + p.expAway + "</b></span><span>\xC9cart attendu : <b>" + (ecart ? esc(nick(D2, favHome ? g.home : g.away)) + " de " + ecart + " pt" + (ecart > 1 ? "s" : "") : "aucun") + "</b></span></div>" + verdict + marketModal(D2, g) + (injState(g) === "final" ? '<p class="injbox ok">' + ic("check") + "<span><b>Blessures \xE0 jour.</b> Le rapport final de la NFL est publi\xE9 pour les deux \xE9quipes : la pr\xE9vision tient compte des absences officielles.</span></p>" : injState(g) === "provisoire" ? '<p class="injbox prov">' + ic("clock") + "<span><b>Blessures provisoires.</b> Le rapport final n\u2019est pas encore publi\xE9 (vendredi pour un match du dimanche, mercredi pour un match du jeudi, samedi pour le lundi). Le mod\xE8le garde les absents du rapport pr\xE9c\xE9dent. Dans le rejeu 2021-2025, la pr\xE9vision juste passe d\u2019environ 63 % \xE0 65 % une fois le rapport final pris en compte : attends-le avant de parier.</span></p>" : "") + (g.prov ? '<p class="meta">Pr\xE9vision provisoire : recalcul\xE9e \xE0 chaque mise \xE0 jour avec les stats et les absences du moment.</p>' : "");
     } else if (p) {
       pred = ctx.gateCard();
     } else {

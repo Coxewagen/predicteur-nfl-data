@@ -74,6 +74,7 @@ class Donnees:
         inj = nfl.load_injuries(season).to_dicts()
         self.injury_week = max((r['week'] for r in inj), default=None)
         self.injuries = [r for r in inj if r['week'] == self.injury_week]
+        self.inj_all = [r for r in inj if r.get('game_type', 'REG') == 'REG']   # tous les rapports (voir indispo_blessures)
         # snaps : saison en cours et précédente
         self.snaps = {season: self._snap_table(season), season - 1: self._snap_table(season - 1)}
         # contrats actifs : salaire annuel (en millions) par groupe de poste
@@ -213,7 +214,76 @@ def raison(r):
     return txt.lower() if txt else None
 
 
-def construire(season, names, played, overrides=None):
+FINAL_STATUSES = ('Out', 'Doubtful', 'Questionable')
+FULL_PRACTICE = 'Full Participation in Practice'
+
+
+def indispo_blessures(d, names, next_week):
+    """Joueurs indisponibles d'après les rapports de blessures, équipe par équipe (ajout du 10/10).
+    Le rapport FINAL d'une semaine (statuts Out/Doubtful/Questionable) ne sort que la veille ou l'avant-veille du
+    match (vendredi pour le dimanche, mercredi pour le jeudi). Avant, le robot n'a que le rapport final précédent :
+      - on garde les Out/Doubtful de ce dernier rapport final (l'ancienne version ne lisait que la toute dernière
+        semaine publiée : en milieu de semaine, ou après une semaine de repos, les absents disparaissaient) ;
+      - si les rapports d'entraînement de la nouvelle semaine sont déjà sortis : un joueur qui n'y figure plus,
+        ou qui s'entraîne normalement (participation complète), n'est plus compté absent.
+    Renvoie (indisponibles {gsis: (équipe, raison)}, état {équipe: (\"final\"|\"provisoire\", semaine du rapport final)})."""
+    by_team = defaultdict(lambda: defaultdict(list))
+    for r in d.inj_all:
+        if r['team'] in names and r.get('gsis_id'):
+            by_team[names[r['team']]][r['week']].append(r)
+    unavailable, etat = {}, {}
+    for team, weeks in by_team.items():
+        finals = [w for w, rows in weeks.items() if any(r['report_status'] in FINAL_STATUSES for r in rows)]
+        wf = max(finals) if finals else None
+        nw = (next_week or {}).get(team)
+        if wf is not None and (nw is None or wf >= nw):
+            etat[team] = ('final', wf)
+            for r in weeks[wf]:
+                if r['report_status'] in OUT_STATUSES:
+                    unavailable[r['gsis_id']] = (team, raison(r) or r['report_status'])
+            continue
+        etat[team] = ('provisoire', wf)
+        newer = [w for w in weeks if wf is None or w > wf]
+        cur = {r['gsis_id']: r for r in weeks[max(newer)]} if newer else None   # rapports d'entraînement en cours
+        for r in (weeks[wf] if wf is not None else []):
+            if r['report_status'] not in OUT_STATUSES:
+                continue
+            if cur is not None:
+                c = cur.get(r['gsis_id'])
+                if c is None or c.get('practice_status') == FULL_PRACTICE:
+                    continue      # absent du nouveau rapport ou entraînement complet : revenu
+            unavailable[r['gsis_id']] = (team, (raison(r) or r['report_status']) + ', rapport précédent')
+        if cur is not None:
+            for c in cur.values():
+                if c['report_status'] in OUT_STATUSES:
+                    unavailable[c['gsis_id']] = (team, raison(c) or c['report_status'])
+    return unavailable, etat
+
+
+TIER_RANK = {'elite': 3, 'titulaire': 2, 'rotation': 1}
+
+
+def un_par_poste(entries, team, journal):
+    """Ligne offensive : un seul titulaire absent compté par poste (ailier/garde gauche ou droit, centre).
+    Quand le titulaire se blesse puis son remplaçant aussi, les deux apparaissaient « titulaire » au même poste."""
+    slots = set(OL_LABEL.values())
+    best, autres = {}, []
+    for e in entries:
+        lab = e['pos'].split(' titulaire')[0]
+        if lab not in slots:
+            autres.append(e)
+            continue
+        k = (TIER_RANK.get(e['tier'], 0), e.get('gp', 0))
+        if lab not in best or k > best[lab][0]:
+            if lab in best:
+                journal.append(f"{team} : {best[lab][1]['pos']} non compté (même poste que {e['pos']})")
+            best[lab] = (k, e)
+        else:
+            journal.append(f"{team} : {e['pos']} non compté (même poste que {best[lab][1]['pos']})")
+    return autres + [v[1] for v in best.values()]
+
+
+def construire(season, names, played, overrides=None, next_week=None):
     """Renvoie (absences par équipe, journal détaillé)."""
     d = Donnees(season, names, played)
     overrides = overrides or {}
@@ -225,12 +295,11 @@ def construire(season, names, played, overrides=None):
 
     # --- indisponibles : « Out »/« Doubtful » + liste des blessés
     unavailable = {}   # gsis -> (équipe, raison)
-    for r in d.injuries:
-        gid = r['gsis_id']
-        if gid and r['report_status'] in OUT_STATUSES and r['team'] in names:
-            unavailable[gid] = (names[r['team']], raison(r) or r['report_status'])
-            name_of.setdefault(gid, r['full_name'])
-            pos_of.setdefault(gid, r['position'])
+    unavailable, etat = indispo_blessures(d, names, next_week)
+    for r in d.inj_all:
+        if r.get('gsis_id') in unavailable:
+            name_of.setdefault(r['gsis_id'], r['full_name'])
+            pos_of.setdefault(r['gsis_id'], r['position'])
     for gid, r in d.ir.items():
         if r['team'] in names:
             unavailable.setdefault(gid, (names[r['team']], 'IR'))
@@ -312,6 +381,17 @@ def construire(season, names, played, overrides=None):
                        + (f"salaire top {100 - round(pct * 100)} % des QB, " if pct is not None else '')
                        + (f"rendement {round(prod * 100)}e centile, " if prod is not None else 'rendement inconnu, ')
                        + f"{entry['qbGp']} match(s) joué(s)")
+
+    # --- ligne offensive : un titulaire absent par poste
+    for team, entry in out.items():
+        if entry.get('offAbsences'):
+            entry['offAbsences'] = un_par_poste(entry['offAbsences'], team, journal)
+
+    # --- état des rapports de blessures (affiché dans l'appli : « à jour » ou « provisoire »)
+    for team, (st, wk) in etat.items():
+        out[team]['injReport'] = st
+        if wk is not None:
+            out[team]['injWeek'] = wk
 
     # --- corrections manuelles : ajouts
     for team, extra in overrides.get('ajouts', {}).items():

@@ -47,3 +47,17 @@ Pour relancer une mise à jour immédiatement sans attendre le prochain horaire 
 **Actions** du dépôt sur GitHub → **Mise à jour des prévisions NFL** → **Run workflow**.
 
 **Mise en ligne d'une nouvelle version :** remplace seulement les fichiers de code (`model.js`, `update.py`, `absences_auto.py`, `backtest.py`, `template.txt`, `README.md`, `.github/`). Ne remplace PAS `state.json`, `app-data.json`, `index.html` et `rapport.json` du dépôt : ce sont les fichiers du robot (journal des prévisions figées au coup d'envoi). Ceux de ce zip sont une copie de 15 h 27, déjà périmée.
+
+**Bouton « Mettre à jour » du prédicteur (predicteur-nfl.html) :** `update.py` ajoute une section `predicteur` (équipes, statistiques, absences automatiques sans noms de joueurs, calendrier et résultats) au fichier `app-data.json`. Le bouton de la page HTML télécharge ce fichier sur ton site GitHub Pages et rafraîchit la page sans rien remplacer à la main. Aucun changement du workflow GitHub n'est nécessaire. Il ne remplace pas les données si le site n'en a pas de plus récentes que celles affichées.
+
+**Marché et avertissements (appli, site, extension) :** `update.py` ajoute à chaque match à venir la ligne du marché et les moneylines (nflverse) : `mkLine` (écart de points, + = domicile favori), `mkPH` (probabilité de victoire du domicile sans marge du bookmaker). Les lignes ne sont publiées que quelques jours avant chaque match : les semaines lointaines n'ont pas de marché. L'appli et le site affichent « Marché : … % » et deux avertissements : « Contredit le marché » (le modèle prend l'autre favori avec ≥ 6 pts d'écart : modèle juste 34 % du temps en 2020-2026) et « Prudence » (favori du modèle ≥ 75 % et ≥ 5 pts au-dessus du marché). Remplace `update.py` ET `model.js` ensemble (model.js renvoie maintenant l'écart exact du modèle).
+
+## Saison précédente dans le modèle (05/10)
+`update.py` calcule, pour chaque équipe, la marge moyenne par match de la saison précédente et de celle d'avant (70 % / 30 %), un éventuel nouvel entraîneur, et un éventuel nouveau QB titulaire (recrue ou écart de qualité). Ces éléments sont écrits dans `prior` (équipes, fichier `app-data.json`) et lus par `model.js` (robot) et par l'extension.
+Le poids de la saison précédente s'estompe avec la semaine (exp(-(semaine-1)/12)) et l'écart brut du modèle reprend la main. Rejeu 2020-2025, chaque saison testée à part : 64,9 % de bons vainqueurs (61,3 % avant), écart moyen avec le marché à la semaine 5 : 2,7 pts (3,9 avant).
+**À remplacer ensemble sur GitHub : `update.py` ET `model.js`.** Sans champ `prior`, l'ancienne formule est utilisée.
+
+## Blessures en milieu de semaine (10/10)
+`absences_auto.py` choisit le rapport de blessures **équipe par équipe** : le rapport final (statuts Out/Doubtful/Questionable) de la semaine du prochain match s'il est publié, sinon le dernier rapport final, en retirant les joueurs absents du nouveau rapport d'entraînement ou qui s'entraînent normalement. L'ancienne version ne lisait que la toute dernière semaine publiée : dès le mercredi (rapports d'entraînement sans statut), ou après une semaine de repos, les absents disparaissaient (vérifié le 10/10 : 79 titulaires absents au lieu de 109).
+Chaque match à venir porte `blessures: "final"` ou `"provisoire"` (affiché dans l'appli, le site et l'extension). Ligne offensive : un seul titulaire absent compté par poste.
+À remplacer sur GitHub : `update.py`, `absences_auto.py`, `template.txt` (et ce README).

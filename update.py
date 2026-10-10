@@ -49,6 +49,36 @@ def kickoff_utc(day, time):
     et = datetime.strptime(f'{day} {time}', '%Y-%m-%d %H:%M').replace(tzinfo=ZoneInfo('America/New_York'))
     return et.astimezone(timezone.utc)
 
+def _num(x):
+    try:
+        v = float(x)
+        return None if v != v else v
+    except (TypeError, ValueError):
+        return None
+
+
+def _proba_ml(m):
+    return -m/(-m+100) if m < 0 else 100/(m+100)
+
+
+def marche(g):
+    """Marché du match d'après le calendrier nflverse (ligne + moneylines) : probabilité de victoire du domicile
+    sans la marge du bookmaker, et ligne d'écart de points (positive = domicile favori). Rien si indisponible."""
+    line, mh, ma = _num(g.get('spread_line')), _num(g.get('home_moneyline')), _num(g.get('away_moneyline'))
+    out = {}
+    if line is not None:
+        out['mkLine'] = round(line, 1)
+    if mh is not None and ma is not None:
+        ph, pa = _proba_ml(mh), _proba_ml(ma)
+        out['mkPH'] = round(ph/(ph+pa), 4)
+        out['mkSrc'] = 'ml'
+    elif line is not None:
+        from statistics import NormalDist
+        out['mkPH'] = round(NormalDist().cdf(line/13.86), 4)
+        out['mkSrc'] = 'ligne'
+    return out
+
+
 def main():
     now = datetime.now(timezone.utc)
     state = json.loads((HERE/'state.json').read_text(encoding='utf-8'))
@@ -63,6 +93,10 @@ def main():
         row = dict(id=g['game_id'], week=g['week'], home=NAMES[g['home_team']], away=NAMES[g['away_team']],
                    homeScore=g['home_score'], awayScore=g['away_score'],
                    status='closed' if closed else 'scheduled', kickoff=ko.strftime('%Y-%m-%dT%H:%M:%SZ'))
+        if not closed:
+            mk = marche(g)
+            if mk:
+                row.update(mk)   # mkLine (ligne, + = domicile favori), mkPH (proba domicile sans marge), mkSrc
         if g.get('location') == 'Neutral':
             row['neutral'] = True   # match à l'étranger : pas d'avantage du terrain (voir model.js, isNeutralGame)
         games.append(row)
@@ -103,14 +137,31 @@ def main():
     journal_abs = []
     try:
         import absences_auto
+        prochaine = {}   # semaine du prochain match de chaque équipe (le rapport de blessures doit être celui-là)
+        for g in games:
+            if g['status'] != 'closed':
+                for n in (g['home'], g['away']):
+                    prochaine[n] = min(prochaine.get(n, 99), g['week'])
         absences, journal_abs = absences_auto.construire(
-            SEASON, NAMES, {n: t['played'] for n, t in T.items()}, absences_auto.charger_overrides())
+            SEASON, NAMES, {n: t['played'] for n, t in T.items()}, absences_auto.charger_overrides(), prochaine)
         state['absences'] = absences
     except Exception as e:  # noqa: BLE001
         print(f"Absences automatiques indisponibles ({e}) : absences du passage précédent conservées.")
         journal_abs = [f"calcul automatique indisponible : {e}"]
     for n, ab in absences.items():
         T[n].update({k: v for k, v in ab.items() if not (v is None or v is False or v == [])})  # (0 doit rester valide : qbGp, gp)
+    # Fraîcheur des blessures pour chaque match à venir : « final » si le rapport final de la semaine du match est
+    # publié pour les deux équipes, sinon « provisoire » (le robot s'appuie sur le rapport final précédent).
+    for g in games:
+        if g['status'] != 'closed':
+            ok = all(T[n].get('injReport') == 'final' and T[n].get('injWeek') == g['week'] for n in (g['home'], g['away']))
+            g['blessures'] = 'final' if ok else 'provisoire'
+    try:
+        for n, pr in prior_features(SEASON).items():
+            if n in T:
+                T[n]['prior'] = pr
+    except Exception as e:  # noqa: BLE001
+        print(f"Saison précédente indisponible ({e}) : ancienne formule utilisée.")
     teams = sorted(T.values(), key=lambda t: t['name'])
     # Infos pour la fiche détaillée d'un match : bilan, points par match, 3 derniers résultats.
     closed_by_team = {n: [] for n in T}
@@ -130,7 +181,8 @@ def main():
     # ---------- 3. prévisions ----------
     todo = [g for g in games if g['status'] == 'scheduled' and g['kickoff'] > now.strftime('%Y-%m-%dT%H:%M:%SZ')
             and T[g['home']]['played'] and T[g['away']]['played']]
-    (HERE/'_in.json').write_text(json.dumps(dict(teams=teams, weeks=weeks, games=todo)), encoding='utf-8')
+    week_now = min((g['week'] for g in todo), default=max(g['week'] for g in games))
+    (HERE/'_in.json').write_text(json.dumps(dict(teams=teams, weeks=weeks, games=todo, week=week_now)), encoding='utf-8')
     subprocess.run(['node', str(HERE/'model.js'), str(HERE/'_in.json'), str(HERE/'_out.json')], check=True)
     preds = json.loads((HERE/'_out.json').read_text(encoding='utf-8'))
 
@@ -144,7 +196,8 @@ def main():
         if p:
             journal[g['id']] = dict(week=g['week'], home=g['home'], away=g['away'], kickoff=g['kickoff'],
                                     pHome=round(p['pHome'], 4), pAway=round(p['pAway'], 4),
-                                    expHome=p['expHome'], expAway=p['expAway'], computedAt=stamp)
+                                    expHome=p['expHome'], expAway=p['expAway'], computedAt=stamp,
+                                    **({'spread': round(p['spread'], 2)} if p.get('spread') is not None else {}))
     by_id = {g['id']: g for g in games}
     for gid, j in journal.items():
         g = by_id.get(gid)
@@ -185,11 +238,13 @@ def main():
         out = []
         for g in week_games:
             j = journal.get(g['id'])
-            pred = j and {k: j[k] for k in ('pHome', 'pAway', 'expHome', 'expAway')}
+            pred = j and {k: j[k] for k in ('pHome', 'pAway', 'expHome', 'expAway', 'spread') if k in j}
             row = dict(g, pred=pred, abs={s: resume_abs(T[g[s]]) for s in ('home', 'away')})
             if not pred and g['status'] == 'scheduled' and g['id'] in preds:   # semaine à venir : prévision provisoire
                 p = preds[g['id']]
                 row['pred'] = dict(pHome=round(p['pHome'], 4), pAway=round(p['pAway'], 4), expHome=p['expHome'], expAway=p['expAway'])
+                if p.get('spread') is not None:
+                    row['pred']['spread'] = round(p['spread'], 2)
                 row['prov'] = True
             out.append(row)
         return out
@@ -272,6 +327,50 @@ def arrivees_effectif():
         out.append(f"{NAMES[r['team']]} : {r['full_name']} ({r['position']}){origine}")
     return sorted(out)
 
+
+def prior_features(season):
+    """Éléments de la saison précédente pour chaque équipe (voir model.js, bloc "SAISON PRÉCÉDENTE").
+    pm/pm2 : marge moyenne par match en N-1 / N-2 ; pmb = 0,7*pm + 0,3*pm2 ; coachnew : l'entraîneur n'est pas
+    celui de la fin de N-1 ; qbnew/qbd/qbrook : le QB titulaire actuel n'est pas le titulaire principal de N-1,
+    écart de qualité (marge des matchs qu'il a démarrés en N-1, lissée) et QB sans saison de titulaire en N-1."""
+    from collections import Counter, defaultdict
+    rows = nfl.load_schedules([season - 2, season - 1, season]).filter(lambda_reg()).to_dicts()
+    tg = []   # une ligne par équipe et par match
+    for g in rows:
+        played = g['home_score'] is not None and g['away_score'] is not None
+        for side, opp in (('home', 'away'), ('away', 'home')):
+            m = (g[side + '_score'] - g[opp + '_score']) if played else None
+            tg.append(dict(s=g['season'], w=g['week'], team=NAMES[g[side + '_team']], qb=g.get(side + '_qb_id'),
+                           coach=g.get(side + '_coach'), m=m))
+    def margins(s, team):
+        return [x['m'] for x in tg if x['s'] == s and x['team'] == team and x['m'] is not None]
+    # qualité des QB en N-1 : marge des matchs démarrés (toutes équipes), lissée vers 0 (n/(n+6))
+    qm = defaultdict(list)
+    for x in tg:
+        if x['s'] == season - 1 and x['m'] is not None and x['qb']:
+            qm[x['qb']].append(x['m'])
+    Q = {q: sum(v) / len(v) * len(v) / (len(v) + 6) for q, v in qm.items()}
+    out = {}
+    for team in set(NAMES.values()):
+        m1, m2 = margins(season - 1, team), margins(season - 2, team)
+        pm = sum(m1) / len(m1) if m1 else None
+        pm2 = sum(m2) / len(m2) if m2 else None
+        pmb = 0.7 * (pm or 0) + 0.3 * (pm2 or 0)
+        prev = sorted([x for x in tg if x['s'] == season - 1 and x['team'] == team and x['m'] is not None], key=lambda x: x['w'])
+        mainqb = Counter(x['qb'] for x in prev if x['qb']).most_common(1)
+        mainqb = mainqb[0][0] if mainqb else None
+        lastcoach = prev[-1]['coach'] if prev else None
+        cur = sorted([x for x in tg if x['s'] == season and x['team'] == team], key=lambda x: x['w'])
+        played = [x for x in cur if x['m'] is not None]
+        qb_now = played[-1]['qb'] if played else None          # titulaire du dernier match joué
+        coach_now = (played[-1] if played else (cur[0] if cur else {})).get('coach')
+        qbnew = bool(mainqb and qb_now and qb_now != mainqb)
+        qbd = (Q.get(qb_now, 0.0) - Q.get(mainqb, 0.0)) if qbnew else 0.0
+        out[team] = dict(pm=None if pm is None else round(pm, 2), pm2=None if pm2 is None else round(pm2, 2),
+                         pmb=round(pmb, 2), coachnew=1 if (lastcoach and coach_now and coach_now != lastcoach) else 0,
+                         qbnew=1 if qbnew else 0, qbd=round(qbd, 2),
+                         qbrook=1 if (qbnew and qb_now not in Q) else 0)
+    return out
 
 def lambda_reg():
     import polars as pl
