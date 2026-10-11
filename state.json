@@ -55,6 +55,17 @@
    "injReport": "final",
    "injWeek": 5
   },
+  "Buffalo Bills": {
+   "defAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "défenseur de ligne titulaire (Ed Oliver, knee)",
+     "gp": 3
+    }
+   ],
+   "injReport": "final",
+   "injWeek": 5
+  },
   "Carolina Panthers": {
    "offAbsences": [
     {
@@ -316,37 +327,6 @@
    "injReport": "provisoire",
    "injWeek": 4
   },
-  "Los Angeles Rams": {
-   "defAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "défenseur de ligne titulaire (Aaron Donald, back, rapport précédent)",
-     "gp": 2
-    },
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Jaylen Watson, shoulder, rapport précédent)",
-     "lane": "pass",
-     "gp": 3
-    },
-    {
-     "tier": "elite",
-     "pos": "edge rusher titulaire (Myles Garrett, IR)",
-     "lane": "pass",
-     "gp": 1
-    }
-   ],
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "centre titulaire (Justin Dedich, IR)",
-     "lane": "line",
-     "gp": 0
-    }
-   ],
-   "injReport": "provisoire",
-   "injWeek": 4
-  },
   "Los Angeles Chargers": {
    "defAbsences": [
     {
@@ -433,11 +413,6 @@
      "pos": "cornerback titulaire (Darrell Baker Jr., IR)",
      "lane": "pass",
      "gp": 0
-    },
-    {
-     "tier": "rotation",
-     "pos": "défenseur de ligne titulaire (Kenneth Grant, IR)",
-     "gp": 0
     }
    ],
    "injReport": "final",
@@ -455,12 +430,6 @@
      "pos": "ailier gauche titulaire (Christian Darrisaw, concussion)",
      "lane": "line",
      "gp": 4
-    },
-    {
-     "tier": "rotation",
-     "pos": "centre titulaire (Michael Jurgens, IR)",
-     "lane": "line",
-     "gp": 0
     }
    ],
    "injReport": "final",
@@ -719,12 +688,6 @@
      "pos": "edge rusher titulaire (Sam Okuayinonu, IR)",
      "lane": "pass",
      "gp": 0
-    },
-    {
-     "tier": "titulaire",
-     "pos": "edge rusher titulaire (Mykel Williams, IR)",
-     "lane": "pass",
-     "gp": 0
     }
    ],
    "offAbsences": [
@@ -862,29 +825,19 @@
    "injReport": "final",
    "injWeek": 5
   },
-  "Houston Texans": {
+  "Los Angeles Rams": {
    "defAbsences": [
     {
-     "tier": "rotation",
-     "pos": "safety titulaire (M.J. Stewart, IR)",
-     "gp": 0
-    },
-    {
-     "tier": "titulaire",
-     "pos": "linebacker titulaire (Henry To'oTo'o, IR)",
+     "tier": "elite",
+     "pos": "edge rusher titulaire (Myles Garrett, IR)",
+     "lane": "pass",
      "gp": 1
     }
    ],
    "offAbsences": [
     {
-     "tier": "rotation",
-     "pos": "receveur titulaire (Jayden Higgins, IR)",
-     "lane": "pass",
-     "gp": 0
-    },
-    {
      "tier": "titulaire",
-     "pos": "ailier droit titulaire (Braden Smith, IR)",
+     "pos": "centre titulaire (Justin Dedich, IR)",
      "lane": "line",
      "gp": 0
     }
@@ -922,6 +875,31 @@
    "injReport": "final",
    "injWeek": 5
   },
+  "Houston Texans": {
+   "offAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "receveur titulaire (Jayden Higgins, IR)",
+     "lane": "pass",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "ailier droit titulaire (Braden Smith, IR)",
+     "lane": "line",
+     "gp": 0
+    }
+   ],
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "linebacker titulaire (Henry To'oTo'o, IR)",
+     "gp": 1
+    }
+   ],
+   "injReport": "final",
+   "injWeek": 5
+  },
   "Chicago Bears": {
    "offAbsences": [
     {
@@ -935,11 +913,6 @@
     {
      "tier": "titulaire",
      "pos": "safety titulaire (Coby Bryant, IR)",
-     "gp": 0
-    },
-    {
-     "tier": "rotation",
-     "pos": "linebacker titulaire (Noah Sewell, IR)",
      "gp": 0
     }
    ],
@@ -957,10 +930,6 @@
    ],
    "injReport": "final",
    "injWeek": 5
-  },
-  "Buffalo Bills": {
-   "injReport": "provisoire",
-   "injWeek": 4
   }
  },
  "journal": {
@@ -1741,7 +1710,7 @@
    "pAway": 0.3011,
    "expHome": 23,
    "expAway": 16,
-   "computedAt": "2026-10-11T04:02:14Z",
+   "computedAt": "2026-10-11T12:07:16Z",
    "spread": 6.63,
    "frozen": false
   },
@@ -1750,12 +1719,12 @@
    "home": "Miami Dolphins",
    "away": "Cincinnati Bengals",
    "kickoff": "2026-10-11T17:00:00Z",
-   "pHome": 0.3242,
-   "pAway": 0.6718,
+   "pHome": 0.3268,
+   "pAway": 0.6692,
    "expHome": 16,
    "expAway": 22,
-   "computedAt": "2026-10-11T04:02:14Z",
-   "spread": -5.79,
+   "computedAt": "2026-10-11T12:07:16Z",
+   "spread": -5.7,
    "frozen": false
   },
   "2026_05_LV_NE": {
@@ -1767,7 +1736,7 @@
    "pAway": 0.4232,
    "expHome": 22,
    "expAway": 20,
-   "computedAt": "2026-10-11T04:02:14Z",
+   "computedAt": "2026-10-11T12:07:16Z",
    "spread": 2.42,
    "frozen": false
   },
@@ -1776,12 +1745,12 @@
    "home": "New Orleans Saints",
    "away": "Minnesota Vikings",
    "kickoff": "2026-10-11T17:00:00Z",
-   "pHome": 0.374,
-   "pAway": 0.622,
+   "pHome": 0.3713,
+   "pAway": 0.6247,
    "expHome": 19,
    "expAway": 23,
-   "computedAt": "2026-10-11T04:02:14Z",
-   "spread": -4.06,
+   "computedAt": "2026-10-11T12:07:16Z",
+   "spread": -4.16,
    "frozen": false
   },
   "2026_05_CLE_NYJ": {
@@ -1793,7 +1762,7 @@
    "pAway": 0.3974,
    "expHome": 22,
    "expAway": 18,
-   "computedAt": "2026-10-11T04:02:14Z",
+   "computedAt": "2026-10-11T12:07:16Z",
    "spread": 3.28,
    "frozen": false
   },
@@ -1806,7 +1775,7 @@
    "pAway": 0.5386,
    "expHome": 24,
    "expAway": 25,
-   "computedAt": "2026-10-11T04:02:14Z",
+   "computedAt": "2026-10-11T12:07:16Z",
    "spread": -1.31,
    "frozen": false
   },
@@ -1815,12 +1784,12 @@
    "home": "Tennessee Titans",
    "away": "Houston Texans",
    "kickoff": "2026-10-11T17:00:00Z",
-   "pHome": 0.3013,
-   "pAway": 0.6947,
-   "expHome": 17,
+   "pHome": 0.2987,
+   "pAway": 0.6973,
+   "expHome": 16,
    "expAway": 23,
-   "computedAt": "2026-10-11T04:02:14Z",
-   "spread": -6.62,
+   "computedAt": "2026-10-11T12:07:16Z",
+   "spread": -6.72,
    "frozen": false
   },
   "2026_05_NYG_WAS": {
@@ -1832,7 +1801,7 @@
    "pAway": 0.3978,
    "expHome": 25,
    "expAway": 22,
-   "computedAt": "2026-10-11T04:02:14Z",
+   "computedAt": "2026-10-11T12:07:16Z",
    "spread": 3.26,
    "frozen": false
   },
@@ -1841,12 +1810,12 @@
    "home": "Green Bay Packers",
    "away": "Chicago Bears",
    "kickoff": "2026-10-11T17:00:00Z",
-   "pHome": 0.4625,
-   "pAway": 0.5335,
-   "expHome": 22,
+   "pHome": 0.4596,
+   "pAway": 0.5364,
+   "expHome": 21,
    "expAway": 23,
-   "computedAt": "2026-10-11T04:02:14Z",
-   "spread": -1.15,
+   "computedAt": "2026-10-11T12:07:16Z",
+   "spread": -1.24,
    "frozen": false
   },
   "2026_05_DEN_LAC": {
@@ -1858,7 +1827,7 @@
    "pAway": 0.5577,
    "expHome": 21,
    "expAway": 23,
-   "computedAt": "2026-10-11T04:02:14Z",
+   "computedAt": "2026-10-11T12:07:16Z",
    "spread": -1.93,
    "frozen": false
   },
@@ -1871,7 +1840,7 @@
    "pAway": 0.602,
    "expHome": 28,
    "expAway": 31,
-   "computedAt": "2026-10-11T04:02:14Z",
+   "computedAt": "2026-10-11T12:07:16Z",
    "spread": -3.39,
    "frozen": false
   },
@@ -1880,12 +1849,12 @@
    "home": "Seattle Seahawks",
    "away": "San Francisco 49ers",
    "kickoff": "2026-10-11T20:25:00Z",
-   "pHome": 0.5033,
-   "pAway": 0.4927,
+   "pHome": 0.4974,
+   "pAway": 0.4986,
    "expHome": 24,
    "expAway": 24,
-   "computedAt": "2026-10-11T04:02:14Z",
-   "spread": 0.17,
+   "computedAt": "2026-10-11T12:07:16Z",
+   "spread": -0.02,
    "frozen": false
   },
   "2026_05_BAL_ATL": {
@@ -1897,7 +1866,7 @@
    "pAway": 0.4097,
    "expHome": 25,
    "expAway": 22,
-   "computedAt": "2026-10-11T04:02:14Z",
+   "computedAt": "2026-10-11T12:07:16Z",
    "spread": 2.87,
    "frozen": false
   },
@@ -1906,12 +1875,12 @@
    "home": "Los Angeles Rams",
    "away": "Buffalo Bills",
    "kickoff": "2026-10-13T00:15:00Z",
-   "pHome": 0.4643,
-   "pAway": 0.5317,
+   "pHome": 0.4916,
+   "pAway": 0.5044,
    "expHome": 26,
-   "expAway": 27,
-   "computedAt": "2026-10-11T04:02:14Z",
-   "spread": -1.09,
+   "expAway": 26,
+   "computedAt": "2026-10-11T12:07:16Z",
+   "spread": -0.21,
    "frozen": false
   }
  }
