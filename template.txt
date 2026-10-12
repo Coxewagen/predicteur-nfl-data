@@ -479,7 +479,7 @@ const D = __DATA__;
     else if (net) tag = '<span class="tag net">' + ic("star") + "Favori net</span>";
     if (mk && mk.level === "contredit") tag += '<span class="tag warn-ko" title="Le mod\xE8le prend l\u2019autre favori que le march\xE9">' + ic("warn") + "Contredit le march\xE9</span>";
     else if (mk && mk.level === "prudence") tag += '<span class="tag warn-pru" title="Mod\xE8le bien plus confiant que le march\xE9">' + ic("warn") + "Prudence</span>";
-    const chips = (a) => (a.qb ? '<span class="chip qb" title="Quarterback absent">' + ic("cross") + "QB</span>" : "") + (a.off + a.deff ? '<span class="chip" title="Autres titulaires absents">' + ic("cross") + (a.off + a.deff) + "</span>" : "");
+    const chips = (a) => (a.qb ? '<span class="chip qb" title="Quarterback titulaire absent">' + ic("cross") + "QB" + (a.qbn ? " " + esc(a.qbn) : "") + "</span>" : "") + (a.off + a.deff ? '<span class="chip" title="Autres titulaires absents">' + ic("cross") + (a.off + a.deff) + "</span>" : "");
     const line = (side) => {
       const name = g[side];
       const showPct = unlocked && p;

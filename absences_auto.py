@@ -209,9 +209,20 @@ def qb_tier(pay, prod):
     return 'titulaire'
 
 
+BLESSURES_FR = {'ankle': 'cheville', 'knee': 'genou', 'hamstring': 'ischio-jambiers', 'shoulder': 'épaule',
+                'concussion': 'commotion', 'foot': 'pied', 'groin': 'aine', 'back': 'dos', 'hip': 'hanche', 'calf': 'mollet',
+                'wrist': 'poignet', 'hand': 'main', 'finger': 'doigt', 'thumb': 'pouce', 'elbow': 'coude', 'neck': 'cou',
+                'chest': 'poitrine', 'ribs': 'côtes', 'quadricep': 'quadriceps', 'achilles': 'tendon d’Achille', 'toe': 'orteil',
+                'illness': 'maladie', 'personal matter': 'raison personnelle', 'not injury related': 'hors blessure',
+                'forearm': 'avant-bras', 'fibula': 'péroné', 'pectoral': 'pectoral', 'abdomen': 'abdomen', 'oblique': 'oblique'}
+
+
 def raison(r):
     txt = r.get('report_primary_injury') or r.get('practice_primary_injury')
-    return txt.lower() if txt else None
+    if not txt:
+        return None
+    t = txt.lower().strip()
+    return BLESSURES_FR.get(t, t)
 
 
 FINAL_STATUSES = ('Out', 'Doubtful', 'Questionable')
@@ -368,6 +379,8 @@ def construire(season, names, played, overrides=None, next_week=None):
         entry['qbOut'] = True
         entry['qbTier'] = tier
         entry['qbGp'] = d.gp(starter, team)
+        entry['qbName'] = nm                                   # affiché dans l'appli (ajout du 12/10)
+        entry['qbWhy'] = why_of(unavailable, starter)
         if not healthy and not others:
             entry['qbBackupOut'] = True      # aucun autre quarterback connu
         elif not healthy:
@@ -376,6 +389,8 @@ def construire(season, names, played, overrides=None, next_week=None):
             rep = max(healthy, key=lambda g: (d.snaps[season].get(g, {}).get('off', 0), d.starts.get(g, 0)))
             n = d.starts.get(rep, 0)
             entry['qbReplacementTier'] = 'aucune_experience' if n == 0 else ('limite' if n <= 5 else 'standard')
+            entry['qbReplacementName'] = name_of.get(rep, rep)
+            entry['qbReplacementStarts'] = n
             journal.append(f"{team} : remplaçant {name_of.get(rep, rep)}, {n} départ(s) en carrière")
         journal.append(f"{team} : QB {nm} ({why_of(unavailable, starter)}) -> {tier}, "
                        + (f"salaire top {100 - round(pct * 100)} % des QB, " if pct is not None else '')

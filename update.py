@@ -389,16 +389,27 @@ def infos_equipes():
 def liste_abs(t):
     out = []
     if t.get('qbOut'):
-        txt = 'Quarterback titulaire absent (niveau ' + t.get('qbTier', 'titulaire') + ')'
-        if t.get('qbBackupOut'): txt += ', remplaçant absent lui aussi'
-        elif t.get('qbReplacementTier'): txt += ', remplaçant : ' + t['qbReplacementTier'].replace('_', ' ')
-        out.append(dict(side='QB', txt=txt))
+        niveau = {'elite': 'élite', 'titulaire': 'titulaire', 'limite': 'limité'}.get(t.get('qbTier', 'titulaire'), t.get('qbTier'))
+        nom = t.get('qbName')
+        txt = (nom + (' (' + t['qbWhy'] + ')' if t.get('qbWhy') else '') + ', quarterback titulaire, niveau ' + niveau) if nom \
+            else 'Quarterback titulaire absent (niveau ' + niveau + ')'
+        if t.get('qbBackupOut'):
+            txt += ' — remplaçant absent lui aussi'
+        elif t.get('qbReplacementName'):
+            n = t.get('qbReplacementStarts', 0)
+            txt += ' — remplacé par ' + t['qbReplacementName'] + ' (' + ('aucune titularisation en carrière' if n == 0 else str(n) + ' titularisation' + ('s' if n > 1 else '') + ' en carrière') + ')'
+        elif t.get('qbReplacementTier'):
+            txt += ', remplaçant : ' + t['qbReplacementTier'].replace('_', ' ')
+        out.append(dict(side='Quarterback', txt=txt))
     out += [dict(side='Attaque', txt=a['pos'], tier=a.get('tier', 'titulaire')) for a in t.get('offAbsences', [])]
     out += [dict(side='Défense', txt=a['pos'], tier=a.get('tier', 'titulaire')) for a in t.get('defAbsences', [])]
     return out
 
 def resume_abs(t):
-    return dict(qb=bool(t.get('qbOut')), off=len(t.get('offAbsences', [])), deff=len(t.get('defAbsences', [])))
+    r = dict(qb=bool(t.get('qbOut')), off=len(t.get('offAbsences', [])), deff=len(t.get('defAbsences', [])))
+    if t.get('qbOut') and t.get('qbName'):
+        r['qbn'] = t['qbName'].split(' ')[-1] if t['qbName'].split(' ')[-1] not in ('Jr.', 'Sr.', 'II', 'III') else t['qbName'].split(' ')[-2]
+    return r
 
 def controle_absences(absences, T, cur_week):
     """Compare les absences retenues aux données officielles. Ne modifie rien : produit une liste à examiner."""
