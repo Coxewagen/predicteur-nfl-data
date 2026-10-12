@@ -4,7 +4,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Andrew Wingard, knee, rapport précédent)",
+     "pos": "safety titulaire (Andrew Wingard, genou, rapport précédent)",
      "gp": 4
     },
     {
@@ -17,7 +17,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "garde gauche titulaire (Isaiah Adams, ankle, rapport précédent)",
+     "pos": "garde gauche titulaire (Isaiah Adams, cheville, rapport précédent)",
      "lane": "line",
      "gp": 3
     },
@@ -35,7 +35,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "edge rusher titulaire (Trey Hendrickson, finger, rapport précédent)",
+     "pos": "edge rusher titulaire (Trey Hendrickson, doigt, rapport précédent)",
      "lane": "pass",
      "gp": 3
     }
@@ -43,7 +43,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "centre titulaire (Cam Jurgens, concussion, rapport précédent)",
+     "pos": "centre titulaire (Cam Jurgens, commotion, rapport précédent)",
      "lane": "line",
      "gp": 4
     }
@@ -51,7 +51,11 @@
    "qbOut": true,
    "qbTier": "elite",
    "qbGp": 4,
+   "qbName": "Lamar Jackson",
+   "qbWhy": "cheville, rapport précédent",
    "qbReplacementTier": "standard",
+   "qbReplacementName": "Tyler Huntley",
+   "qbReplacementStarts": 15,
    "injReport": "provisoire",
    "injWeek": 5
   },
@@ -59,7 +63,7 @@
    "defAbsences": [
     {
      "tier": "rotation",
-     "pos": "défenseur de ligne titulaire (Ed Oliver, knee)",
+     "pos": "défenseur de ligne titulaire (Ed Oliver, genou)",
      "gp": 3
     }
    ],
@@ -70,13 +74,13 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Xavier Legette, knee, rapport précédent)",
+     "pos": "receveur titulaire (Xavier Legette, genou, rapport précédent)",
      "lane": "pass",
      "gp": 2
     },
     {
      "tier": "titulaire",
-     "pos": "garde gauche titulaire (Damien Lewis, elbow, rapport précédent)",
+     "pos": "garde gauche titulaire (Damien Lewis, coude, rapport précédent)",
      "lane": "line",
      "gp": 3
     }
@@ -88,7 +92,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Kyle Dugger, quadricep, rapport précédent)",
+     "pos": "safety titulaire (Kyle Dugger, quadriceps, rapport précédent)",
      "gp": 1
     },
     {
@@ -113,7 +117,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "défenseur de ligne titulaire (Mason Graham, knee, rapport précédent)",
+     "pos": "défenseur de ligne titulaire (Mason Graham, genou, rapport précédent)",
      "gp": 4
     },
     {
@@ -130,13 +134,13 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Cobie Durant, hamstring, rapport précédent)",
+     "pos": "cornerback titulaire (Cobie Durant, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 2
     },
     {
      "tier": "titulaire",
-     "pos": "linebacker titulaire (DeMarvion Overshown, hamstring, rapport précédent)",
+     "pos": "linebacker titulaire (DeMarvion Overshown, ischio-jambiers, rapport précédent)",
      "gp": 1
     },
     {
@@ -152,13 +156,13 @@
    "defAbsences": [
     {
      "tier": "elite",
-     "pos": "cornerback titulaire (Pat Surtain II, ankle, rapport précédent)",
+     "pos": "cornerback titulaire (Pat Surtain II, cheville, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Riley Moss, ribs, rapport précédent)",
+     "pos": "cornerback titulaire (Riley Moss, côtes, rapport précédent)",
      "lane": "pass",
      "gp": 4
     }
@@ -178,13 +182,13 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Rock Ya-Sin, hamstring, rapport précédent)",
+     "pos": "cornerback titulaire (Rock Ya-Sin, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 3
     },
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Brian Branch, achilles, rapport précédent)",
+     "pos": "safety titulaire (Brian Branch, tendon d’Achille, rapport précédent)",
      "gp": 0
     },
     {
@@ -214,13 +218,13 @@
     },
     {
      "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Ben Bartch, foot, rapport précédent)",
+     "pos": "ailier gauche titulaire (Ben Bartch, pied, rapport précédent)",
      "lane": "line",
      "gp": 2
     },
     {
      "tier": "titulaire",
-     "pos": "centre titulaire (Cade Mays, wrist, rapport précédent)",
+     "pos": "centre titulaire (Cade Mays, poignet, rapport précédent)",
      "lane": "line",
      "gp": 0
     }
@@ -232,13 +236,13 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "garde gauche titulaire (Aaron Banks, knee, rapport précédent)",
+     "pos": "garde gauche titulaire (Aaron Banks, genou, rapport précédent)",
      "lane": "line",
      "gp": 1
     },
     {
      "tier": "titulaire",
-     "pos": "centre titulaire (Jacob Monk, quadricep, rapport précédent)",
+     "pos": "centre titulaire (Jacob Monk, quadriceps, rapport précédent)",
      "lane": "line",
      "gp": 3
     },
@@ -269,13 +273,13 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "edge rusher titulaire (Arden Key, hamstring, rapport précédent)",
+     "pos": "edge rusher titulaire (Arden Key, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Jaylon Carlies, ribs, rapport précédent)",
+     "pos": "safety titulaire (Jaylon Carlies, côtes, rapport précédent)",
      "gp": 4
     },
     {
@@ -300,7 +304,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Eric Murray, concussion, rapport précédent)",
+     "pos": "safety titulaire (Eric Murray, commotion, rapport précédent)",
      "gp": 4
     }
    ],
@@ -319,7 +323,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Josh Simmons, back, rapport précédent)",
+     "pos": "ailier gauche titulaire (Josh Simmons, dos, rapport précédent)",
      "lane": "line",
      "gp": 0
     }
@@ -331,13 +335,13 @@
    "defAbsences": [
     {
      "tier": "rotation",
-     "pos": "cornerback titulaire (Donte Jackson, hamstring, rapport précédent)",
+     "pos": "cornerback titulaire (Donte Jackson, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
     {
      "tier": "elite",
-     "pos": "safety titulaire (Derwin James, hamstring, rapport précédent)",
+     "pos": "safety titulaire (Derwin James, ischio-jambiers, rapport précédent)",
      "gp": 3
     },
     {
@@ -349,7 +353,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Quentin Johnston, chest, rapport précédent)",
+     "pos": "receveur titulaire (Quentin Johnston, poitrine, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
@@ -360,7 +364,7 @@
     },
     {
      "tier": "titulaire",
-     "pos": "ailier droit titulaire (Joe Alt, neck, rapport précédent)",
+     "pos": "ailier droit titulaire (Joe Alt, cou, rapport précédent)",
      "lane": "line",
      "gp": 4
     },
@@ -384,7 +388,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Jalen Nailor, concussion, rapport précédent)",
+     "pos": "receveur titulaire (Jalen Nailor, commotion, rapport précédent)",
      "lane": "pass",
      "gp": 4
     }
@@ -396,7 +400,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Caleb Douglas, ankle, rapport précédent)",
+     "pos": "receveur titulaire (Caleb Douglas, cheville, rapport précédent)",
      "lane": "pass",
      "gp": 2
     },
@@ -427,7 +431,7 @@
     },
     {
      "tier": "elite",
-     "pos": "ailier gauche titulaire (Christian Darrisaw, concussion, rapport précédent)",
+     "pos": "ailier gauche titulaire (Christian Darrisaw, commotion, rapport précédent)",
      "lane": "line",
      "gp": 4
     }
@@ -439,7 +443,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Mack Hollins, calf, rapport précédent)",
+     "pos": "receveur titulaire (Mack Hollins, mollet, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
@@ -464,13 +468,13 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Carlton Davis III, neck, rapport précédent)",
+     "pos": "cornerback titulaire (Carlton Davis III, cou, rapport précédent)",
      "lane": "pass",
      "gp": 3
     },
     {
      "tier": "elite",
-     "pos": "cornerback titulaire (Christian Gonzalez, shoulder, rapport précédent)",
+     "pos": "cornerback titulaire (Christian Gonzalez, épaule, rapport précédent)",
      "lane": "pass",
      "gp": 3
     },
@@ -488,7 +492,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "linebacker titulaire (Kaden Elliss, calf, rapport précédent)",
+     "pos": "linebacker titulaire (Kaden Elliss, mollet, rapport précédent)",
      "gp": 3
     },
     {
@@ -524,12 +528,12 @@
    "defAbsences": [
     {
      "tier": "rotation",
-     "pos": "safety titulaire (Jason Pinnock, concussion, rapport précédent)",
+     "pos": "safety titulaire (Jason Pinnock, commotion, rapport précédent)",
      "gp": 2
     },
     {
      "tier": "rotation",
-     "pos": "edge rusher titulaire (Chauncey Golston, neck, rapport précédent)",
+     "pos": "edge rusher titulaire (Chauncey Golston, cou, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
@@ -562,7 +566,11 @@
    "qbOut": true,
    "qbTier": "titulaire",
    "qbGp": 2,
+   "qbName": "Jaxson Dart",
+   "qbWhy": "IR",
    "qbReplacementTier": "standard",
+   "qbReplacementName": "Jameis Winston",
+   "qbReplacementStarts": 95,
    "injReport": "provisoire",
    "injWeek": 5
   },
@@ -570,19 +578,19 @@
    "offAbsences": [
     {
      "tier": "elite",
-     "pos": "coureur titulaire (Breece Hall, quadricep, rapport précédent)",
+     "pos": "coureur titulaire (Breece Hall, quadriceps, rapport précédent)",
      "lane": "rush",
      "gp": 3
     },
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Adonai Mitchell, finger, rapport précédent)",
+     "pos": "receveur titulaire (Adonai Mitchell, doigt, rapport précédent)",
      "lane": "pass",
      "gp": 2
     },
     {
      "tier": "titulaire",
-     "pos": "garde gauche titulaire (Dylan Parham, knee, rapport précédent)",
+     "pos": "garde gauche titulaire (Dylan Parham, genou, rapport précédent)",
      "lane": "line",
      "gp": 3
     }
@@ -601,25 +609,25 @@
    "offAbsences": [
     {
      "tier": "elite",
-     "pos": "coureur titulaire (Saquon Barkley, hamstring, rapport précédent)",
+     "pos": "coureur titulaire (Saquon Barkley, ischio-jambiers, rapport précédent)",
      "lane": "rush",
      "gp": 4
     },
     {
      "tier": "rotation",
-     "pos": "receveur titulaire (Marquise Brown, ankle, rapport précédent)",
+     "pos": "receveur titulaire (Marquise Brown, cheville, rapport précédent)",
      "lane": "pass",
      "gp": 1
     },
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (DeVonta Smith, hamstring, rapport précédent)",
+     "pos": "receveur titulaire (DeVonta Smith, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 3
     },
     {
      "tier": "titulaire",
-     "pos": "centre titulaire (Drew Kendall, knee, rapport précédent)",
+     "pos": "centre titulaire (Drew Kendall, genou, rapport précédent)",
      "lane": "line",
      "gp": 3
     },
@@ -633,7 +641,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Marcus Epps, groin, rapport précédent)",
+     "pos": "safety titulaire (Marcus Epps, aine, rapport précédent)",
      "gp": 3
     }
    ],
@@ -644,12 +652,12 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (DeShon Elliott, knee, rapport précédent)",
+     "pos": "safety titulaire (DeShon Elliott, genou, rapport précédent)",
      "gp": 0
     },
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Jamel Dean, ankle, rapport précédent)",
+     "pos": "cornerback titulaire (Jamel Dean, cheville, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
@@ -662,7 +670,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Michael Pittman, foot, rapport précédent)",
+     "pos": "receveur titulaire (Michael Pittman, pied, rapport précédent)",
      "lane": "pass",
      "gp": 3
     }
@@ -674,13 +682,13 @@
    "defAbsences": [
     {
      "tier": "elite",
-     "pos": "edge rusher titulaire (Nick Bosa, knee, rapport précédent)",
+     "pos": "edge rusher titulaire (Nick Bosa, genou, rapport précédent)",
      "lane": "pass",
      "gp": 2
     },
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Marques Sigle, ankle, rapport précédent)",
+     "pos": "safety titulaire (Marques Sigle, cheville, rapport précédent)",
      "gp": 4
     },
     {
@@ -716,12 +724,12 @@
     },
     {
      "tier": "titulaire",
-     "pos": "linebacker titulaire (SirVocea Dennis, ankle, rapport précédent)",
+     "pos": "linebacker titulaire (SirVocea Dennis, cheville, rapport précédent)",
      "gp": 4
     },
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Benjamin Morrison, quadricep, rapport précédent)",
+     "pos": "cornerback titulaire (Benjamin Morrison, quadriceps, rapport précédent)",
      "lane": "pass",
      "gp": 3
     }
@@ -743,7 +751,11 @@
    "qbOut": true,
    "qbTier": "titulaire",
    "qbGp": 3,
+   "qbName": "Baker Mayfield",
+   "qbWhy": "pouce, rapport précédent",
    "qbReplacementTier": "limite",
+   "qbReplacementName": "Jalon Daniels",
+   "qbReplacementStarts": 2,
    "injReport": "provisoire",
    "injWeek": 5
   },
@@ -751,7 +763,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Amani Hooker, concussion, rapport précédent)",
+     "pos": "safety titulaire (Amani Hooker, commotion, rapport précédent)",
      "gp": 4
     },
     {
@@ -787,7 +799,7 @@
    "offAbsences": [
     {
      "tier": "rotation",
-     "pos": "receveur titulaire (Stefon Diggs, hamstring, rapport précédent)",
+     "pos": "receveur titulaire (Stefon Diggs, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
@@ -801,13 +813,13 @@
    "defAbsences": [
     {
      "tier": "rotation",
-     "pos": "edge rusher titulaire (Charles Omenihu, groin, rapport précédent)",
+     "pos": "edge rusher titulaire (Charles Omenihu, aine, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Nick Cross, illness, rapport précédent)",
+     "pos": "safety titulaire (Nick Cross, maladie, rapport précédent)",
      "gp": 2
     },
     {
@@ -1918,7 +1930,7 @@
    "pAway": 0.5044,
    "expHome": 26,
    "expAway": 26,
-   "computedAt": "2026-10-12T10:13:53Z",
+   "computedAt": "2026-10-12T14:53:43Z",
    "spread": -0.21,
    "frozen": false
   }
