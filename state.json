@@ -67,6 +67,26 @@
      "gp": 3
     }
    ],
+   "watch": [
+    {
+     "name": "DJ Moore",
+     "pos": "receveur",
+     "etat": "incertain pour le match",
+     "why": "épaule"
+    },
+    {
+     "name": "Dee Alford",
+     "pos": "cornerback",
+     "etat": "incertain pour le match",
+     "why": "cheville"
+    },
+    {
+     "name": "Terrel Bernard",
+     "pos": "linebacker",
+     "etat": "absent à l’entraînement",
+     "why": "genou"
+    }
+   ],
    "injReport": "final",
    "injWeek": 5
   },
@@ -852,6 +872,26 @@
      "pos": "centre titulaire (Justin Dedich, IR)",
      "lane": "line",
      "gp": 0
+    }
+   ],
+   "watch": [
+    {
+     "name": "Aaron Donald",
+     "pos": "défenseur de ligne",
+     "etat": "absent à l’entraînement",
+     "why": "dos"
+    },
+    {
+     "name": "Quentin Lake",
+     "pos": "safety",
+     "etat": "incertain pour le match",
+     "why": "hanche"
+    },
+    {
+     "name": "Josaiah Stewart",
+     "pos": "edge rusher",
+     "etat": "entraînement limité",
+     "why": "aine"
     }
    ],
    "injReport": "final",
@@ -1930,7 +1970,7 @@
    "pAway": 0.5044,
    "expHome": 26,
    "expAway": 26,
-   "computedAt": "2026-10-12T14:59:15Z",
+   "computedAt": "2026-10-12T15:18:34Z",
    "spread": -0.21,
    "frozen": false
   }
