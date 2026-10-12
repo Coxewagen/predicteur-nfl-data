@@ -35,7 +35,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "edge rusher titulaire (Trey Hendrickson, finger)",
+     "pos": "edge rusher titulaire (Trey Hendrickson, finger, rapport précédent)",
      "lane": "pass",
      "gp": 3
     }
@@ -43,7 +43,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "centre titulaire (Cam Jurgens, concussion)",
+     "pos": "centre titulaire (Cam Jurgens, concussion, rapport précédent)",
      "lane": "line",
      "gp": 4
     }
@@ -52,7 +52,7 @@
    "qbTier": "elite",
    "qbGp": 4,
    "qbReplacementTier": "standard",
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 5
   },
   "Buffalo Bills": {
@@ -872,7 +872,7 @@
      "gp": 0
     }
    ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 5
   },
   "Houston Texans": {
@@ -1904,7 +1904,10 @@
    "expAway": 22,
    "computedAt": "2026-10-12T00:13:48Z",
    "spread": 2.87,
-   "frozen": false
+   "frozen": true,
+   "homeScore": 23,
+   "awayScore": 30,
+   "correct": false
   },
   "2026_05_BUF_LA": {
    "week": 5,
@@ -1915,7 +1918,7 @@
    "pAway": 0.5044,
    "expHome": 26,
    "expAway": 26,
-   "computedAt": "2026-10-12T00:13:48Z",
+   "computedAt": "2026-10-12T10:13:53Z",
    "spread": -0.21,
    "frozen": false
   }
