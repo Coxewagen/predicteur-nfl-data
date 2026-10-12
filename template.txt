@@ -160,8 +160,11 @@ td{border-bottom:1px solid var(--line);padding:8px 8px 8px 0;vertical-align:top}
   padding:18px 16px calc(env(safe-area-inset-bottom,0px) + 18px);
   box-shadow:0 -10px 30px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:14px}
 .modal-panel .handle{width:40px;height:4px;border-radius:999px;background:var(--line);margin:0 auto}
-.modal-close{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;
-  background:var(--track);border:none;color:var(--ink);font-size:16px;line-height:1}
+/* bouton de fermeture flottant : reste visible en haut à droite pendant qu'on fait défiler la fiche */
+.modal-close{position:sticky;top:8px;align-self:flex-end;z-index:5;flex:none;width:46px;height:46px;margin-bottom:-60px;
+  border-radius:50%;background:var(--ink);color:var(--pitch);border:2px solid var(--pitch);
+  font-size:22px;font-weight:700;line-height:1;display:grid;place-items:center;
+  box-shadow:0 2px 10px rgba(0,0,0,.55);cursor:pointer}
 
 @media (max-width:380px){
   .tname .long{display:none} .tname .short{display:inline}
@@ -627,7 +630,7 @@ const D = __DATA__;
     if (unlocked && p) {
       const favHome = p.pHome >= p.pAway, ecart = Math.abs(p.expHome - p.expAway);
       const verdict = done && g.homeScore !== g.awayScore ? '<p class="verdict ' + (g.homeScore > g.awayScore === favHome ? "yes" : "no") + '">' + ic(g.homeScore > g.awayScore === favHome ? "check" : "x") + (g.homeScore > g.awayScore === favHome ? "Pr\xE9vision juste" : "Pr\xE9vision fausse") + " \u2014 r\xE9sultat " + g.homeScore + " \u2013 " + g.awayScore + " (pr\xE9vu " + p.expHome + " \u2013 " + p.expAway + ")</p>" : "";
-      pred = '<div class="bigbadges"><span class="pbadge big home' + (favHome ? " fav" : "") + '"><i>Domicile</i>' + pct(p.pHome) + '</span><span class="pbadge big away' + (!favHome ? " fav" : "") + '"><i>Ext\xE9rieur</i>' + pct(p.pAway) + '</span></div><div class="gfoot"><span>Score attendu : <b>' + p.expHome + " \u2013 " + p.expAway + "</b></span><span>\xC9cart attendu : <b>" + (ecart ? esc(nick(D2, favHome ? g.home : g.away)) + " de " + ecart + " pt" + (ecart > 1 ? "s" : "") : "aucun") + "</b></span></div>" + verdict + marketModal(D2, g) + (injState(g) === "final" ? '<p class="injbox ok">' + ic("check") + "<span><b>Blessures \xE0 jour.</b> Le rapport final de la NFL est publi\xE9 pour les deux \xE9quipes : la pr\xE9vision tient compte des absences officielles.</span></p>" : injState(g) === "provisoire" ? '<p class="injbox prov">' + ic("clock") + "<span><b>Blessures provisoires.</b> Le rapport final n\u2019est pas encore publi\xE9 (vendredi pour un match du dimanche, mercredi pour un match du jeudi, samedi pour le lundi). Le mod\xE8le garde les absents du rapport pr\xE9c\xE9dent. Dans le rejeu 2021-2025, la pr\xE9vision juste passe d\u2019environ 63 % \xE0 65 % une fois le rapport final pris en compte : attends-le avant de parier.</span></p>" : "") + (g.prov ? '<p class="meta">Pr\xE9vision provisoire : recalcul\xE9e \xE0 chaque mise \xE0 jour avec les stats et les absences du moment.</p>' : "") + analyseHtml(D2, g);
+      pred = '<div class="bigbadges"><span class="pbadge big home' + (favHome ? " fav" : "") + '"><i>Domicile</i>' + pct(p.pHome) + '</span><span class="pbadge big away' + (!favHome ? " fav" : "") + '"><i>Ext\xE9rieur</i>' + pct(p.pAway) + '</span></div><div class="gfoot"><span>Score attendu : <b>' + p.expHome + " \u2013 " + p.expAway + "</b></span><span>\xC9cart attendu : <b>" + (ecart ? esc(nick(D2, favHome ? g.home : g.away)) + " de " + ecart + " pt" + (ecart > 1 ? "s" : "") : "aucun") + "</b></span></div>" + verdict + marketModal(D2, g) + (injState(g) === "final" ? '<p class="injbox ok">' + ic("check") + "<span><b>Blessures \xE0 jour.</b> Le rapport final de la NFL est publi\xE9 pour les deux \xE9quipes : la pr\xE9vision tient compte des absences officielles.</span></p>" : "") + (g.prov ? '<p class="meta">Pr\xE9vision provisoire : recalcul\xE9e \xE0 chaque mise \xE0 jour avec les stats et les absences du moment.</p>' : "") + analyseHtml(D2, g);
     } else if (p) {
       pred = ctx.gateCard();
     } else {
@@ -639,7 +642,7 @@ const D = __DATA__;
     if (g.neutral) notes.push("Match jou\xE9 \xE0 l\u2019\xE9tranger : pas d\u2019avantage du terrain.");
     const lv = liveOf(g);
     const liveLine = lv ? '<p class="livebox">' + (lv.state === "in" ? '<i class="dot"></i><b>En direct</b> \xB7 ' + esc(lv.detail) : "<b>Termin\xE9</b> (score ESPN, le bilan sera valid\xE9 \xE0 la prochaine mise \xE0 jour)") + " \u2014 " + esc(nick(D2, g.home)) + " <b>" + lv.hs + "</b> \u2013 <b>" + lv.as + "</b> " + esc(nick(D2, g.away)) + "</p>" : "";
-    return '<div class="handle"></div><button class="modal-close" id="modalClose" aria-label="Fermer">\u2715</button>' + liveLine + '<div class="mwhen' + (isBet(g.id) ? " betted" : "") + '" data-id="' + esc(g.id) + '"><span class="when">' + ic("clock") + when(g.kickoff) + "</span>" + validated() + '</div><div class="team">' + shield(D2, g.home) + '<span class="tname"><span class="long">' + esc(g.home) + '</span><span class="role">' + ic("home") + '</span></span></div><div class="team">' + shield(D2, g.away) + '<span class="tname"><span class="long">' + esc(g.away) + '</span><span class="role">' + ic("plane") + "</span></span></div>" + betRow(g) + pred + stats + abs + (notes.length ? '<p class="meta">' + notes.join(" ") + "</p>" : "");
+    return '<button class="modal-close" id="modalClose" aria-label="Fermer">\u2715</button><div class="handle"></div>' + liveLine + '<div class="mwhen' + (isBet(g.id) ? " betted" : "") + '" data-id="' + esc(g.id) + '"><span class="when">' + ic("clock") + when(g.kickoff) + "</span>" + validated() + '</div><div class="team">' + shield(D2, g.home) + '<span class="tname"><span class="long">' + esc(g.home) + '</span><span class="role">' + ic("home") + '</span></span></div><div class="team">' + shield(D2, g.away) + '<span class="tname"><span class="long">' + esc(g.away) + '</span><span class="role">' + ic("plane") + "</span></span></div>" + betRow(g) + pred + stats + abs + (notes.length ? '<p class="meta">' + notes.join(" ") + "</p>" : "");
   }
   function wireGames(gamesEl, getGames, open) {
     gamesEl.addEventListener("change", (e) => {
