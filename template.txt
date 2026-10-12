@@ -236,6 +236,13 @@ ul.abs{margin:4px 0 0;padding-left:18px} ul.abs li{margin:3px 0;font-size:15px}
 .livebox{margin:6px 0 10px;padding:10px 12px;border-radius:10px;background:var(--bad-bg);border-left:6px solid var(--bad);font-size:17px}
 .dim{color:var(--muted);font-weight:400}
 
+/* filtre « Favoris 65 % et plus » (12/10) */
+.filterbar{display:flex;gap:8px;margin:4px 0 12px;flex-wrap:wrap}
+.filterbar button{flex:1 1 auto;min-height:46px;padding:8px 14px;border-radius:999px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 17px var(--sans);display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.filterbar button.on{background:var(--field);border-color:var(--field);color:var(--on-field)}
+.favhead{font-size:17px;margin:0 0 12px;color:var(--ink)}
+.favhead b{color:var(--field)}
+
 .site-shell{max-width:760px;margin:0 auto;min-height:100%}
 </style>
 
@@ -461,6 +468,58 @@ const D = __DATA__;
     const v = LIVE[g.id];
     return v && g.status !== "closed" && (v.state === "in" || v.state === "post") ? v : null;
   };
+  var FAV_MIN = 0.65;
+  var FILTER_KEY = "nfl_filtre_v1";
+  function getFilter() {
+    try {
+      return localStorage.getItem(FILTER_KEY) === "fav" ? "fav" : "all";
+    } catch (e) {
+      return "all";
+    }
+  }
+  function setFilter(m) {
+    try {
+      localStorage.setItem(FILTER_KEY, m);
+    } catch (e) {
+    }
+    curFilter = m;
+  }
+  var curFilter = null;
+  var currentFilter = () => curFilter || (curFilter = getFilter());
+  var favP = (g) => g.pred ? Math.max(g.pred.pHome, g.pred.pAway) : 0;
+  var favGames = (ctx, games) => games.filter((g) => g.pred && ctx.isUnlocked(g) && favP(g) >= FAV_MIN);
+  function seasonFavRecord(D2) {
+    let n = 0, ok = 0;
+    for (const g of Object.values(D2 && D2.weeks || {}).flat()) {
+      if (g.status !== "closed" || !g.pred || favP(g) < FAV_MIN || g.homeScore === g.awayScore) continue;
+      n++;
+      if (g.homeScore > g.awayScore === g.pred.pHome >= g.pred.pAway) ok++;
+    }
+    return { n, ok };
+  }
+  function filterBarHtml(mode, nFav) {
+    return '<button type="button" data-filter="all" class="' + (mode === "all" ? "on" : "") + '">Tous les matchs</button><button type="button" data-filter="fav" class="' + (mode === "fav" ? "on" : "") + '">' + ic("star") + "Favoris 65 % et plus" + (nFav ? " (" + nFav + ")" : "") + "</button>";
+  }
+  function favHeaderHtml(D2, nWeek) {
+    const r = seasonFavRecord(D2);
+    return '<p class="favhead">' + (nWeek ? nWeek + " match" + (nWeek > 1 ? "s" : "") + " o\xF9 le mod\xE8le donne 65 % ou plus au favori." : "Aucun match \xE0 65 % ou plus cette semaine.") + (r.n ? " Cette saison, ces favoris ont gagn\xE9 <b>" + r.ok + " fois sur " + r.n + "</b> (" + Math.round(r.ok / r.n * 100) + " %)." : "") + "</p>";
+  }
+  function filterBar(gamesEl, onChange) {
+    let bar = document.getElementById("filterBar");
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.id = "filterBar";
+      bar.className = "filterbar";
+      gamesEl.parentNode.insertBefore(bar, gamesEl);
+      bar.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-filter]");
+        if (!b) return;
+        setFilter(b.dataset.filter);
+        onChange();
+      });
+    }
+    return bar;
+  }
   function gameCard(D2, ctx, g, idx) {
     const p = g.pred, lv = liveOf(g);
     const done = g.status === "closed" || lv && lv.state === "post";
@@ -591,7 +650,10 @@ const D = __DATA__;
     $("updatedMeta").textContent = "Mis \xE0 jour le " + D.updatedLabel + " (heure de Paris)" + (ws.future ? " \xB7 pr\xE9visions provisoires" : "");
     $("weekPrev").disabled = selectedWeek <= ws.minWeek;
     $("weekNext").disabled = selectedWeek >= ws.maxWeek;
-    $("games").innerHTML = shown.length ? shown.map((g, i) => gameCard(D, CTX, g, i)).join("") : '<p class="meta">Aucun match enregistr\xE9 pour cette semaine.</p>';
+    const mode = currentFilter(), fav = favGames(CTX, shown);
+    filterBar($("games"), render).innerHTML = filterBarHtml(mode, fav.length);
+    if (mode === "fav") shown = fav;
+    $("games").innerHTML = (mode === "fav" ? favHeaderHtml(D, fav.length) : "") + (shown.length ? shown.map((g, i) => gameCard(D, CTX, g, i)).join("") : mode === "fav" ? "" : '<p class="meta">Aucun match enregistr\xE9 pour cette semaine.</p>');
   }
   $("weekPrev").addEventListener("click", () => {
     if (!$("weekPrev").disabled) {
