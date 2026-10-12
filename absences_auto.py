@@ -222,6 +222,8 @@ def raison(r):
     if not txt:
         return None
     t = txt.lower().strip()
+    if t.startswith('not injury related'):
+        return 'repos' if 'rest' in t else 'hors blessure'
     return BLESSURES_FR.get(t, t)
 
 
@@ -401,6 +403,38 @@ def construire(season, names, played, overrides=None, next_week=None):
     for team, entry in out.items():
         if entry.get('offAbsences'):
             entry['offAbsences'] = un_par_poste(entry['offAbsences'], team, journal)
+
+    # --- titulaires « à surveiller » (ajout du 12/10) : sur le rapport de la semaine du prochain match, mais pas
+    #     comptés absents — incertains (Questionable) ou qui manquent / limitent l'entraînement. Information seulement,
+    #     sans effet sur le calcul ; rien avant le premier rapport d'entraînement (mercredi en général).
+    PRAT = {'Did Not Participate In Practice': 'absent à l’entraînement', 'Limited Participation in Practice': 'entraînement limité'}
+    derniers = defaultdict(dict)
+    for r in d.inj_all:
+        tm = names.get(r['team'])
+        if tm and r.get('gsis_id') and (next_week or {}).get(tm) == r['week']:
+            derniers[tm][r['gsis_id']] = r
+    for team, rows in derniers.items():
+        for gid, r in rows.items():
+            if gid in unavailable or r['report_status'] in OUT_STATUSES:
+                continue
+            etat_j = 'incertain pour le match' if r['report_status'] == 'Questionable' else PRAT.get(r.get('practice_status'))
+            if not etat_j or (raison(r) in ('repos', 'hors blessure') and r['report_status'] != 'Questionable'):
+                continue      # simple repos d'un joueur en bonne santé : rien à surveiller
+            pos = pos_of.get(gid) or r.get('position')
+            if pos in IGNORED_POS:
+                continue
+            share = d.share(gid)
+            if share is None or share < STARTER_SHARE:
+                continue
+            c = d.contract.get(gid)
+            group = (c['group'] if c and c['group'] else None) or ROSTER_GROUP.get(pos)
+            if group == 'QB':
+                label = 'quarterback'
+            elif group:
+                label = LABEL[group] if group != 'OL' else OL_LABEL.get(c['pos'] if c else '', LABEL['OL'])
+            else:
+                label = pos or '?'
+            out[team].setdefault('watch', []).append(dict(name=r['full_name'], pos=label, etat=etat_j, why=raison(r) or ''))
 
     # --- état des rapports de blessures (affiché dans l'appli : « à jour » ou « provisoire »)
     for team, (st, wk) in etat.items():

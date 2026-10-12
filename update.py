@@ -169,14 +169,18 @@ def main():
         if g['status'] == 'closed':
             for me, opp, pf, pa in ((g['home'], g['away'], g['homeScore'], g['awayScore']),
                                     (g['away'], g['home'], g['awayScore'], g['homeScore'])):
-                closed_by_team[me].append((g['kickoff'], 'V' if pf > pa else 'D' if pf < pa else 'N', opp, pf, pa))
+                # victoire « surprise » : le modèle (prévision figée au coup d'envoi) donnait l'adversaire favori
+                j = journal.get(g['id']) or {}
+                p_me = (j.get('pHome') if me == g['home'] else j.get('pAway')) if j else None
+                sup = pf > pa and p_me is not None and p_me < 0.5
+                closed_by_team[me].append((g['kickoff'], 'V' if pf > pa else 'D' if pf < pa else 'N', opp, pf, pa, sup, p_me))
     fiche = {}
     for n, t in T.items():
         r = sorted(closed_by_team[n])
         fiche[n] = dict(rec=f"{t['wins']}-{t['losses']}" + (f"-{t['ties']}" if t['ties'] else ''),
                         pf=round(t['pointsFor']/t['played'], 1) if t['played'] else None,
                         pa=round(t['pointsAgainst']/t['played'], 1) if t['played'] else None,
-                        form=[dict(r=x[1], opp=x[2], s=f"{x[3]}-{x[4]}") for x in r[-3:]][::-1])
+                        form=[dict(r=x[1], opp=x[2], s=f"{x[3]}-{x[4]}", **({'sup': round(x[6] * 100)} if x[5] else {})) for x in r[-5:]][::-1])
 
     # ---------- 3. prévisions ----------
     todo = [g for g in games if g['status'] == 'scheduled' and g['kickoff'] > now.strftime('%Y-%m-%dT%H:%M:%SZ')
@@ -403,10 +407,14 @@ def liste_abs(t):
         out.append(dict(side='Quarterback', txt=txt))
     out += [dict(side='Attaque', txt=a['pos'], tier=a.get('tier', 'titulaire')) for a in t.get('offAbsences', [])]
     out += [dict(side='Défense', txt=a['pos'], tier=a.get('tier', 'titulaire')) for a in t.get('defAbsences', [])]
+    out += [dict(side='À surveiller', txt=w['name'] + ', ' + w['pos'] + ' titulaire — ' + w['etat'] + (' (' + w['why'] + ')' if w.get('why') else ''), watch=True)
+            for w in t.get('watch', [])]
     return out
 
 def resume_abs(t):
     r = dict(qb=bool(t.get('qbOut')), off=len(t.get('offAbsences', [])), deff=len(t.get('defAbsences', [])))
+    if t.get('watch'):
+        r['watch'] = len(t['watch'])
     if t.get('qbOut') and t.get('qbName'):
         r['qbn'] = t['qbName'].split(' ')[-1] if t['qbName'].split(' ')[-1] not in ('Jr.', 'Sr.', 'II', 'III') else t['qbName'].split(' ')[-2]
     return r

@@ -243,6 +243,14 @@ ul.abs{margin:4px 0 0;padding-left:18px} ul.abs li{margin:3px 0;font-size:15px}
 .favhead{font-size:17px;margin:0 0 12px;color:var(--ink)}
 .favhead b{color:var(--field)}
 
+/* titulaires à surveiller (12/10) */
+.chip.watch{background:rgba(120,170,255,.18);color:#9cc3ff}
+.abs li.watch{color:#9cc3ff}
+.prevrep{color:var(--warn);font-weight:700}
+
+/* victoire surprise (12/10) */
+.surprise{color:var(--gold);font-size:18px;cursor:help}
+
 .site-shell{max-width:760px;margin:0 auto;min-height:100%}
 </style>
 
@@ -538,7 +546,7 @@ const D = __DATA__;
     else if (net) tag = '<span class="tag net">' + ic("star") + "Favori net</span>";
     if (mk && mk.level === "contredit") tag += '<span class="tag warn-ko" title="Le mod\xE8le prend l\u2019autre favori que le march\xE9">' + ic("warn") + "Contredit le march\xE9</span>";
     else if (mk && mk.level === "prudence") tag += '<span class="tag warn-pru" title="Mod\xE8le bien plus confiant que le march\xE9">' + ic("warn") + "Prudence</span>";
-    const chips = (a) => (a.qb ? '<span class="chip qb" title="Quarterback titulaire absent">' + ic("cross") + "QB" + (a.qbn ? " " + esc(a.qbn) : "") + "</span>" : "") + (a.off + a.deff ? '<span class="chip" title="Autres titulaires absents">' + ic("cross") + (a.off + a.deff) + "</span>" : "");
+    const chips = (a) => (a.qb ? '<span class="chip qb" title="Quarterback titulaire absent">' + ic("cross") + "QB" + (a.qbn ? " " + esc(a.qbn) : "") + "</span>" : "") + (a.off + a.deff ? '<span class="chip" title="Autres titulaires absents">' + ic("cross") + (a.off + a.deff) + "</span>" : "") + (a.watch ? '<span class="chip watch" title="Titulaires incertains cette semaine (d\xE9tail dans la fiche du match)">?' + a.watch + "</span>" : "");
     const line = (side) => {
       const name = g[side];
       const showPct = unlocked && p;
@@ -578,12 +586,12 @@ const D = __DATA__;
   function absBlockHtml(D2, name) {
     const items = ((D2.absences || []).find((a) => a.team === name) || { items: [] }).items;
     if (!items.length) return '<p class="meta">Aucune absence notable retenue.</p>';
-    return '<ul class="abs">' + items.map((i) => "<li>" + esc(i.side) + " : " + esc(i.txt) + "</li>").join("") + "</ul>";
+    return '<ul class="abs">' + items.map((i) => "<li" + (i.watch ? ' class="watch"' : "") + ">" + esc(i.side) + " : " + esc(i.txt).replace(", rapport pr\xE9c\xE9dent", ', <span class="prevrep">rapport de la semaine pass\xE9e</span>') + "</li>").join("") + "</ul>";
   }
   var formHtml = (D2, t) => {
     const f = (D2.fiche || {})[t];
     if (!f || !f.form || !f.form.length) return "\u2013";
-    return f.form.map((x) => '<span class="' + (x.r === "V" ? "yes" : x.r === "D" ? "no" : "") + '"><b>' + x.r + "</b></span> " + esc(x.s) + ' <span class="dim">vs ' + esc((D2.teams[x.opp] || {}).abbr || "?") + "</span>").join("<br>");
+    return f.form.map((x) => '<span class="' + (x.r === "V" ? "yes" : x.r === "D" ? "no" : "") + '"><b>' + x.r + "</b></span> " + esc(x.s) + ' <span class="dim">vs ' + esc((D2.teams[x.opp] || {}).abbr || "?") + "</span>" + (x.sup != null ? ' <span class="surprise" title="Victoire surprise : le mod\xE8le ne lui donnait que ' + x.sup + ' %">\u26A1</span>' : "")).join("<br>");
   };
   function modalHtml(D2, ctx, g) {
     var _a, _b, _c, _d;
@@ -600,7 +608,7 @@ const D = __DATA__;
     } else {
       pred = '<p class="meta">Pas assez de matchs jou\xE9s pour g\xE9n\xE9rer une pr\xE9vision.</p>';
     }
-    const stats = '<table class="cmp"><thead><tr><th></th><th>' + esc(nick(D2, g.home)) + "</th><th>" + esc(nick(D2, g.away)) + "</th></tr></thead><tbody><tr><td>Bilan</td><td>" + esc(fh.rec || "\u2013") + "</td><td>" + esc(fa.rec || "\u2013") + "</td></tr><tr><td>Points marqu\xE9s / match</td><td>" + ((_a = fh.pf) != null ? _a : "\u2013") + "</td><td>" + ((_b = fa.pf) != null ? _b : "\u2013") + "</td></tr><tr><td>Points encaiss\xE9s / match</td><td>" + ((_c = fh.pa) != null ? _c : "\u2013") + "</td><td>" + ((_d = fa.pa) != null ? _d : "\u2013") + "</td></tr><tr><td>3 derniers matchs</td><td>" + formHtml(D2, g.home) + "</td><td>" + formHtml(D2, g.away) + "</td></tr></tbody></table>";
+    const stats = '<table class="cmp"><thead><tr><th></th><th>' + esc(nick(D2, g.home)) + "</th><th>" + esc(nick(D2, g.away)) + "</th></tr></thead><tbody><tr><td>Bilan</td><td>" + esc(fh.rec || "\u2013") + "</td><td>" + esc(fa.rec || "\u2013") + "</td></tr><tr><td>Points marqu\xE9s / match</td><td>" + ((_a = fh.pf) != null ? _a : "\u2013") + "</td><td>" + ((_b = fa.pf) != null ? _b : "\u2013") + "</td></tr><tr><td>Points encaiss\xE9s / match</td><td>" + ((_c = fh.pa) != null ? _c : "\u2013") + "</td><td>" + ((_d = fa.pa) != null ? _d : "\u2013") + '</td></tr><tr><td>5 derniers matchs <span class="dim">(\u26A1 victoire surprise)</span></td><td>' + formHtml(D2, g.home) + "</td><td>" + formHtml(D2, g.away) + "</td></tr></tbody></table>";
     const abs = unlocked && p ? '<h3>Absences retenues</h3><div class="absgrid"><div><b>' + esc(nick(D2, g.home)) + "</b>" + absBlockHtml(D2, g.home) + "</div><div><b>" + esc(nick(D2, g.away)) + "</b>" + absBlockHtml(D2, g.away) + "</div></div>" : "";
     const notes = [];
     if (g.neutral) notes.push("Match jou\xE9 \xE0 l\u2019\xE9tranger : pas d\u2019avantage du terrain.");
