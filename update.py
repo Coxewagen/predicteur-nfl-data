@@ -238,12 +238,21 @@ def main():
     # de qui était absent à l'époque, donc les chips QB/absences sur un match déjà joué reflètent
     # l'état actuel des blessures, pas forcément celui du jour du match (limite connue, pas grave
     # pour un match déjà au score, mais à garder en tête).
+    # Analyses des matchs serrés (écrites le mercredi et le samedi par la tâche planifiée, voir ANALYSE.md) :
+    # recopiées telles quelles dans le match correspondant (champ "analyse"), affichées dans la fiche du match.
+    try:
+        analyses = json.loads((HERE/'analyses.json').read_text(encoding='utf-8')).get('matchs') or {}
+    except Exception as e:
+        print(f"analyses.json illisible, ignoré : {e}")
+        analyses = {}
     def build_week_games(week_games):
         out = []
         for g in week_games:
             j = journal.get(g['id'])
             pred = j and {k: j[k] for k in ('pHome', 'pAway', 'expHome', 'expAway', 'spread') if k in j}
             row = dict(g, pred=pred, abs={s: resume_abs(T[g[s]]) for s in ('home', 'away')})
+            if isinstance(analyses.get(g['id']), dict):
+                row['analyse'] = analyses[g['id']]
             if not pred and g['status'] == 'scheduled' and g['id'] in preds:   # semaine à venir : prévision provisoire
                 p = preds[g['id']]
                 row['pred'] = dict(pHome=round(p['pHome'], 4), pAway=round(p['pAway'], 4), expHome=p['expHome'], expAway=p['expAway'])

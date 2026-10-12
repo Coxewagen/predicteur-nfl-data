@@ -64,3 +64,11 @@ Chaque match à venir porte `blessures: "final"` ou `"provisoire"` (affiché dan
 
 ## Scores en direct (10/10)
 La page et l'appli lisent le tableau des scores public d'ESPN (sans clé) toutes les 30 secondes, seulement entre 10 minutes avant un coup d'envoi et 5 heures après. Une carte en cours affiche « En direct · 3e QT · 8:42 » et le score ; un match fini affiche le résultat « provisoire, ESPN » jusqu'au passage suivant du robot, qui reste la référence pour le bilan. Si ESPN ne répond pas, rien ne change.
+
+## Analyse des matchs serrés (12/10)
+Le mercredi et le samedi vers 23 h 45 (heure de Paris), une tâche planifiée Claude analyse les matchs **serrés** (favori du modèle entre 45 et 60 %) ou en **désaccord** avec le marché (favori différent, ou ≥ 10 points d'écart), dans les 7 jours à venir.
+- `matchs_serres.py` choisit les matchs (fichier `a_analyser.json`, non publié).
+- `ANALYSE.md` : les consignes suivies par la tâche (à modifier pour changer la façon d'analyser).
+- `analyses.json` : les analyses écrites (résumé, points clés, penchant, confiance faible/moyenne, avis).
+- `update.py` recopie chaque analyse dans son match (champ `analyse`) ; l'appli et le site l'affichent dans la fiche du match, avec une étiquette « Analyse » sur la carte.
+- `update.yml` relance le robot dès que `analyses.json` est publié, et récupère une analyse publiée pendant un calcul avant d'envoyer ses fichiers.

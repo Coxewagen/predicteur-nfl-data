@@ -4,9 +4,17 @@ on:
   schedule:
     - cron: '0 */3 * * *'
   workflow_dispatch: {}
+  # relance immédiate quand la tâche d'analyse (mercredi / samedi) publie analyses.json
+  push:
+    branches: [main]
+    paths: ['analyses.json']
 
 permissions:
   contents: write
+
+concurrency:
+  group: maj-nfl
+  cancel-in-progress: false
 
 jobs:
   update:
@@ -39,4 +47,10 @@ jobs:
           git config user.name "predicteur-nfl-bot"
           git config user.email "actions@users.noreply.github.com"
           git add app-data.json index.html state.json rapport.json
-          git diff --cached --quiet && echo "Rien de nouveau à publier." || (git commit -m "Mise à jour automatique des prévisions NFL" && git push)
+          if git diff --cached --quiet; then
+            echo "Rien de nouveau à publier."
+          else
+            git commit -m "Mise à jour automatique des prévisions NFL"
+            # si une analyse a été publiée pendant le calcul, on la récupère avant d'envoyer
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push
+          fi

@@ -251,6 +251,16 @@ ul.abs{margin:4px 0 0;padding-left:18px} ul.abs li{margin:3px 0;font-size:15px}
 /* victoire surprise (12/10) */
 .surprise{color:var(--gold);font-size:18px;cursor:help}
 
+/* --- analyse des matchs serrés (mercredi / samedi) --- */
+.tag.ana{background:var(--navy);color:var(--on-navy)}
+.anabox{margin:14px 0 0;padding:12px 14px;border-radius:10px;background:rgba(29,58,110,.35);border-left:6px solid var(--navy-soft);color:var(--ink);font-size:17px;line-height:1.45}
+.anabox h3{margin:0 0 6px;font-size:18px}
+.anabox p{margin:6px 0}
+.anabox ul{margin:6px 0;padding-left:20px}
+.anabox li{margin:3px 0}
+.anabox .anavis{background:rgba(255,255,255,.07);border-radius:8px;padding:8px 10px}
+.anabox .meta{font-size:14px}
+
 .site-shell{max-width:760px;margin:0 auto;min-height:100%}
 </style>
 
@@ -546,6 +556,7 @@ const D = __DATA__;
     else if (net) tag = '<span class="tag net">' + ic("star") + "Favori net</span>";
     if (mk && mk.level === "contredit") tag += '<span class="tag warn-ko" title="Le mod\xE8le prend l\u2019autre favori que le march\xE9">' + ic("warn") + "Contredit le march\xE9</span>";
     else if (mk && mk.level === "prudence") tag += '<span class="tag warn-pru" title="Mod\xE8le bien plus confiant que le march\xE9">' + ic("warn") + "Prudence</span>";
+    if (g.analyse && unlocked && !done) tag += '<span class="tag ana" title="Analyse d\xE9taill\xE9e dans la fiche du match">Analyse</span>';
     const chips = (a) => (a.qb ? '<span class="chip qb" title="Quarterback titulaire absent">' + ic("cross") + "QB" + (a.qbn ? " " + esc(a.qbn) : "") + "</span>" : "") + (a.off + a.deff ? '<span class="chip" title="Autres titulaires absents">' + ic("cross") + (a.off + a.deff) + "</span>" : "") + (a.watch ? '<span class="chip watch" title="Titulaires incertains cette semaine (d\xE9tail dans la fiche du match)">?' + a.watch + "</span>" : "");
     const line = (side) => {
       const name = g[side];
@@ -583,6 +594,20 @@ const D = __DATA__;
       html += '<p class="warnbox pru">' + ic("warn") + "<span><b>Prudence.</b> Le mod\xE8le donne " + pct(mk.pFav) + " \xE0 " + esc(nick(D2, mk.favMod)) + ", le march\xE9 " + pct(mk.mFav) + ". Sur 2020-2026, ces favoris ont gagn\xE9 environ 75 % du temps, contre environ 82 % quand mod\xE8le et march\xE9 sont d\u2019accord.</span></p>";
     return html;
   }
+  function analyseDate(iso) {
+    if (!iso) return "";
+    const d = new Date(iso);
+    if (isNaN(d)) return "";
+    return d.toLocaleDateString("fr-FR", { ...PARIS, weekday: "long", day: "numeric", month: "long" }) + " \xE0 " + d.toLocaleTimeString("fr-FR", { ...PARIS, hour: "2-digit", minute: "2-digit" }).replace(":", " h ");
+  }
+  function analyseHtml(D2, g) {
+    const a = g.analyse;
+    if (!a || !a.resume && !(a.points || []).length && !a.avis) return "";
+    const r = a.raisons || [];
+    const why = [r.includes("serr\xE9") ? "match serr\xE9" : "", r.includes("d\xE9saccord") ? "mod\xE8le et march\xE9 en d\xE9saccord" : ""].filter(Boolean).join(" \xB7 ");
+    const conf = a.confiance === "moyenne" ? "moyenne" : "faible";
+    return '<div class="anabox"><h3>Analyse du match' + (why ? ' <span class="dim">(' + esc(why) + ")</span>" : "") + "</h3>" + (a.resume ? "<p>" + esc(a.resume) + "</p>" : "") + ((a.points || []).length ? "<ul>" + a.points.map((x) => "<li>" + esc(x) + "</li>").join("") + "</ul>" : "") + (a.avis ? '<p class="anavis"><b>Avis' + (a.penchant ? " \u2014 penchant " + esc(nick(D2, a.penchant)) : "") + "</b> (confiance " + conf + ") : " + esc(a.avis) + "</p>" : "") + '<p class="meta">Analyse automatique' + (a.faitLe ? " du " + esc(analyseDate(a.faitLe)) : "") + ". Ce n\u2019est pas une certitude : sur un match serr\xE9, une petite mise ou pas de mise du tout.</p></div>";
+  }
   function absBlockHtml(D2, name) {
     const items = ((D2.absences || []).find((a) => a.team === name) || { items: [] }).items;
     if (!items.length) return '<p class="meta">Aucune absence notable retenue.</p>';
@@ -602,7 +627,7 @@ const D = __DATA__;
     if (unlocked && p) {
       const favHome = p.pHome >= p.pAway, ecart = Math.abs(p.expHome - p.expAway);
       const verdict = done && g.homeScore !== g.awayScore ? '<p class="verdict ' + (g.homeScore > g.awayScore === favHome ? "yes" : "no") + '">' + ic(g.homeScore > g.awayScore === favHome ? "check" : "x") + (g.homeScore > g.awayScore === favHome ? "Pr\xE9vision juste" : "Pr\xE9vision fausse") + " \u2014 r\xE9sultat " + g.homeScore + " \u2013 " + g.awayScore + " (pr\xE9vu " + p.expHome + " \u2013 " + p.expAway + ")</p>" : "";
-      pred = '<div class="bigbadges"><span class="pbadge big home' + (favHome ? " fav" : "") + '"><i>Domicile</i>' + pct(p.pHome) + '</span><span class="pbadge big away' + (!favHome ? " fav" : "") + '"><i>Ext\xE9rieur</i>' + pct(p.pAway) + '</span></div><div class="gfoot"><span>Score attendu : <b>' + p.expHome + " \u2013 " + p.expAway + "</b></span><span>\xC9cart attendu : <b>" + (ecart ? esc(nick(D2, favHome ? g.home : g.away)) + " de " + ecart + " pt" + (ecart > 1 ? "s" : "") : "aucun") + "</b></span></div>" + verdict + marketModal(D2, g) + (injState(g) === "final" ? '<p class="injbox ok">' + ic("check") + "<span><b>Blessures \xE0 jour.</b> Le rapport final de la NFL est publi\xE9 pour les deux \xE9quipes : la pr\xE9vision tient compte des absences officielles.</span></p>" : injState(g) === "provisoire" ? '<p class="injbox prov">' + ic("clock") + "<span><b>Blessures provisoires.</b> Le rapport final n\u2019est pas encore publi\xE9 (vendredi pour un match du dimanche, mercredi pour un match du jeudi, samedi pour le lundi). Le mod\xE8le garde les absents du rapport pr\xE9c\xE9dent. Dans le rejeu 2021-2025, la pr\xE9vision juste passe d\u2019environ 63 % \xE0 65 % une fois le rapport final pris en compte : attends-le avant de parier.</span></p>" : "") + (g.prov ? '<p class="meta">Pr\xE9vision provisoire : recalcul\xE9e \xE0 chaque mise \xE0 jour avec les stats et les absences du moment.</p>' : "");
+      pred = '<div class="bigbadges"><span class="pbadge big home' + (favHome ? " fav" : "") + '"><i>Domicile</i>' + pct(p.pHome) + '</span><span class="pbadge big away' + (!favHome ? " fav" : "") + '"><i>Ext\xE9rieur</i>' + pct(p.pAway) + '</span></div><div class="gfoot"><span>Score attendu : <b>' + p.expHome + " \u2013 " + p.expAway + "</b></span><span>\xC9cart attendu : <b>" + (ecart ? esc(nick(D2, favHome ? g.home : g.away)) + " de " + ecart + " pt" + (ecart > 1 ? "s" : "") : "aucun") + "</b></span></div>" + verdict + marketModal(D2, g) + (injState(g) === "final" ? '<p class="injbox ok">' + ic("check") + "<span><b>Blessures \xE0 jour.</b> Le rapport final de la NFL est publi\xE9 pour les deux \xE9quipes : la pr\xE9vision tient compte des absences officielles.</span></p>" : injState(g) === "provisoire" ? '<p class="injbox prov">' + ic("clock") + "<span><b>Blessures provisoires.</b> Le rapport final n\u2019est pas encore publi\xE9 (vendredi pour un match du dimanche, mercredi pour un match du jeudi, samedi pour le lundi). Le mod\xE8le garde les absents du rapport pr\xE9c\xE9dent. Dans le rejeu 2021-2025, la pr\xE9vision juste passe d\u2019environ 63 % \xE0 65 % une fois le rapport final pris en compte : attends-le avant de parier.</span></p>" : "") + (g.prov ? '<p class="meta">Pr\xE9vision provisoire : recalcul\xE9e \xE0 chaque mise \xE0 jour avec les stats et les absences du moment.</p>' : "") + analyseHtml(D2, g);
     } else if (p) {
       pred = ctx.gateCard();
     } else {

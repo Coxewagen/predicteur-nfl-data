@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 _in.json
 _out.json
+a_analyser.json
