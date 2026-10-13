@@ -63,31 +63,11 @@
    "defAbsences": [
     {
      "tier": "rotation",
-     "pos": "défenseur de ligne titulaire (Ed Oliver, genou)",
+     "pos": "défenseur de ligne titulaire (Ed Oliver, genou, rapport précédent)",
      "gp": 3
     }
    ],
-   "watch": [
-    {
-     "name": "DJ Moore",
-     "pos": "receveur",
-     "etat": "incertain pour le match",
-     "why": "épaule"
-    },
-    {
-     "name": "Dee Alford",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    },
-    {
-     "name": "Terrel Bernard",
-     "pos": "linebacker",
-     "etat": "absent à l’entraînement",
-     "why": "genou"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 5
   },
   "Carolina Panthers": {
@@ -874,27 +854,7 @@
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "Aaron Donald",
-     "pos": "défenseur de ligne",
-     "etat": "absent à l’entraînement",
-     "why": "dos"
-    },
-    {
-     "name": "Quentin Lake",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "hanche"
-    },
-    {
-     "name": "Josaiah Stewart",
-     "pos": "edge rusher",
-     "etat": "entraînement limité",
-     "why": "aine"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 5
   },
   "Atlanta Falcons": {
@@ -1972,7 +1932,10 @@
    "expAway": 26,
    "computedAt": "2026-10-12T20:54:39Z",
    "spread": -0.21,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 34,
+   "awayScore": 37,
+   "correct": true
   },
   "2026_06_SEA_DEN": {
    "week": 6,
@@ -1983,7 +1946,7 @@
    "pAway": 0.4889,
    "expHome": 24,
    "expAway": 23,
-   "computedAt": "2026-10-13T02:25:06Z",
+   "computedAt": "2026-10-13T10:06:07Z",
    "spread": 0.29,
    "frozen": false
   },
@@ -1996,7 +1959,7 @@
    "pAway": 0.4145,
    "expHome": 23,
    "expAway": 20,
-   "computedAt": "2026-10-13T02:25:06Z",
+   "computedAt": "2026-10-13T10:06:07Z",
    "spread": 2.71,
    "frozen": false
   },
@@ -2009,7 +1972,7 @@
    "pAway": 0.4621,
    "expHome": 24,
    "expAway": 23,
-   "computedAt": "2026-10-13T02:25:06Z",
+   "computedAt": "2026-10-13T10:06:07Z",
    "spread": 1.16,
    "frozen": false
   },
@@ -2022,7 +1985,7 @@
    "pAway": 0.6185,
    "expHome": 20,
    "expAway": 24,
-   "computedAt": "2026-10-13T02:25:06Z",
+   "computedAt": "2026-10-13T10:06:07Z",
    "spread": -3.95,
    "frozen": false
   },
@@ -2035,7 +1998,7 @@
    "pAway": 0.2226,
    "expHome": 26,
    "expAway": 16,
-   "computedAt": "2026-10-13T02:25:06Z",
+   "computedAt": "2026-10-13T10:06:07Z",
    "spread": 9.73,
    "frozen": false
   },
@@ -2048,7 +2011,7 @@
    "pAway": 0.3254,
    "expHome": 21,
    "expAway": 15,
-   "computedAt": "2026-10-13T02:25:06Z",
+   "computedAt": "2026-10-13T10:06:07Z",
    "spread": 5.75,
    "frozen": false
   },
@@ -2061,7 +2024,7 @@
    "pAway": 0.4773,
    "expHome": 24,
    "expAway": 24,
-   "computedAt": "2026-10-13T02:25:06Z",
+   "computedAt": "2026-10-13T10:06:07Z",
    "spread": 0.67,
    "frozen": false
   },
@@ -2074,7 +2037,7 @@
    "pAway": 0.4598,
    "expHome": 22,
    "expAway": 21,
-   "computedAt": "2026-10-13T02:25:06Z",
+   "computedAt": "2026-10-13T10:06:07Z",
    "spread": 1.23,
    "frozen": false
   },
@@ -2087,7 +2050,7 @@
    "pAway": 0.5371,
    "expHome": 22,
    "expAway": 23,
-   "computedAt": "2026-10-13T02:25:06Z",
+   "computedAt": "2026-10-13T10:06:07Z",
    "spread": -1.26,
    "frozen": false
   },
@@ -2096,12 +2059,12 @@
    "home": "Los Angeles Rams",
    "away": "Arizona Cardinals",
    "kickoff": "2026-10-18T20:05:00Z",
-   "pHome": 0.7627,
-   "pAway": 0.2333,
-   "expHome": 29,
-   "expAway": 20,
-   "computedAt": "2026-10-13T02:25:06Z",
-   "spread": 9.28,
+   "pHome": 0.7647,
+   "pAway": 0.2313,
+   "expHome": 30,
+   "expAway": 21,
+   "computedAt": "2026-10-13T10:06:07Z",
+   "spread": 9.36,
    "frozen": false
   },
   "2026_06_LAC_KC": {
@@ -2113,7 +2076,7 @@
    "pAway": 0.2113,
    "expHome": 27,
    "expAway": 17,
-   "computedAt": "2026-10-13T02:25:06Z",
+   "computedAt": "2026-10-13T10:06:07Z",
    "spread": 10.22,
    "frozen": false
   },
@@ -2122,12 +2085,12 @@
    "home": "Las Vegas Raiders",
    "away": "Buffalo Bills",
    "kickoff": "2026-10-18T20:25:00Z",
-   "pHome": 0.3132,
-   "pAway": 0.6828,
-   "expHome": 25,
-   "expAway": 31,
-   "computedAt": "2026-10-13T02:25:06Z",
-   "spread": -6.19,
+   "pHome": 0.3073,
+   "pAway": 0.6887,
+   "expHome": 26,
+   "expAway": 32,
+   "computedAt": "2026-10-13T10:06:07Z",
+   "spread": -6.4,
    "frozen": false
   },
   "2026_06_DAL_GB": {
@@ -2139,7 +2102,7 @@
    "pAway": 0.4302,
    "expHome": 27,
    "expAway": 25,
-   "computedAt": "2026-10-13T02:25:06Z",
+   "computedAt": "2026-10-13T10:06:07Z",
    "spread": 2.19,
    "frozen": false
   },
@@ -2152,7 +2115,7 @@
    "pAway": 0.242,
    "expHome": 32,
    "expAway": 24,
-   "computedAt": "2026-10-13T02:25:06Z",
+   "computedAt": "2026-10-13T10:06:07Z",
    "spread": 8.92,
    "frozen": false
   }
