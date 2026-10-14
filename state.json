@@ -116,6 +116,11 @@
      "gp": 3
     },
     {
+     "tier": "rotation",
+     "pos": "défenseur de ligne titulaire (Cam Jackson, IR)",
+     "gp": 1
+    },
+    {
      "tier": "titulaire",
      "pos": "edge rusher titulaire (Nic Scourton, IR)",
      "lane": "pass",
@@ -196,6 +201,14 @@
      "pos": "receveur titulaire (Pat Bryant, IR)",
      "lane": "pass",
      "gp": 4
+    }
+   ],
+   "watch": [
+    {
+     "name": "Talanoa Hufanga",
+     "pos": "safety",
+     "etat": "absent à l’entraînement",
+     "why": "cheville"
     }
    ],
    "injReport": "provisoire",
@@ -314,6 +327,12 @@
      "pos": "garde droit titulaire (Patrick Mekari, IR)",
      "lane": "line",
      "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "ailier droit titulaire (Anton Harrison, IR)",
+     "lane": "line",
+     "gp": 5
     }
    ],
    "injReport": "provisoire",
@@ -321,6 +340,12 @@
   },
   "Kansas City Chiefs": {
    "offAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "receveur titulaire (Tyquan Thornton, IR)",
+     "lane": "pass",
+     "gp": 4
+    },
     {
      "tier": "titulaire",
      "pos": "ailier gauche titulaire (Josh Simmons, dos, rapport précédent)",
@@ -899,19 +924,25 @@
    "injWeek": 5
   },
   "Chicago Bears": {
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "edge rusher titulaire (Montez Sweat, IR)",
+     "lane": "pass",
+     "gp": 5
+    },
+    {
+     "tier": "titulaire",
+     "pos": "safety titulaire (Coby Bryant, IR)",
+     "gp": 0
+    }
+   ],
    "offAbsences": [
     {
      "tier": "titulaire",
      "pos": "ailier gauche titulaire (Braxton Jones, IR)",
      "lane": "line",
      "gp": 3
-    }
-   ],
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "safety titulaire (Coby Bryant, IR)",
-     "gp": 0
     }
    ],
    "injReport": "provisoire",
@@ -924,6 +955,32 @@
      "pos": "garde droit titulaire (Anthony Bradford, IR)",
      "lane": "line",
      "gp": 1
+    }
+   ],
+   "watch": [
+    {
+     "name": "Leonard Williams",
+     "pos": "défenseur de ligne",
+     "etat": "entraînement limité",
+     "why": "cheville"
+    },
+    {
+     "name": "Drew Lock",
+     "pos": "quarterback",
+     "etat": "entraînement limité",
+     "why": "avant-bras"
+    },
+    {
+     "name": "Jaxon Smith-Njigba",
+     "pos": "receveur",
+     "etat": "entraînement limité",
+     "why": "cheville"
+    },
+    {
+     "name": "Drake Thomas",
+     "pos": "linebacker",
+     "etat": "absent à l’entraînement",
+     "why": "cheville"
     }
    ],
    "injReport": "provisoire",
@@ -1932,7 +1989,7 @@
    "pAway": 0.4889,
    "expHome": 24,
    "expAway": 23,
-   "computedAt": "2026-10-14T00:09:01Z",
+   "computedAt": "2026-10-14T08:23:48Z",
    "spread": 0.29,
    "frozen": false
   },
@@ -1941,12 +1998,12 @@
    "home": "Jacksonville Jaguars",
    "away": "Houston Texans",
    "kickoff": "2026-10-18T13:30:00Z",
-   "pHome": 0.5815,
-   "pAway": 0.4145,
-   "expHome": 23,
-   "expAway": 20,
-   "computedAt": "2026-10-14T00:09:01Z",
-   "spread": 2.71,
+   "pHome": 0.5611,
+   "pAway": 0.4349,
+   "expHome": 22,
+   "expAway": 19,
+   "computedAt": "2026-10-14T08:23:48Z",
+   "spread": 2.04,
    "frozen": false
   },
   "2026_06_CHI_ATL": {
@@ -1954,12 +2011,12 @@
    "home": "Atlanta Falcons",
    "away": "Chicago Bears",
    "kickoff": "2026-10-18T17:00:00Z",
-   "pHome": 0.5339,
-   "pAway": 0.4621,
-   "expHome": 24,
+   "pHome": 0.5479,
+   "pAway": 0.4481,
+   "expHome": 25,
    "expAway": 23,
-   "computedAt": "2026-10-14T00:09:01Z",
-   "spread": 1.16,
+   "computedAt": "2026-10-14T08:23:48Z",
+   "spread": 1.61,
    "frozen": false
   },
   "2026_06_BAL_CLE": {
@@ -1971,7 +2028,7 @@
    "pAway": 0.6185,
    "expHome": 20,
    "expAway": 24,
-   "computedAt": "2026-10-14T00:09:01Z",
+   "computedAt": "2026-10-14T08:23:48Z",
    "spread": -3.95,
    "frozen": false
   },
@@ -1984,7 +2041,7 @@
    "pAway": 0.2226,
    "expHome": 26,
    "expAway": 16,
-   "computedAt": "2026-10-14T00:09:01Z",
+   "computedAt": "2026-10-14T08:23:48Z",
    "spread": 9.73,
    "frozen": false
   },
@@ -1997,7 +2054,7 @@
    "pAway": 0.3254,
    "expHome": 21,
    "expAway": 15,
-   "computedAt": "2026-10-14T00:09:01Z",
+   "computedAt": "2026-10-14T08:23:48Z",
    "spread": 5.75,
    "frozen": false
   },
@@ -2010,7 +2067,7 @@
    "pAway": 0.4773,
    "expHome": 24,
    "expAway": 24,
-   "computedAt": "2026-10-14T00:09:01Z",
+   "computedAt": "2026-10-14T08:23:48Z",
    "spread": 0.67,
    "frozen": false
   },
@@ -2019,12 +2076,12 @@
    "home": "Philadelphia Eagles",
    "away": "Carolina Panthers",
    "kickoff": "2026-10-18T17:00:00Z",
-   "pHome": 0.6098,
-   "pAway": 0.3862,
+   "pHome": 0.6105,
+   "pAway": 0.3855,
    "expHome": 25,
    "expAway": 21,
-   "computedAt": "2026-10-14T00:09:01Z",
-   "spread": 3.65,
+   "computedAt": "2026-10-14T08:23:48Z",
+   "spread": 3.68,
    "frozen": false
   },
   "2026_06_PIT_TB": {
@@ -2036,7 +2093,7 @@
    "pAway": 0.5371,
    "expHome": 22,
    "expAway": 23,
-   "computedAt": "2026-10-14T00:09:01Z",
+   "computedAt": "2026-10-14T08:23:48Z",
    "spread": -1.26,
    "frozen": false
   },
@@ -2049,7 +2106,7 @@
    "pAway": 0.2313,
    "expHome": 30,
    "expAway": 21,
-   "computedAt": "2026-10-14T00:09:01Z",
+   "computedAt": "2026-10-14T08:23:48Z",
    "spread": 9.36,
    "frozen": false
   },
@@ -2058,12 +2115,12 @@
    "home": "Kansas City Chiefs",
    "away": "Los Angeles Chargers",
    "kickoff": "2026-10-18T20:25:00Z",
-   "pHome": 0.7847,
-   "pAway": 0.2113,
+   "pHome": 0.7783,
+   "pAway": 0.2177,
    "expHome": 27,
    "expAway": 17,
-   "computedAt": "2026-10-14T00:09:01Z",
-   "spread": 10.22,
+   "computedAt": "2026-10-14T08:23:48Z",
+   "spread": 9.94,
    "frozen": false
   },
   "2026_06_BUF_LV": {
@@ -2075,7 +2132,7 @@
    "pAway": 0.6887,
    "expHome": 26,
    "expAway": 32,
-   "computedAt": "2026-10-14T00:09:01Z",
+   "computedAt": "2026-10-14T08:23:48Z",
    "spread": -6.4,
    "frozen": false
   },
@@ -2088,7 +2145,7 @@
    "pAway": 0.4302,
    "expHome": 27,
    "expAway": 25,
-   "computedAt": "2026-10-14T00:09:01Z",
+   "computedAt": "2026-10-14T08:23:48Z",
    "spread": 2.19,
    "frozen": false
   },
@@ -2101,7 +2158,7 @@
    "pAway": 0.2573,
    "expHome": 33,
    "expAway": 24,
-   "computedAt": "2026-10-14T00:09:01Z",
+   "computedAt": "2026-10-14T08:23:48Z",
    "spread": 8.3,
    "frozen": false
   }
