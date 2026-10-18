@@ -99,7 +99,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "centre titulaire (Cam Jurgens, commotion)",
+     "pos": "centre titulaire (Cam Jurgens, commotion, rapport précédent)",
      "lane": "line",
      "gp": 4
     }
@@ -108,43 +108,11 @@
    "qbTier": "elite",
    "qbGp": 4,
    "qbName": "Lamar Jackson",
-   "qbWhy": "cheville",
+   "qbWhy": "cheville, rapport précédent",
    "qbReplacementTier": "standard",
    "qbReplacementName": "Tyler Huntley",
-   "qbReplacementStarts": 15,
-   "watch": [
-    {
-     "name": "Ronnie Stanley",
-     "pos": "ailier gauche",
-     "etat": "absent à l’entraînement",
-     "why": "cheville"
-    },
-    {
-     "name": "John Simpson",
-     "pos": "garde gauche",
-     "etat": "entraînement limité",
-     "why": "aine"
-    },
-    {
-     "name": "Andrew Vorhees",
-     "pos": "garde gauche",
-     "etat": "incertain pour le match",
-     "why": "pied"
-    },
-    {
-     "name": "Zay Flowers",
-     "pos": "receveur",
-     "etat": "entraînement limité",
-     "why": "orteil"
-    },
-    {
-     "name": "Emery Jones Jr.",
-     "pos": "ailier droit",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    }
-   ],
-   "injReport": "final",
+   "qbReplacementStarts": 16,
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Carolina Panthers": {
@@ -442,7 +410,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Jalen Pitre, épaule)",
+     "pos": "cornerback titulaire (Jalen Pitre, épaule, rapport précédent)",
      "lane": "pass",
      "gp": 5
     }
@@ -455,15 +423,7 @@
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "Henry To'oTo'o",
-     "pos": "linebacker",
-     "etat": "incertain pour le match",
-     "why": "épaule"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Indianapolis Colts": {
@@ -521,7 +481,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Montaric Brown, ischio-jambiers)",
+     "pos": "cornerback titulaire (Montaric Brown, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 4
     }
@@ -540,21 +500,7 @@
      "gp": 5
     }
    ],
-   "watch": [
-    {
-     "name": "Jourdan Lewis",
-     "pos": "cornerback",
-     "etat": "entraînement limité",
-     "why": "ischio-jambiers"
-    },
-    {
-     "name": "Emmanuel Pregnon",
-     "pos": "garde droit",
-     "etat": "entraînement limité",
-     "why": "orteil"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Kansas City Chiefs": {
@@ -1378,39 +1324,7 @@
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "Maliek Collins",
-     "pos": "défenseur de ligne",
-     "etat": "entraînement limité",
-     "why": "pied"
-    },
-    {
-     "name": "Carson Schwesinger",
-     "pos": "linebacker",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    },
-    {
-     "name": "Mason Graham",
-     "pos": "défenseur de ligne",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    },
-    {
-     "name": "Quinshon Judkins",
-     "pos": "coureur",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    },
-    {
-     "name": "Denzel Boston",
-     "pos": "receveur",
-     "etat": "entraînement limité",
-     "why": "pied"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Buffalo Bills": {
@@ -2470,7 +2384,10 @@
    "expAway": 20,
    "computedAt": "2026-10-18T10:24:30Z",
    "spread": 2.21,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 31,
+   "awayScore": 34,
+   "correct": false
   },
   "2026_06_CHI_ATL": {
    "week": 6,
@@ -2483,7 +2400,7 @@
    "expAway": 24,
    "computedAt": "2026-10-18T15:23:01Z",
    "spread": 2.13,
-   "frozen": false
+   "frozen": true
   },
   "2026_06_BAL_CLE": {
    "week": 6,
@@ -2496,7 +2413,10 @@
    "expAway": 23,
    "computedAt": "2026-10-18T15:23:01Z",
    "spread": -3.83,
-   "frozen": false
+   "frozen": true,
+   "homeScore": 13,
+   "awayScore": 10,
+   "correct": false
   },
   "2026_06_TEN_IND": {
    "week": 6,
@@ -2509,7 +2429,7 @@
    "expAway": 16,
    "computedAt": "2026-10-18T15:23:01Z",
    "spread": 9.73,
-   "frozen": false
+   "frozen": true
   },
   "2026_06_NYJ_NE": {
    "week": 6,
@@ -2522,7 +2442,7 @@
    "expAway": 14,
    "computedAt": "2026-10-18T15:23:01Z",
    "spread": 7.59,
-   "frozen": false
+   "frozen": true
   },
   "2026_06_NO_NYG": {
    "week": 6,
@@ -2535,7 +2455,7 @@
    "expAway": 24,
    "computedAt": "2026-10-18T15:23:01Z",
    "spread": -0.74,
-   "frozen": false
+   "frozen": true
   },
   "2026_06_CAR_PHI": {
    "week": 6,
@@ -2548,7 +2468,7 @@
    "expAway": 21,
    "computedAt": "2026-10-18T15:23:01Z",
    "spread": 1.43,
-   "frozen": false
+   "frozen": true
   },
   "2026_06_PIT_TB": {
    "week": 6,
@@ -2561,7 +2481,7 @@
    "expAway": 22,
    "computedAt": "2026-10-18T15:23:01Z",
    "spread": -1.33,
-   "frozen": false
+   "frozen": true
   },
   "2026_06_ARI_LA": {
    "week": 6,
@@ -2574,7 +2494,7 @@
    "expAway": 21,
    "computedAt": "2026-10-18T15:23:01Z",
    "spread": 8.67,
-   "frozen": false
+   "frozen": true
   },
   "2026_06_LAC_KC": {
    "week": 6,
@@ -2585,7 +2505,7 @@
    "pAway": 0.2313,
    "expHome": 26,
    "expAway": 16,
-   "computedAt": "2026-10-18T15:23:01Z",
+   "computedAt": "2026-10-18T20:06:37Z",
    "spread": 9.36,
    "frozen": false
   },
@@ -2598,7 +2518,7 @@
    "pAway": 0.6879,
    "expHome": 26,
    "expAway": 33,
-   "computedAt": "2026-10-18T15:23:01Z",
+   "computedAt": "2026-10-18T20:06:37Z",
    "spread": -6.37,
    "frozen": false
   },
@@ -2611,7 +2531,7 @@
    "pAway": 0.4221,
    "expHome": 28,
    "expAway": 25,
-   "computedAt": "2026-10-18T15:23:01Z",
+   "computedAt": "2026-10-18T20:06:37Z",
    "spread": 2.46,
    "frozen": false
   },
@@ -2624,7 +2544,7 @@
    "pAway": 0.2862,
    "expHome": 32,
    "expAway": 24,
-   "computedAt": "2026-10-18T15:23:01Z",
+   "computedAt": "2026-10-18T20:06:37Z",
    "spread": 7.18,
    "frozen": false
   }
