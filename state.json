@@ -2470,7 +2470,7 @@
    "expAway": 20,
    "computedAt": "2026-10-18T10:24:30Z",
    "spread": 2.21,
-   "frozen": false
+   "frozen": true
   },
   "2026_06_CHI_ATL": {
    "week": 6,
@@ -2481,7 +2481,7 @@
    "pAway": 0.4323,
    "expHome": 27,
    "expAway": 24,
-   "computedAt": "2026-10-18T10:24:30Z",
+   "computedAt": "2026-10-18T15:23:01Z",
    "spread": 2.13,
    "frozen": false
   },
@@ -2494,7 +2494,7 @@
    "pAway": 0.615,
    "expHome": 19,
    "expAway": 23,
-   "computedAt": "2026-10-18T10:24:30Z",
+   "computedAt": "2026-10-18T15:23:01Z",
    "spread": -3.83,
    "frozen": false
   },
@@ -2507,7 +2507,7 @@
    "pAway": 0.2226,
    "expHome": 26,
    "expAway": 16,
-   "computedAt": "2026-10-18T10:24:30Z",
+   "computedAt": "2026-10-18T15:23:01Z",
    "spread": 9.73,
    "frozen": false
   },
@@ -2520,7 +2520,7 @@
    "pAway": 0.2756,
    "expHome": 22,
    "expAway": 14,
-   "computedAt": "2026-10-18T10:24:30Z",
+   "computedAt": "2026-10-18T15:23:01Z",
    "spread": 7.59,
    "frozen": false
   },
@@ -2533,7 +2533,7 @@
    "pAway": 0.5208,
    "expHome": 24,
    "expAway": 24,
-   "computedAt": "2026-10-18T10:24:30Z",
+   "computedAt": "2026-10-18T15:23:01Z",
    "spread": -0.74,
    "frozen": false
   },
@@ -2546,7 +2546,7 @@
    "pAway": 0.4538,
    "expHome": 22,
    "expAway": 21,
-   "computedAt": "2026-10-18T10:24:30Z",
+   "computedAt": "2026-10-18T15:23:01Z",
    "spread": 1.43,
    "frozen": false
   },
@@ -2559,7 +2559,7 @@
    "pAway": 0.5391,
    "expHome": 21,
    "expAway": 22,
-   "computedAt": "2026-10-18T10:24:30Z",
+   "computedAt": "2026-10-18T15:23:01Z",
    "spread": -1.33,
    "frozen": false
   },
@@ -2572,7 +2572,7 @@
    "pAway": 0.2481,
    "expHome": 29,
    "expAway": 21,
-   "computedAt": "2026-10-18T10:24:30Z",
+   "computedAt": "2026-10-18T15:23:01Z",
    "spread": 8.67,
    "frozen": false
   },
@@ -2585,7 +2585,7 @@
    "pAway": 0.2313,
    "expHome": 26,
    "expAway": 16,
-   "computedAt": "2026-10-18T10:24:30Z",
+   "computedAt": "2026-10-18T15:23:01Z",
    "spread": 9.36,
    "frozen": false
   },
@@ -2598,7 +2598,7 @@
    "pAway": 0.6879,
    "expHome": 26,
    "expAway": 33,
-   "computedAt": "2026-10-18T10:24:30Z",
+   "computedAt": "2026-10-18T15:23:01Z",
    "spread": -6.37,
    "frozen": false
   },
@@ -2611,7 +2611,7 @@
    "pAway": 0.4221,
    "expHome": 28,
    "expAway": 25,
-   "computedAt": "2026-10-18T10:24:30Z",
+   "computedAt": "2026-10-18T15:23:01Z",
    "spread": 2.46,
    "frozen": false
   },
@@ -2624,7 +2624,7 @@
    "pAway": 0.2862,
    "expHome": 32,
    "expAway": 24,
-   "computedAt": "2026-10-18T10:24:30Z",
+   "computedAt": "2026-10-18T15:23:01Z",
    "spread": 7.18,
    "frozen": false
   }
