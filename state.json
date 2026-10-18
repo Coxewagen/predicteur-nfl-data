@@ -182,11 +182,6 @@
      "gp": 3
     },
     {
-     "tier": "titulaire",
-     "pos": "défenseur de ligne titulaire (Tershawn Wharton, IR)",
-     "gp": 0
-    },
-    {
      "tier": "elite",
      "pos": "cornerback titulaire (Jaycee Horn, IR)",
      "lane": "pass",
@@ -205,6 +200,18 @@
     }
    ],
    "watch": [
+    {
+     "name": "Taylor Moton",
+     "pos": "ailier droit",
+     "etat": "incertain pour le match",
+     "why": "lung"
+    },
+    {
+     "name": "Tershawn Wharton",
+     "pos": "défenseur de ligne",
+     "etat": "incertain pour le match",
+     "why": "cou"
+    },
     {
      "name": "Damien Lewis",
      "pos": "garde gauche",
@@ -438,11 +445,6 @@
      "pos": "cornerback titulaire (Jalen Pitre, épaule)",
      "lane": "pass",
      "gp": 5
-    },
-    {
-     "tier": "titulaire",
-     "pos": "linebacker titulaire (Henry To'oTo'o, IR)",
-     "gp": 1
     }
    ],
    "offAbsences": [
@@ -451,6 +453,14 @@
      "pos": "receveur titulaire (Jayden Higgins, IR)",
      "lane": "pass",
      "gp": 0
+    }
+   ],
+   "watch": [
+    {
+     "name": "Henry To'oTo'o",
+     "pos": "linebacker",
+     "etat": "incertain pour le match",
+     "why": "épaule"
     }
    ],
    "injReport": "final",
@@ -704,12 +714,6 @@
      "gp": 4
     },
     {
-     "tier": "elite",
-     "pos": "receveur titulaire (A.J. Brown, IR)",
-     "lane": "pass",
-     "gp": 1
-    },
-    {
      "tier": "rotation",
      "pos": "tight end titulaire (Julian Hill, IR)",
      "gp": 0
@@ -727,6 +731,12 @@
      "pos": "ailier droit",
      "etat": "entraînement limité",
      "why": "pied"
+    },
+    {
+     "name": "A.J. Brown",
+     "pos": "receveur",
+     "etat": "incertain pour le match",
+     "why": "cheville"
     },
     {
      "name": "Christian Elliss",
@@ -948,7 +958,7 @@
     },
     {
      "tier": "titulaire",
-     "pos": "garde gauche titulaire (Landon Dickerson, IR)",
+     "pos": "garde gauche titulaire (Landon Dickerson, genou)",
      "lane": "line",
      "gp": 1
     }
@@ -1011,7 +1021,7 @@
     {
      "name": "DK Metcalf",
      "pos": "receveur",
-     "etat": "incertain pour le match",
+     "etat": "absent à l’entraînement",
      "why": "maladie"
     },
     {
@@ -1025,6 +1035,12 @@
      "pos": "coureur",
      "etat": "incertain pour le match",
      "why": "orteil"
+    },
+    {
+     "name": "Pat Freiermuth",
+     "pos": "tight end",
+     "etat": "incertain pour le match",
+     "why": "mollet"
     },
     {
      "name": "Keeanu Benton",
@@ -1059,13 +1075,13 @@
    "defAbsences": [
     {
      "tier": "elite",
-     "pos": "edge rusher titulaire (Nick Bosa, genou, rapport précédent)",
+     "pos": "edge rusher titulaire (Nick Bosa, genou)",
      "lane": "pass",
      "gp": 2
     },
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Marques Sigle, cheville, rapport précédent)",
+     "pos": "safety titulaire (Marques Sigle, cheville)",
      "gp": 4
     },
     {
@@ -1083,6 +1099,12 @@
    "offAbsences": [
     {
      "tier": "titulaire",
+     "pos": "receveur titulaire (Deebo Samuel Sr., ischio-jambiers)",
+     "lane": "pass",
+     "gp": 5
+    },
+    {
+     "tier": "titulaire",
      "pos": "receveur titulaire (Ricky Pearsall, IR)",
      "lane": "pass",
      "gp": 0
@@ -1098,42 +1120,30 @@
     {
      "name": "Mike Evans",
      "pos": "receveur",
-     "etat": "absent à l’entraînement",
+     "etat": "incertain pour le match",
      "why": "côtes"
-    },
-    {
-     "name": "Deebo Samuel Sr.",
-     "pos": "receveur",
-     "etat": "absent à l’entraînement",
-     "why": "ischio-jambiers"
-    },
-    {
-     "name": "Colton McKivitz",
-     "pos": "ailier gauche",
-     "etat": "entraînement limité",
-     "why": "maladie"
     },
     {
      "name": "Upton Stout",
      "pos": "safety",
-     "etat": "entraînement limité",
+     "etat": "incertain pour le match",
      "why": "épaule"
     },
     {
      "name": "Mykel Williams",
      "pos": "edge rusher",
-     "etat": "entraînement limité",
+     "etat": "incertain pour le match",
      "why": "genou"
     },
     {
      "name": "Romello Height",
      "pos": "edge rusher",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
      "why": "main"
     }
    ],
-   "injReport": "provisoire",
-   "injWeek": 5
+   "injReport": "final",
+   "injWeek": 6
   },
   "Tampa Bay Buccaneers": {
    "offAbsences": [
@@ -1233,24 +1243,10 @@
    "injWeek": 6
   },
   "Washington Commanders": {
-   "offAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "receveur titulaire (Stefon Diggs, ischio-jambiers, rapport précédent)",
-     "lane": "pass",
-     "gp": 4
-    },
-    {
-     "tier": "elite",
-     "pos": "ailier gauche titulaire (Laremy Tunsil, IR)",
-     "lane": "line",
-     "gp": 0
-    }
-   ],
    "defAbsences": [
     {
      "tier": "rotation",
-     "pos": "edge rusher titulaire (Charles Omenihu, aine, rapport précédent)",
+     "pos": "edge rusher titulaire (Charles Omenihu, aine)",
      "lane": "pass",
      "gp": 4
     },
@@ -1266,11 +1262,25 @@
      "gp": 0
     }
    ],
+   "offAbsences": [
+    {
+     "tier": "elite",
+     "pos": "ailier gauche titulaire (Laremy Tunsil, IR)",
+     "lane": "line",
+     "gp": 0
+    }
+   ],
    "watch": [
+    {
+     "name": "Stefon Diggs",
+     "pos": "receveur",
+     "etat": "incertain pour le match",
+     "why": "ischio-jambiers"
+    },
     {
      "name": "Lucas Patrick",
      "pos": "garde gauche",
-     "etat": "entraînement limité",
+     "etat": "incertain pour le match",
      "why": "maladie"
     },
     {
@@ -1282,20 +1292,14 @@
     {
      "name": "Terry McLaurin",
      "pos": "receveur",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
      "why": "ischio-jambiers"
     },
     {
      "name": "Javon Kinlaw",
      "pos": "défenseur de ligne",
-     "etat": "absent à l’entraînement",
+     "etat": "incertain pour le match",
      "why": "cheville"
-    },
-    {
-     "name": "K'Lavon Chaisson",
-     "pos": "edge rusher",
-     "etat": "absent à l’entraînement",
-     "why": "genou"
     },
     {
      "name": "Rachaad White",
@@ -1304,14 +1308,20 @@
      "why": "épaule"
     },
     {
+     "name": "Nick Cross",
+     "pos": "safety",
+     "etat": "incertain pour le match",
+     "why": "maladie"
+    },
+    {
      "name": "Treylon Burks",
      "pos": "receveur",
      "etat": "entraînement limité",
      "why": "épaule"
     }
    ],
-   "injReport": "provisoire",
-   "injWeek": 5
+   "injReport": "final",
+   "injWeek": 6
   },
   "Los Angeles Rams": {
    "defAbsences": [
@@ -2454,12 +2464,12 @@
    "home": "Jacksonville Jaguars",
    "away": "Houston Texans",
    "kickoff": "2026-10-18T13:30:00Z",
-   "pHome": 0.5733,
-   "pAway": 0.4227,
-   "expHome": 23,
+   "pHome": 0.5662,
+   "pAway": 0.4298,
+   "expHome": 22,
    "expAway": 20,
-   "computedAt": "2026-10-18T03:03:02Z",
-   "spread": 2.44,
+   "computedAt": "2026-10-18T10:24:30Z",
+   "spread": 2.21,
    "frozen": false
   },
   "2026_06_CHI_ATL": {
@@ -2471,7 +2481,7 @@
    "pAway": 0.4323,
    "expHome": 27,
    "expAway": 24,
-   "computedAt": "2026-10-18T03:03:02Z",
+   "computedAt": "2026-10-18T10:24:30Z",
    "spread": 2.13,
    "frozen": false
   },
@@ -2484,7 +2494,7 @@
    "pAway": 0.615,
    "expHome": 19,
    "expAway": 23,
-   "computedAt": "2026-10-18T03:03:02Z",
+   "computedAt": "2026-10-18T10:24:30Z",
    "spread": -3.83,
    "frozen": false
   },
@@ -2497,7 +2507,7 @@
    "pAway": 0.2226,
    "expHome": 26,
    "expAway": 16,
-   "computedAt": "2026-10-18T03:03:02Z",
+   "computedAt": "2026-10-18T10:24:30Z",
    "spread": 9.73,
    "frozen": false
   },
@@ -2506,12 +2516,12 @@
    "home": "New England Patriots",
    "away": "New York Jets",
    "kickoff": "2026-10-18T17:00:00Z",
-   "pHome": 0.7067,
-   "pAway": 0.2893,
-   "expHome": 21,
+   "pHome": 0.7204,
+   "pAway": 0.2756,
+   "expHome": 22,
    "expAway": 14,
-   "computedAt": "2026-10-18T03:03:02Z",
-   "spread": 7.07,
+   "computedAt": "2026-10-18T10:24:30Z",
+   "spread": 7.59,
    "frozen": false
   },
   "2026_06_NO_NYG": {
@@ -2523,7 +2533,7 @@
    "pAway": 0.5208,
    "expHome": 24,
    "expAway": 24,
-   "computedAt": "2026-10-18T03:03:02Z",
+   "computedAt": "2026-10-18T10:24:30Z",
    "spread": -0.74,
    "frozen": false
   },
@@ -2532,12 +2542,12 @@
    "home": "Philadelphia Eagles",
    "away": "Carolina Panthers",
    "kickoff": "2026-10-18T17:00:00Z",
-   "pHome": 0.5451,
-   "pAway": 0.4509,
+   "pHome": 0.5422,
+   "pAway": 0.4538,
    "expHome": 22,
    "expAway": 21,
-   "computedAt": "2026-10-18T03:03:02Z",
-   "spread": 1.52,
+   "computedAt": "2026-10-18T10:24:30Z",
+   "spread": 1.43,
    "frozen": false
   },
   "2026_06_PIT_TB": {
@@ -2549,7 +2559,7 @@
    "pAway": 0.5391,
    "expHome": 21,
    "expAway": 22,
-   "computedAt": "2026-10-18T03:03:02Z",
+   "computedAt": "2026-10-18T10:24:30Z",
    "spread": -1.33,
    "frozen": false
   },
@@ -2562,7 +2572,7 @@
    "pAway": 0.2481,
    "expHome": 29,
    "expAway": 21,
-   "computedAt": "2026-10-18T03:03:02Z",
+   "computedAt": "2026-10-18T10:24:30Z",
    "spread": 8.67,
    "frozen": false
   },
@@ -2575,7 +2585,7 @@
    "pAway": 0.2313,
    "expHome": 26,
    "expAway": 16,
-   "computedAt": "2026-10-18T03:03:02Z",
+   "computedAt": "2026-10-18T10:24:30Z",
    "spread": 9.36,
    "frozen": false
   },
@@ -2588,7 +2598,7 @@
    "pAway": 0.6879,
    "expHome": 26,
    "expAway": 33,
-   "computedAt": "2026-10-18T03:03:02Z",
+   "computedAt": "2026-10-18T10:24:30Z",
    "spread": -6.37,
    "frozen": false
   },
@@ -2601,7 +2611,7 @@
    "pAway": 0.4221,
    "expHome": 28,
    "expAway": 25,
-   "computedAt": "2026-10-18T03:03:02Z",
+   "computedAt": "2026-10-18T10:24:30Z",
    "spread": 2.46,
    "frozen": false
   },
@@ -2610,12 +2620,12 @@
    "home": "San Francisco 49ers",
    "away": "Washington Commanders",
    "kickoff": "2026-10-20T00:15:00Z",
-   "pHome": 0.7308,
-   "pAway": 0.2652,
+   "pHome": 0.7098,
+   "pAway": 0.2862,
    "expHome": 32,
    "expAway": 24,
-   "computedAt": "2026-10-18T03:03:02Z",
-   "spread": 7.99,
+   "computedAt": "2026-10-18T10:24:30Z",
+   "spread": 7.18,
    "frozen": false
   }
  }
