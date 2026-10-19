@@ -193,7 +193,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Cobie Durant, ischio-jambiers)",
+     "pos": "cornerback titulaire (Cobie Durant, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 2
     },
@@ -203,21 +203,7 @@
      "gp": 3
     }
    ],
-   "watch": [
-    {
-     "name": "DeMarvion Overshown",
-     "pos": "linebacker",
-     "etat": "incertain pour le match",
-     "why": "ischio-jambiers"
-    },
-    {
-     "name": "Joey Porter Jr.",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Denver Broncos": {
@@ -280,7 +266,7 @@
    "defAbsences": [
     {
      "tier": "rotation",
-     "pos": "défenseur de ligne titulaire (Javon Hargrave, tendon d’Achille)",
+     "pos": "défenseur de ligne titulaire (Javon Hargrave, tendon d’Achille, rapport précédent)",
      "gp": 4
     },
     {
@@ -303,39 +289,7 @@
      "gp": 2
     }
    ],
-   "watch": [
-    {
-     "name": "Keisean Nixon",
-     "pos": "cornerback",
-     "etat": "entraînement limité",
-     "why": "aine"
-    },
-    {
-     "name": "Aaron Banks",
-     "pos": "garde gauche",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    },
-    {
-     "name": "Devonte Wyatt",
-     "pos": "défenseur de ligne",
-     "etat": "entraînement limité",
-     "why": "cheville"
-    },
-    {
-     "name": "Jacob Monk",
-     "pos": "centre",
-     "etat": "incertain pour le match",
-     "why": "quadriceps"
-    },
-    {
-     "name": "Brandon Cisse",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "hanche"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Houston Texans": {
@@ -2244,7 +2198,10 @@
    "expAway": 25,
    "computedAt": "2026-10-18T22:46:27Z",
    "spread": 2.46,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 23,
+   "awayScore": 13,
+   "correct": true
   },
   "2026_06_WAS_SF": {
    "week": 6,
@@ -2255,7 +2212,7 @@
    "pAway": 0.2862,
    "expHome": 32,
    "expAway": 24,
-   "computedAt": "2026-10-19T03:17:19Z",
+   "computedAt": "2026-10-19T12:09:14Z",
    "spread": 7.18,
    "frozen": false
   }
