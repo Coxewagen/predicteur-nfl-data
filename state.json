@@ -4,7 +4,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Andrew Wingard, genou)",
+     "pos": "safety titulaire (Andrew Wingard, genou, rapport précédent)",
      "gp": 4
     },
     {
@@ -28,15 +28,7 @@
      "gp": 3
     }
    ],
-   "watch": [
-    {
-     "name": "Budda Baker",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "repos"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Atlanta Falcons": {
@@ -427,7 +419,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Rashee Rice, ischio-jambiers)",
+     "pos": "receveur titulaire (Rashee Rice, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
@@ -439,33 +431,25 @@
     },
     {
      "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Josh Simmons, dos)",
+     "pos": "ailier gauche titulaire (Josh Simmons, dos, rapport précédent)",
      "lane": "line",
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "L'Jarius Sneed",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Los Angeles Chargers": {
    "defAbsences": [
     {
      "tier": "rotation",
-     "pos": "cornerback titulaire (Donte Jackson, ischio-jambiers)",
+     "pos": "cornerback titulaire (Donte Jackson, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
     {
      "tier": "elite",
-     "pos": "safety titulaire (Derwin James, ischio-jambiers)",
+     "pos": "safety titulaire (Derwin James, ischio-jambiers, rapport précédent)",
      "gp": 3
     },
     {
@@ -477,7 +461,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Tre Harris, ischio-jambiers)",
+     "pos": "receveur titulaire (Tre Harris, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 5
     },
@@ -488,7 +472,7 @@
     },
     {
      "tier": "titulaire",
-     "pos": "ailier droit titulaire (Joe Alt, cou)",
+     "pos": "ailier droit titulaire (Joe Alt, cou, rapport précédent)",
      "lane": "line",
      "gp": 4
     },
@@ -505,32 +489,18 @@
      "gp": 4
     }
    ],
-   "watch": [
-    {
-     "name": "Daiyan Henley",
-     "pos": "linebacker",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    },
-    {
-     "name": "Jamaree Caldwell",
-     "pos": "défenseur de ligne",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Las Vegas Raiders": {
    "defAbsences": [
     {
      "tier": "rotation",
-     "pos": "défenseur de ligne titulaire (Tonka Hemingway, commotion)",
+     "pos": "défenseur de ligne titulaire (Tonka Hemingway, commotion, rapport précédent)",
      "gp": 5
     }
    ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Miami Dolphins": {
@@ -1058,27 +1028,7 @@
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "Kam Curl",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    },
-    {
-     "name": "Trent McDuffie",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "aine"
-    },
-    {
-     "name": "Davis Allen",
-     "pos": "tight end",
-     "etat": "entraînement limité",
-     "why": "pied"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Cleveland Browns": {
@@ -1094,39 +1044,7 @@
    "injWeek": 6
   },
   "Buffalo Bills": {
-   "watch": [
-    {
-     "name": "DJ Moore",
-     "pos": "receveur",
-     "etat": "incertain pour le match",
-     "why": "épaule"
-    },
-    {
-     "name": "Ed Oliver",
-     "pos": "défenseur de ligne",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    },
-    {
-     "name": "Dee Alford",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    },
-    {
-     "name": "Terrel Bernard",
-     "pos": "linebacker",
-     "etat": "entraînement limité",
-     "why": "genou"
-    },
-    {
-     "name": "T.J. Sanders",
-     "pos": "défenseur de ligne",
-     "etat": "incertain pour le match",
-     "why": "épaule"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   }
  },
@@ -2278,7 +2196,10 @@
    "expAway": 21,
    "computedAt": "2026-10-18T15:23:01Z",
    "spread": 8.67,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 16,
+   "awayScore": 18,
+   "correct": false
   },
   "2026_06_LAC_KC": {
    "week": 6,
@@ -2291,7 +2212,10 @@
    "expAway": 16,
    "computedAt": "2026-10-18T20:06:37Z",
    "spread": 9.36,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 22,
+   "awayScore": 6,
+   "correct": true
   },
   "2026_06_BUF_LV": {
    "week": 6,
@@ -2304,7 +2228,10 @@
    "expAway": 33,
    "computedAt": "2026-10-18T20:06:37Z",
    "spread": -6.37,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 30,
+   "awayScore": 33,
+   "correct": true
   },
   "2026_06_DAL_GB": {
    "week": 6,
@@ -2317,7 +2244,7 @@
    "expAway": 25,
    "computedAt": "2026-10-18T22:46:27Z",
    "spread": 2.46,
-   "frozen": false
+   "frozen": true
   },
   "2026_06_WAS_SF": {
    "week": 6,
@@ -2328,7 +2255,7 @@
    "pAway": 0.2862,
    "expHome": 32,
    "expAway": 24,
-   "computedAt": "2026-10-18T22:46:27Z",
+   "computedAt": "2026-10-19T03:17:19Z",
    "spread": 7.18,
    "frozen": false
   }
