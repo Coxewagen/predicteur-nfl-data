@@ -733,13 +733,13 @@
    "defAbsences": [
     {
      "tier": "elite",
-     "pos": "edge rusher titulaire (Nick Bosa, genou)",
+     "pos": "edge rusher titulaire (Nick Bosa, genou, rapport précédent)",
      "lane": "pass",
      "gp": 2
     },
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Marques Sigle, cheville)",
+     "pos": "safety titulaire (Marques Sigle, cheville, rapport précédent)",
      "gp": 4
     },
     {
@@ -757,7 +757,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Deebo Samuel Sr., ischio-jambiers)",
+     "pos": "receveur titulaire (Deebo Samuel Sr., ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 5
     },
@@ -774,33 +774,7 @@
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "Mike Evans",
-     "pos": "receveur",
-     "etat": "incertain pour le match",
-     "why": "côtes"
-    },
-    {
-     "name": "Upton Stout",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "épaule"
-    },
-    {
-     "name": "Mykel Williams",
-     "pos": "edge rusher",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    },
-    {
-     "name": "Romello Height",
-     "pos": "edge rusher",
-     "etat": "entraînement limité",
-     "why": "main"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Tampa Bay Buccaneers": {
@@ -882,7 +856,7 @@
    "defAbsences": [
     {
      "tier": "rotation",
-     "pos": "edge rusher titulaire (Charles Omenihu, aine)",
+     "pos": "edge rusher titulaire (Charles Omenihu, aine, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
@@ -890,12 +864,6 @@
      "tier": "rotation",
      "pos": "linebacker titulaire (Leo Chenal, IR)",
      "gp": 3
-    },
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Trey Amos, IR)",
-     "lane": "pass",
-     "gp": 0
     }
    ],
    "offAbsences": [
@@ -906,57 +874,7 @@
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "Stefon Diggs",
-     "pos": "receveur",
-     "etat": "incertain pour le match",
-     "why": "ischio-jambiers"
-    },
-    {
-     "name": "Lucas Patrick",
-     "pos": "garde gauche",
-     "etat": "incertain pour le match",
-     "why": "maladie"
-    },
-    {
-     "name": "Jeremy Reaves",
-     "pos": "safety",
-     "etat": "entraînement limité",
-     "why": "rib"
-    },
-    {
-     "name": "Terry McLaurin",
-     "pos": "receveur",
-     "etat": "entraînement limité",
-     "why": "ischio-jambiers"
-    },
-    {
-     "name": "Javon Kinlaw",
-     "pos": "défenseur de ligne",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    },
-    {
-     "name": "Rachaad White",
-     "pos": "coureur",
-     "etat": "entraînement limité",
-     "why": "épaule"
-    },
-    {
-     "name": "Nick Cross",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "maladie"
-    },
-    {
-     "name": "Treylon Burks",
-     "pos": "receveur",
-     "etat": "entraînement limité",
-     "why": "épaule"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 6
   },
   "Los Angeles Rams": {
@@ -2214,6 +2132,191 @@
    "expAway": 24,
    "computedAt": "2026-10-20T00:06:39Z",
    "spread": 7.18,
+   "frozen": true,
+   "homeScore": 23,
+   "awayScore": 17,
+   "correct": true
+  },
+  "2026_07_NE_CHI": {
+   "week": 7,
+   "home": "Chicago Bears",
+   "away": "New England Patriots",
+   "kickoff": "2026-10-23T00:15:00Z",
+   "pHome": 0.4928,
+   "pAway": 0.5032,
+   "expHome": 22,
+   "expAway": 23,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": -0.17,
+   "frozen": false
+  },
+  "2026_07_PIT_NO": {
+   "week": 7,
+   "home": "New Orleans Saints",
+   "away": "Pittsburgh Steelers",
+   "kickoff": "2026-10-25T13:30:00Z",
+   "pHome": 0.4376,
+   "pAway": 0.5584,
+   "expHome": 24,
+   "expAway": 26,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": -1.95,
+   "frozen": false
+  },
+  "2026_07_SF_ATL": {
+   "week": 7,
+   "home": "Atlanta Falcons",
+   "away": "San Francisco 49ers",
+   "kickoff": "2026-10-25T17:00:00Z",
+   "pHome": 0.3859,
+   "pAway": 0.6101,
+   "expHome": 25,
+   "expAway": 29,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": -3.66,
+   "frozen": false
+  },
+  "2026_07_CIN_BAL": {
+   "week": 7,
+   "home": "Baltimore Ravens",
+   "away": "Cincinnati Bengals",
+   "kickoff": "2026-10-25T17:00:00Z",
+   "pHome": 0.4895,
+   "pAway": 0.5065,
+   "expHome": 22,
+   "expAway": 22,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": -0.28,
+   "frozen": false
+  },
+  "2026_07_TB_CAR": {
+   "week": 7,
+   "home": "Carolina Panthers",
+   "away": "Tampa Bay Buccaneers",
+   "kickoff": "2026-10-25T17:00:00Z",
+   "pHome": 0.6313,
+   "pAway": 0.3647,
+   "expHome": 27,
+   "expAway": 22,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": 4.38,
+   "frozen": false
+  },
+  "2026_07_NYG_HOU": {
+   "week": 7,
+   "home": "Houston Texans",
+   "away": "New York Giants",
+   "kickoff": "2026-10-25T17:00:00Z",
+   "pHome": 0.765,
+   "pAway": 0.231,
+   "expHome": 29,
+   "expAway": 20,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": 9.38,
+   "frozen": false
+  },
+  "2026_07_IND_MIN": {
+   "week": 7,
+   "home": "Minnesota Vikings",
+   "away": "Indianapolis Colts",
+   "kickoff": "2026-10-25T17:00:00Z",
+   "pHome": 0.6771,
+   "pAway": 0.3189,
+   "expHome": 24,
+   "expAway": 18,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": 5.98,
+   "frozen": false
+  },
+  "2026_07_MIA_NYJ": {
+   "week": 7,
+   "home": "New York Jets",
+   "away": "Miami Dolphins",
+   "kickoff": "2026-10-25T17:00:00Z",
+   "pHome": 0.6096,
+   "pAway": 0.3864,
+   "expHome": 19,
+   "expAway": 16,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": 3.65,
+   "frozen": false
+  },
+  "2026_07_CLE_TEN": {
+   "week": 7,
+   "home": "Tennessee Titans",
+   "away": "Cleveland Browns",
+   "kickoff": "2026-10-25T17:00:00Z",
+   "pHome": 0.4909,
+   "pAway": 0.5051,
+   "expHome": 18,
+   "expAway": 18,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": -0.23,
+   "frozen": false
+  },
+  "2026_07_DEN_ARI": {
+   "week": 7,
+   "home": "Arizona Cardinals",
+   "away": "Denver Broncos",
+   "kickoff": "2026-10-25T20:05:00Z",
+   "pHome": 0.4104,
+   "pAway": 0.5856,
+   "expHome": 22,
+   "expAway": 25,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": -2.85,
+   "frozen": false
+  },
+  "2026_07_GB_DET": {
+   "week": 7,
+   "home": "Detroit Lions",
+   "away": "Green Bay Packers",
+   "kickoff": "2026-10-25T20:25:00Z",
+   "pHome": 0.601,
+   "pAway": 0.395,
+   "expHome": 29,
+   "expAway": 26,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": 3.36,
+   "frozen": false
+  },
+  "2026_07_LA_LV": {
+   "week": 7,
+   "home": "Las Vegas Raiders",
+   "away": "Los Angeles Rams",
+   "kickoff": "2026-10-25T20:25:00Z",
+   "pHome": 0.4144,
+   "pAway": 0.5816,
+   "expHome": 24,
+   "expAway": 26,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": -2.72,
+   "frozen": false
+  },
+  "2026_07_KC_SEA": {
+   "week": 7,
+   "home": "Seattle Seahawks",
+   "away": "Kansas City Chiefs",
+   "kickoff": "2026-10-26T00:20:00Z",
+   "pHome": 0.4361,
+   "pAway": 0.5599,
+   "expHome": 21,
+   "expAway": 23,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": -2.0,
+   "frozen": false
+  },
+  "2026_07_DAL_PHI": {
+   "week": 7,
+   "home": "Philadelphia Eagles",
+   "away": "Dallas Cowboys",
+   "kickoff": "2026-10-27T00:15:00Z",
+   "pHome": 0.4472,
+   "pAway": 0.5488,
+   "expHome": 20,
+   "expAway": 21,
+   "computedAt": "2026-10-20T08:11:23Z",
+   "spread": -1.64,
    "frozen": false
   }
  }
