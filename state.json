@@ -184,6 +184,20 @@
      "tier": "titulaire",
      "pos": "safety titulaire (Kyle Dugger, quadriceps, rapport précédent)",
      "gp": 1
+    },
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Jalen Davis, IR)",
+     "lane": "pass",
+     "gp": 3
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "receveur titulaire (Andrei Iosivas, IR)",
+     "lane": "pass",
+     "gp": 2
     }
    ],
    "injReport": "provisoire",
@@ -243,9 +257,37 @@
      "tier": "titulaire",
      "pos": "safety titulaire (Brian Branch, tendon d’Achille, rapport précédent)",
      "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Avonte Maddox, IR)",
+     "lane": "pass",
+     "gp": 2
+    },
+    {
+     "tier": "titulaire",
+     "pos": "linebacker titulaire (Devin White, IR)",
+     "gp": 3
+    },
+    {
+     "tier": "elite",
+     "pos": "safety titulaire (Kerby Joseph, IR)",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Thomas Harper, IR)",
+     "lane": "pass",
+     "gp": 2
     }
    ],
    "offAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "coureur titulaire (Isiah Pacheco, IR)",
+     "lane": "rush",
+     "gp": 0
+    },
     {
      "tier": "titulaire",
      "pos": "ailier gauche titulaire (Ben Bartch, pied, rapport précédent)",
@@ -352,20 +394,6 @@
      "gp": 4
     }
    ],
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "garde droit titulaire (Patrick Mekari, IR)",
-     "lane": "line",
-     "gp": 0
-    },
-    {
-     "tier": "titulaire",
-     "pos": "ailier droit titulaire (Anton Harrison, IR)",
-     "lane": "line",
-     "gp": 5
-    }
-   ],
    "injReport": "provisoire",
    "injWeek": 6
   },
@@ -405,11 +433,6 @@
      "tier": "elite",
      "pos": "safety titulaire (Derwin James, ischio-jambiers, rapport précédent)",
      "gp": 3
-    },
-    {
-     "tier": "rotation",
-     "pos": "linebacker titulaire (Denzel Perryman, IR)",
-     "gp": 0
     }
    ],
    "offAbsences": [
@@ -421,24 +444,7 @@
     },
     {
      "tier": "titulaire",
-     "pos": "tight end titulaire (David Njoku, IR)",
-     "gp": 2
-    },
-    {
-     "tier": "titulaire",
      "pos": "ailier droit titulaire (Joe Alt, cou, rapport précédent)",
-     "lane": "line",
-     "gp": 4
-    },
-    {
-     "tier": "titulaire",
-     "pos": "centre titulaire (Tyler Biadasz, IR)",
-     "lane": "line",
-     "gp": 0
-    },
-    {
-     "tier": "elite",
-     "pos": "ailier gauche titulaire (Rashawn Slater, IR)",
      "lane": "line",
      "gp": 4
     }
@@ -464,6 +470,20 @@
      "pos": "receveur titulaire (Caleb Douglas, cheville, rapport précédent)",
      "lane": "pass",
      "gp": 2
+    },
+    {
+     "tier": "elite",
+     "pos": "coureur titulaire (De'Von Achane, IR)",
+     "lane": "rush",
+     "gp": 3
+    }
+   ],
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Darrell Baker Jr., IR)",
+     "lane": "pass",
+     "gp": 0
     }
    ],
    "injReport": "provisoire",
@@ -471,6 +491,11 @@
   },
   "Minnesota Vikings": {
    "offAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "tight end titulaire (Josh Oliver, IR)",
+     "gp": 3
+    },
     {
      "tier": "elite",
      "pos": "ailier gauche titulaire (Christian Darrisaw, commotion, rapport précédent)",
@@ -502,6 +527,12 @@
      "pos": "receveur titulaire (Mack Hollins, IR)",
      "lane": "pass",
      "gp": 4
+    },
+    {
+     "tier": "titulaire",
+     "pos": "receveur titulaire (Romeo Doubs, IR)",
+     "lane": "pass",
+     "gp": 6
     },
     {
      "tier": "rotation",
@@ -766,12 +797,6 @@
      "pos": "receveur titulaire (Ricky Pearsall, IR)",
      "lane": "pass",
      "gp": 0
-    },
-    {
-     "tier": "rotation",
-     "pos": "ailier gauche titulaire (Brett Toth, IR)",
-     "lane": "line",
-     "gp": 0
     }
    ],
    "injReport": "provisoire",
@@ -859,19 +884,6 @@
      "pos": "edge rusher titulaire (Charles Omenihu, aine, rapport précédent)",
      "lane": "pass",
      "gp": 4
-    },
-    {
-     "tier": "rotation",
-     "pos": "linebacker titulaire (Leo Chenal, IR)",
-     "gp": 3
-    }
-   ],
-   "offAbsences": [
-    {
-     "tier": "elite",
-     "pos": "ailier gauche titulaire (Laremy Tunsil, IR)",
-     "lane": "line",
-     "gp": 0
     }
    ],
    "injReport": "provisoire",
@@ -887,12 +899,6 @@
     }
    ],
    "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Alaric Jackson, IR)",
-     "lane": "line",
-     "gp": 5
-    },
     {
      "tier": "titulaire",
      "pos": "centre titulaire (Justin Dedich, IR)",
@@ -2142,12 +2148,12 @@
    "home": "Chicago Bears",
    "away": "New England Patriots",
    "kickoff": "2026-10-23T00:15:00Z",
-   "pHome": 0.4928,
-   "pAway": 0.5032,
+   "pHome": 0.5115,
+   "pAway": 0.4845,
    "expHome": 22,
-   "expAway": 23,
-   "computedAt": "2026-10-20T08:11:23Z",
-   "spread": -0.17,
+   "expAway": 22,
+   "computedAt": "2026-10-20T14:06:29Z",
+   "spread": 0.44,
    "frozen": false
   },
   "2026_07_PIT_NO": {
@@ -2159,7 +2165,7 @@
    "pAway": 0.5584,
    "expHome": 24,
    "expAway": 26,
-   "computedAt": "2026-10-20T08:11:23Z",
+   "computedAt": "2026-10-20T14:06:29Z",
    "spread": -1.95,
    "frozen": false
   },
@@ -2168,12 +2174,12 @@
    "home": "Atlanta Falcons",
    "away": "San Francisco 49ers",
    "kickoff": "2026-10-25T17:00:00Z",
-   "pHome": 0.3859,
-   "pAway": 0.6101,
+   "pHome": 0.3836,
+   "pAway": 0.6124,
    "expHome": 25,
    "expAway": 29,
-   "computedAt": "2026-10-20T08:11:23Z",
-   "spread": -3.66,
+   "computedAt": "2026-10-20T14:06:29Z",
+   "spread": -3.74,
    "frozen": false
   },
   "2026_07_CIN_BAL": {
@@ -2181,12 +2187,12 @@
    "home": "Baltimore Ravens",
    "away": "Cincinnati Bengals",
    "kickoff": "2026-10-25T17:00:00Z",
-   "pHome": 0.4895,
-   "pAway": 0.5065,
-   "expHome": 22,
+   "pHome": 0.5142,
+   "pAway": 0.4818,
+   "expHome": 23,
    "expAway": 22,
-   "computedAt": "2026-10-20T08:11:23Z",
-   "spread": -0.28,
+   "computedAt": "2026-10-20T14:06:29Z",
+   "spread": 0.52,
    "frozen": false
   },
   "2026_07_TB_CAR": {
@@ -2198,7 +2204,7 @@
    "pAway": 0.3647,
    "expHome": 27,
    "expAway": 22,
-   "computedAt": "2026-10-20T08:11:23Z",
+   "computedAt": "2026-10-20T14:06:29Z",
    "spread": 4.38,
    "frozen": false
   },
@@ -2211,7 +2217,7 @@
    "pAway": 0.231,
    "expHome": 29,
    "expAway": 20,
-   "computedAt": "2026-10-20T08:11:23Z",
+   "computedAt": "2026-10-20T14:06:29Z",
    "spread": 9.38,
    "frozen": false
   },
@@ -2220,12 +2226,12 @@
    "home": "Minnesota Vikings",
    "away": "Indianapolis Colts",
    "kickoff": "2026-10-25T17:00:00Z",
-   "pHome": 0.6771,
-   "pAway": 0.3189,
+   "pHome": 0.6713,
+   "pAway": 0.3247,
    "expHome": 24,
    "expAway": 18,
-   "computedAt": "2026-10-20T08:11:23Z",
-   "spread": 5.98,
+   "computedAt": "2026-10-20T14:06:29Z",
+   "spread": 5.77,
    "frozen": false
   },
   "2026_07_MIA_NYJ": {
@@ -2233,12 +2239,12 @@
    "home": "New York Jets",
    "away": "Miami Dolphins",
    "kickoff": "2026-10-25T17:00:00Z",
-   "pHome": 0.6096,
-   "pAway": 0.3864,
+   "pHome": 0.6477,
+   "pAway": 0.3483,
    "expHome": 19,
-   "expAway": 16,
-   "computedAt": "2026-10-20T08:11:23Z",
-   "spread": 3.65,
+   "expAway": 14,
+   "computedAt": "2026-10-20T14:06:29Z",
+   "spread": 4.94,
    "frozen": false
   },
   "2026_07_CLE_TEN": {
@@ -2250,7 +2256,7 @@
    "pAway": 0.5051,
    "expHome": 18,
    "expAway": 18,
-   "computedAt": "2026-10-20T08:11:23Z",
+   "computedAt": "2026-10-20T14:06:29Z",
    "spread": -0.23,
    "frozen": false
   },
@@ -2263,7 +2269,7 @@
    "pAway": 0.5856,
    "expHome": 22,
    "expAway": 25,
-   "computedAt": "2026-10-20T08:11:23Z",
+   "computedAt": "2026-10-20T14:06:29Z",
    "spread": -2.85,
    "frozen": false
   },
@@ -2272,12 +2278,12 @@
    "home": "Detroit Lions",
    "away": "Green Bay Packers",
    "kickoff": "2026-10-25T20:25:00Z",
-   "pHome": 0.601,
-   "pAway": 0.395,
-   "expHome": 29,
-   "expAway": 26,
-   "computedAt": "2026-10-20T08:11:23Z",
-   "spread": 3.36,
+   "pHome": 0.5554,
+   "pAway": 0.4406,
+   "expHome": 30,
+   "expAway": 28,
+   "computedAt": "2026-10-20T14:06:29Z",
+   "spread": 1.86,
    "frozen": false
   },
   "2026_07_LA_LV": {
@@ -2285,12 +2291,12 @@
    "home": "Las Vegas Raiders",
    "away": "Los Angeles Rams",
    "kickoff": "2026-10-25T20:25:00Z",
-   "pHome": 0.4144,
-   "pAway": 0.5816,
+   "pHome": 0.3957,
+   "pAway": 0.6003,
    "expHome": 24,
-   "expAway": 26,
-   "computedAt": "2026-10-20T08:11:23Z",
-   "spread": -2.72,
+   "expAway": 27,
+   "computedAt": "2026-10-20T14:06:29Z",
+   "spread": -3.33,
    "frozen": false
   },
   "2026_07_KC_SEA": {
@@ -2302,7 +2308,7 @@
    "pAway": 0.5599,
    "expHome": 21,
    "expAway": 23,
-   "computedAt": "2026-10-20T08:11:23Z",
+   "computedAt": "2026-10-20T14:06:29Z",
    "spread": -2.0,
    "frozen": false
   },
@@ -2315,7 +2321,7 @@
    "pAway": 0.5488,
    "expHome": 20,
    "expAway": 21,
-   "computedAt": "2026-10-20T08:11:23Z",
+   "computedAt": "2026-10-20T14:06:29Z",
    "spread": -1.64,
    "frozen": false
   }
