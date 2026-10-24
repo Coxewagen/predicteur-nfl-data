@@ -1,6 +1,6 @@
 {
- "faitLe": "2026-10-17T23:50:00+02:00",
- "faitLeLabel": "samedi 17 octobre à 23 h 50",
+ "faitLe": "2026-10-24T23:48:00+02:00",
+ "faitLeLabel": "samedi 24 octobre à 23 h 48",
  "matchs": {
   "2026_06_HOU_JAX": {
    "faitLe": "2026-10-17T23:50:00+02:00",
@@ -134,6 +134,123 @@
    "penchant": null,
    "confiance": "faible",
    "avis": "Le modèle contredit le marché de 9 points ; sur 2020-2026, dans ce cas, le marché a eu raison 66 % du temps. Analyse à refaire mercredi avec les rapports de la semaine 7 : ne rien décider avant."
+  },
+  "2026_07_PIT_NO": {
+   "faitLe": "2026-10-24T23:48:00+02:00",
+   "raisons": [
+    "serré"
+   ],
+   "resume": "Match à Paris (terrain neutre) : modèle et marché voient Pittsburgh légèrement devant, mais la météo pluvieuse et venteuse peut niveler l'écart.",
+   "points": [
+    "Match au Stade de France, terrain neutre ; pluie et vent de travers possibles, l'entraînement des Steelers de vendredi a été annulé à cause du temps.",
+    "Steelers : Ben Skowronek et le cornerback Brandin Echols forfaits ; le coureur Rico Dowdle et le safety DeShon Elliott incertains.",
+    "Saints : le quarterback Tyler Shough s'est entraîné à plein ; Alvin Kamara jouera (sans désignation) ; le garde Cesar Ruiz et Nathan Shepherd sont incertains, et les deux ailiers titulaires sont sur la liste des blessés.",
+    "Forme : Pittsburgh (4-2) encaisse 21,3 points par match, New Orleans (2-4) 29,7.",
+    "Le marché donne Pittsburgh favori de 3 points (59 %), le modèle un peu moins (55 %)."
+   ],
+   "penchant": "Pittsburgh Steelers",
+   "confiance": "faible",
+   "avis": "Léger penchant Steelers, partagé par le marché, mais la météo et le terrain neutre rendent le match aléatoire : petite mise seulement."
+  },
+  "2026_07_CIN_BAL": {
+   "faitLe": "2026-10-24T23:48:00+02:00",
+   "raisons": [
+    "serré",
+    "désaccord"
+   ],
+   "resume": "Gros changement ce samedi soir : Lamar Jackson est déclaré forfait, alors que le modèle compte encore sur lui.",
+   "points": [
+    "Lamar Jackson (entorse haute de la cheville) a été rétrogradé à « forfait » samedi : Tyler Huntley sera titulaire pour le troisième match d'affilée.",
+    "Ravens aussi privés du safety Jaylinn Hawkins et de l'edge Tavius Robinson (saison terminée) ; Ronnie Stanley est sorti du rapport et jouera.",
+    "Baltimore a perdu son dernier match 10-13 contre Cleveland ; Cincinnati (3-2) a gagné le sien contre Miami.",
+    "Le marché faisait déjà de Cincinnati le favori de 2,5 points (57 %), le modèle préfère Baltimore (52 %) car il ne compte pas Jackson absent."
+   ],
+   "penchant": "Cincinnati Bengals",
+   "confiance": "faible",
+   "avis": "Le modèle contredit le marché de 9 points ; sur 2020-2026, dans ce cas, le marché a eu raison 66 % du temps. Avec Jackson forfait, penchant Bengals, petite mise seulement."
+  },
+  "2026_07_CLE_TEN": {
+   "faitLe": "2026-10-24T23:48:00+02:00",
+   "raisons": [
+    "serré",
+    "désaccord"
+   ],
+   "resume": "Deux attaques faibles et un modèle à pile ou face (Titans 50 %), alors que le marché préfère Cleveland.",
+   "points": [
+    "Browns : Denzel Ward, Grant Delpit, Quincy Williams et Dylan Sampson incertains ; Mike Hall Jr., Teven Jenkins et Kalia Davis forfaits.",
+    "Titans : Calvin Ridley ne s'est pas entraîné jeudi ni vendredi et reste incertain, comme Tyjae Spears et les safeties Tony Adams et Kevin Winston Jr. ; deux gardes titulaires sont sur la liste des blessés.",
+    "Forme : Cleveland (4-2) a gagné 4 de ses 5 derniers matchs ; Tennessee (1-5) ne marque que 14,0 points par match.",
+    "Le marché donne Cleveland favori de 2,5 points (54 %), le modèle penche très légèrement pour Tennessee."
+   ],
+   "penchant": "Cleveland Browns",
+   "confiance": "faible",
+   "avis": "Le modèle contredit le marché d'environ 5 points ; sur 2020-2026, dans ce cas, le marché a eu raison 66 % du temps. Léger penchant Browns, mais match à peu de points : petite mise ou passer."
+  },
+  "2026_07_GB_DET": {
+   "faitLe": "2026-10-24T23:48:00+02:00",
+   "raisons": [
+    "serré"
+   ],
+   "resume": "Detroit favori chez lui, mais sa défense est décimée face à des Packers eux aussi diminués en défense.",
+   "points": [
+    "Lions : le safety Kerby Joseph et deux cornerbacks titulaires sont sur la liste des blessés ; Brian Branch et le centre Cade Mays sont incertains.",
+    "Packers : Micah Parsons et Edgerrin Cooper sur la liste des blessés, et le linebacker Zaire Franklin forfait (blessé jeudi) ; le garde Aaron Banks est incertain.",
+    "Detroit marque 32,8 points par match mais en encaisse 29,6 ; Green Bay (4-2) n'en encaisse que 20,8.",
+    "Match en salle à Detroit, pas d'effet météo ; le marché (62 %) et le modèle (58 %) sont d'accord sur Detroit."
+   ],
+   "penchant": "Detroit Lions",
+   "confiance": "moyenne",
+   "avis": "Penchant Lions, partagé par le marché, mais sous ton seuil de 60 % pour le modèle : petite mise seulement."
+  },
+  "2026_07_LA_LV": {
+   "faitLe": "2026-10-24T23:48:00+02:00",
+   "raisons": [
+    "serré"
+   ],
+   "resume": "Les Rams sont favoris de 3 points, mais deux titulaires clés sont incertains et le modèle est plus prudent que le marché.",
+   "points": [
+    "Rams : Puka Nacua (mollet, blessé jeudi) et le cornerback Trent McDuffie (aine, aucun entraînement de la semaine) sont incertains ; le linebacker Nate Landman est forfait.",
+    "Rams aussi sans Myles Garrett, Kobie Turner et Davante Adams (liste des blessés).",
+    "Raiders (3-3) : peu d'absences notables, et deux victoires lors des deux derniers matchs.",
+    "Le marché donne les Rams à 61 %, le modèle à 53 %."
+   ],
+   "penchant": "Los Angeles Rams",
+   "confiance": "faible",
+   "avis": "Léger penchant Rams, mais tout dépend de Nacua et McDuffie : vérifier les inactifs dimanche vers 19 h 55 (heure de Paris), sinon passer son tour."
+  },
+  "2026_07_KC_SEA": {
+   "faitLe": "2026-10-24T23:48:00+02:00",
+   "raisons": [
+    "serré",
+    "désaccord"
+   ],
+   "resume": "Le modèle préfère les Chiefs invaincus, le marché les Seahawks à domicile : vrai désaccord sur le match du dimanche soir.",
+   "points": [
+    "Seattle garde Sam Darnold au poste de quarterback ; Drew Lock, remplaçant, est incertain (coude).",
+    "Seahawks : le coureur Zach Charbonnet et le linebacker Drake Thomas forfaits ; DeMarcus Lawrence, Uchenna Nwosu et le safety Nick Emmanwori incertains.",
+    "Chiefs (5-0) : Rashee Rice, l'ailier Jaylon Moore et le coureur Brashard Smith forfaits ; L'Jarius Sneed incertain, Travis Kelce jouera ; défense à 16,6 points encaissés.",
+    "Seattle (3-3) a joué jeudi dernier (défaite en prolongation) et a donc plus de repos.",
+    "Le marché fait de Seattle le favori de 3 points (56 %), le modèle donne Kansas City à 54 %."
+   ],
+   "penchant": null,
+   "confiance": "faible",
+   "avis": "Le modèle contredit le marché de 11 points ; sur 2020-2026, dans ce cas, le marché a eu raison 66 % du temps. Aucun penchant assez clair : passer son tour."
+  },
+  "2026_07_DAL_PHI": {
+   "faitLe": "2026-10-24T23:48:00+02:00",
+   "raisons": [
+    "serré"
+   ],
+   "resume": "Philadelphie sans Jalen Hurts et avec ses principales cibles incertaines : Dallas est favori, mais le rapport final ne tombera que samedi soir américain.",
+   "points": [
+    "Jalen Hurts est sur la liste des blessés : Tanner McKee sera le quarterback.",
+    "DeVonta Smith, Dontayvion Wicks et Dallas Goedert ne se sont pas entraînés jeudi ni vendredi ; Saquon Barkley et Landon Dickerson semblent en voie de jouer.",
+    "Philadelphie (2-4) a perdu ses 4 derniers matchs et ne marque que 17,7 points par match ; Dallas (2-4) en marque 25,2.",
+    "Dallas est presque au complet ; le marché le donne favori de 4,5 points (66 %), le modèle à 56 %."
+   ],
+   "penchant": "Dallas Cowboys",
+   "confiance": "faible",
+   "avis": "Penchant Cowboys, partagé par le marché, mais blessures encore provisoires (match lundi) : petite mise seulement, après le rapport final."
   }
  }
 }
