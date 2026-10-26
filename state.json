@@ -4,12 +4,12 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Andrew Wingard, genou)",
+     "pos": "safety titulaire (Andrew Wingard, genou, rapport précédent)",
      "gp": 4
     },
     {
      "tier": "titulaire",
-     "pos": "défenseur de ligne titulaire (Walter Nolen, cheville)",
+     "pos": "défenseur de ligne titulaire (Walter Nolen, cheville, rapport précédent)",
      "gp": 6
     },
     {
@@ -22,7 +22,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "garde gauche titulaire (Jon Gaines II, genou)",
+     "pos": "garde gauche titulaire (Jon Gaines II, genou, rapport précédent)",
      "lane": "line",
      "gp": 4
     },
@@ -33,21 +33,7 @@
      "gp": 4
     }
    ],
-   "watch": [
-    {
-     "name": "Budda Baker",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "aine"
-    },
-    {
-     "name": "Max Melton",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 7
   },
   "Atlanta Falcons": {
@@ -233,12 +219,12 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Talanoa Hufanga, cheville)",
+     "pos": "safety titulaire (Talanoa Hufanga, cheville, rapport précédent)",
      "gp": 5
     },
     {
      "tier": "rotation",
-     "pos": "edge rusher titulaire (Jonah Elliss, cheville)",
+     "pos": "edge rusher titulaire (Jonah Elliss, cheville, rapport précédent)",
      "lane": "pass",
      "gp": 6
     }
@@ -251,22 +237,14 @@
      "gp": 4
     }
    ],
-   "watch": [
-    {
-     "name": "Pat Surtain II",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 7
   },
   "Green Bay Packers": {
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "linebacker titulaire (Zaire Franklin, shin)",
+     "pos": "linebacker titulaire (Zaire Franklin, shin, rapport précédent)",
      "gp": 6
     },
     {
@@ -294,39 +272,7 @@
      "gp": 2
     }
    ],
-   "watch": [
-    {
-     "name": "Aaron Banks",
-     "pos": "garde gauche",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    },
-    {
-     "name": "Christian Watson",
-     "pos": "receveur",
-     "etat": "entraînement limité",
-     "why": "cheville"
-    },
-    {
-     "name": "Savion Williams",
-     "pos": "receveur",
-     "etat": "entraînement limité",
-     "why": "cheville"
-    },
-    {
-     "name": "Matthew Golden",
-     "pos": "receveur",
-     "etat": "entraînement limité",
-     "why": "épaule"
-    },
-    {
-     "name": "Brandon Cisse",
-     "pos": "cornerback",
-     "etat": "entraînement limité",
-     "why": "épaule"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 7
   },
   "Houston Texans": {
@@ -445,7 +391,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "linebacker titulaire (Nate Landman, commotion)",
+     "pos": "linebacker titulaire (Nate Landman, commotion, rapport précédent)",
      "gp": 6
     },
     {
@@ -474,21 +420,7 @@
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "Trent McDuffie",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "aine"
-    },
-    {
-     "name": "Puka Nacua",
-     "pos": "receveur",
-     "etat": "incertain pour le match",
-     "why": "mollet"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 7
   },
   "Los Angeles Chargers": {
@@ -875,21 +807,7 @@
      "gp": 2
     }
    ],
-   "watch": [
-    {
-     "name": "Cade Mays",
-     "pos": "centre",
-     "etat": "incertain pour le match",
-     "why": "poignet"
-    },
-    {
-     "name": "Brian Branch",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "tendon d’Achille"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 7
   },
   "Cincinnati Bengals": {
@@ -1042,21 +960,13 @@
    "injReport": "provisoire",
    "injWeek": 7
   },
-  "Las Vegas Raiders": {
-   "watch": [
-    {
-     "name": "Quay Walker",
-     "pos": "linebacker",
-     "etat": "incertain pour le match",
-     "why": "poitrine"
-    }
-   ],
-   "injReport": "final",
-   "injWeek": 7
-  },
   "Buffalo Bills": {
    "injReport": "provisoire",
    "injWeek": 6
+  },
+  "Las Vegas Raiders": {
+   "injReport": "provisoire",
+   "injWeek": 7
   }
  },
  "journal": {
@@ -2431,7 +2341,10 @@
    "expAway": 26,
    "computedAt": "2026-10-25T15:33:38Z",
    "spread": -4.4,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 16,
+   "awayScore": 30,
+   "correct": true
   },
   "2026_07_GB_DET": {
    "week": 7,
@@ -2444,7 +2357,10 @@
    "expAway": 27,
    "computedAt": "2026-10-25T20:23:07Z",
    "spread": 3.16,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 20,
+   "awayScore": 17,
+   "correct": true
   },
   "2026_07_LA_LV": {
    "week": 7,
@@ -2457,7 +2373,10 @@
    "expAway": 26,
    "computedAt": "2026-10-25T20:23:07Z",
    "spread": -1.0,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 21,
+   "awayScore": 35,
+   "correct": true
   },
   "2026_07_KC_SEA": {
    "week": 7,
@@ -2470,7 +2389,7 @@
    "expAway": 22,
    "computedAt": "2026-10-25T23:00:47Z",
    "spread": -1.29,
-   "frozen": false
+   "frozen": true
   },
   "2026_07_DAL_PHI": {
    "week": 7,
@@ -2481,7 +2400,7 @@
    "pAway": 0.5482,
    "expHome": 20,
    "expAway": 22,
-   "computedAt": "2026-10-25T23:00:47Z",
+   "computedAt": "2026-10-26T03:14:56Z",
    "spread": -1.62,
    "frozen": false
   }
