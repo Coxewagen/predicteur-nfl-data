@@ -353,7 +353,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Rashee Rice, ischio-jambiers)",
+     "pos": "receveur titulaire (Rashee Rice, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
@@ -365,26 +365,12 @@
     },
     {
      "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Jaylon Moore, commotion)",
+     "pos": "ailier gauche titulaire (Jaylon Moore, commotion, rapport précédent)",
      "lane": "line",
      "gp": 5
     }
    ],
-   "watch": [
-    {
-     "name": "Travis Kelce",
-     "pos": "tight end",
-     "etat": "entraînement limité",
-     "why": "cheville"
-    },
-    {
-     "name": "L'Jarius Sneed",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 7
   },
   "Los Angeles Rams": {
@@ -644,37 +630,11 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "linebacker titulaire (Drake Thomas, cheville)",
+     "pos": "linebacker titulaire (Drake Thomas, cheville, rapport précédent)",
      "gp": 5
     }
    ],
-   "watch": [
-    {
-     "name": "DeMarcus Lawrence",
-     "pos": "edge rusher",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    },
-    {
-     "name": "Uchenna Nwosu",
-     "pos": "edge rusher",
-     "etat": "incertain pour le match",
-     "why": "hanche"
-    },
-    {
-     "name": "Drew Lock",
-     "pos": "quarterback",
-     "etat": "incertain pour le match",
-     "why": "coude"
-    },
-    {
-     "name": "Nick Emmanwori",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "hanche"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 7
   },
   "San Francisco 49ers": {
@@ -2389,7 +2349,10 @@
    "expAway": 22,
    "computedAt": "2026-10-25T23:00:47Z",
    "spread": -1.29,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 20,
+   "awayScore": 3,
+   "correct": false
   },
   "2026_07_DAL_PHI": {
    "week": 7,
@@ -2400,7 +2363,7 @@
    "pAway": 0.5482,
    "expHome": 20,
    "expAway": 22,
-   "computedAt": "2026-10-26T03:14:56Z",
+   "computedAt": "2026-10-26T12:16:12Z",
    "spread": -1.62,
    "frozen": false
   }
