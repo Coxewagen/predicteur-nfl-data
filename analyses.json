@@ -1,6 +1,6 @@
 {
- "faitLe": "2026-10-24T23:48:00+02:00",
- "faitLeLabel": "samedi 24 octobre à 23 h 48",
+ "faitLe": "2026-10-28T23:50:00+01:00",
+ "faitLeLabel": "mercredi 28 octobre à 23 h 50",
  "matchs": {
   "2026_06_HOU_JAX": {
    "faitLe": "2026-10-17T23:50:00+02:00",
@@ -251,6 +251,92 @@
    "penchant": "Dallas Cowboys",
    "confiance": "faible",
    "avis": "Penchant Cowboys, partagé par le marché, mais blessures encore provisoires (match lundi) : petite mise seulement, après le rapport final."
+  },
+  "2026_08_BAL_BUF": {
+   "faitLe": "2026-10-28T23:50:00+01:00",
+   "raisons": [
+    "désaccord"
+   ],
+   "resume": "Le modèle (74 % Buffalo) compte encore Lamar Jackson absent, alors qu'il s'est entraîné à plein mercredi : l'écart avec le marché (61 %) vient surtout de là.",
+   "points": [
+    "Lamar Jackson (cheville) a fait un entraînement complet mercredi, son premier depuis sa blessure : il devrait jouer, le modèle le compte pourtant remplacé par Tyler Huntley.",
+    "Buffalo (5-1) marque 32,8 points par match mais en encaisse 28,5 ; ses trois dernières victoires se sont jouées à 3 points ou moins.",
+    "Côté Bills, l'ailier droit Spencer Brown (dos) n'a pas participé mercredi, Dalton Kincaid (côtes) était limité ; le safety C.J. Gardner-Johnson est sur la liste des blessés.",
+    "Baltimore (4-3) reste sur deux défaites (13-35 contre Cincinnati, 10-13 contre Cleveland).",
+    "Le marché fait de Buffalo le favori de 3 points."
+   ],
+   "penchant": "Buffalo Bills",
+   "confiance": "faible",
+   "avis": "Sur 2020-2026, quand le modèle contredit le marché, le marché a eu raison 66 % du temps. Avec Jackson de retour, le vrai niveau est plus proche du marché : léger penchant Buffalo, petite mise seulement, à revoir samedi."
+  },
+  "2026_08_MIN_DET": {
+   "faitLe": "2026-10-28T23:50:00+01:00",
+   "raisons": [
+    "serré",
+    "désaccord"
+   ],
+   "resume": "Le marché fait de Detroit le favori (60 %), le modèle préfère Minnesota invaincu (52 %), et deux armes majeures des Lions ont manqué l'entraînement mercredi.",
+   "points": [
+    "Detroit : Jahmyr Gibbs (épaule) et Amon-Ra St. Brown (cheville) n'ont pas participé mercredi ; Kerby Joseph (genou), sur la liste des blessés, s'entraîne de façon limitée.",
+    "Detroit a aussi deux cornerbacks titulaires (Maddox, Harper) et le linebacker Devin White sur la liste des blessés.",
+    "Minnesota (6-0) gagne grâce à sa défense (12,3 points encaissés par match) mais marque peu (20,8) ; Aaron Jones (genou) et le garde Joe Huber (genou) sont incertains.",
+    "Detroit (4-2) marque 30,7 points par match mais en encaisse 27,5 ; match en salle, pas de souci de météo.",
+    "Le marché donne Detroit favori de 3 points."
+   ],
+   "penchant": null,
+   "confiance": "faible",
+   "avis": "Sur 2020-2026, quand le modèle contredit le marché, le marché a eu raison 66 % du temps. Mais si Gibbs et St. Brown sont absents, l'avantage de Detroit fond : aucun penchant pour l'instant, passer son tour en attendant le rapport final de samedi."
+  },
+  "2026_08_LV_NYJ": {
+   "faitLe": "2026-10-28T23:50:00+01:00",
+   "raisons": [
+    "serré"
+   ],
+   "resume": "Deux équipes en difficulté et un marché quasi à égalité (Jets 53 %) : le modèle penche un peu plus pour New York (58 %).",
+   "points": [
+    "Las Vegas garde Kirk Cousins comme quarterback cette semaine ; le débutant Fernando Mendoza ne jouera pas encore.",
+    "Las Vegas (3-4) a perdu ses 4 derniers matchs après un départ à 3-0 et encaisse 28,1 points par match.",
+    "Les Jets (2-5) ont perdu 4 de leurs 5 derniers matchs ; Breece Hall, Dylan Parham et le rusher Joseph Ossai sont incertains.",
+    "Le marché fait des Jets un très léger favori (1,5 point)."
+   ],
+   "penchant": "New York Jets",
+   "confiance": "faible",
+   "avis": "Léger penchant Jets, avec l'avantage du terrain face à une équipe en chute, mais l'écart est mince : petite mise seulement, ou passer."
+  },
+  "2026_08_ATL_TB": {
+   "faitLe": "2026-10-28T23:50:00+01:00",
+   "raisons": [
+    "serré"
+   ],
+   "resume": "Modèle et marché d'accord sur Tampa Bay (53-55 %), avec le retour de Baker Mayfield, mais plusieurs titulaires des deux côtés sont incertains.",
+   "points": [
+    "Baker Mayfield (pouce) s'est entraîné à plein mercredi et devrait retrouver sa place de titulaire.",
+    "Tampa Bay : le garde Luke Goedeke (mollet) et le coureur Kenny Gainwell (hanche) n'ont pas participé mercredi, Emeka Egbuka (commotion/pied) était limité ; Antoine Winfield Jr. s'est entraîné à plein.",
+    "Atlanta : Divine Deablo, Billy Bowman Jr. et le coureur Brian Robinson n'ont pas participé mercredi ; trois rushers (Hand, Walker, Pearce) sont sur la liste des blessés.",
+    "Atlanta (3-4) a gagné 3 de ses 5 derniers matchs ; Tampa Bay (2-5) sort d'une victoire 43-13 contre Carolina.",
+    "Le marché donne Tampa Bay favori de 2,5 points."
+   ],
+   "penchant": "Tampa Bay Buccaneers",
+   "confiance": "faible",
+   "avis": "Léger penchant Tampa Bay avec Mayfield de retour, mais on reste près de 50/50 : petite mise seulement, à confirmer samedi selon Egbuka et Goedeke."
+  },
+  "2026_08_KC_DEN": {
+   "faitLe": "2026-10-28T23:50:00+01:00",
+   "raisons": [
+    "serré",
+    "désaccord"
+   ],
+   "resume": "Le modèle met Denver légèrement devant (54 %), le marché préfère Kansas City (52 %) : un vrai pile ou face entre deux équipes de tête.",
+   "points": [
+    "Kansas City : Patrick Mahomes (genou) et l'ailier Jaylon Moore (commotion) se sont entraînés à plein mercredi ; Rashee Rice (ischio-jambiers/genou) était limité.",
+    "Denver : Pat Surtain II et le safety Talanoa Hufanga sont annoncés incertains.",
+    "Kansas City (5-1) a la meilleure défense des deux (17,2 points encaissés par match) et avait battu Denver 31-10 en semaine 1.",
+    "Denver (5-2) a gagné 4 de ses 5 derniers matchs, souvent de peu, et marque 20,6 points par match.",
+    "Le marché fait de Kansas City le favori de 1,5 point."
+   ],
+   "penchant": null,
+   "confiance": "faible",
+   "avis": "Sur 2020-2026, quand le modèle contredit le marché, le marché a eu raison 66 % du temps. Ici l'écart est petit (6 points) et Rice pourrait revenir : aucun penchant, passer son tour."
   }
  }
 }
