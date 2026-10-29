@@ -586,9 +586,9 @@
     },
     {
      "tier": "titulaire",
-     "pos": "ailier droit titulaire (Joe Alt, cou, rapport précédent)",
+     "pos": "ailier droit titulaire (Kayode Awosika, péroné, rapport précédent)",
      "lane": "line",
-     "gp": 4
+     "gp": 2
     },
     {
      "tier": "titulaire",
@@ -784,6 +784,44 @@
    "qbReplacementTier": "limite",
    "qbReplacementName": "Tanner McKee",
    "qbReplacementStarts": 3,
+   "watch": [
+    {
+     "name": "Jonathan Jones",
+     "pos": "cornerback",
+     "etat": "absent à l’entraînement",
+     "why": "ischio-jambiers"
+    },
+    {
+     "name": "Saquon Barkley",
+     "pos": "coureur",
+     "etat": "absent à l’entraînement",
+     "why": "ischio-jambiers"
+    },
+    {
+     "name": "Jonathan Greenard",
+     "pos": "edge rusher",
+     "etat": "entraînement limité",
+     "why": "cheville"
+    },
+    {
+     "name": "Moro Ojomo",
+     "pos": "défenseur de ligne",
+     "etat": "entraînement limité",
+     "why": "cou"
+    },
+    {
+     "name": "Jalyx Hunt",
+     "pos": "edge rusher",
+     "etat": "entraînement limité",
+     "why": "genou"
+    },
+    {
+     "name": "Jihaad Campbell",
+     "pos": "linebacker",
+     "etat": "absent à l’entraînement",
+     "why": "ischio-jambiers"
+    }
+   ],
    "injReport": "provisoire",
    "injWeek": 7
   },
@@ -2851,7 +2889,7 @@
    "pAway": 0.339,
    "expHome": 27,
    "expAway": 22,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": 5.27,
    "frozen": false
   },
@@ -2864,7 +2902,7 @@
    "pAway": 0.296,
    "expHome": 33,
    "expAway": 27,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": 6.82,
    "frozen": false
   },
@@ -2877,7 +2915,7 @@
    "pAway": 0.2133,
    "expHome": 26,
    "expAway": 16,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": 10.14,
    "frozen": false
   },
@@ -2890,7 +2928,7 @@
    "pAway": 0.2708,
    "expHome": 32,
    "expAway": 24,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": 7.77,
    "frozen": false
   },
@@ -2903,7 +2941,7 @@
    "pAway": 0.5188,
    "expHome": 22,
    "expAway": 23,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": -0.67,
    "frozen": false
   },
@@ -2916,7 +2954,7 @@
    "pAway": 0.2419,
    "expHome": 28,
    "expAway": 19,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": 8.92,
    "frozen": false
   },
@@ -2929,7 +2967,7 @@
    "pAway": 0.4207,
    "expHome": 25,
    "expAway": 23,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": 2.51,
    "frozen": false
   },
@@ -2942,7 +2980,7 @@
    "pAway": 0.3161,
    "expHome": 23,
    "expAway": 17,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": 6.08,
    "frozen": false
   },
@@ -2955,7 +2993,7 @@
    "pAway": 0.4407,
    "expHome": 24,
    "expAway": 22,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": 1.85,
    "frozen": false
   },
@@ -2968,7 +3006,7 @@
    "pAway": 0.2383,
    "expHome": 25,
    "expAway": 16,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": 9.07,
    "frozen": false
   },
@@ -2981,7 +3019,7 @@
    "pAway": 0.4727,
    "expHome": 20,
    "expAway": 20,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": 0.82,
    "frozen": false
   },
@@ -2994,7 +3032,7 @@
    "pAway": 0.6516,
    "expHome": 16,
    "expAway": 21,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": -5.08,
    "frozen": false
   },
@@ -3007,7 +3045,7 @@
    "pAway": 0.3942,
    "expHome": 22,
    "expAway": 18,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": 3.38,
    "frozen": false
   },
@@ -3020,7 +3058,7 @@
    "pAway": 0.3223,
    "expHome": 25,
    "expAway": 20,
-   "computedAt": "2026-10-29T09:20:37Z",
+   "computedAt": "2026-10-29T18:01:41Z",
    "spread": 5.86,
    "frozen": false
   }
