@@ -37,13 +37,19 @@
     {
      "name": "Elijah Wilkinson",
      "pos": "garde gauche",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
+     "why": "genou"
+    },
+    {
+     "name": "Hjalte Froholdt",
+     "pos": "garde droit",
+     "etat": "entraînement limité",
      "why": "genou"
     },
     {
      "name": "Tyler Allgeier",
      "pos": "coureur",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
      "why": "orteil"
     },
     {
@@ -105,6 +111,30 @@
      "pos": "ailier droit",
      "etat": "entraînement limité",
      "why": "ischio-jambiers"
+    },
+    {
+     "name": "C.J. Henderson",
+     "pos": "cornerback",
+     "etat": "entraînement limité",
+     "why": "aine"
+    },
+    {
+     "name": "A.J. Terrell",
+     "pos": "cornerback",
+     "etat": "entraînement limité",
+     "why": "aine"
+    },
+    {
+     "name": "Cameron Thomas",
+     "pos": "edge rusher",
+     "etat": "entraînement limité",
+     "why": "aine"
+    },
+    {
+     "name": "Kendal Daniels",
+     "pos": "linebacker",
+     "etat": "entraînement limité",
+     "why": "tendon d’Achille"
     }
    ],
    "injReport": "provisoire",
@@ -134,15 +164,9 @@
    ],
    "watch": [
     {
-     "name": "Ronnie Stanley",
-     "pos": "ailier gauche",
-     "etat": "entraînement limité",
-     "why": "orteil"
-    },
-    {
      "name": "Roquan Smith",
      "pos": "linebacker",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
      "why": "genou"
     },
     {
@@ -154,13 +178,13 @@
     {
      "name": "Kyle Hamilton",
      "pos": "safety",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
      "why": "genou"
     },
     {
      "name": "Olaivavega Ioane",
      "pos": "garde gauche",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
      "why": "genou"
     }
    ],
@@ -177,13 +201,13 @@
     },
     {
      "tier": "titulaire",
-     "pos": "garde gauche titulaire (Damien Lewis, genou)",
+     "pos": "garde gauche titulaire (Damien Lewis, genou, rapport précédent)",
      "lane": "line",
      "gp": 5
     },
     {
      "tier": "titulaire",
-     "pos": "garde droit titulaire (Torricelli Simpkins III, cheville)",
+     "pos": "garde droit titulaire (Torricelli Simpkins III, cheville, rapport précédent)",
      "lane": "line",
      "gp": 1
     },
@@ -203,13 +227,13 @@
    "defAbsences": [
     {
      "tier": "elite",
-     "pos": "edge rusher titulaire (Jaelan Phillips, ischio-jambiers)",
+     "pos": "edge rusher titulaire (Jaelan Phillips, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 5
     },
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Akayleb Evans, triceps)",
+     "pos": "cornerback titulaire (Akayleb Evans, triceps, rapport précédent)",
      "lane": "pass",
      "gp": 5
     },
@@ -237,48 +261,8 @@
      "gp": 0
     }
    ],
-   "injReport": "final",
-   "injWeek": 8
-  },
-  "Chicago Bears": {
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "linebacker titulaire (T.J. Edwards, ischio-jambiers, rapport précédent)",
-     "gp": 5
-    },
-    {
-     "tier": "titulaire",
-     "pos": "linebacker titulaire (Jack Sanborn, commotion, rapport précédent)",
-     "gp": 1
-    },
-    {
-     "tier": "titulaire",
-     "pos": "edge rusher titulaire (Dayo Odeyingbo, IR)",
-     "lane": "pass",
-     "gp": 5
-    },
-    {
-     "tier": "titulaire",
-     "pos": "safety titulaire (Coby Bryant, IR)",
-     "gp": 0
-    }
-   ],
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "tight end titulaire (Cole Kmet, IR)",
-     "gp": 7
-    },
-    {
-     "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Braxton Jones, IR)",
-     "lane": "line",
-     "gp": 3
-    }
-   ],
    "injReport": "provisoire",
-   "injWeek": 7
+   "injWeek": 8
   },
   "Cincinnati Bengals": {
    "defAbsences": [
@@ -381,13 +365,19 @@
     {
      "name": "Zach Allen",
      "pos": "défenseur de ligne",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
+     "why": "ischio-jambiers"
+    },
+    {
+     "name": "Brandon Jones",
+     "pos": "safety",
+     "etat": "entraînement limité",
      "why": "ischio-jambiers"
     },
     {
      "name": "Jaylen Waddle",
      "pos": "receveur",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
      "why": "poitrine"
     }
    ],
@@ -398,7 +388,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "linebacker titulaire (Zaire Franklin, shin)",
+     "pos": "linebacker titulaire (Zaire Franklin, shin, rapport précédent)",
      "gp": 6
     },
     {
@@ -421,13 +411,13 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "centre titulaire (Sean Rhyan, cheville)",
+     "pos": "centre titulaire (Sean Rhyan, cheville, rapport précédent)",
      "lane": "line",
      "gp": 7
     },
     {
      "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Travis Glover, genou)",
+     "pos": "ailier gauche titulaire (Travis Glover, genou, rapport précédent)",
      "lane": "line",
      "gp": 4
     },
@@ -438,21 +428,7 @@
      "gp": 2
     }
    ],
-   "watch": [
-    {
-     "name": "Devonte Wyatt",
-     "pos": "défenseur de ligne",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    },
-    {
-     "name": "Matthew Golden",
-     "pos": "receveur",
-     "etat": "incertain pour le match",
-     "why": "épaule"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 8
   },
   "Houston Texans": {
@@ -473,13 +449,20 @@
    "injWeek": 7
   },
   "Indianapolis Colts": {
-   "defAbsences": [
+   "offAbsences": [
     {
-     "tier": "elite",
-     "pos": "cornerback titulaire (Sauce Gardner, mollet, rapport précédent)",
-     "lane": "pass",
-     "gp": 6
+     "tier": "titulaire",
+     "pos": "tight end titulaire (Tyler Warren, aine, rapport précédent)",
+     "gp": 5
     },
+    {
+     "tier": "titulaire",
+     "pos": "receveur titulaire (Alec Pierce, IR)",
+     "lane": "pass",
+     "gp": 2
+    }
+   ],
+   "defAbsences": [
     {
      "tier": "titulaire",
      "pos": "edge rusher titulaire (Arden Key, IR)",
@@ -499,26 +482,7 @@
      "gp": 2
     }
    ],
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "tight end titulaire (Tyler Warren, aine, rapport précédent)",
-     "gp": 5
-    },
-    {
-     "tier": "titulaire",
-     "pos": "receveur titulaire (Alec Pierce, IR)",
-     "lane": "pass",
-     "gp": 2
-    }
-   ],
    "watch": [
-    {
-     "name": "Matt Goncalves",
-     "pos": "ailier gauche",
-     "etat": "entraînement limité",
-     "why": "cheville"
-    },
     {
      "name": "Justin Walley",
      "pos": "cornerback",
@@ -548,6 +512,26 @@
      "pos": "ailier gauche titulaire (Josh Simmons, IR)",
      "lane": "line",
      "gp": 0
+    }
+   ],
+   "watch": [
+    {
+     "name": "Travis Kelce",
+     "pos": "tight end",
+     "etat": "entraînement limité",
+     "why": "cheville"
+    },
+    {
+     "name": "L'Jarius Sneed",
+     "pos": "cornerback",
+     "etat": "entraînement limité",
+     "why": "genou"
+    },
+    {
+     "name": "Mansoor Delane",
+     "pos": "cornerback",
+     "etat": "absent à l’entraînement",
+     "why": "épaule"
     }
    ],
    "injReport": "provisoire",
@@ -662,7 +646,7 @@
     {
      "name": "A.J. Brown",
      "pos": "receveur",
-     "etat": "entraînement limité",
+     "etat": "absent à l’entraînement",
      "why": "cheville"
     }
    ],
@@ -724,12 +708,6 @@
      "pos": "coureur",
      "etat": "entraînement limité",
      "why": "quadriceps"
-    },
-    {
-     "name": "Braelon Allen",
-     "pos": "coureur",
-     "etat": "entraînement limité",
-     "why": "cheville"
     },
     {
      "name": "T'Vondre Sweat",
@@ -796,6 +774,12 @@
      "pos": "coureur",
      "etat": "absent à l’entraînement",
      "why": "ischio-jambiers"
+    },
+    {
+     "name": "Marcus Epps",
+     "pos": "safety",
+     "etat": "entraînement limité",
+     "why": "jaw"
     },
     {
      "name": "Jonathan Greenard",
@@ -895,20 +879,6 @@
      "gp": 4
     }
    ],
-   "watch": [
-    {
-     "name": "Yaya Diaby",
-     "pos": "edge rusher",
-     "etat": "entraînement limité",
-     "why": "maladie"
-    },
-    {
-     "name": "Josiah Trotter",
-     "pos": "linebacker",
-     "etat": "absent à l’entraînement",
-     "why": "maladie"
-    }
-   ],
    "injReport": "provisoire",
    "injWeek": 7
   },
@@ -942,10 +912,10 @@
    ],
    "watch": [
     {
-     "name": "Stefon Diggs",
-     "pos": "receveur",
+     "name": "Nick Allegretti",
+     "pos": "garde gauche",
      "etat": "absent à l’entraînement",
-     "why": "main"
+     "why": "dos"
     },
     {
      "name": "Javon Kinlaw",
@@ -962,7 +932,7 @@
     {
      "name": "Treylon Burks",
      "pos": "receveur",
-     "etat": "entraînement limité",
+     "etat": "absent à l’entraînement",
      "why": "pied"
     }
    ],
@@ -1059,26 +1029,6 @@
      "gp": 2
     }
    ],
-   "watch": [
-    {
-     "name": "Amon-Ra St. Brown",
-     "pos": "receveur",
-     "etat": "absent à l’entraînement",
-     "why": "cheville"
-    },
-    {
-     "name": "Jahmyr Gibbs",
-     "pos": "coureur",
-     "etat": "absent à l’entraînement",
-     "why": "épaule"
-    },
-    {
-     "name": "Tyleik Williams",
-     "pos": "défenseur de ligne",
-     "etat": "absent à l’entraînement",
-     "why": "maladie"
-    }
-   ],
    "injReport": "provisoire",
    "injWeek": 7
   },
@@ -1138,19 +1088,7 @@
     {
      "name": "Aaron Jones",
      "pos": "coureur",
-     "etat": "absent à l’entraînement",
-     "why": "genou"
-    },
-    {
-     "name": "Brian O'Neill",
-     "pos": "ailier droit",
      "etat": "entraînement limité",
-     "why": "genou"
-    },
-    {
-     "name": "Joe Huber",
-     "pos": "garde droit",
-     "etat": "absent à l’entraînement",
      "why": "genou"
     }
    ],
@@ -1179,12 +1117,6 @@
      "why": "poitrine"
     },
     {
-     "name": "Ed Oliver",
-     "pos": "défenseur de ligne",
-     "etat": "entraînement limité",
-     "why": "genou"
-    },
-    {
      "name": "Spencer Brown",
      "pos": "ailier droit",
      "etat": "absent à l’entraînement",
@@ -1193,7 +1125,7 @@
     {
      "name": "Dee Alford",
      "pos": "cornerback",
-     "etat": "entraînement limité",
+     "etat": "absent à l’entraînement",
      "why": "cheville"
     },
     {
@@ -1201,12 +1133,6 @@
      "pos": "tight end",
      "etat": "entraînement limité",
      "why": "poitrine"
-    },
-    {
-     "name": "T.J. Sanders",
-     "pos": "défenseur de ligne",
-     "etat": "entraînement limité",
-     "why": "épaule"
     }
    ],
    "injReport": "provisoire",
@@ -1230,16 +1156,54 @@
    ],
    "watch": [
     {
-     "name": "Jalen Ramsey",
-     "pos": "cornerback",
-     "etat": "absent à l’entraînement",
-     "why": "poignet"
-    },
-    {
      "name": "Alex Highsmith",
      "pos": "edge rusher",
      "etat": "entraînement limité",
      "why": "aine"
+    }
+   ],
+   "injReport": "provisoire",
+   "injWeek": 7
+  },
+  "Chicago Bears": {
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "tight end titulaire (Cole Kmet, IR)",
+     "gp": 7
+    },
+    {
+     "tier": "titulaire",
+     "pos": "ailier gauche titulaire (Braxton Jones, IR)",
+     "lane": "line",
+     "gp": 3
+    }
+   ],
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "edge rusher titulaire (Dayo Odeyingbo, IR)",
+     "lane": "pass",
+     "gp": 5
+    },
+    {
+     "tier": "titulaire",
+     "pos": "safety titulaire (Coby Bryant, IR)",
+     "gp": 0
+    }
+   ],
+   "watch": [
+    {
+     "name": "D'Marco Jackson",
+     "pos": "linebacker",
+     "etat": "entraînement limité",
+     "why": "cheville"
+    },
+    {
+     "name": "Malik Muhammad",
+     "pos": "cornerback",
+     "etat": "entraînement limité",
+     "why": "orteil"
     }
    ],
    "injReport": "provisoire",
@@ -1264,7 +1228,7 @@
     {
      "name": "Elgton Jenkins",
      "pos": "garde gauche",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
      "why": "genou"
     },
     {
@@ -1282,7 +1246,7 @@
     {
      "name": "Jared Verse",
      "pos": "edge rusher",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
      "why": "genou"
     },
     {
@@ -1328,7 +1292,7 @@
     {
      "name": "Julius Brents",
      "pos": "cornerback",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
      "why": "cou"
     },
     {
@@ -1391,7 +1355,7 @@
     {
      "name": "John Franklin-Myers",
      "pos": "edge rusher",
-     "etat": "absent à l’entraînement",
+     "etat": "entraînement limité",
      "why": "aine"
     },
     {
@@ -1413,22 +1377,16 @@
   "Las Vegas Raiders": {
    "watch": [
     {
-     "name": "Quay Walker",
-     "pos": "linebacker",
-     "etat": "entraînement limité",
-     "why": "poitrine"
-    },
-    {
-     "name": "Brock Bowers",
-     "pos": "tight end",
-     "etat": "entraînement limité",
-     "why": "mollet"
-    },
-    {
      "name": "DJ Glaze",
      "pos": "ailier droit",
      "etat": "entraînement limité",
      "why": "cheville"
+    },
+    {
+     "name": "Jackson Powers-Johnson",
+     "pos": "garde droit",
+     "etat": "absent à l’entraînement",
+     "why": "dos"
     }
    ],
    "injReport": "provisoire",
@@ -2891,7 +2849,10 @@
    "expAway": 22,
    "computedAt": "2026-10-29T18:01:41Z",
    "spread": 5.27,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 27,
+   "awayScore": 19,
+   "correct": true
   },
   "2026_08_BAL_BUF": {
    "week": 8,
@@ -2902,7 +2863,7 @@
    "pAway": 0.296,
    "expHome": 33,
    "expAway": 27,
-   "computedAt": "2026-10-30T00:36:57Z",
+   "computedAt": "2026-10-30T09:36:35Z",
    "spread": 6.82,
    "frozen": false
   },
@@ -2915,7 +2876,7 @@
    "pAway": 0.2133,
    "expHome": 26,
    "expAway": 16,
-   "computedAt": "2026-10-30T00:36:57Z",
+   "computedAt": "2026-10-30T09:36:35Z",
    "spread": 10.14,
    "frozen": false
   },
@@ -2928,7 +2889,7 @@
    "pAway": 0.2708,
    "expHome": 32,
    "expAway": 24,
-   "computedAt": "2026-10-30T00:36:57Z",
+   "computedAt": "2026-10-30T09:36:35Z",
    "spread": 7.77,
    "frozen": false
   },
@@ -2941,7 +2902,7 @@
    "pAway": 0.5188,
    "expHome": 22,
    "expAway": 23,
-   "computedAt": "2026-10-30T00:36:57Z",
+   "computedAt": "2026-10-30T09:36:35Z",
    "spread": -0.67,
    "frozen": false
   },
@@ -2950,12 +2911,12 @@
    "home": "Jacksonville Jaguars",
    "away": "Indianapolis Colts",
    "kickoff": "2026-11-01T18:00:00Z",
-   "pHome": 0.7541,
-   "pAway": 0.2419,
-   "expHome": 28,
-   "expAway": 19,
-   "computedAt": "2026-10-30T00:36:57Z",
-   "spread": 8.92,
+   "pHome": 0.7269,
+   "pAway": 0.2691,
+   "expHome": 26,
+   "expAway": 18,
+   "computedAt": "2026-10-30T09:36:35Z",
+   "spread": 7.84,
    "frozen": false
   },
   "2026_08_LV_NYJ": {
@@ -2967,7 +2928,7 @@
    "pAway": 0.4207,
    "expHome": 25,
    "expAway": 23,
-   "computedAt": "2026-10-30T00:36:57Z",
+   "computedAt": "2026-10-30T09:36:35Z",
    "spread": 2.51,
    "frozen": false
   },
@@ -2980,7 +2941,7 @@
    "pAway": 0.3161,
    "expHome": 23,
    "expAway": 17,
-   "computedAt": "2026-10-30T00:36:57Z",
+   "computedAt": "2026-10-30T09:36:35Z",
    "spread": 6.08,
    "frozen": false
   },
@@ -2993,7 +2954,7 @@
    "pAway": 0.4407,
    "expHome": 24,
    "expAway": 22,
-   "computedAt": "2026-10-30T00:36:57Z",
+   "computedAt": "2026-10-30T09:36:35Z",
    "spread": 1.85,
    "frozen": false
   },
@@ -3006,7 +2967,7 @@
    "pAway": 0.2383,
    "expHome": 25,
    "expAway": 16,
-   "computedAt": "2026-10-30T00:36:57Z",
+   "computedAt": "2026-10-30T09:36:35Z",
    "spread": 9.07,
    "frozen": false
   },
@@ -3019,7 +2980,7 @@
    "pAway": 0.4727,
    "expHome": 20,
    "expAway": 20,
-   "computedAt": "2026-10-30T00:36:57Z",
+   "computedAt": "2026-10-30T09:36:35Z",
    "spread": 0.82,
    "frozen": false
   },
@@ -3032,7 +2993,7 @@
    "pAway": 0.6516,
    "expHome": 16,
    "expAway": 21,
-   "computedAt": "2026-10-30T00:36:57Z",
+   "computedAt": "2026-10-30T09:36:35Z",
    "spread": -5.08,
    "frozen": false
   },
@@ -3045,7 +3006,7 @@
    "pAway": 0.3942,
    "expHome": 22,
    "expAway": 18,
-   "computedAt": "2026-10-30T00:36:57Z",
+   "computedAt": "2026-10-30T09:36:35Z",
    "spread": 3.38,
    "frozen": false
   },
@@ -3054,12 +3015,12 @@
    "home": "Seattle Seahawks",
    "away": "Chicago Bears",
    "kickoff": "2026-11-03T01:15:00Z",
-   "pHome": 0.6737,
-   "pAway": 0.3223,
+   "pHome": 0.655,
+   "pAway": 0.341,
    "expHome": 25,
-   "expAway": 20,
-   "computedAt": "2026-10-30T00:36:57Z",
-   "spread": 5.86,
+   "expAway": 19,
+   "computedAt": "2026-10-30T09:36:35Z",
+   "spread": 5.2,
    "frozen": false
   }
  }
