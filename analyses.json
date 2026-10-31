@@ -1,6 +1,6 @@
 {
- "faitLe": "2026-10-28T23:50:00+01:00",
- "faitLeLabel": "mercredi 28 octobre à 23 h 50",
+ "faitLe": "2026-10-31T23:50:00+01:00",
+ "faitLeLabel": "samedi 31 octobre à 23 h 50",
  "matchs": {
   "2026_06_HOU_JAX": {
    "faitLe": "2026-10-17T23:50:00+02:00",
@@ -253,90 +253,124 @@
    "avis": "Penchant Cowboys, partagé par le marché, mais blessures encore provisoires (match lundi) : petite mise seulement, après le rapport final."
   },
   "2026_08_BAL_BUF": {
-   "faitLe": "2026-10-28T23:50:00+01:00",
+   "faitLe": "2026-10-31T23:50:00+01:00",
    "raisons": [
     "désaccord"
    ],
-   "resume": "Le modèle (74 % Buffalo) compte encore Lamar Jackson absent, alors qu'il s'est entraîné à plein mercredi : l'écart avec le marché (61 %) vient surtout de là.",
+   "resume": "Les deux camps voient Buffalo favori, mais le modèle (72 %) est bien plus sûr que le marché (59 %), alors que Lamar Jackson fait son retour.",
    "points": [
-    "Lamar Jackson (cheville) a fait un entraînement complet mercredi, son premier depuis sa blessure : il devrait jouer, le modèle le compte pourtant remplacé par Tyler Huntley.",
-    "Buffalo (5-1) marque 32,8 points par match mais en encaisse 28,5 ; ses trois dernières victoires se sont jouées à 3 points ou moins.",
-    "Côté Bills, l'ailier droit Spencer Brown (dos) n'a pas participé mercredi, Dalton Kincaid (côtes) était limité ; le safety C.J. Gardner-Johnson est sur la liste des blessés.",
-    "Baltimore (4-3) reste sur deux défaites (13-35 contre Cincinnati, 10-13 contre Cleveland).",
-    "Le marché fait de Buffalo le favori de 3 points."
+    "Lamar Jackson (cheville) est confirmé pour le match après trois matchs d'absence.",
+    "Baltimore sera privé du garde Vega Ioane et du safety Jaylinn Hawkins (genou, tous deux forfaits).",
+    "Buffalo : le receveur Tyrell Shavers est forfait ; DJ Moore, Spencer Brown, Dee Alford et Dalton Kincaid figurent encore sur le rapport final ; C.J. Gardner-Johnson est sur la liste des blessés.",
+    "Buffalo (5-1) marque 32,8 points par match mais en encaisse 28,5 ; Baltimore (4-3) reste sur deux défaites.",
+    "Météo calme à Buffalo (environ 17 °C, presque pas de vent) ; le marché fait des Bills les favoris de 3 points."
    ],
    "penchant": "Buffalo Bills",
    "confiance": "faible",
-   "avis": "Sur 2020-2026, quand le modèle contredit le marché, le marché a eu raison 66 % du temps. Avec Jackson de retour, le vrai niveau est plus proche du marché : léger penchant Buffalo, petite mise seulement, à revoir samedi."
+   "avis": "Sur 2020-2026, quand le modèle contredit le marché, le marché a eu raison 66 % du temps. Avec Jackson de retour, le vrai rapport de force est plus proche des 59 % du marché : léger penchant Buffalo, petite mise seulement."
   },
   "2026_08_MIN_DET": {
-   "faitLe": "2026-10-28T23:50:00+01:00",
+   "faitLe": "2026-10-31T23:50:00+01:00",
    "raisons": [
     "serré",
     "désaccord"
    ],
-   "resume": "Le marché fait de Detroit le favori (60 %), le modèle préfère Minnesota invaincu (52 %), et deux armes majeures des Lions ont manqué l'entraînement mercredi.",
+   "resume": "Le modèle met Minnesota invaincu légèrement devant (52 %), le marché préfère Detroit (60 %), qui récupère finalement ses deux armes offensives.",
    "points": [
-    "Detroit : Jahmyr Gibbs (épaule) et Amon-Ra St. Brown (cheville) n'ont pas participé mercredi ; Kerby Joseph (genou), sur la liste des blessés, s'entraîne de façon limitée.",
-    "Detroit a aussi deux cornerbacks titulaires (Maddox, Harper) et le linebacker Devin White sur la liste des blessés.",
-    "Minnesota (6-0) gagne grâce à sa défense (12,3 points encaissés par match) mais marque peu (20,8) ; Aaron Jones (genou) et le garde Joe Huber (genou) sont incertains.",
-    "Detroit (4-2) marque 30,7 points par match mais en encaisse 27,5 ; match en salle, pas de souci de météo.",
-    "Le marché donne Detroit favori de 3 points."
+    "Bonne nouvelle pour Detroit : Jahmyr Gibbs et Amon-Ra St. Brown ne sont plus sur le rapport de blessures et joueront.",
+    "Detroit : le safety Kerby Joseph (genou) est forfait, le cornerback Roger McCreary (pied) incertain ; deux autres cornerbacks titulaires sont sur la liste des blessés.",
+    "Minnesota (6-0) gagne grâce à sa défense (12,3 points encaissés par match) mais marque peu (20,8) ; seul Jay Ward (genou) est incertain.",
+    "Detroit (4-2) marque 30,7 points par match ; match en salle, pas de souci de météo.",
+    "Le marché fait de Detroit le favori de 3 points."
    ],
-   "penchant": null,
+   "penchant": "Detroit Lions",
    "confiance": "faible",
-   "avis": "Sur 2020-2026, quand le modèle contredit le marché, le marché a eu raison 66 % du temps. Mais si Gibbs et St. Brown sont absents, l'avantage de Detroit fond : aucun penchant pour l'instant, passer son tour en attendant le rapport final de samedi."
+   "avis": "Sur 2020-2026, quand le modèle contredit le marché, le marché a eu raison 66 % du temps. Avec Gibbs et St. Brown présents, on suit plutôt le marché : léger penchant Detroit, petite mise seulement."
   },
   "2026_08_LV_NYJ": {
-   "faitLe": "2026-10-28T23:50:00+01:00",
+   "faitLe": "2026-10-31T23:50:00+01:00",
    "raisons": [
     "serré"
    ],
-   "resume": "Deux équipes en difficulté et un marché quasi à égalité (Jets 53 %) : le modèle penche un peu plus pour New York (58 %).",
+   "resume": "Deux équipes en difficulté et un marché quasi à égalité (Jets 53 %) ; le modèle penche à peine pour New York (54 %).",
    "points": [
-    "Las Vegas garde Kirk Cousins comme quarterback cette semaine ; le débutant Fernando Mendoza ne jouera pas encore.",
-    "Las Vegas (3-4) a perdu ses 4 derniers matchs après un départ à 3-0 et encaisse 28,1 points par match.",
-    "Les Jets (2-5) ont perdu 4 de leurs 5 derniers matchs ; Breece Hall, Dylan Parham et le rusher Joseph Ossai sont incertains.",
-    "Le marché fait des Jets un très léger favori (1,5 point)."
+    "Jets : Joseph Ossai, T'Vondre Sweat et le joueur de ligne Max Mitchell sont forfaits, David Bailey est douteux ; Breece Hall et Dylan Parham sont incertains.",
+    "Las Vegas : Patrick Johnson et le tight end Carter Runyon sont forfaits, Jackson Powers-Johnson (maladie) incertain.",
+    "Las Vegas (3-4) a perdu ses 4 derniers matchs et encaisse 28,1 points par match ; les Jets (2-5) ont perdu 4 de leurs 5 derniers.",
+    "Météo sans souci (environ 16 °C, vent faible, pas de pluie) ; le marché fait des Jets un très léger favori (1,5 point)."
    ],
    "penchant": "New York Jets",
    "confiance": "faible",
-   "avis": "Léger penchant Jets, avec l'avantage du terrain face à une équipe en chute, mais l'écart est mince : petite mise seulement, ou passer."
+   "avis": "Très léger penchant Jets grâce au terrain, mais leur ligne défensive est décimée et l'écart est mince : petite mise seulement, ou passer son tour."
   },
   "2026_08_ATL_TB": {
-   "faitLe": "2026-10-28T23:50:00+01:00",
+   "faitLe": "2026-10-31T23:50:00+01:00",
    "raisons": [
     "serré"
    ],
-   "resume": "Modèle et marché d'accord sur Tampa Bay (53-55 %), avec le retour de Baker Mayfield, mais plusieurs titulaires des deux côtés sont incertains.",
+   "resume": "Modèle et marché d'accord sur Tampa Bay (55-57 %), mais les Bucs perdent Emeka Egbuka et l'orage menace.",
    "points": [
-    "Baker Mayfield (pouce) s'est entraîné à plein mercredi et devrait retrouver sa place de titulaire.",
-    "Tampa Bay : le garde Luke Goedeke (mollet) et le coureur Kenny Gainwell (hanche) n'ont pas participé mercredi, Emeka Egbuka (commotion/pied) était limité ; Antoine Winfield Jr. s'est entraîné à plein.",
-    "Atlanta : Divine Deablo, Billy Bowman Jr. et le coureur Brian Robinson n'ont pas participé mercredi ; trois rushers (Hand, Walker, Pearce) sont sur la liste des blessés.",
+    "Tampa Bay : Emeka Egbuka (pied) est forfait ; Kenny Gainwell et Luke Goedeke sont incertains ; Baker Mayfield n'apparaît pas sur le rapport final.",
+    "Atlanta : le coureur Brian Robinson Jr. est forfait et huit joueurs sont incertains, dont Billy Bowman Jr., Divine Deablo et Olamide Zaccheaus ; trois rushers sont sur la liste des blessés.",
     "Atlanta (3-4) a gagné 3 de ses 5 derniers matchs ; Tampa Bay (2-5) sort d'une victoire 43-13 contre Carolina.",
+    "Météo : averses et orages probables à Tampa (environ 27 °C, vent de 19 km/h), ce qui peut freiner les attaques et provoquer une interruption.",
     "Le marché donne Tampa Bay favori de 2,5 points."
    ],
    "penchant": "Tampa Bay Buccaneers",
    "confiance": "faible",
-   "avis": "Léger penchant Tampa Bay avec Mayfield de retour, mais on reste près de 50/50 : petite mise seulement, à confirmer samedi selon Egbuka et Goedeke."
+   "avis": "Léger penchant Tampa Bay avec Mayfield, mais sans Egbuka et sous la pluie on reste proche du 50/50 : petite mise seulement."
   },
   "2026_08_KC_DEN": {
-   "faitLe": "2026-10-28T23:50:00+01:00",
+   "faitLe": "2026-10-31T23:50:00+01:00",
    "raisons": [
     "serré",
     "désaccord"
    ],
-   "resume": "Le modèle met Denver légèrement devant (54 %), le marché préfère Kansas City (52 %) : un vrai pile ou face entre deux équipes de tête.",
+   "resume": "Le modèle met Denver à peine devant (51 %), le marché préfère Kansas City (52 %) : un pile ou face, mais les nouvelles de fin de semaine sont plutôt bonnes pour les Chiefs.",
    "points": [
-    "Kansas City : Patrick Mahomes (genou) et l'ailier Jaylon Moore (commotion) se sont entraînés à plein mercredi ; Rashee Rice (ischio-jambiers/genou) était limité.",
-    "Denver : Pat Surtain II et le safety Talanoa Hufanga sont annoncés incertains.",
+    "Kansas City : Rashee Rice, Jaylon Moore et Patrick Mahomes ne sont plus sur le rapport et joueront ; les deux cornerbacks L'Jarius Sneed et Mansoor Delane sont incertains.",
+    "Denver : le coureur RJ Harvey et le safety Talanoa Hufanga sont forfaits ; Jaylen Waddle, Garett Bolles, Zach Allen et Brandon Jones sont incertains ; Pat Surtain II s'est entraîné normalement.",
     "Kansas City (5-1) a la meilleure défense des deux (17,2 points encaissés par match) et avait battu Denver 31-10 en semaine 1.",
-    "Denver (5-2) a gagné 4 de ses 5 derniers matchs, souvent de peu, et marque 20,6 points par match.",
+    "Denver (5-2) a gagné 4 de ses 5 derniers matchs, souvent de peu ; météo calme (environ 17 °C, vent faible).",
     "Le marché fait de Kansas City le favori de 1,5 point."
+   ],
+   "penchant": "Kansas City Chiefs",
+   "confiance": "faible",
+   "avis": "Sur 2020-2026, quand le modèle contredit le marché, le marché a eu raison 66 % du temps. Ici l'écart est minime, mais le retour de Rice et les absences côté Denver font pencher légèrement vers Kansas City : très petite mise, ou passer son tour."
+  },
+  "2026_08_PHI_WAS": {
+   "faitLe": "2026-10-31T23:50:00+01:00",
+   "raisons": [
+    "serré",
+    "désaccord"
+   ],
+   "resume": "Tout le monde voit Washington favori, mais le modèle (58 %) l'est bien moins que le marché (69 %, 6 points d'écart) dans ce duel de deux équipes mal en point.",
+   "points": [
+    "Philadelphie joue sans Jalen Hurts (liste des blessés) : Tanner McKee titulaire, face à Jayden Daniels côté Washington.",
+    "Philadelphie : DeVonta Smith, Dontayvion Wicks, Jihaad Campbell et le cornerback Jonathan Jones sont forfaits.",
+    "Washington : Javon Kinlaw est forfait ; Daron Payne, John Bates, Treylon Burks et Jer'Zhan Newton sont incertains ; Terry McLaurin et Laremy Tunsil sont sur la liste des blessés.",
+    "Philadelphie (2-5) a perdu ses 5 derniers matchs et ne marque que 18,1 points par match ; Washington (1-4-1) encaisse 28,7 points par match.",
+    "Météo calme (environ 12 °C, sans vent ni pluie)."
+   ],
+   "penchant": "Washington Commanders",
+   "confiance": "moyenne",
+   "avis": "Avantage clair au poste de quarterback pour Washington : penchant Commanders sur la victoire simple, mais pas sur l'écart de 6 points, le modèle ne voyant qu'environ 3 points de marge."
+  },
+  "2026_09_JAX_BAL": {
+   "faitLe": "2026-10-31T23:50:00+01:00",
+   "raisons": [
+    "désaccord"
+   ],
+   "resume": "Le modèle préfère Jacksonville (61 %) alors que le marché fait de Baltimore le favori (58 %) : analyse précoce, les deux équipes jouent encore dimanche avant ce match du jeudi.",
+   "points": [
+    "Rapport de blessures seulement provisoire : les deux équipes jouent dimanche (Baltimore à Buffalo, Jacksonville contre Indianapolis) puis enchaînent sur une semaine courte.",
+    "Lamar Jackson fait son retour dimanche à Buffalo ; son état après ce match comptera beaucoup pour jeudi.",
+    "Baltimore (4-3) reste sur deux défaites ; Jacksonville (4-2) a la meilleure défense des deux (17,3 points encaissés par match).",
+    "Le marché fait de Baltimore le favori de 3 points à domicile."
    ],
    "penchant": null,
    "confiance": "faible",
-   "avis": "Sur 2020-2026, quand le modèle contredit le marché, le marché a eu raison 66 % du temps. Ici l'écart est petit (6 points) et Rice pourrait revenir : aucun penchant, passer son tour."
+   "avis": "Sur 2020-2026, quand le modèle contredit le marché, le marché a eu raison 66 % du temps. Trop tôt pour trancher : aucun penchant, passer son tour en attendant l'analyse de mercredi."
   }
  }
 }
