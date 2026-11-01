@@ -699,6 +699,46 @@
    "injReport": "final",
    "injWeek": 8
   },
+  "Seattle Seahawks": {
+   "defAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "edge rusher titulaire (Uchenna Nwosu, cheville)",
+     "lane": "pass",
+     "gp": 7
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "receveur titulaire (Rashid Shaheed, genou)",
+     "lane": "pass",
+     "gp": 7
+    },
+    {
+     "tier": "elite",
+     "pos": "ailier gauche titulaire (Charles Cross, cheville)",
+     "lane": "line",
+     "gp": 7
+    }
+   ],
+   "watch": [
+    {
+     "name": "Drew Lock",
+     "pos": "quarterback",
+     "etat": "incertain pour le match",
+     "why": "coude"
+    },
+    {
+     "name": "Anthony Bradford",
+     "pos": "garde droit",
+     "etat": "incertain pour le match",
+     "why": "genou"
+    }
+   ],
+   "injReport": "final",
+   "injWeek": 8
+  },
   "San Francisco 49ers": {
    "offAbsences": [
     {
@@ -1131,24 +1171,52 @@
     {
      "name": "D'Marco Jackson",
      "pos": "linebacker",
-     "etat": "absent à l’entraînement",
+     "etat": "incertain pour le match",
      "why": "cheville"
-    },
-    {
-     "name": "Colston Loveland",
-     "pos": "tight end",
-     "etat": "entraînement limité",
-     "why": "cou"
     },
     {
      "name": "Malik Muhammad",
      "pos": "cornerback",
-     "etat": "entraînement limité",
+     "etat": "incertain pour le match",
      "why": "orteil"
     }
    ],
-   "injReport": "provisoire",
-   "injWeek": 7
+   "injReport": "final",
+   "injWeek": 8
+  },
+  "Kansas City Chiefs": {
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (L'Jarius Sneed, IR)",
+     "lane": "pass",
+     "gp": 6
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "receveur titulaire (Tyquan Thornton, IR)",
+     "lane": "pass",
+     "gp": 4
+    },
+    {
+     "tier": "titulaire",
+     "pos": "ailier gauche titulaire (Josh Simmons, IR)",
+     "lane": "line",
+     "gp": 0
+    }
+   ],
+   "watch": [
+    {
+     "name": "Mansoor Delane",
+     "pos": "cornerback",
+     "etat": "incertain pour le match",
+     "why": "épaule"
+    }
+   ],
+   "injReport": "final",
+   "injWeek": 8
   },
   "Cleveland Browns": {
    "defAbsences": [
@@ -1182,38 +1250,6 @@
    "injReport": "final",
    "injWeek": 8
   },
-  "Kansas City Chiefs": {
-   "offAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "receveur titulaire (Tyquan Thornton, IR)",
-     "lane": "pass",
-     "gp": 4
-    },
-    {
-     "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Josh Simmons, IR)",
-     "lane": "line",
-     "gp": 0
-    }
-   ],
-   "watch": [
-    {
-     "name": "L'Jarius Sneed",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    },
-    {
-     "name": "Mansoor Delane",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "épaule"
-    }
-   ],
-   "injReport": "final",
-   "injWeek": 8
-  },
   "Las Vegas Raiders": {
    "watch": [
     {
@@ -1231,48 +1267,6 @@
    ],
    "injReport": "final",
    "injWeek": 8
-  },
-  "Seattle Seahawks": {
-   "watch": [
-    {
-     "name": "Uchenna Nwosu",
-     "pos": "edge rusher",
-     "etat": "absent à l’entraînement",
-     "why": "cheville"
-    },
-    {
-     "name": "Drew Lock",
-     "pos": "quarterback",
-     "etat": "entraînement limité",
-     "why": "coude"
-    },
-    {
-     "name": "Rashid Shaheed",
-     "pos": "receveur",
-     "etat": "absent à l’entraînement",
-     "why": "genou"
-    },
-    {
-     "name": "Charles Cross",
-     "pos": "ailier gauche",
-     "etat": "absent à l’entraînement",
-     "why": "cheville"
-    },
-    {
-     "name": "Anthony Bradford",
-     "pos": "garde droit",
-     "etat": "absent à l’entraînement",
-     "why": "genou"
-    },
-    {
-     "name": "Byron Murphy II",
-     "pos": "défenseur de ligne",
-     "etat": "entraînement limité",
-     "why": "dos"
-    }
-   ],
-   "injReport": "provisoire",
-   "injWeek": 7
   },
   "New Orleans Saints": {
    "injReport": "provisoire",
@@ -2745,7 +2739,7 @@
    "pAway": 0.2752,
    "expHome": 33,
    "expAway": 25,
-   "computedAt": "2026-11-01T05:48:45Z",
+   "computedAt": "2026-11-01T12:41:15Z",
    "spread": 7.6,
    "frozen": false
   },
@@ -2758,7 +2752,7 @@
    "pAway": 0.1973,
    "expHome": 26,
    "expAway": 15,
-   "computedAt": "2026-11-01T05:48:45Z",
+   "computedAt": "2026-11-01T12:41:15Z",
    "spread": 10.85,
    "frozen": false
   },
@@ -2771,7 +2765,7 @@
    "pAway": 0.281,
    "expHome": 31,
    "expAway": 24,
-   "computedAt": "2026-11-01T05:48:45Z",
+   "computedAt": "2026-11-01T12:41:15Z",
    "spread": 7.38,
    "frozen": false
   },
@@ -2784,7 +2778,7 @@
    "pAway": 0.5188,
    "expHome": 22,
    "expAway": 23,
-   "computedAt": "2026-11-01T05:48:45Z",
+   "computedAt": "2026-11-01T12:41:15Z",
    "spread": -0.67,
    "frozen": false
   },
@@ -2797,7 +2791,7 @@
    "pAway": 0.2803,
    "expHome": 28,
    "expAway": 20,
-   "computedAt": "2026-11-01T05:48:45Z",
+   "computedAt": "2026-11-01T12:41:15Z",
    "spread": 7.41,
    "frozen": false
   },
@@ -2810,7 +2804,7 @@
    "pAway": 0.4565,
    "expHome": 26,
    "expAway": 24,
-   "computedAt": "2026-11-01T05:48:45Z",
+   "computedAt": "2026-11-01T12:41:15Z",
    "spread": 1.34,
    "frozen": false
   },
@@ -2823,7 +2817,7 @@
    "pAway": 0.3161,
    "expHome": 23,
    "expAway": 17,
-   "computedAt": "2026-11-01T05:48:45Z",
+   "computedAt": "2026-11-01T12:41:15Z",
    "spread": 6.08,
    "frozen": false
   },
@@ -2836,7 +2830,7 @@
    "pAway": 0.4232,
    "expHome": 25,
    "expAway": 23,
-   "computedAt": "2026-11-01T05:48:45Z",
+   "computedAt": "2026-11-01T12:41:15Z",
    "spread": 2.42,
    "frozen": false
   },
@@ -2849,7 +2843,7 @@
    "pAway": 0.2521,
    "expHome": 25,
    "expAway": 16,
-   "computedAt": "2026-11-01T05:48:45Z",
+   "computedAt": "2026-11-01T12:41:15Z",
    "spread": 8.51,
    "frozen": false
   },
@@ -2858,12 +2852,12 @@
    "home": "Denver Broncos",
    "away": "Kansas City Chiefs",
    "kickoff": "2026-11-01T21:25:00Z",
-   "pHome": 0.5089,
-   "pAway": 0.4871,
-   "expHome": 20,
+   "pHome": 0.5294,
+   "pAway": 0.4666,
+   "expHome": 21,
    "expAway": 20,
-   "computedAt": "2026-11-01T05:48:45Z",
-   "spread": 0.35,
+   "computedAt": "2026-11-01T12:41:15Z",
+   "spread": 1.01,
    "frozen": false
   },
   "2026_08_NE_MIA": {
@@ -2875,7 +2869,7 @@
    "pAway": 0.6859,
    "expHome": 15,
    "expAway": 22,
-   "computedAt": "2026-11-01T05:48:45Z",
+   "computedAt": "2026-11-01T12:41:15Z",
    "spread": -6.3,
    "frozen": false
   },
@@ -2888,7 +2882,7 @@
    "pAway": 0.4121,
    "expHome": 23,
    "expAway": 20,
-   "computedAt": "2026-11-01T05:48:45Z",
+   "computedAt": "2026-11-01T12:41:15Z",
    "spread": 2.79,
    "frozen": false
   },
@@ -2897,12 +2891,12 @@
    "home": "Seattle Seahawks",
    "away": "Chicago Bears",
    "kickoff": "2026-11-03T01:15:00Z",
-   "pHome": 0.6688,
-   "pAway": 0.3272,
-   "expHome": 24,
-   "expAway": 19,
-   "computedAt": "2026-11-01T05:48:45Z",
-   "spread": 5.68,
+   "pHome": 0.5932,
+   "pAway": 0.4028,
+   "expHome": 21,
+   "expAway": 18,
+   "computedAt": "2026-11-01T12:41:15Z",
+   "spread": 3.1,
    "frozen": false
   }
  }
