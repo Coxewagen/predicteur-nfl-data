@@ -2741,7 +2741,7 @@
    "expAway": 25,
    "computedAt": "2026-11-01T12:41:15Z",
    "spread": 7.6,
-   "frozen": false
+   "frozen": true
   },
   "2026_08_TEN_CIN": {
    "week": 8,
@@ -2754,7 +2754,7 @@
    "expAway": 15,
    "computedAt": "2026-11-01T12:41:15Z",
    "spread": 10.85,
-   "frozen": false
+   "frozen": true
   },
   "2026_08_ARI_DAL": {
    "week": 8,
@@ -2767,7 +2767,7 @@
    "expAway": 24,
    "computedAt": "2026-11-01T12:41:15Z",
    "spread": 7.38,
-   "frozen": false
+   "frozen": true
   },
   "2026_08_MIN_DET": {
    "week": 8,
@@ -2780,7 +2780,7 @@
    "expAway": 23,
    "computedAt": "2026-11-01T12:41:15Z",
    "spread": -0.67,
-   "frozen": false
+   "frozen": true
   },
   "2026_08_IND_JAX": {
    "week": 8,
@@ -2793,7 +2793,7 @@
    "expAway": 20,
    "computedAt": "2026-11-01T12:41:15Z",
    "spread": 7.41,
-   "frozen": false
+   "frozen": true
   },
   "2026_08_LV_NYJ": {
    "week": 8,
@@ -2806,7 +2806,7 @@
    "expAway": 24,
    "computedAt": "2026-11-01T12:41:15Z",
    "spread": 1.34,
-   "frozen": false
+   "frozen": true
   },
   "2026_08_CLE_PIT": {
    "week": 8,
@@ -2819,7 +2819,7 @@
    "expAway": 17,
    "computedAt": "2026-11-01T12:41:15Z",
    "spread": 6.08,
-   "frozen": false
+   "frozen": true
   },
   "2026_08_ATL_TB": {
    "week": 8,
@@ -2832,7 +2832,7 @@
    "expAway": 23,
    "computedAt": "2026-11-01T12:41:15Z",
    "spread": 2.42,
-   "frozen": false
+   "frozen": true
   },
   "2026_08_LAC_LA": {
    "week": 8,
@@ -2843,7 +2843,7 @@
    "pAway": 0.2521,
    "expHome": 25,
    "expAway": 16,
-   "computedAt": "2026-11-01T12:41:15Z",
+   "computedAt": "2026-11-01T19:21:53Z",
    "spread": 8.51,
    "frozen": false
   },
@@ -2856,7 +2856,7 @@
    "pAway": 0.4666,
    "expHome": 21,
    "expAway": 20,
-   "computedAt": "2026-11-01T12:41:15Z",
+   "computedAt": "2026-11-01T19:21:53Z",
    "spread": 1.01,
    "frozen": false
   },
@@ -2869,7 +2869,7 @@
    "pAway": 0.6859,
    "expHome": 15,
    "expAway": 22,
-   "computedAt": "2026-11-01T12:41:15Z",
+   "computedAt": "2026-11-01T19:21:53Z",
    "spread": -6.3,
    "frozen": false
   },
@@ -2882,7 +2882,7 @@
    "pAway": 0.4121,
    "expHome": 23,
    "expAway": 20,
-   "computedAt": "2026-11-01T12:41:15Z",
+   "computedAt": "2026-11-01T19:21:53Z",
    "spread": 2.79,
    "frozen": false
   },
@@ -2895,7 +2895,7 @@
    "pAway": 0.4028,
    "expHome": 21,
    "expAway": 18,
-   "computedAt": "2026-11-01T12:41:15Z",
+   "computedAt": "2026-11-01T19:21:53Z",
    "spread": 3.1,
    "frozen": false
   }
