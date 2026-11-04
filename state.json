@@ -48,15 +48,35 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "garde gauche titulaire (Olaivavega Ioane, genou, rapport précédent)",
-     "lane": "line",
-     "gp": 7
-    },
-    {
-     "tier": "titulaire",
      "pos": "centre titulaire (Jovaughn Gwyn, IR)",
      "lane": "line",
      "gp": 3
+    }
+   ],
+   "watch": [
+    {
+     "name": "Lamar Jackson",
+     "pos": "quarterback",
+     "etat": "absent à l’entraînement",
+     "why": "pouce"
+    },
+    {
+     "name": "Tyler Huntley",
+     "pos": "quarterback",
+     "etat": "absent à l’entraînement",
+     "why": "orteil"
+    },
+    {
+     "name": "John Simpson",
+     "pos": "garde gauche",
+     "etat": "entraînement limité",
+     "why": "dos"
+    },
+    {
+     "name": "Roger Rosengarten",
+     "pos": "ailier droit",
+     "etat": "entraînement limité",
+     "why": "cheville"
     }
    ],
    "injReport": "provisoire",
@@ -365,6 +385,44 @@
      "pos": "ailier droit titulaire (Anton Harrison, IR)",
      "lane": "line",
      "gp": 5
+    }
+   ],
+   "watch": [
+    {
+     "name": "Eric Murray",
+     "pos": "safety",
+     "etat": "absent à l’entraînement",
+     "why": "coude"
+    },
+    {
+     "name": "Jakobi Meyers",
+     "pos": "receveur",
+     "etat": "entraînement limité",
+     "why": "ischio-jambiers"
+    },
+    {
+     "name": "Ezra Cleveland",
+     "pos": "garde gauche",
+     "etat": "entraînement limité",
+     "why": "genou"
+    },
+    {
+     "name": "Travon Walker",
+     "pos": "edge rusher",
+     "etat": "entraînement limité",
+     "why": "rib"
+    },
+    {
+     "name": "Jarrian Jones",
+     "pos": "cornerback",
+     "etat": "entraînement limité",
+     "why": "cheville"
+    },
+    {
+     "name": "Bhayshul Tuten",
+     "pos": "coureur",
+     "etat": "absent à l’entraînement",
+     "why": "cheville"
     }
    ],
    "injReport": "provisoire",
@@ -2579,12 +2637,12 @@
    "home": "Baltimore Ravens",
    "away": "Jacksonville Jaguars",
    "kickoff": "2026-11-06T01:15:00Z",
-   "pHome": 0.2986,
-   "pAway": 0.6974,
-   "expHome": 20,
-   "expAway": 26,
-   "computedAt": "2026-11-04T01:02:20Z",
-   "spread": -6.72,
+   "pHome": 0.3175,
+   "pAway": 0.6785,
+   "expHome": 21,
+   "expAway": 27,
+   "computedAt": "2026-11-04T10:28:44Z",
+   "spread": -6.03,
    "frozen": false
   },
   "2026_09_CIN_ATL": {
@@ -2596,7 +2654,7 @@
    "pAway": 0.6059,
    "expHome": 24,
    "expAway": 27,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": -3.52,
    "frozen": false
   },
@@ -2609,7 +2667,7 @@
    "pAway": 0.665,
    "expHome": 23,
    "expAway": 28,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": -5.55,
    "frozen": false
   },
@@ -2622,7 +2680,7 @@
    "pAway": 0.5716,
    "expHome": 27,
    "expAway": 30,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": -2.39,
    "frozen": false
   },
@@ -2635,7 +2693,7 @@
    "pAway": 0.2692,
    "expHome": 27,
    "expAway": 19,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": 7.84,
    "frozen": false
   },
@@ -2648,7 +2706,7 @@
    "pAway": 0.7316,
    "expHome": 20,
    "expAway": 28,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": -8.02,
    "frozen": false
   },
@@ -2661,7 +2719,7 @@
    "pAway": 0.3273,
    "expHome": 25,
    "expAway": 19,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": 5.68,
    "frozen": false
   },
@@ -2674,7 +2732,7 @@
    "pAway": 0.5146,
    "expHome": 21,
    "expAway": 21,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": -0.54,
    "frozen": false
   },
@@ -2687,7 +2745,7 @@
    "pAway": 0.6058,
    "expHome": 23,
    "expAway": 26,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": -3.52,
    "frozen": false
   },
@@ -2700,7 +2758,7 @@
    "pAway": 0.6332,
    "expHome": 19,
    "expAway": 23,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": -4.44,
    "frozen": false
   },
@@ -2713,7 +2771,7 @@
    "pAway": 0.2837,
    "expHome": 31,
    "expAway": 24,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": 7.28,
    "frozen": false
   },
@@ -2726,7 +2784,7 @@
    "pAway": 0.3766,
    "expHome": 22,
    "expAway": 18,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": 3.98,
    "frozen": false
   },
@@ -2739,7 +2797,7 @@
    "pAway": 0.2647,
    "expHome": 27,
    "expAway": 19,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": 8.01,
    "frozen": false
   },
@@ -2752,7 +2810,7 @@
    "pAway": 0.4234,
    "expHome": 23,
    "expAway": 20,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": 2.42,
    "frozen": false
   },
@@ -2765,7 +2823,7 @@
    "pAway": 0.4685,
    "expHome": 23,
    "expAway": 22,
-   "computedAt": "2026-11-04T01:02:20Z",
+   "computedAt": "2026-11-04T10:28:44Z",
    "spread": 0.95,
    "frozen": false
   }
