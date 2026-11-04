@@ -1,123 +1,7 @@
 {
- "faitLe": "2026-10-31T23:50:00+01:00",
- "faitLeLabel": "samedi 31 octobre à 23 h 50",
+ "faitLe": "2026-11-04T23:47:00+01:00",
+ "faitLeLabel": "mercredi 4 novembre à 23 h 47",
  "matchs": {
-  "2026_06_HOU_JAX": {
-   "faitLe": "2026-10-17T23:50:00+02:00",
-   "raisons": [
-    "serré"
-   ],
-   "resume": "Modèle et marché d'accord sur Jacksonville (57 %), mais pas un favori net : match à Londres, sans vrai avantage du terrain.",
-   "points": [
-    "Match joué à Wembley (Londres) : terrain neutre, donc pas de vrai avantage à domicile pour Jacksonville.",
-    "Houston (1-4) sera privé au rapport final du coureur David Montgomery, du receveur Tank Dell et du defensive back Jalen Pitre ; Henry To'oTo'o est incertain.",
-    "Jacksonville (4-1) joue sans son ailier droit Anton Harrison ni son garde Patrick Mekari (liste des blessés) ; le cornerback Montaric Brown est forfait.",
-    "La défense de Jacksonville encaisse 14,0 points par match, contre 22,4 pour celle de Houston ; Jacksonville a gagné 4 de ses 5 derniers matchs."
-   ],
-   "penchant": "Jacksonville Jaguars",
-   "confiance": "moyenne",
-   "avis": "Légère faveur à Jacksonville, renforcée par les absences offensives de Houston, mais sous ton seuil de 60 % : petite mise seulement."
-  },
-  "2026_06_CHI_ATL": {
-   "faitLe": "2026-10-17T23:50:00+02:00",
-   "raisons": [
-    "serré",
-    "désaccord"
-   ],
-   "resume": "Le grand changement depuis cet après-midi : Caleb Williams est annoncé titulaire pour Chicago, alors que le modèle ne compte pas encore pleinement sur lui.",
-   "points": [
-    "Caleb Williams (ischio-jambiers), absent 3 matchs, est annoncé titulaire samedi soir après trois jours d'entraînement (encore « incertain » sur le rapport officiel).",
-    "Chicago est privé de T.J. Edwards, Dayo Odeyingbo (forfaits), Montez Sweat et Coby Bryant (liste des blessés) ; Kyler Gordon et Tyrique Stevenson sont incertains.",
-    "Atlanta (2-3) est privé des cornerbacks C.J. Henderson et A.J. Terrell et de trois rushers (Hand, Walker, Pearce) ; Drake London et Jake Matthews étaient limités à l'entraînement.",
-    "Le marché donne Chicago favori de 1,5 point (Atlanta à 48 %), le modèle préfère Atlanta (56 %)."
-   ],
-   "penchant": "Chicago Bears",
-   "confiance": "faible",
-   "avis": "Le modèle contredit le marché de 8 points ; sur 2020-2026, dans ce cas, le marché a eu raison 66 % du temps. Avec le retour de Williams, léger penchant Chicago : petite mise, en vérifiant les inactifs dimanche vers 17 h 30."
-  },
-  "2026_06_NO_NYG": {
-   "faitLe": "2026-10-17T23:50:00+02:00",
-   "raisons": [
-    "serré",
-    "désaccord"
-   ],
-   "resume": "Match à égalité parfaite (modèle 48 % Giants, marché 50 %) avec trois titulaires des Giants encore incertains.",
-   "points": [
-    "Giants : Jaxson Dart est sur la liste des blessés, Jameis Winston est au poste de quarterback.",
-    "Rapport final Giants : Theo Johnson, Colton Hood et Tyler Nubin forfaits ; les ailiers Andrew Thomas et Jermaine Eluemunor et le rusher Abdul Carter restent incertains.",
-    "Saints : le quarterback Tyler Shough s'est entraîné à plein et jouera ; Kaden Elliss et Anfernee Jennings sont forfaits, Alvin Kamara et Chris Olave incertains.",
-    "Les deux ailiers titulaires des Saints et le coureur Travis Etienne sont sur la liste des blessés.",
-    "Forme : Giants (3-1-1) 3 victoires sur 5 ; Saints (1-4) 4 défaites sur 5, défense à 30,2 points encaissés par match."
-   ],
-   "penchant": null,
-   "confiance": "faible",
-   "avis": "Écart de 2 points seulement entre modèle et marché : pas un vrai désaccord. Aucun penchant clair, passer son tour ou attendre les inactifs de dimanche (vers 17 h 30)."
-  },
-  "2026_06_CAR_PHI": {
-   "faitLe": "2026-10-17T23:50:00+02:00",
-   "raisons": [
-    "serré",
-    "désaccord"
-   ],
-   "resume": "Le plus gros désaccord de la semaine : le modèle donne Philadelphie à 55 %, le marché Carolina à 60 % car les Eagles jouent sans Hurts ni Barkley.",
-   "points": [
-    "Jalen Hurts (mollet) et Saquon Barkley (ischio-jambiers) sont forfaits ; Tanner McKee (2 titularisations en carrière) sera le quarterback.",
-    "Philadelphie perd aussi le rusher Jalyx Hunt et le safety Michael Carter II (forfaits) ; DeVonta Smith jouera.",
-    "Carolina a de nombreux titulaires sur la liste des blessés (Ekwonu, Christensen, Horn) et l'ailier Monroe Freeling est douteux, mais marque 30,2 points par match.",
-    "Le marché fait de Carolina le favori de 3 points ; Philadelphie (2-3) ne marque que 18,4 points par match."
-   ],
-   "penchant": "Carolina Panthers",
-   "confiance": "faible",
-   "avis": "Le modèle contredit le marché de 14 points ; sur 2020-2026, dans ce cas, le marché a eu raison 66 % du temps. Si tu joues, plutôt Carolina avec une petite mise ; sinon passer."
-  },
-  "2026_06_PIT_TB": {
-   "faitLe": "2026-10-17T23:50:00+02:00",
-   "raisons": [
-    "serré"
-   ],
-   "resume": "Tampa jouera avec un quarterback débutant : Baker Mayfield est officiellement forfait, ce qui fait de Pittsburgh un léger favori.",
-   "points": [
-    "Baker Mayfield (pouce) est officiellement forfait ; Jalon Daniels (2 titularisations) le remplace pour le troisième match de suite.",
-    "Tampa perd aussi le safety Antoine Winfield Jr. et le receveur David Sills (forfaits) ; le cornerback Benjamin Morrison est douteux.",
-    "Pittsburgh (3-2) est privé de DeShon Elliott, Roman Wilson et Ben Skowronek ; Jalen Ramsey, DK Metcalf (maladie), Jamel Dean et Rico Dowdle sont incertains.",
-    "Le marché donne Pittsburgh favori de 2,5 points (57 %), le modèle un peu moins haut (54 %)."
-   ],
-   "penchant": "Pittsburgh Steelers",
-   "confiance": "faible",
-   "avis": "Légère faveur aux Steelers, mais plusieurs titulaires incertains chez eux et sous ton seuil de 60 % : petite mise seulement, ou passer."
-  },
-  "2026_06_ARI_LA": {
-   "faitLe": "2026-10-17T15:53:06+02:00",
-   "raisons": [
-    "désaccord"
-   ],
-   "resume": "Les Rams sont favoris nets au marché (85 %) ; le modèle est plus prudent (75 %) car ils ont perdu 3 matchs sur 5 et plusieurs titulaires.",
-   "points": [
-    "Los Angeles (2-3) est privé de Myles Garrett (liste des blessés après une opération du genou) et de deux titulaires de la ligne offensive, Alaric Jackson et Justin Dedich ; Kam Curl et Trent McDuffie sont incertains.",
-    "Arizona (1-4) reste sur 4 défaites de suite et encaisse 32,4 points par match.",
-    "Arizona est aussi diminué : l'ailier Paris Johnson Jr. et le garde Isaiah Adams sont sur la liste des blessés, le safety Andrew Wingard est incertain.",
-    "Le marché donne Los Angeles favori de 12,5 points ; le modèle attend un écart de 9 points environ (29-21)."
-   ],
-   "penchant": "Los Angeles Rams",
-   "confiance": "moyenne",
-   "avis": "Les Rams sont logiquement favoris, mais avec une cote d'environ 1,11 le gain est minime : pari peu intéressant, petite mise seulement."
-  },
-  "2026_06_DAL_GB": {
-   "faitLe": "2026-10-17T23:50:00+02:00",
-   "raisons": [
-    "serré"
-   ],
-   "resume": "Match très ouvert du dimanche soir : Green Bay est légèrement favori à domicile, mais sa ligne défensive est décimée face à une attaque de Dallas productive.",
-   "points": [
-    "Green Bay est privé de Micah Parsons, Edgerrin Cooper (liste des blessés), Javon Hargrave et Jonathan Ford (forfaits) ; Jordon Riley est douteux.",
-    "Côté Packers, Aaron Banks et Jacob Monk (ligne offensive) sont incertains ; le cornerback Keisean Nixon jouera.",
-    "Dallas (2-3) est privé du cornerback Cobie Durant et de l'ailier Drew Shelton ; CeeDee Lamb est apte, DeMarvion Overshown et Joey Porter Jr. incertains.",
-    "Dallas marque 27,6 points par match et en encaisse 27,2 ; Green Bay en marque 20,8 et en encaisse 22,4."
-   ],
-   "penchant": "Green Bay Packers",
-   "confiance": "faible",
-   "avis": "Légère faveur à Green Bay (modèle 57 %, marché 52 %), mais match équilibré : petite mise ou passer. Coup d'envoi à 2 h 20 en France, vérifie les inactifs."
-  },
   "2026_07_NE_CHI": {
    "faitLe": "2026-10-17T23:50:00+02:00",
    "raisons": [
@@ -357,20 +241,90 @@
    "avis": "Avantage clair au poste de quarterback pour Washington : penchant Commanders sur la victoire simple, mais pas sur l'écart de 6 points, le modèle ne voyant qu'environ 3 points de marge."
   },
   "2026_09_JAX_BAL": {
-   "faitLe": "2026-10-31T23:50:00+01:00",
+   "faitLe": "2026-11-04T23:47:00+01:00",
    "raisons": [
     "désaccord"
    ],
-   "resume": "Le modèle préfère Jacksonville (61 %) alors que le marché fait de Baltimore le favori (58 %) : analyse précoce, les deux équipes jouent encore dimanche avant ce match du jeudi.",
+   "resume": "Les deux camps voient Jacksonville gagnant, mais le marché bien plus nettement (81 % contre 68 %) : Baltimore jouera jeudi avec un quarterback débutant.",
    "points": [
-    "Rapport de blessures seulement provisoire : les deux équipes jouent dimanche (Baltimore à Buffalo, Jacksonville contre Indianapolis) puis enchaînent sur une semaine courte.",
-    "Lamar Jackson fait son retour dimanche à Buffalo ; son état après ce match comptera beaucoup pour jeudi.",
-    "Baltimore (4-3) reste sur deux défaites ; Jacksonville (4-2) a la meilleure défense des deux (17,3 points encaissés par match).",
-    "Le marché fait de Baltimore le favori de 3 points à domicile."
+    "Lamar Jackson (pouce droit, opéré) part sur la liste des blessés et Tyler Huntley (orteil) est forfait : le rookie non drafté Joe Fagnano est annoncé titulaire.",
+    "Fagnano, entré en jeu à Buffalo, a réussi 10 passes sur 21 pour 91 yards avec une interception et un fumble perdu.",
+    "Baltimore (4-4) reste sur trois défaites (10-36, 13-35, 10-13) et perd aussi son botteur Tyler Loop (aine, liste des blessés).",
+    "Jacksonville (5-2) a la meilleure défense des deux (15,9 points encaissés par match) et vient d'écraser Indianapolis 42-7 ; le coureur Bhayshul Tuten et le rusher Travon Walker sont incertains.",
+    "Le marché fait de Jacksonville le favori de 10 points ; le modèle ne compte pas encore l'absence de Jackson dans ses chiffres."
    ],
-   "penchant": null,
+   "penchant": "Jacksonville Jaguars",
+   "confiance": "moyenne",
+   "avis": "Penchant Jacksonville, plus proche du marché que du modèle vu la situation au quarterback ; mais 10 points d'écart à couvrir sur une semaine courte : petite mise sur la victoire seulement, pas sur le handicap."
+  },
+  "2026_09_DAL_IND": {
+   "faitLe": "2026-11-04T23:47:00+01:00",
+   "raisons": [
+    "serré",
+    "désaccord"
+   ],
+   "resume": "Deux équipes en difficulté et deux défenses parmi les plus faibles de la ligue : Dallas favori, mais moins nettement pour le modèle (58 %) que pour le marché (69 %).",
+   "points": [
+    "Indianapolis (2-6) a perdu quatre matchs de suite, dont 7-42 à Jacksonville la semaine dernière.",
+    "Dallas (3-5) a perdu trois de ses quatre derniers matchs, le dernier en prolongation contre l'Arizona (30-33).",
+    "Les Colts sont privés du receveur Alec Pierce, du cornerback Cam Taylor-Britt et du rusher Arden Key (liste des blessés) ; le cornerback Justin Walley est incertain.",
+    "Côté Dallas, George Pickens (ischio-jambiers) et Jake Ferguson (cheville) sont incertains, la safety Jalen Thompson est sur la liste des blessés.",
+    "Match en salle à Indianapolis ; le marché fait de Dallas le favori de 6 points, total attendu élevé (51,5 points)."
+   ],
+   "penchant": "Dallas Cowboys",
+   "confiance": "moyenne",
+   "avis": "Modèle et marché d'accord sur Dallas, avec un écart de 11 points sur la probabilité : léger penchant Cowboys, petite mise seulement, en vérifiant Pickens et Ferguson samedi."
+  },
+  "2026_09_NYG_PHI": {
+   "faitLe": "2026-11-04T23:47:00+01:00",
+   "raisons": [
+    "serré"
+   ],
+   "resume": "Match presque à pile ou face pour le modèle, mais Philadelphie change encore de quarterback et lancera un joueur sans aucune titularisation.",
+   "points": [
+    "Jalen Hurts est sur la liste des blessés (caillot au mollet) ; Tanner McKee (3 titularisations, 3 défaites) est mis sur le banc au profit de Joe Milton, qui fera sa première titularisation.",
+    "Philadelphie (2-6) a perdu ses six derniers matchs et n'inscrit que 17,1 points par match ; DeVonta Smith (ischio-jambiers) et Dontayvion Wicks (cheville) sont incertains.",
+    "Les Giants (4-2-1) jouent sans Jaxson Dart (liste des blessés) ; le linebacker Tremaine Edmunds est sur la liste des blessés et Greg Newsome II (commotion) est incertain.",
+    "Le marché fait des Giants les favoris de 3,5 points à Philadelphie ; le modèle compte encore sur McKee comme remplaçant."
+   ],
+   "penchant": "New York Giants",
    "confiance": "faible",
-   "avis": "Sur 2020-2026, quand le modèle contredit le marché, le marché a eu raison 66 % du temps. Trop tôt pour trancher : aucun penchant, passer son tour en attendant l'analyse de mercredi."
+   "avis": "Léger penchant Giants, en phase avec le marché, mais un quarterback inconnu rend Philadelphie imprévisible : passer son tour ou toute petite mise."
+  },
+  "2026_09_TB_CHI": {
+   "faitLe": "2026-11-04T23:47:00+01:00",
+   "raisons": [
+    "serré",
+    "désaccord"
+   ],
+   "resume": "Chicago favori pour tout le monde, mais le modèle (57 %) bien moins sûr que le marché (72 %) ; tout dépend du pouce de Baker Mayfield.",
+   "points": [
+    "Baker Mayfield (pouce droit luxé) n'a lancé que 14 passes en deux matchs ; son entraîneur assure qu'il peut lancer, cette semaine doit le confirmer.",
+    "Tampa Bay a la pire attaque par la passe de la ligue (5,7 yards par tentative) mais la meilleure au sol (168,6 yards par match) et 16 ballons récupérés ; Emeka Egbuka (pied) n'a pas participé à l'entraînement mercredi, Yaya Diaby (genou) est forfait.",
+    "Chicago (6-2) a gagné 4 de ses 5 derniers matchs et vient de recruter le défenseur Jeffery Simmons ; Cole Kmet et Braxton Jones sont sur la liste des blessés.",
+    "La défense de Chicago concède 8,2 yards par passe (30e), mais est 4e contre la course, le point fort de Tampa Bay.",
+    "Le marché fait de Chicago le favori de 6 points à domicile dimanche soir."
+   ],
+   "penchant": "Chicago Bears",
+   "confiance": "moyenne",
+   "avis": "Penchant Chicago tant que Mayfield reste diminué ; écart modèle-marché de 15 points, donc petite mise seulement, à revoir samedi avec le rapport final."
+  },
+  "2026_09_BUF_MIN": {
+   "faitLe": "2026-11-04T23:47:00+01:00",
+   "raisons": [
+    "serré",
+    "désaccord"
+   ],
+   "resume": "Le modèle penche pour Minnesota (53 %), le marché pour Buffalo (62 %), et le quarterback des Vikings est incertain.",
+   "points": [
+    "Kyler Murray (ischio-jambiers) est incertain ; s'il ne joue pas, Carson Wentz sera titulaire. La ligne est passée de Buffalo -2,5 à -3,5 après l'annonce.",
+    "Minnesota (6-1) gagne grâce à sa défense (13,3 points encaissés par match) alors que son attaque est l'une des moins efficaces de la ligue (20 points par match).",
+    "Buffalo (6-1) a la meilleure attaque des deux (33,3 points par match) et vient de battre Baltimore 36-10 ; la safety C.J. Gardner-Johnson est sur la liste des blessés.",
+    "Match en salle à Minneapolis, lundi soir."
+   ],
+   "penchant": "Buffalo Bills",
+   "confiance": "faible",
+   "avis": "Sur 2020-2026, quand le modèle contredit le marché, le marché a eu raison 66 % du temps. Léger penchant Buffalo avec le marché, surtout si Murray est forfait : petite mise au mieux, sinon passer son tour."
   }
  }
 }
