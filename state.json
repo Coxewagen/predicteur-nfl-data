@@ -415,7 +415,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Reed Blankenship, commotion, rapport précédent)",
+     "pos": "safety titulaire (Reed Blankenship, commotion)",
      "gp": 6
     }
    ],
@@ -427,8 +427,8 @@
      "gp": 0
     }
    ],
-   "injReport": "provisoire",
-   "injWeek": 7
+   "injReport": "final",
+   "injWeek": 9
   },
   "Indianapolis Colts": {
    "defAbsences": [
@@ -442,6 +442,11 @@
      "pos": "cornerback titulaire (Justin Walley, genou)",
      "lane": "pass",
      "gp": 7
+    },
+    {
+     "tier": "titulaire",
+     "pos": "safety titulaire (A.J. Haulcy, cheville)",
+     "gp": 8
     },
     {
      "tier": "titulaire",
@@ -476,12 +481,6 @@
      "pos": "ailier gauche",
      "etat": "incertain pour le match",
      "why": "pouce"
-    },
-    {
-     "name": "A.J. Haulcy",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "cheville"
     }
    ],
    "injReport": "final",
@@ -636,6 +635,51 @@
    "injReport": "final",
    "injWeek": 9
   },
+  "Minnesota Vikings": {
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "receveur titulaire (Jauan Jennings, mollet)",
+     "lane": "pass",
+     "gp": 6
+    },
+    {
+     "tier": "rotation",
+     "pos": "tight end titulaire (Josh Oliver, IR)",
+     "gp": 3
+    },
+    {
+     "tier": "titulaire",
+     "pos": "ailier gauche titulaire (Donovan Jackson, IR)",
+     "lane": "line",
+     "gp": 4
+    }
+   ],
+   "qbOut": true,
+   "qbTier": "titulaire",
+   "qbGp": 6,
+   "qbName": "Kyler Murray",
+   "qbWhy": "ischio-jambiers",
+   "qbReplacementTier": "standard",
+   "qbReplacementName": "Carson Wentz",
+   "qbReplacementStarts": 100,
+   "watch": [
+    {
+     "name": "Christian Darrisaw",
+     "pos": "ailier gauche",
+     "etat": "absent à l’entraînement",
+     "why": "épaule"
+    },
+    {
+     "name": "Theo Jackson",
+     "pos": "safety",
+     "etat": "incertain pour le match",
+     "why": "quadriceps"
+    }
+   ],
+   "injReport": "final",
+   "injWeek": 9
+  },
   "New England Patriots": {
    "offAbsences": [
     {
@@ -762,15 +806,19 @@
    "injWeek": 9
   },
   "New York Jets": {
-   "offAbsences": [
-    {
-     "tier": "elite",
-     "pos": "receveur titulaire (Garrett Wilson, commotion)",
-     "lane": "pass",
-     "gp": 8
-    }
-   ],
    "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "edge rusher titulaire (Joseph Ossai, cheville)",
+     "lane": "pass",
+     "gp": 3
+    },
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Nahshon Wright, dos)",
+     "lane": "pass",
+     "gp": 0
+    },
     {
      "tier": "titulaire",
      "pos": "linebacker titulaire (Trevin Wallace, aine)",
@@ -787,24 +835,20 @@
      "gp": 7
     }
    ],
+   "offAbsences": [
+    {
+     "tier": "elite",
+     "pos": "receveur titulaire (Garrett Wilson, commotion)",
+     "lane": "pass",
+     "gp": 8
+    }
+   ],
    "watch": [
     {
      "name": "Harrison Phillips",
      "pos": "défenseur de ligne",
      "etat": "incertain pour le match",
      "why": "cheville"
-    },
-    {
-     "name": "Joseph Ossai",
-     "pos": "edge rusher",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    },
-    {
-     "name": "Nahshon Wright",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "dos"
     }
    ],
    "injReport": "final",
@@ -1119,49 +1163,6 @@
    "injReport": "final",
    "injWeek": 9
   },
-  "Minnesota Vikings": {
-   "offAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "tight end titulaire (Josh Oliver, IR)",
-     "gp": 3
-    },
-    {
-     "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Donovan Jackson, IR)",
-     "lane": "line",
-     "gp": 4
-    }
-   ],
-   "watch": [
-    {
-     "name": "Kyler Murray",
-     "pos": "quarterback",
-     "etat": "absent à l’entraînement",
-     "why": "ischio-jambiers"
-    },
-    {
-     "name": "Andrew Van Ginkel",
-     "pos": "edge rusher",
-     "etat": "entraînement limité",
-     "why": "poitrine"
-    },
-    {
-     "name": "Jauan Jennings",
-     "pos": "receveur",
-     "etat": "absent à l’entraînement",
-     "why": "mollet"
-    },
-    {
-     "name": "Theo Jackson",
-     "pos": "safety",
-     "etat": "absent à l’entraînement",
-     "why": "quadriceps"
-    }
-   ],
-   "injReport": "provisoire",
-   "injWeek": 8
-  },
   "Dallas Cowboys": {
    "defAbsences": [
     {
@@ -1307,7 +1308,7 @@
     {
      "name": "Dion Dawkins",
      "pos": "ailier gauche",
-     "etat": "absent à l’entraînement",
+     "etat": "incertain pour le match",
      "why": "rib"
     },
     {
@@ -1317,20 +1318,14 @@
      "why": "épaule"
     },
     {
-     "name": "Spencer Brown",
-     "pos": "ailier droit",
-     "etat": "entraînement limité",
-     "why": "dos"
-    },
-    {
      "name": "Keon Coleman",
      "pos": "receveur",
      "etat": "entraînement limité",
      "why": "épaule"
     }
    ],
-   "injReport": "provisoire",
-   "injWeek": 8
+   "injReport": "final",
+   "injWeek": 9
   },
   "Pittsburgh Steelers": {
    "injReport": "provisoire",
@@ -3027,7 +3022,7 @@
    "pAway": 0.6033,
    "expHome": 24,
    "expAway": 27,
-   "computedAt": "2026-11-08T04:28:57Z",
+   "computedAt": "2026-11-08T12:46:26Z",
    "spread": -3.43,
    "frozen": false
   },
@@ -3040,7 +3035,7 @@
    "pAway": 0.6283,
    "expHome": 24,
    "expAway": 29,
-   "computedAt": "2026-11-08T04:28:57Z",
+   "computedAt": "2026-11-08T12:46:26Z",
    "spread": -4.28,
    "frozen": false
   },
@@ -3053,7 +3048,7 @@
    "pAway": 0.6013,
    "expHome": 27,
    "expAway": 30,
-   "computedAt": "2026-11-08T04:28:57Z",
+   "computedAt": "2026-11-08T12:46:26Z",
    "spread": -3.37,
    "frozen": false
   },
@@ -3062,12 +3057,12 @@
    "home": "Kansas City Chiefs",
    "away": "New York Jets",
    "kickoff": "2026-11-08T18:00:00Z",
-   "pHome": 0.7372,
-   "pAway": 0.2588,
-   "expHome": 25,
+   "pHome": 0.7478,
+   "pAway": 0.2482,
+   "expHome": 26,
    "expAway": 17,
-   "computedAt": "2026-11-08T04:28:57Z",
-   "spread": 8.24,
+   "computedAt": "2026-11-08T12:46:26Z",
+   "spread": 8.67,
    "frozen": false
   },
   "2026_09_DET_MIA": {
@@ -3079,7 +3074,7 @@
    "pAway": 0.6711,
    "expHome": 23,
    "expAway": 29,
-   "computedAt": "2026-11-08T04:28:57Z",
+   "computedAt": "2026-11-08T12:46:26Z",
    "spread": -5.77,
    "frozen": false
   },
@@ -3092,7 +3087,7 @@
    "pAway": 0.3309,
    "expHome": 25,
    "expAway": 19,
-   "computedAt": "2026-11-08T04:28:57Z",
+   "computedAt": "2026-11-08T12:46:26Z",
    "spread": 5.56,
    "frozen": false
   },
@@ -3105,7 +3100,7 @@
    "pAway": 0.4943,
    "expHome": 20,
    "expAway": 20,
-   "computedAt": "2026-11-08T04:28:57Z",
+   "computedAt": "2026-11-08T12:46:26Z",
    "spread": 0.12,
    "frozen": false
   },
@@ -3118,7 +3113,7 @@
    "pAway": 0.6062,
    "expHome": 23,
    "expAway": 26,
-   "computedAt": "2026-11-08T04:28:57Z",
+   "computedAt": "2026-11-08T12:46:26Z",
    "spread": -3.53,
    "frozen": false
   },
@@ -3131,7 +3126,7 @@
    "pAway": 0.642,
    "expHome": 18,
    "expAway": 23,
-   "computedAt": "2026-11-08T04:28:57Z",
+   "computedAt": "2026-11-08T12:46:26Z",
    "spread": -4.75,
    "frozen": false
   },
@@ -3144,7 +3139,7 @@
    "pAway": 0.2535,
    "expHome": 31,
    "expAway": 23,
-   "computedAt": "2026-11-08T04:28:57Z",
+   "computedAt": "2026-11-08T12:46:26Z",
    "spread": 8.45,
    "frozen": false
   },
@@ -3157,7 +3152,7 @@
    "pAway": 0.3934,
    "expHome": 21,
    "expAway": 18,
-   "computedAt": "2026-11-08T04:28:57Z",
+   "computedAt": "2026-11-08T12:46:26Z",
    "spread": 3.41,
    "frozen": false
   },
@@ -3170,7 +3165,7 @@
    "pAway": 0.3764,
    "expHome": 23,
    "expAway": 19,
-   "computedAt": "2026-11-08T04:28:57Z",
+   "computedAt": "2026-11-08T12:46:26Z",
    "spread": 3.98,
    "frozen": false
   },
@@ -3183,7 +3178,7 @@
    "pAway": 0.4137,
    "expHome": 24,
    "expAway": 21,
-   "computedAt": "2026-11-08T04:28:57Z",
+   "computedAt": "2026-11-08T12:46:26Z",
    "spread": 2.74,
    "frozen": false
   },
@@ -3192,12 +3187,12 @@
    "home": "Minnesota Vikings",
    "away": "Buffalo Bills",
    "kickoff": "2026-11-10T01:15:00Z",
-   "pHome": 0.5082,
-   "pAway": 0.4878,
-   "expHome": 22,
-   "expAway": 22,
-   "computedAt": "2026-11-08T04:28:57Z",
-   "spread": 0.33,
+   "pHome": 0.4359,
+   "pAway": 0.5601,
+   "expHome": 19,
+   "expAway": 21,
+   "computedAt": "2026-11-08T12:46:26Z",
+   "spread": -2.01,
    "frozen": false
   }
  }
