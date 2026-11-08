@@ -169,7 +169,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Kyle Dugger, quadriceps)",
+     "pos": "safety titulaire (Kyle Dugger, quadriceps, rapport précédent)",
      "gp": 1
     },
     {
@@ -187,7 +187,7 @@
      "gp": 2
     }
    ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 9
   },
   "Cleveland Browns": {
@@ -1146,21 +1146,7 @@
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "Divine Deablo",
-     "pos": "linebacker",
-     "etat": "incertain pour le match",
-     "why": "avant-bras"
-    },
-    {
-     "name": "James Pearce Jr.",
-     "pos": "edge rusher",
-     "etat": "incertain pour le match",
-     "why": "dos"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 9
   },
   "Dallas Cowboys": {
@@ -3024,7 +3010,10 @@
    "expAway": 27,
    "computedAt": "2026-11-08T12:46:26Z",
    "spread": -3.43,
-   "frozen": false
+   "frozen": true,
+   "homeScore": 17,
+   "awayScore": 34,
+   "correct": true
   },
   "2026_09_DEN_CAR": {
    "week": 9,
@@ -3037,7 +3026,7 @@
    "expAway": 29,
    "computedAt": "2026-11-08T12:46:26Z",
    "spread": -4.28,
-   "frozen": false
+   "frozen": true
   },
   "2026_09_DAL_IND": {
    "week": 9,
@@ -3050,7 +3039,7 @@
    "expAway": 30,
    "computedAt": "2026-11-08T12:46:26Z",
    "spread": -3.37,
-   "frozen": false
+   "frozen": true
   },
   "2026_09_NYJ_KC": {
    "week": 9,
@@ -3063,7 +3052,7 @@
    "expAway": 17,
    "computedAt": "2026-11-08T12:46:26Z",
    "spread": 8.67,
-   "frozen": false
+   "frozen": true
   },
   "2026_09_DET_MIA": {
    "week": 9,
@@ -3076,7 +3065,7 @@
    "expAway": 29,
    "computedAt": "2026-11-08T12:46:26Z",
    "spread": -5.77,
-   "frozen": false
+   "frozen": true
   },
   "2026_09_CLE_NO": {
    "week": 9,
@@ -3089,7 +3078,7 @@
    "expAway": 19,
    "computedAt": "2026-11-08T12:46:26Z",
    "spread": 5.56,
-   "frozen": false
+   "frozen": true
   },
   "2026_09_NYG_PHI": {
    "week": 9,
@@ -3102,7 +3091,7 @@
    "expAway": 20,
    "computedAt": "2026-11-08T12:46:26Z",
    "spread": 0.12,
-   "frozen": false
+   "frozen": true
   },
   "2026_09_LA_WAS": {
    "week": 9,
@@ -3115,7 +3104,7 @@
    "expAway": 26,
    "computedAt": "2026-11-08T12:46:26Z",
    "spread": -3.53,
-   "frozen": false
+   "frozen": true
   },
   "2026_09_HOU_LAC": {
    "week": 9,
@@ -3126,7 +3115,7 @@
    "pAway": 0.642,
    "expHome": 18,
    "expAway": 23,
-   "computedAt": "2026-11-08T12:46:26Z",
+   "computedAt": "2026-11-08T19:19:59Z",
    "spread": -4.75,
    "frozen": false
   },
@@ -3139,7 +3128,7 @@
    "pAway": 0.2535,
    "expHome": 31,
    "expAway": 23,
-   "computedAt": "2026-11-08T12:46:26Z",
+   "computedAt": "2026-11-08T19:19:59Z",
    "spread": 8.45,
    "frozen": false
   },
@@ -3152,7 +3141,7 @@
    "pAway": 0.3934,
    "expHome": 21,
    "expAway": 18,
-   "computedAt": "2026-11-08T12:46:26Z",
+   "computedAt": "2026-11-08T19:19:59Z",
    "spread": 3.41,
    "frozen": false
   },
@@ -3165,7 +3154,7 @@
    "pAway": 0.3764,
    "expHome": 23,
    "expAway": 19,
-   "computedAt": "2026-11-08T12:46:26Z",
+   "computedAt": "2026-11-08T19:19:59Z",
    "spread": 3.98,
    "frozen": false
   },
@@ -3178,7 +3167,7 @@
    "pAway": 0.4137,
    "expHome": 24,
    "expAway": 21,
-   "computedAt": "2026-11-08T12:46:26Z",
+   "computedAt": "2026-11-08T19:19:59Z",
    "spread": 2.74,
    "frozen": false
   },
@@ -3191,7 +3180,7 @@
    "pAway": 0.5601,
    "expHome": 19,
    "expAway": 21,
-   "computedAt": "2026-11-08T12:46:26Z",
+   "computedAt": "2026-11-08T19:19:59Z",
    "spread": -2.01,
    "frozen": false
   }
