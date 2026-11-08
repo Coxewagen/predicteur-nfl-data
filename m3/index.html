@@ -372,7 +372,7 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
       </h2>
       <p class="meta" id="updatedMeta"></p>
       <div class="updbar"><button type="button" id="updBtn" class="ubtn"><svg class="ic"><use href="#i-refresh"/></svg><span>Mettre à jour</span></button><span id="updMsg" role="status" aria-live="polite"></span><span id="liveMsg" role="status"></span></div>
-      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.25</span></div>
+      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.26</span></div>
       <div class="filterbar"><button type="button" id="filterBtn" class="fbtn" aria-pressed="false"><svg class="ic"><use href="#i-star"/></svg><span>Favoris à 60 % et plus seulement</span></button><button type="button" id="liveBtn" class="fbtn" aria-pressed="false"><span class="ldot"></span><span id="liveLbl">En direct</span></button><span id="filterCount" aria-live="polite"></span></div>
       <div class="games" id="games"></div>
       <div class="recap" id="recap"></div>
@@ -937,7 +937,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
   function setMsg(t, cls) { updMsg.textContent = t; updMsg.className = cls || ""; }
   var FEED_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/m3_data.json";
   var PAGE_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/index.html";
-  var APP_VERSION = "1.0.25";
+  var APP_VERSION = "1.0.26";
   var newV = null;
   function vNum(v) { return String(v || "0").split(".").map((x) => parseInt(x, 10) || 0); }
   function vGt(a, b) {
@@ -1048,7 +1048,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
       const url = side === "home" ? g._hl : g._al, sv = shield(D2, g[side]);
       const ball = g._ps === side ? ballIc() : "";
       if (!/^https:\/\/[a-z0-9.-]*espncdn\.com\//i.test(url || "")) return '<span class="crest">' + sv + ball + "</span>";
-      return '<span class="crest">' + sv + '<img src="' + esc(url) + '" alt="" referrerpolicy="no-referrer" onload="this.parentNode.classList.add(\'ok\')" onerror="this.remove()">' + ball + "</span>";
+      return '<span class="crest">' + sv + '<img src="' + esc(url) + '" data-u="' + esc(url) + '" alt="" referrerpolicy="no-referrer" onload="this.parentNode.classList.add(\'ok\')">' + ball + "</span>";
     };
     const bd = (side) => showPct ? '<span class="pbadge ' + side + ((side === "home" ? favHome === true : favHome === false) ? " fav" : "") + '">' + pct(side === "home" ? p.pHome : p.pAway) + "</span>" : "";
     return '<div class="game lrow clickable' + (bs ? " betted" : "") + '" data-idx="' + idx + '" data-id="' + esc(g.id) + '"><span class="lst">' + stHtml + '</span><span class="lt h' + (bs === "home" ? " pick" : "") + '">' + crest("home") + bd("home") + '</span><span class="lsc"><b class="' + (hl ? "lead" : "") + '">' + g.homeScore + "</b><i>\u2013</i><b class=\"" + (al ? "lead" : "") + '">' + g.awayScore + '</b></span><span class="lt a' + (bs === "away" ? " pick" : "") + '">' + bd("away") + crest("away") + "</span></div>";
@@ -1061,6 +1061,16 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     const ok = g.homeScore !== g.awayScore && g.homeScore > g.awayScore === p.pHome >= p.pAway;
     return ok ? validated() + '<span class="tag tg-term">Termin\u00E9</span>' : '<span class="tag">Termin\u00E9</span>';
   }
+  // Un blason qui ne charge pas n'est plus retiré tout de suite : autre adresse du même logo, puis deux nouveaux essais (4 s, 8 s) ; l'écusson de secours reste dessous
+  document.addEventListener("error", function (e) {
+    const im = e.target;
+    if (!im || im.tagName !== "IMG" || !im.parentNode || !im.parentNode.classList || !im.parentNode.classList.contains("crest")) return;
+    const u0 = im.getAttribute("data-u") || "", n = parseInt(im.getAttribute("data-n") || "0", 10) || 0;
+    im.setAttribute("data-n", String(n + 1));
+    if (n === 0) { im.src = u0.replace("/500/scoreboard/", "/500/"); return; }
+    if (n <= 2) { setTimeout(function () { if (im.isConnected) im.src = u0 + (u0.indexOf("?") < 0 ? "?" : "&") + "r=" + n; }, n * 4000); return; }
+    im.remove();
+  }, true);
   function ballIc() { return '<svg class="ball" viewBox="0 0 24 24" role="img" aria-label="Ballon"><ellipse cx="12" cy="12" rx="10.5" ry="6.5" transform="rotate(-35 12 12)" fill="#9a5a2b" stroke="#fff" stroke-width="1.6"/><path d="M8.2 15.8l7.6-7.6M10.6 9.4l4 4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>'; }
   function liveLabel(st) {
     const n = (st.type && st.type.name) || "";
