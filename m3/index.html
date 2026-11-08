@@ -372,7 +372,7 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
       </h2>
       <p class="meta" id="updatedMeta"></p>
       <div class="updbar"><button type="button" id="updBtn" class="ubtn"><svg class="ic"><use href="#i-refresh"/></svg><span>Mettre à jour</span></button><span id="updMsg" role="status" aria-live="polite"></span><span id="liveMsg" role="status"></span></div>
-      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.24</span></div>
+      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.25</span></div>
       <div class="filterbar"><button type="button" id="filterBtn" class="fbtn" aria-pressed="false"><svg class="ic"><use href="#i-star"/></svg><span>Favoris à 60 % et plus seulement</span></button><button type="button" id="liveBtn" class="fbtn" aria-pressed="false"><span class="ldot"></span><span id="liveLbl">En direct</span></button><span id="filterCount" aria-live="polite"></span></div>
       <div class="games" id="games"></div>
       <div class="recap" id="recap"></div>
@@ -937,7 +937,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
   function setMsg(t, cls) { updMsg.textContent = t; updMsg.className = cls || ""; }
   var FEED_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/m3_data.json";
   var PAGE_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/index.html";
-  var APP_VERSION = "1.0.24";
+  var APP_VERSION = "1.0.25";
   var newV = null;
   function vNum(v) { return String(v || "0").split(".").map((x) => parseInt(x, 10) || 0); }
   function vGt(a, b) {
@@ -1053,9 +1053,9 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     const bd = (side) => showPct ? '<span class="pbadge ' + side + ((side === "home" ? favHome === true : favHome === false) ? " fav" : "") + '">' + pct(side === "home" ? p.pHome : p.pAway) + "</span>" : "";
     return '<div class="game lrow clickable' + (bs ? " betted" : "") + '" data-idx="' + idx + '" data-id="' + esc(g.id) + '"><span class="lst">' + stHtml + '</span><span class="lt h' + (bs === "home" ? " pick" : "") + '">' + crest("home") + bd("home") + '</span><span class="lsc"><b class="' + (hl ? "lead" : "") + '">' + g.homeScore + "</b><i>\u2013</i><b class=\"" + (al ? "lead" : "") + '">' + g.awayScore + '</b></span><span class="lt a' + (bs === "away" ? " pick" : "") + '">' + bd("away") + crest("away") + "</span></div>";
   }
-  // match terminé : « Validé » seulement si j'ai coché ET que le score confirme la prévision de M3 ; sinon l'encart « Terminé » (le choix coché / décoché se fait par le style, sans réaffichage)
+  // « Validé » : jamais avant la fin du match ; une fois terminé, seulement si j'ai coché ET que le score confirme la prévision de M3 ; sinon l'encart « Terminé » (le choix coché / décoché se fait par le style, sans réaffichage)
   function validatedFor(g, ctx) {
-    if (g.status !== "closed") return validated();
+    if (g.status !== "closed") return "";
     const p = g.pred;
     if (!p || !ctx.isUnlocked(g)) return "";
     const ok = g.homeScore !== g.awayScore && g.homeScore > g.awayScore === p.pHome >= p.pAway;
