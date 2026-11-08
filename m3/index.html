@@ -309,9 +309,9 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
 .lrow .lst i{font-style:normal}
 .lrow .lt{display:flex;flex-wrap:nowrap;align-items:center;gap:4px;min-width:0}
 .lrow .lt.a{justify-content:flex-end}
-.lrow .shield{width:32px;height:32px;flex:none;border-radius:50%}
+.lrow .shield{width:42px;height:42px;flex:none;border-radius:50%}
 .lrow .lt.pick .shield,.lrow .lt.pick .crest{box-shadow:0 0 0 2px var(--gold)}
-.crest{position:relative;display:inline-flex;width:32px;height:32px;flex:none;border-radius:50%}
+.crest{position:relative;display:inline-flex;width:42px;height:42px;flex:none;border-radius:50%}
 .crest .shield{position:absolute;inset:0}
 .crest img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;padding:3px;box-sizing:border-box}
 .crest.ok{background:#f2f2f0}
@@ -324,7 +324,7 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
 .lrow .lsc b.lead{color:var(--ink)}
 .lrow .lsc i{font-style:normal;color:var(--muted);font-size:18px}
 .game.lrow.betted{border-color:var(--gold)}
-@media (max-width:380px){.lrow .lsc{font-size:19px;min-width:54px;gap:3px}.lrow .lsc i{font-size:15px}.lrow .pbadge{font-size:12px;padding:2px 3px}.game.lrow{gap:3px;padding:6px}}
+@media (max-width:380px){.lrow .shield,.crest{width:36px;height:36px}.lrow .lsc{font-size:19px;min-width:54px;gap:3px}.lrow .lsc i{font-size:15px}.lrow .pbadge{font-size:12px;padding:2px 3px}.game.lrow{gap:3px;padding:6px}}
 @keyframes livepulse{50%{opacity:.25}}
 :root{color-scheme:dark}
 </style>
@@ -366,7 +366,7 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
       </h2>
       <p class="meta" id="updatedMeta"></p>
       <div class="updbar"><button type="button" id="updBtn" class="ubtn"><svg class="ic"><use href="#i-refresh"/></svg><span>Mettre à jour</span></button><span id="updMsg" role="status" aria-live="polite"></span><span id="liveMsg" role="status"></span></div>
-      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.21</span></div>
+      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.22</span></div>
       <div class="filterbar"><button type="button" id="filterBtn" class="fbtn" aria-pressed="false"><svg class="ic"><use href="#i-star"/></svg><span>Favoris à 60 % et plus seulement</span></button><button type="button" id="liveBtn" class="fbtn" aria-pressed="false"><span class="ldot"></span><span id="liveLbl">En direct</span></button><span id="filterCount" aria-live="polite"></span></div>
       <div class="games" id="games"></div>
       <div class="recap" id="recap"></div>
@@ -931,7 +931,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
   function setMsg(t, cls) { updMsg.textContent = t; updMsg.className = cls || ""; }
   var FEED_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/m3_data.json";
   var PAGE_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/index.html";
-  var APP_VERSION = "1.0.21";
+  var APP_VERSION = "1.0.22";
   var newV = null;
   function vNum(v) { return String(v || "0").split(".").map((x) => parseInt(x, 10) || 0); }
   function vGt(a, b) {
