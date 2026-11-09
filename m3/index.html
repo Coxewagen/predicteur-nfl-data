@@ -318,6 +318,12 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
 .crest.ok img{opacity:1}
 .crest.ok .shield{visibility:hidden}
 .team .crest{width:36px;height:36px}
+.lkb{flex:none;width:38px;height:38px;border-radius:50%;border:2px solid var(--line);background:transparent;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;padding:0;position:relative;cursor:pointer;min-height:0}
+.lkb.on{background:var(--gold);border-color:var(--gold);color:#2b1b00}
+.lkb.chg::after{content:"";position:absolute;top:-4px;right:-4px;width:12px;height:12px;border-radius:50%;background:var(--bad);border:2px solid #0d2818}
+.bigbadges .lkb{width:46px;height:46px;align-self:center}
+.mnew{font-family:Consolas,"Courier New",monospace;font-size:16px;font-weight:700;color:var(--muted);align-self:center}
+@media (max-width:460px){.pright .lkb{width:34px;height:34px}}
 .betted .tg-term{display:none}
 .ball{width:22px;height:22px;flex:none;background:#0a2013;border:2px solid var(--gold);border-radius:50%;padding:2px;box-sizing:border-box}
 .crest .ball{position:absolute;top:-6px;z-index:2}
@@ -373,7 +379,7 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
       </h2>
       <p class="meta" id="updatedMeta"></p>
       <div class="updbar"><button type="button" id="updBtn" class="ubtn"><svg class="ic"><use href="#i-refresh"/></svg><span>Mettre à jour</span></button><span id="updMsg" role="status" aria-live="polite"></span><span id="liveMsg" role="status"></span></div>
-      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.29</span></div>
+      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.30</span></div>
       <div class="filterbar"><button type="button" id="filterBtn" class="fbtn" aria-pressed="false"><svg class="ic"><use href="#i-star"/></svg><span>Favoris à 60 % et plus seulement</span></button><button type="button" id="liveBtn" class="fbtn" aria-pressed="false"><span class="ldot"></span><span id="liveLbl">En direct</span></button><span id="filterCount" aria-live="polite"></span></div>
       <div class="games" id="games"></div>
       <div class="recap" id="recap"></div>
@@ -785,7 +791,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
       const prob = side === "home" ? p && p.pHome : p && p.pAway;
       const fav = showPct && (side === "home" ? favHome === true : favHome === false);
       const badge = showPct ? '<span class="pbadge ' + side + (fav ? " fav" : "") + '">' + pct(prob) + "</span>" : "";
-      const right = done || g._live === "in" ? badge + '<span class="pct' + (fav ? " fav" : "") + '">' + (side === "home" ? g.homeScore : g.awayScore) + "</span>" : showPct ? badge : '<span class="pct">\u2013</span>';
+      const right = done || g._live === "in" ? badge + '<span class="pct' + (fav ? " fav" : "") + '">' + (side === "home" ? g.homeScore : g.awayScore) + "</span>" : showPct ? badge + lockBtn(g) : '<span class="pct">\u2013</span>';
       return '<div class="team">' + crestHtml(D2, name, side === "home" ? g._hl : g._al, "") + '<span class="tname' + (fav ? " fav" : "") + '"><span class="long">' + esc(name) + '</span><span class="short">' + esc(nick(D2, name)) + '</span><span class="role" title="' + (side === "home" ? "À domicile" : "À l’extérieur") + '">' + ic(side === "home" ? "home" : "plane") + "</span>" + chips(g.abs[side]) + (g._live === "in" && g._ps === side ? ballIc() : "") + '</span><span class="pright">' + right + "</span></div>";
     };
     const foot = [];
@@ -830,7 +836,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     if (unlocked && p) {
       const favHome = p.pHome >= p.pAway;
       const verdict = done && g.homeScore !== g.awayScore ? '<p class="verdict ' + (g.homeScore > g.awayScore === favHome ? "yes" : "no") + '">' + ic(g.homeScore > g.awayScore === favHome ? "check" : "x") + (g.homeScore > g.awayScore === favHome ? "Prévision juste" : "Prévision fausse") + " \u2014 résultat " + g.homeScore + " \u2013 " + g.awayScore + " (écart prévu : " + gapTxt(D2, p, g) + ")</p>" : "";
-      pred = '<div class="bigbadges"><span class="pbadge big home' + (favHome ? " fav" : "") + '"><i>Domicile</i>' + pct(p.pHome) + '</span><span class="pbadge big away' + (!favHome ? " fav" : "") + '"><i>Extérieur</i>' + pct(p.pAway) + '</span></div><div class="gfoot"><span>Écart attendu : <b>' + gapTxt(D2, p, g) + "</b></span></div>" + verdict + (g.prov ? '<p class="meta">Prévision provisoire</p>' : "");
+      pred = '<div class="bigbadges"><span class="pbadge big home' + (favHome ? " fav" : "") + '"><i>Domicile</i>' + pct(p.pHome) + '</span><span class="pbadge big away' + (!favHome ? " fav" : "") + '"><i>Extérieur</i>' + pct(p.pAway) + '</span>' + lockBtn(g, true) + '</div><div class="gfoot"><span>Écart attendu : <b>' + gapTxt(D2, p, g) + "</b></span></div>" + verdict + (g.prov ? '<p class="meta">Prévision provisoire</p>' : "");
     } else if (done) {
       pred = "";
     } else {
@@ -872,6 +878,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     $("gameModalOverlay").classList.remove("open");
   }
   function openModal(g) {
+    modalGameId = g.id;
     $("gameModalPanel").innerHTML = modalHtml(D, CTX, g);
     $("modalClose").addEventListener("click", closeModal);
     $("gameModalOverlay").classList.add("open");
@@ -939,7 +946,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
   function setMsg(t, cls) { updMsg.textContent = t; updMsg.className = cls || ""; }
   var FEED_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/m3_data.json";
   var PAGE_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/index.html";
-  var APP_VERSION = "1.0.29";
+  var APP_VERSION = "1.0.30";
   var newV = null;
   function vNum(v) { return String(v || "0").split(".").map((x) => parseInt(x, 10) || 0); }
   function vGt(a, b) {
@@ -1003,7 +1010,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
       if (r.st === "ok") {
         if (String(r.data.updatedAt) > String(D.updatedAt)) {
           const newWeek = String(r.data.week) !== String(D.week);
-          D = r.data;
+          D = r.data; applyLocks();
           if (newWeek) selectedWeek = null;
           render();
           setMsg("✓ Mis à jour", "ok");
@@ -1080,6 +1087,36 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     if (n <= 2) { setTimeout(function () { if (im.isConnected) im.src = u0 + (u0.indexOf("?") < 0 ? "?" : "&") + "r=" + n; }, n * 4000); return; }
     im.remove();
   }, true);
+  // --- Cadenas : bloquer le pourcentage d'un match (le chiffre bloqué reste, même si M3 le recalcule plus tard) ---
+  var LOCKS_KEY = "m3_locks_v1", locks = {}, modalGameId = "";
+  try { locks = JSON.parse(localStorage.getItem(LOCKS_KEY) || "{}") || {}; } catch (e) { locks = {}; }
+  function saveLocks() { try { localStorage.setItem(LOCKS_KEY, JSON.stringify(locks)); } catch (e) {} }
+  function lockGame(g) {
+    if (!g || (!g.pred && !g._pn)) return;
+    const cur = g._pn || g.pred, L = locks[g.id];
+    g._pn = cur;
+    g.pred = L && typeof L.pHome === "number" ? Object.assign({}, cur, { pHome: L.pHome, pAway: L.pAway, margin: L.margin }) : cur;
+  }
+  function applyLocks() { Object.keys(D.weeks || {}).forEach((w) => (D.weeks[w] || []).forEach(lockGame)); }
+  var LK_ON = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
+  var LK_OFF = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M8 11V8a4 4 0 0 1 7.6-1.7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
+  function lockBtn(g, big) {
+    const on = !!locks[g.id], pn = g._pn || g.pred;
+    const chg = on && !!pn && !!g.pred && Math.abs(pn.pHome - g.pred.pHome) >= 0.0005;
+    return '<button type="button" class="lkb' + (on ? " on" : "") + (chg ? " chg" : "") + '" data-lock="' + esc(g.id) + '" aria-pressed="' + (on ? "true" : "false") + '" aria-label="Bloquer le pourcentage">' + (on ? LK_ON : LK_OFF) + "</button>" + (big && chg ? '<span class="mnew">→ ' + pct(pn.pHome) + " · " + pct(pn.pAway) + "</span>" : "");
+  }
+  document.addEventListener("click", function (e) {
+    const b = e.target && e.target.closest ? e.target.closest("[data-lock]") : null;
+    if (!b) return;
+    e.stopPropagation(); e.preventDefault();
+    const id = b.getAttribute("data-lock"), g = gameById(id);
+    if (!g || !g.pred) return;
+    if (locks[id]) delete locks[id]; else locks[id] = { pHome: g.pred.pHome, pAway: g.pred.pAway, margin: g.pred.margin, at: Date.now() };
+    saveLocks(); lockGame(g);
+    render();
+    if (modalOpen() && modalGameId === id) { $("gameModalPanel").innerHTML = modalHtml(D, CTX, g); $("modalClose").addEventListener("click", closeModal); }
+  }, true);
+  applyLocks();
   function ballIc() { return '<svg class="ball" viewBox="0 0 24 24" role="img" aria-label="Ballon"><ellipse cx="12" cy="12" rx="10.5" ry="6.5" transform="rotate(-35 12 12)" fill="#9a5a2b" stroke="#fff" stroke-width="1.6"/><path d="M8.2 15.8l7.6-7.6M10.6 9.4l4 4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>'; }
   function liveLabel(st) {
     const n = (st.type && st.type.name) || "";
