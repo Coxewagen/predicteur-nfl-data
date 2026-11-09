@@ -322,6 +322,12 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
 .lkb.on{background:var(--gold);border-color:var(--gold);color:#2b1b00}
 .lkb.chg::after{content:"";position:absolute;top:-4px;right:-4px;width:12px;height:12px;border-radius:50%;background:var(--bad);border:2px solid #0d2818}
 .bigbadges .lkb{width:46px;height:46px;align-self:center}
+.rtop .rpick{flex:1;min-width:0}
+.rpc{display:inline-flex;align-items:center;gap:3px}
+.rpc i{font-style:normal;font-size:19px;font-weight:700;color:var(--muted)}
+.rpc-in{font:inherit;font-size:21px;font-weight:700;color:var(--ink);background:rgba(0,0,0,.25);border:2px solid var(--line);border-radius:10px;padding:4px 8px;min-height:44px;width:80px;text-align:right;font-variant-numeric:tabular-nums}
+.rpc-in.man{border-color:var(--gold)}
+.rpc-in:focus{outline:3px solid var(--gold);outline-offset:1px}
 .mnew{font-family:Consolas,"Courier New",monospace;font-size:16px;font-weight:700;color:var(--muted);align-self:center}
 @media (max-width:460px){.pright .lkb{width:34px;height:34px}}
 .betted .tg-term{display:none}
@@ -379,7 +385,7 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
       </h2>
       <p class="meta" id="updatedMeta"></p>
       <div class="updbar"><button type="button" id="updBtn" class="ubtn"><svg class="ic"><use href="#i-refresh"/></svg><span>Mettre à jour</span></button><span id="updMsg" role="status" aria-live="polite"></span><span id="liveMsg" role="status"></span></div>
-      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.31</span></div>
+      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.32</span></div>
       <div class="filterbar"><button type="button" id="filterBtn" class="fbtn" aria-pressed="false"><svg class="ic"><use href="#i-star"/></svg><span>Favoris à 60 % et plus seulement</span></button><button type="button" id="liveBtn" class="fbtn" aria-pressed="false"><span class="ldot"></span><span id="liveLbl">En direct</span></button><span id="filterCount" aria-live="polite"></span></div>
       <div class="games" id="games"></div>
       <div class="recap" id="recap"></div>
@@ -658,7 +664,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     const seg = days.length > 1 ? '<div class="seg">' + days.concat(["all"]).map((d) => '<button type="button" data-scope="' + esc(d) + '" class="' + (d === scope ? "on" : "") + '">' + (d === "all" ? "Toute la semaine" : esc(d)) + "</button>").join("") + "</div>" : "";
     const items = sel.map((g) => {
       const s = betSide(g), o = betBase(g), st = STT[legState(g)];
-      return '<div class="ritem"><div class="rtop"><b class="rpick">' + esc(nick(D, g[s])) + '</b><input class="rcote-in' + (bets[g.id] && bets[g.id].m ? " man" : "") + '" data-oid="' + esc(g.id) + '" inputmode="decimal" autocomplete="off" aria-label="Cote" placeholder="–" value="' + (o ? f2(o) : "") + '"></div><div class="rsub"><span>' + esc(subTxt(g)) + '</span><span class="rst ' + st[0] + '">' + st[1] + "</span></div></div>";
+      return '<div class="ritem"><div class="rtop"><b class="rpick">' + esc(nick(D, g[s])) + '</b>' + pcInput(g) + '<input class="rcote-in' + (bets[g.id] && bets[g.id].m ? " man" : "") + '" data-oid="' + esc(g.id) + '" inputmode="decimal" autocomplete="off" aria-label="Cote" placeholder="–" value="' + (o ? f2(o) : "") + '"></div><div class="rsub"><span>' + esc(subTxt(g)) + '</span><span class="rst ' + st[0] + '">' + st[1] + "</span></div></div>";
     }).join("");
     const stc = c.etat === "gagne" ? '<span class="rst ok">✓ Gagné</span>' : c.etat === "perdu" ? '<span class="rst ko">✗ Perdu</span>' : c.etat === "annule" ? '<span class="rst">Annulé</span>' : "";
     const head = c.n < 2 ? "Pari simple" : "Combiné \xB7 " + c.n + " matchs";
@@ -676,7 +682,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
       const id = e.target.dataset.oid, g = gameById(id);
       if (!g || !bets[id]) return;
       const x = parseNum(e.target.value), t = betSide(g);
-      bets[id] = x >= 1 ? { t: t, o: x, m: 1, p: bets[id].p } : { t: t, o: oddsOf(g, t), s: oddsSrc(g, t), p: bets[id].p };
+      bets[id] = x >= 1 ? { t: t, o: x, m: 1, p: bets[id].p, pm: bets[id].pm } : { t: t, o: oddsOf(g, t), s: oddsSrc(g, t), p: bets[id].p, pm: bets[id].pm };
       e.target.classList.toggle("man", x >= 1);
       const sp = e.target.closest(".ritem") && e.target.closest(".ritem").querySelector(".rsub span");
       if (sp) sp.textContent = subTxt(g);
@@ -946,7 +952,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
   function setMsg(t, cls) { updMsg.textContent = t; updMsg.className = cls || ""; }
   var FEED_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/m3_data.json";
   var PAGE_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/index.html";
-  var APP_VERSION = "1.0.31";
+  var APP_VERSION = "1.0.32";
   var newV = null;
   function vNum(v) { return String(v || "0").split(".").map((x) => parseInt(x, 10) || 0); }
   function vGt(a, b) {
@@ -1105,6 +1111,39 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     const chg = on && !!pn && !!g.pred && Math.abs(pn.pHome - g.pred.pHome) >= 0.0005;
     return '<button type="button" class="lkb' + (on ? " on" : "") + (chg ? " chg" : "") + '" data-lock="' + esc(g.id) + '" aria-pressed="' + (on ? "true" : "false") + '" aria-label="Bloquer le pourcentage">' + (on ? LK_ON : LK_OFF) + "</button>" + (big && chg ? '<span class="mnew">→ ' + pct(pn.pHome) + " · " + pct(pn.pAway) + "</span>" : "");
   }
+  // --- Pourcentage du pari réglable à la main dans le récap (comme la cote) ; il se bloque aussi sur la carte du match ---
+  function phiN(z) {
+    const t = 1 / (1 + 0.2316419 * Math.abs(z)), d = 0.3989423 * Math.exp(-z * z / 2);
+    const q = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+    return z > 0 ? 1 - q : q;
+  }
+  function invPhi(p) {
+    let lo = -6, hi = 6;
+    for (let n = 0; n < 60; n++) { const m = (lo + hi) / 2; if (phiN(m) < p) lo = m; else hi = m; }
+    return (lo + hi) / 2;
+  }
+  function pcInput(g) {
+    const p = legProb(g), b = bets[g.id];
+    return '<span class="rpc"><input class="rpc-in' + (b && b.pm ? " man" : "") + '" data-pid="' + esc(g.id) + '" inputmode="decimal" autocomplete="off" aria-label="Pourcentage M3" placeholder="–" value="' + (p ? (p * 100).toFixed(1).replace(".", ",") : "") + '"><i>%</i></span>';
+  }
+  document.addEventListener("input", function (e) {
+    const t = e.target;
+    if (!t.classList || !t.classList.contains("rpc-in")) return;
+    const id = t.dataset.pid, g = gameById(id), b = bets[id];
+    if (!g || !b || typeof b !== "object") return;
+    const raw = t.value.trim().replace(",", ".").replace("%", ""), x = parseFloat(raw);
+    if (raw === "") {
+      delete b.pm; delete locks[id]; lockGame(g); b.p = pOf(g, betSide(g));
+      t.classList.remove("man");
+    } else if (x > 0 && x < 100) {
+      const side = betSide(g), pS = x / 100, pH = side === "home" ? pS : 1 - pS;
+      b.p = pS; b.pm = 1;
+      locks[id] = { pHome: pH, pAway: 1 - pH, margin: (D.sigma || 13) * invPhi(pH), at: 2 };
+      lockGame(g);
+      t.classList.add("man");
+    } else return;
+    saveBets(); saveLocks(); render();
+  });
   document.addEventListener("click", function (e) {
     const b = e.target && e.target.closest ? e.target.closest("[data-lock]") : null;
     if (!b) return;
@@ -1116,15 +1155,16 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     render();
     if (modalOpen() && modalGameId === id) { $("gameModalPanel").innerHTML = modalHtml(D, CTX, g); $("modalClose").addEventListener("click", closeModal); }
   }, true);
-  // Paris cochés avant la v1.0.29 : on leur redonne le pourcentage vu au moment du pari (dernière version publiée avant les inactifs officiels de 18 h 16, dimanche 8/11)
-  var PBET = {"2026_09_JAX_BAL": {"pHome": 0.3249, "pAway": 0.6751, "margin": -5.9}, "2026_09_CIN_ATL": {"pHome": 0.46636, "pAway": 0.53364, "margin": -1.1}, "2026_09_DEN_CAR": {"pHome": 0.26307, "pAway": 0.73693, "margin": -8.24}, "2026_09_DAL_IND": {"pHome": 0.40213, "pAway": 0.59787, "margin": -3.22}, "2026_09_NYJ_KC": {"pHome": 0.80814, "pAway": 0.19186, "margin": 11.32}, "2026_09_DET_MIA": {"pHome": 0.41213, "pAway": 0.58787, "margin": -2.89}, "2026_09_CLE_NO": {"pHome": 0.70953, "pAway": 0.29047, "margin": 7.18}, "2026_09_NYG_PHI": {"pHome": 0.52266, "pAway": 0.47734, "margin": 0.74}, "2026_09_LA_WAS": {"pHome": 0.52633, "pAway": 0.47367, "margin": 0.86}, "2026_09_HOU_LAC": {"pHome": 0.50856, "pAway": 0.49144, "margin": 0.28}, "2026_09_LV_SF": {"pHome": 0.75888, "pAway": 0.24112, "margin": 9.14}, "2026_09_GB_NE": {"pHome": 0.61164, "pAway": 0.38836, "margin": 3.69}, "2026_09_ARI_SEA": {"pHome": 0.65666, "pAway": 0.34334, "margin": 5.24}, "2026_09_TB_CHI": {"pHome": 0.56347, "pAway": 0.43653, "margin": 2.08}, "2026_09_BUF_MIN": {"pHome": 0.32909, "pAway": 0.67091, "margin": -5.75}};
+  // Paris cochés avant la v1.0.29 : on leur redonne un pourcentage de départ (version publiée le mardi 3/11 à 8 h 09, où Dallas était à 65,5 %) ; un repère at = 0 sur le cadenas marque la correction faite par la v1.0.31 (jeu de chiffres de dimanche 14 h 54), refaite ici ; le pourcentage se règle ensuite à la main dans le récap
+  var PBET = {"2026_09_JAX_BAL": {"pHome": 0.35814, "pAway": 0.64186, "margin": -4.72}, "2026_09_CIN_ATL": {"pHome": 0.46704, "pAway": 0.53296, "margin": -1.08}, "2026_09_DEN_CAR": {"pHome": 0.33765, "pAway": 0.66235, "margin": -5.45}, "2026_09_DAL_IND": {"pHome": 0.34526, "pAway": 0.65474, "margin": -5.18}, "2026_09_NYJ_KC": {"pHome": 0.79821, "pAway": 0.20179, "margin": 10.86}, "2026_09_DET_MIA": {"pHome": 0.30868, "pAway": 0.69132, "margin": -6.49}, "2026_09_CLE_NO": {"pHome": 0.53169, "pAway": 0.46831, "margin": 1.03}, "2026_09_NYG_PHI": {"pHome": 0.50634, "pAway": 0.49366, "margin": 0.21}, "2026_09_LA_WAS": {"pHome": 0.37823, "pAway": 0.62177, "margin": -4.03}, "2026_09_HOU_LAC": {"pHome": 0.46988, "pAway": 0.53012, "margin": -0.98}, "2026_09_LV_SF": {"pHome": 0.80608, "pAway": 0.19392, "margin": 11.23}, "2026_09_GB_NE": {"pHome": 0.55825, "pAway": 0.44175, "margin": 1.91}, "2026_09_ARI_SEA": {"pHome": 0.76081, "pAway": 0.23919, "margin": 9.22}, "2026_09_TB_CHI": {"pHome": 0.57285, "pAway": 0.42715, "margin": 2.39}, "2026_09_BUF_MIN": {"pHome": 0.44391, "pAway": 0.55609, "margin": -1.83}};
   (function () {
     let ch = false, cl = false;
     Object.keys(bets).forEach((id) => {
       const b = bets[id], f = PBET[id];
-      if (!b || typeof b !== "object" || typeof b.p === "number" || !f) return;
+      const redo = !!locks[id] && locks[id].at === 0;
+      if (!b || typeof b !== "object" || (typeof b.p === "number" && !redo) || !f) return;
       b.p = b.t === "home" ? f.pHome : f.pAway; ch = true;
-      if (!locks[id]) { locks[id] = { pHome: f.pHome, pAway: f.pAway, margin: f.margin, at: 0 }; cl = true; }
+      if (!locks[id] || redo) { locks[id] = { pHome: f.pHome, pAway: f.pAway, margin: f.margin, at: 1 }; cl = true; }
     });
     if (ch) saveBets();
     if (cl) saveLocks();
