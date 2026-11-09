@@ -210,14 +210,6 @@
      "gp": 6
     }
    ],
-   "offAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "receveur titulaire (Pat Bryant, IR)",
-     "lane": "pass",
-     "gp": 4
-    }
-   ],
    "injReport": "provisoire",
    "injWeek": 9
   },
@@ -290,12 +282,12 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "linebacker titulaire (Zaire Franklin, shin)",
+     "pos": "linebacker titulaire (Zaire Franklin, shin, rapport précédent)",
      "gp": 6
     },
     {
      "tier": "elite",
-     "pos": "edge rusher titulaire (Micah Parsons, genou)",
+     "pos": "edge rusher titulaire (Micah Parsons, genou, rapport précédent)",
      "lane": "pass",
      "gp": 0
     },
@@ -313,13 +305,13 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "centre titulaire (Sean Rhyan, cheville)",
+     "pos": "centre titulaire (Sean Rhyan, cheville, rapport précédent)",
      "lane": "line",
      "gp": 7
     },
     {
      "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Travis Glover, genou)",
+     "pos": "ailier gauche titulaire (Travis Glover, genou, rapport précédent)",
      "lane": "line",
      "gp": 4
     },
@@ -330,34 +322,14 @@
      "gp": 2
     }
    ],
-   "watch": [
-    {
-     "name": "Keisean Nixon",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "aine"
-    },
-    {
-     "name": "Aaron Banks",
-     "pos": "garde gauche",
-     "etat": "entraînement limité",
-     "why": "genou"
-    },
-    {
-     "name": "Christian Watson",
-     "pos": "receveur",
-     "etat": "entraînement limité",
-     "why": "rib"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 9
   },
   "Houston Texans": {
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Reed Blankenship, commotion)",
+     "pos": "safety titulaire (Reed Blankenship, commotion, rapport précédent)",
      "gp": 6
     }
    ],
@@ -369,7 +341,7 @@
      "gp": 0
     }
    ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 9
   },
   "Indianapolis Colts": {
@@ -461,12 +433,6 @@
      "gp": 7
     },
     {
-     "tier": "elite",
-     "pos": "edge rusher titulaire (Myles Garrett, IR)",
-     "lane": "pass",
-     "gp": 1
-    },
-    {
      "tier": "titulaire",
      "pos": "défenseur de ligne titulaire (Kobie Turner, IR)",
      "gp": 6
@@ -493,7 +459,7 @@
    "defAbsences": [
     {
      "tier": "rotation",
-     "pos": "linebacker titulaire (Denzel Perryman, pectoral)",
+     "pos": "linebacker titulaire (Denzel Perryman, pectoral, rapport précédent)",
      "gp": 0
     },
     {
@@ -505,12 +471,12 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "tight end titulaire (David Njoku, péroné)",
+     "pos": "tight end titulaire (David Njoku, péroné, rapport précédent)",
      "gp": 2
     },
     {
      "tier": "titulaire",
-     "pos": "ailier droit titulaire (Kayode Awosika, péroné)",
+     "pos": "ailier droit titulaire (Kayode Awosika, péroné, rapport précédent)",
      "lane": "line",
      "gp": 2
     },
@@ -527,7 +493,7 @@
      "gp": 4
     }
    ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 9
   },
   "Las Vegas Raiders": {
@@ -590,15 +556,9 @@
    "offAbsences": [
     {
      "tier": "elite",
-     "pos": "receveur titulaire (A.J. Brown, cheville)",
+     "pos": "receveur titulaire (A.J. Brown, cheville, rapport précédent)",
      "lane": "pass",
      "gp": 3
-    },
-    {
-     "tier": "titulaire",
-     "pos": "receveur titulaire (Mack Hollins, IR)",
-     "lane": "pass",
-     "gp": 4
     },
     {
      "tier": "titulaire",
@@ -626,33 +586,7 @@
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "Morgan Moses",
-     "pos": "ailier droit",
-     "etat": "incertain pour le match",
-     "why": "pied"
-    },
-    {
-     "name": "Hunter Henry",
-     "pos": "tight end",
-     "etat": "incertain pour le match",
-     "why": "pied"
-    },
-    {
-     "name": "Kevin Byard",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "poitrine"
-    },
-    {
-     "name": "Carlton Davis III",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "cou"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 9
   },
   "New York Giants": {
@@ -872,7 +806,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "edge rusher titulaire (Yaya Diaby, genou)",
+     "pos": "edge rusher titulaire (Yaya Diaby, genou, rapport précédent)",
      "lane": "pass",
      "gp": 8
     },
@@ -890,21 +824,7 @@
      "gp": 2
     }
    ],
-   "watch": [
-    {
-     "name": "Tristan Wirfs",
-     "pos": "ailier droit",
-     "etat": "entraînement limité",
-     "why": "orteil"
-    },
-    {
-     "name": "Emeka Egbuka",
-     "pos": "receveur",
-     "etat": "incertain pour le match",
-     "why": "pied"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 9
   },
   "Tennessee Titans": {
@@ -1041,21 +961,7 @@
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "Tyrique Stevenson",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "pouce"
-    },
-    {
-     "name": "Malik Muhammad",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "orteil"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 9
   },
   "New Orleans Saints": {
@@ -1071,12 +977,6 @@
      "pos": "ailier droit titulaire (Dillon Radunz, IR)",
      "lane": "line",
      "gp": 0
-    },
-    {
-     "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Kelvin Banks Jr., IR)",
-     "lane": "line",
-     "gp": 2
     }
    ],
    "defAbsences": [
@@ -2958,7 +2858,10 @@
    "expAway": 23,
    "computedAt": "2026-11-08T19:19:59Z",
    "spread": -4.75,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 22,
+   "awayScore": 44,
+   "correct": true
   },
   "2026_09_LV_SF": {
    "week": 9,
@@ -2987,7 +2890,10 @@
    "expAway": 18,
    "computedAt": "2026-11-08T19:19:59Z",
    "spread": 3.41,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 27,
+   "awayScore": 45,
+   "correct": false
   },
   "2026_09_ARI_SEA": {
    "week": 9,
@@ -3016,7 +2922,10 @@
    "expAway": 21,
    "computedAt": "2026-11-09T00:32:40Z",
    "spread": 2.74,
-   "frozen": false
+   "frozen": true,
+   "homeScore": 27,
+   "awayScore": 24,
+   "correct": true
   },
   "2026_09_BUF_MIN": {
    "week": 9,
@@ -3027,7 +2936,7 @@
    "pAway": 0.5601,
    "expHome": 19,
    "expAway": 21,
-   "computedAt": "2026-11-09T00:32:40Z",
+   "computedAt": "2026-11-09T10:54:23Z",
    "spread": -2.01,
    "frozen": false
   }
