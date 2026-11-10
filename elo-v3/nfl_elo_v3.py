@@ -31,6 +31,7 @@ import urllib.request
 import base64
 import html
 import io
+import json
 import webbrowser
 from collections import defaultdict
 
@@ -69,6 +70,11 @@ STATUTS_ROSTER_ABSENT = {"RES"}      # réserve / IR
 # --- Calibration ---
 CALIBRATION = "platt"                # "isotonic" ou "platt" (modifiable par: python nfl_elo_v3.py platt)
 SEUIL_CONFIANCE = 0.55               # pour le % ATS "quand P >= 55 %"
+
+# Corrections manuelles des absences de la prochaine semaine (fichier facultatif) :
+# {"absents": {"BAL": ["Lamar Jackson"]}, "presents": {"MIN": ["Kyler Murray"]}}
+FICHIER_ABSENCES = "absences.json"
+CORRECTIONS = {"absents": {}, "presents": {}}   # rempli au démarrage (noms -> gsis_id)
 
 DOSSIER_CACHE = "nfl_cache"
 CACHE_SAISON_EN_COURS_H = 12
@@ -371,6 +377,9 @@ def construire_features(matchs, eq, joueurs, absents, semaines_rapport):
                     # Semaine future sans rapport publié : on reprend les absents de S-1
                     if (saison, semaine) not in semaines_rapport:
                         abs_t = abs_t | absents.get((saison, semaine - 1, t), set())
+                    # Corrections manuelles (uniquement pour la semaine à venir)
+                    if (saison, semaine) == CORRECTIONS.get("cible"):
+                        abs_t = (abs_t | CORRECTIONS["absents"].get(t, set())) - CORRECTIONS["presents"].get(t, set())
                     m, det = malus_equipe(t, v, moy_poste, snaps_eq, abs_t)
                     epa_net, pts, pf, pa = forces.get(t, (0.0, 0.0, POINTS_MOYENS, POINTS_MOYENS))
                     feats[cote] = dict(elo=elo[t], epa=epa_net, pts=pts, pf=pf, pa=pa, malus=m, det=det)
@@ -603,119 +612,291 @@ def graphique_elo(df, saison):
 # -----------------------------------------------------------------------------
 # Génération du HTML autonome
 # -----------------------------------------------------------------------------
+SEUIL_PARI = 0.55          # proba minimale pour conseiller un pari handicap / total
+SEUIL_EV_ML = 0.05         # espérance de gain minimale pour conseiller un pari "vainqueur"
+
 CSS = """
 *{box-sizing:border-box}
 body{margin:0;background:#1a1a2e;color:#fff;font-family:Segoe UI,Roboto,Arial,sans-serif;font-size:18px}
-.page{max-width:1500px;margin:auto;padding:18px}
-h1{font-size:30px;margin:6px 0 18px}
-h2{font-size:24px;margin:34px 0 14px;border-left:6px solid #4cc9f0;padding-left:12px}
+.page{max-width:1300px;margin:auto;padding:16px}
+h1{font-size:30px;margin:6px 0 16px}
+h2{font-size:25px;margin:34px 0 14px;border-left:6px solid #4cc9f0;padding-left:12px}
 .tab{overflow-x:auto;background:#22223b;border-radius:12px;padding:6px}
 table{border-collapse:collapse;width:100%}
-th{background:#2d2d50;color:#fff;font-size:16px;text-align:left;padding:12px 10px;white-space:nowrap}
-td{padding:12px 10px;border-top:1px solid #3a3a5a;vertical-align:middle;font-size:18px}
-tr:hover td{background:#2a2a48}
-.match{font-weight:700;font-size:20px;white-space:nowrap}
-.qb{font-size:15px;color:#c8c8e0}
+th{background:#2d2d50;font-size:16px;text-align:left;padding:12px 10px;white-space:nowrap}
+td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px}
 .num{font-variant-numeric:tabular-nums;font-weight:700}
-.barre{position:relative;background:#3a3a5a;border-radius:8px;height:30px;min-width:120px;overflow:hidden}
-.barre span{position:absolute;left:0;top:0;bottom:0;border-radius:8px}
-.barre b{position:relative;display:block;text-align:center;line-height:30px;font-size:17px;text-shadow:0 0 4px #000}
+.match{font-weight:700;white-space:nowrap}
+/* --- Paris de la semaine --- */
+#paris{display:grid;gap:12px}
+.pari{display:flex;align-items:center;gap:16px;background:#1e5631;border:2px solid #2ecc71;border-radius:14px;padding:14px 18px}
+.sel{background:#16324f;border-color:#4cc9f0}
+.sel .rang{color:#9ad6f0}
+.pari .rang{font-size:30px;font-weight:800;color:#9ff5b8;min-width:40px}
+.pari .quoi{font-size:26px;font-weight:800}
+.pari .type{font-size:16px;color:#c8f5d6}
+.pari .chiffres{margin-left:auto;text-align:right;font-size:19px;font-weight:700;white-space:nowrap}
+.aucun{background:#3a3a5a;border-radius:14px;padding:18px;font-size:22px;font-weight:700;text-align:center}
+.histo{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.histo div{background:#22223b;border-radius:10px;padding:9px 14px;font-size:16px}
+.histo b{font-size:19px}
+.bon{color:#2ecc71}.mauvais{color:#ff6b6b}
+/* --- Cartes match --- */
+#cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:16px}
+.carte{background:#22223b;border-radius:16px;padding:16px;border:2px solid #33335a}
+.carte.conseil{border-color:#2ecc71}
+.entete{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.equipes{font-size:26px;font-weight:800}
+.elo{font-size:15px;color:#c8c8e0}
+.ligne{display:grid;grid-template-columns:105px 1fr auto;align-items:center;gap:10px;
+       padding:10px 0;border-top:1px solid #3a3a5a}
+.ligne .lib{font-size:15px;color:#9ad6f0;font-weight:700}
+.choix{font-size:21px;font-weight:800}
+.reglage{font-size:14px;color:#c8c8e0;margin-top:5px}
+.verdict{font-weight:800;font-size:17px;padding:7px 12px;border-radius:10px;white-space:nowrap}
+.jouer{background:#2ecc71;color:#0b2914}.passer{background:#3a3a5a;color:#d0d0e0}
+.barre{position:relative;background:#3a3a5a;border-radius:8px;height:26px;margin-top:5px;overflow:hidden}
+.barre span{position:absolute;left:0;top:0;bottom:0}
+.barre b{position:relative;display:block;text-align:center;line-height:26px;font-size:16px;text-shadow:0 0 4px #000}
 .vert{background:#2ecc71}.orange{background:#f39c12}.rouge{background:#e74c3c}
-input{width:84px;background:#11111f;color:#fff;border:2px solid #4cc9f0;border-radius:8px;
-      padding:7px;font-size:18px;font-weight:700}
-.cotes input{width:76px;margin:2px 0}
-.edge div{white-space:nowrap;font-weight:700;padding:3px 8px;border-radius:6px;margin:3px 0;font-size:16px}
-.ok{background:#1e5631;color:#9ff5b8}.ko{background:#5a1e1e;color:#ffb3b3}
-.blesse{font-size:14px;color:#ffcf70}
+input{width:78px;background:#11111f;color:#fff;border:2px solid #4cc9f0;border-radius:8px;
+      padding:5px 6px;font-size:17px;font-weight:700}
+.blesse{font-size:15px;color:#ffcf70;padding-top:8px;border-top:1px solid #3a3a5a}
 .graph{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.graph img,.full img{width:100%;border-radius:12px;background:#22223b}
+.graph img,.full img{width:100%;border-radius:12px}
 .full{margin-top:16px}
 @media (max-width:820px){
   body{font-size:17px}
   .graph{grid-template-columns:1fr}
-  #semaine table,#semaine thead,#semaine tbody,#semaine tr,#semaine td{display:block;width:100%}
-  #semaine thead{display:none}
-  #semaine tr{border-bottom:4px solid #1a1a2e;padding:6px 0}
-  #semaine td{border:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
-  #semaine td::before{content:attr(data-label);font-weight:700;color:#9ad6f0;font-size:15px}
-  #semaine .barre{flex:1;max-width:60%}
-  #semaine td.edge{flex-wrap:wrap;justify-content:flex-start}
+  #cartes{grid-template-columns:1fr}
+  .pari{flex-wrap:wrap}.pari .chiffres{margin-left:0;text-align:left}
+  .pari .quoi{font-size:23px}
 }
 """
 
 JS = """
-const SEUIL=%SEUIL%;
+const SEUIL=%SEUIL%, SEUIL_EV=%SEUIL_EV%, RENTA=%RENTA%;
+const M=JSON.parse(document.getElementById('donnees').textContent);
+const H=JSON.parse(document.getElementById('histo').textContent);
+function tranche(cle,x){for(const t of H[cle]){if(x>=t.lo&&x<t.hi)return t}return null}
+function histoTxt(cle,t){if(!t||t.v===null)return '';const v=cle==='ml'?sg((t.v*100).toFixed(1))+' %':pc(t.v);
+ return 'Historique : <b class="'+(t.ok?'bon':'mauvais')+'">'+v+'</b> ('+t.n+' paris)'}
 function erf(x){const s=Math.sign(x);x=Math.abs(x);const t=1/(1+0.3275911*x);
- const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);return s*y}
+ return s*(1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x))}
 function phi(x){return 0.5*(1+erf(x/Math.SQRT2))}
-function classe(p){return p>0.55?'vert':(p>=0.5?'orange':'rouge')}
-function barre(el,p){if(isNaN(p)){el.innerHTML='';return}
- el.innerHTML='<div class="barre"><span class="'+classe(p)+'" style="width:'+(p*100).toFixed(1)+'%"></span><b>'+(p*100).toFixed(1)+' %</b></div>'}
-function ligne(txt,v){return '<div class="'+(v>0?'ok':'ko')+'">'+txt+'</div>'}
-function calcule(tr){
- const d=tr.dataset, m=+d.marge, s=+d.sigma, t=+d.total, st=+d.sigmat, pv=+d.pvic;
- const sp=parseFloat(tr.querySelector('.in-spread').value);
- const to=parseFloat(tr.querySelector('.in-total').value);
- const cd=parseFloat(tr.querySelector('.in-cd').value), ce=parseFloat(tr.querySelector('.in-ce').value);
- let html='';
- const pc=isNaN(sp)?NaN:1-phi((sp-m)/s);
- barre(tr.querySelector('.p-couvre'),pc);
- if(!isNaN(pc)){const dom=pc>=0.5, p=dom?pc:1-pc, e=p-SEUIL;
-   html+=ligne('ATS '+(dom?d.dom:d.ext)+' '+(e>=0?'+':'')+(e*100).toFixed(1)+' pts',e)}
- const po=isNaN(to)?NaN:1-phi((to-t)/st);
- barre(tr.querySelector('.p-over'),po);
- if(!isNaN(po)){const ov=po>=0.5, p=ov?po:1-po, e=p-SEUIL;
-   html+=ligne((ov?'Over ':'Under ')+(e>=0?'+':'')+(e*100).toFixed(1)+' pts',e)}
- if(!isNaN(cd)&&!isNaN(ce)){const evd=pv*cd-1, eve=(1-pv)*ce-1, dom=evd>=eve, ev=dom?evd:eve;
-   html+=ligne('ML '+(dom?d.dom:d.ext)+' EV '+(ev>=0?'+':'')+(ev*100).toFixed(1)+' %',ev)}
- tr.querySelector('.edge').innerHTML=html;
+function pc(p){return (p*100).toFixed(1).replace('.',',')+' %'}
+function sg(x){return (x>0?'+':'')+String(x).replace('.',',')}
+function barre(p){const c=p>0.55?'vert':(p>=0.5?'orange':'rouge');
+ return '<div class="barre"><span class="'+c+'" style="width:'+(p*100).toFixed(1)+'%"></span><b>'+pc(p)+'</b></div>'}
+function verdict(ok){return '<span class="verdict '+(ok?'jouer':'passer')+'">'+(ok?'✅ JOUER':'❌ PASSER')+'</span>'}
+function val(i,cl){return parseFloat(document.querySelector('#c'+i+' .'+cl).value.replace(',','.'))}
+
+function analyse(m,i){
+ const r={i:i,paris:[]};
+ // Vainqueur (moneyline)
+ const cd=val(i,'in-cd'), ce=val(i,'in-ce'), pd=m.pvic;
+ const fav=pd>=0.5?m.dom:m.ext, pf=Math.max(pd,1-pd);
+ r.vain={fav:fav,p:pf};
+ if(!isNaN(cd)&&!isNaN(ce)){
+   const evd=pd*cd-1, eve=(1-pd)*ce-1, dom=evd>=eve;
+   r.ml={eq:dom?m.dom:m.ext, cote:dom?cd:ce, p:dom?pd:1-pd, ev:dom?evd:eve};
+   r.ml.t=tranche('ml',r.ml.ev); r.ml.ok=!!(r.ml.t&&r.ml.t.ok);
+   if(r.ml.ok) r.paris.push({quoi:r.ml.eq+' gagne', type:'Vainqueur du match', p:r.ml.p,
+                              detail:'cote '+String(r.ml.cote).replace('.',',')+' · historique '+sg((r.ml.t.v*100).toFixed(1))+' %', score:r.ml.ev});
+ }
+ // Handicap : saisi comme le handicap de l'équipe à domicile (ex. -2.5 = domicile favori de 2,5)
+ const h=val(i,'in-hand');
+ if(!isNaN(h)){
+   const pdom=1-phi((-h-m.marge)/m.sigma);           // domicile gagne de plus que -h
+   const dom=pdom>=0.5, p=dom?pdom:1-pdom, hh=dom?h:-h;
+   const ta=tranche('hand',p); r.ats={eq:dom?m.dom:m.ext, hand:hh, p:p, t:ta, ok:!!(ta&&ta.ok)};
+   if(r.ats.ok) r.paris.push({quoi:r.ats.eq+' '+sg(hh), type:'Handicap', p:p,
+                              detail:'historique '+pc(ta.v), score:p-RENTA});
+ }
+ // Total de points
+ const t=val(i,'in-tot');
+ if(!isNaN(t)){
+   const po=1-phi((t-m.total)/m.sigmat), ov=po>=0.5, p=ov?po:1-po;
+   const tt=tranche('tot',p); r.tot={sens:ov?'Plus de':'Moins de', ligne:t, p:p, t:tt, ok:!!(tt&&tt.ok)};
+   if(r.tot.ok) r.paris.push({quoi:(ov?'Plus de ':'Moins de ')+String(t).replace('.',',')+' pts', type:'Total de points ('+m.dom+' vs '+m.ext+')', p:p,
+                              detail:'historique '+pc(tt.v), score:p-RENTA});
+ }
+ return r;
 }
-document.querySelectorAll('#semaine tbody tr').forEach(tr=>{
- tr.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>calcule(tr)));calcule(tr)});
-""".replace("%SEUIL%", str(SEUIL_RENTABILITE))
+
+function rendCarte(m,i,r){
+ const el=document.querySelector('#c'+i+' .calc');
+ let h='';
+ h+='<div class="ligne"><div class="lib">Vainqueur</div><div><div class="choix">'+r.vain.fav+'</div>'+barre(r.vain.p)
+   +(r.ml?'<div class="reglage">'+(r.ml.ev>0?'Valeur sur '+r.ml.eq+' (cote '+String(r.ml.cote).replace('.',',')+') · EV '+sg((r.ml.ev*100).toFixed(1))+' %'+(r.ml.t?' · '+histoTxt('ml',r.ml.t):''):'Pas de valeur')+'</div>':'')
+   +'</div>'+verdict(r.ml&&r.ml.ok)+'</div>';
+ if(r.ats) h+='<div class="ligne"><div class="lib">Handicap</div><div><div class="choix">'+r.ats.eq+' '+sg(r.ats.hand)+'</div>'+barre(r.ats.p)+'<div class="reglage">'+histoTxt('hand',r.ats.t)+'</div></div>'+verdict(r.ats.ok)+'</div>';
+ if(r.tot) h+='<div class="ligne"><div class="lib">Total</div><div><div class="choix">'+r.tot.sens+' '+String(r.tot.ligne).replace('.',',')+'</div>'+barre(r.tot.p)+'<div class="reglage">'+histoTxt('tot',r.tot.t)+'</div></div>'+verdict(r.tot.ok)+'</div>';
+ el.innerHTML=h;
+ document.getElementById('c'+i).classList.toggle('conseil',r.paris.length>0);
+}
+
+function tout(){
+ let liste=[];
+ M.forEach((m,i)=>{const r=analyse(m,i);rendCarte(m,i,r);liste=liste.concat(r.paris)});
+ liste.sort((a,b)=>b.score-a.score);
+ const z=document.getElementById('paris');
+ if(!liste.length){z.innerHTML='<div class="aucun">❌ Aucun pari conseillé cette semaine</div>';return}
+ z.innerHTML=liste.map((p,k)=>'<div class="pari"><div class="rang">'+(k+1)+'</div><div><div class="quoi">'+p.quoi
+   +'</div><div class="type">'+p.type+'</div></div><div class="chiffres">'+pc(p.p)+'<br>'+p.detail+'</div></div>').join('');
+}
+// --- Sélections moneyline >= 60 % ---
+const H60=JSON.parse(document.getElementById('histo60').textContent);
+function ml60(){
+ const L=[];
+ M.forEach((m,i)=>{const dom=m.pvic>=0.5, p=dom?m.pvic:1-m.pvic; if(p<%SEL%)return;
+   const c=val(i,dom?'in-cd':'in-ce'); L.push({eq:dom?m.dom:m.ext, adv:dom?m.ext:m.dom, p:p, c:c, ev:isNaN(c)?NaN:p*c-1})});
+ L.sort((a,b)=>b.p-a.p);
+ const z=document.getElementById('ml60');
+ if(!L.length){z.innerHTML='<div class="aucun">Aucune sélection ≥ 60 %</div>';return}
+ z.innerHTML='<div id="paris-ml" style="display:grid;gap:12px">'+L.map((x,k)=>'<div class="pari sel"><div class="rang">'+(k+1)+'</div><div><div class="quoi">'+x.eq
+   +' gagne</div><div class="type">contre '+x.adv+'</div></div><div class="chiffres">'+pc(x.p)+'<br>'
+   +(isNaN(x.c)?'':'cote '+String(x.c).replace('.',',')+' · EV <span class="'+(x.ev>0?'bon':'mauvais')+'">'+sg((x.ev*100).toFixed(1))+' %</span>')
+   +'</div></div>').join('')+'</div>';
+}
+function majTout(){tout();ml60()}
+document.querySelectorAll('#cartes input').forEach(x=>x.addEventListener('input',majTout));
+ml60();
+tout();
+""".replace("%SEUIL%", str(SEUIL_PARI)).replace("%SEL%", "0.60").replace("%SEUIL_EV%", str(SEUIL_EV_ML)).replace(
+    "%RENTA%", str(SEUIL_RENTABILITE))
 
 
 def fmt(x, nd=1):
     return "" if pd.isna(x) else f"{x:.{nd}f}"
 
 
-def barre_html(p):
-    if pd.isna(p):
-        return ""
-    c = "vert" if p > 0.55 else ("orange" if p >= 0.5 else "rouge")
-    return (f'<div class="barre"><span class="{c}" style="width:{p*100:.1f}%"></span>'
-            f'<b>{p*100:.1f} %</b></div>')
+TRANCHES_P = [0.55, 0.60, 0.65, 1.01]        # tranches de proba (handicap / total)
+TRANCHES_EV = [0.05, 0.15, 0.30, 99.0]       # tranches d'espérance de gain (vainqueur)
 
 
-def tableau_semaine(p, modele):
+def _tranches(valeur, resultat, saisons, bornes, rentable):
+    """Pour chaque tranche : taux (ou rendement), nb de paris, et si c'est rentable de façon régulière."""
+    out = []
+    for lo, hi in zip(bornes[:-1], bornes[1:]):
+        m = (valeur >= lo) & (valeur < hi)
+        n = int(m.sum())
+        if n == 0:
+            out.append({"lo": lo, "hi": hi, "v": None, "n": 0, "ok": False})
+            continue
+        v = float(np.mean(resultat[m]))
+        par_saison = pd.Series(resultat[m]).groupby(np.asarray(saisons)[m]).mean()
+        ok = bool(rentable(v) and (par_saison.apply(rentable).sum() >= 3) and n >= 30)
+        out.append({"lo": lo, "hi": hi, "v": round(v, 4), "n": n, "ok": ok})
+    return out
+
+
+def historique_paris(tout):
+    """
+    Réussite passée (backtest walk-forward) des paris, par tranche de confiance.
+    Une tranche n'est « à jouer » que si elle a été rentable au global ET sur au moins 3 saisons sur 4.
+    """
+    t = tout.copy()
+    res = {}
+    a = t[t["spread_line"].notna() & (t["marge"] != t["spread_line"])]
+    pick = a["p_couvre"] >= 0.5
+    pa = np.where(pick, a["p_couvre"], 1 - a["p_couvre"])
+    ga = (pick == (a["marge"] > a["spread_line"])).to_numpy().astype(float)
+    res["hand"] = _tranches(pa, ga, a["season"], TRANCHES_P, lambda v: v >= SEUIL_RENTABILITE)
+
+    o = t[t["total_line"].notna() & (t["total"] != t["total_line"])]
+    ov = o["p_over"] >= 0.5
+    po = np.where(ov, o["p_over"], 1 - o["p_over"])
+    go = (ov == (o["total"] > o["total_line"])).to_numpy().astype(float)
+    res["tot"] = _tranches(po, go, o["season"], TRANCHES_P, lambda v: v >= SEUIL_RENTABILITE)
+
+    v = t[t["ml_dom"].notna() & t["ml_ext"].notna() & (t["marge"] != 0)]
+    cd, ce = v["ml_dom"].apply(ml_vers_decimale), v["ml_ext"].apply(ml_vers_decimale)
+    evd, eve = v["p_victoire"] * cd - 1, (1 - v["p_victoire"]) * ce - 1
+    dom = (evd >= eve).to_numpy()
+    ev = np.where(dom, evd, eve)
+    cote = np.where(dom, cd, ce)
+    gain = np.where(dom == (v["marge"] > 0).to_numpy(), cote - 1, -1.0)
+    res["ml"] = _tranches(ev, gain, v["season"], TRANCHES_EV, lambda x: x > 0)
+    return res
+
+
+SEUIL_ML_SELECTION = 0.60   # section « Sélections moneyline ≥ 60 % »
+
+
+def historique_ml60(tout):
+    """Bilan passé : équipe donnée gagnante à ≥ 60 % par le modèle, jouée à la cote de clôture."""
+    v = tout[tout["ml_dom"].notna() & tout["ml_ext"].notna() & (tout["marge"] != 0)]
+    dom = v["p_victoire"] >= 0.5
+    p = np.where(dom, v["p_victoire"], 1 - v["p_victoire"])
+    cote = np.where(dom, v["ml_dom"].apply(ml_vers_decimale), v["ml_ext"].apply(ml_vers_decimale))
+    gagne = (dom == (v["marge"] > 0)).to_numpy()
+    m = p >= SEUIL_ML_SELECTION
+    gain = np.where(gagne, cote - 1, -1.0)
+    par_saison = pd.Series(gain[m]).groupby(v["season"].to_numpy()[m]).mean()
+    return {"n": int(m.sum()), "taux": round(float(gagne[m].mean()), 4),
+            "roi": round(float(gain[m].mean()), 4),
+            "saisons": {int(k): round(float(x), 4) for k, x in par_saison.items()}}
+
+
+def bloc_ml60(h):
+    def v(x):                         # format français, sans toucher au JSON
+        return f"{x*100:+.1f} %".replace(".", ",")
+    saisons = "".join(f'<div>{k} : <b class="{"bon" if x > 0 else "mauvais"}">{v(x)}</b></div>'
+                      for k, x in h["saisons"].items())
+    taux = f"{h['taux']*100:.1f} %".replace(".", ",")
+    cl = "bon" if h["roi"] > 0 else "mauvais"
+    return (f'<script type="application/json" id="histo60">{json.dumps(h)}</script>'
+            f'<div id="ml60"></div><div class="histo">'
+            f'<div>Historique : <b>{taux}</b> gagnés ({h["n"]})</div>'
+            f'<div>Rendement : <b class="{cl}">{v(h["roi"])}</b></div>{saisons}</div>')
+
+
+def bloc_paris(hist):
+    noms = {"hand": "Handicap", "tot": "Total", "ml": "Vainqueur"}
+    cases = []
+    for cle, tranches in hist.items():
+        for tr in tranches:
+            if tr["v"] is None:
+                continue
+            if cle == "ml":
+                lib = f"EV {tr['lo']*100:.0f}–{tr['hi']*100:.0f} %" if tr["hi"] < 99 else f"EV ≥ {tr['lo']*100:.0f} %"
+                txt = f"{tr['v']*100:+.1f} %".replace(".", ",")
+            else:
+                lib = f"{tr['lo']*100:.0f}–{min(tr['hi'],1)*100:.0f} %"
+                txt = f"{tr['v']*100:.1f} %".replace(".", ",")
+            cl = "bon" if tr["ok"] else "mauvais"
+            cases.append(f'<div>{noms[cle]} {lib} : <b class="{cl}">{txt}</b> ({tr["n"]})</div>')
+    json_h = json.dumps(hist).replace("</", "<\\/")
+    return (f'<script type="application/json" id="histo">{json_h}</script>'
+            f'<div id="paris"></div><div class="histo">{"".join(cases)}</div>')
+
+
+def cartes_semaine(p, modele):
     e = html.escape
-    lignes = []
-    for r in p.itertuples(index=False):
+    donnees, cartes = [], []
+    for i, r in enumerate(p.itertuples(index=False)):
         cd, ce = ml_vers_decimale(r.ml_dom), ml_vers_decimale(r.ml_ext)
-        blessures = "".join(f'<div class="blesse">🩹 {e(t)}: {e(x)}</div>'
+        donnees.append({"dom": r.dom, "ext": r.ext, "marge": round(r.pred_marge, 3),
+                        "sigma": round(modele.sigma, 3), "total": round(r.pred_total, 3),
+                        "sigmat": round(modele.sigma_total, 3), "pvic": round(r.p_victoire, 4)})
+        hand = "" if pd.isna(r.spread_line) else fmt(-r.spread_line)   # handicap du domicile
+        blessures = "".join(f"<div>🩹 {e(t)} : {e(x)}</div>"
                             for t, x in ((r.dom, r.absents_dom), (r.ext, r.absents_ext)) if x)
-        lignes.append(f"""
-<tr data-marge="{r.pred_marge:.4f}" data-sigma="{modele.sigma:.4f}" data-total="{r.pred_total:.4f}"
-    data-sigmat="{modele.sigma_total:.4f}" data-pvic="{r.p_victoire:.4f}" data-dom="{e(r.dom)}" data-ext="{e(r.ext)}">
- <td data-label="Match"><div class="match">{e(r.dom)} vs {e(r.ext)}</div>{blessures}</td>
- <td data-label="Elo" class="num">{r.elo_dom:+.0f} / {r.elo_ext:+.0f}</td>
- <td data-label="Marge" class="num">{r.pred_marge:+.1f}</td>
- <td data-label="P victoire {e(r.dom)}">{barre_html(r.p_victoire)}</td>
- <td data-label="Spread"><input class="in-spread" type="number" step="0.5" value="{fmt(r.spread_line)}"></td>
- <td data-label="P couvre {e(r.dom)}" class="p-couvre"></td>
- <td data-label="Total"><input class="in-total" type="number" step="0.5" value="{fmt(r.total_line)}"></td>
- <td data-label="Total prédit" class="num">{r.pred_total:.1f}</td>
- <td data-label="P over" class="p-over"></td>
- <td data-label="Cotes {e(r.dom)} / {e(r.ext)}" class="cotes">
-   <input class="in-cd" type="number" step="0.01" value="{fmt(cd, 2)}">
-   <input class="in-ce" type="number" step="0.01" value="{fmt(ce, 2)}"></td>
- <td data-label="Écart vs cote" class="edge"></td>
-</tr>""")
-    return f"""
-<div class="tab" id="semaine"><table>
-<thead><tr><th>Match</th><th>Elo dom / ext</th><th>Marge</th><th>P victoire dom</th><th>Spread</th>
-<th>P couvre dom</th><th>Total</th><th>Total prédit</th><th>P over</th><th>Cotes dom / ext</th><th>Écart vs cote</th></tr></thead>
-<tbody>{''.join(lignes)}</tbody></table></div>"""
+        cartes.append(f"""
+<div class="carte" id="c{i}">
+ <div class="entete"><div class="equipes">🏠 {e(r.dom)} – {e(r.ext)}</div>
+   <div class="elo">Elo {r.elo_dom:+.0f} / {r.elo_ext:+.0f}</div></div>
+ <div class="calc"></div>
+ <div class="reglage">Handicap {e(r.dom)} <input class="in-hand" type="number" step="0.5" value="{hand}">
+   Total <input class="in-tot" type="number" step="0.5" value="{fmt(r.total_line)}"></div>
+ <div class="reglage">Cote {e(r.dom)} <input class="in-cd" type="number" step="0.01" value="{fmt(cd, 2)}">
+   Cote {e(r.ext)} <input class="in-ce" type="number" step="0.01" value="{fmt(ce, 2)}"></div>
+ {f'<div class="blesse">{blessures}</div>' if blessures else ''}
+</div>""")
+    json_txt = json.dumps(donnees, ensure_ascii=False).replace("</", "<\\/")
+    return (f'<script type="application/json" id="donnees">{json_txt}</script>'
+            f'<div id="cartes">{"".join(cartes)}</div>')
 
 
 def tableau_backtest(tab):
@@ -739,6 +920,17 @@ def tableau_erreurs(tout, n=15):
             f"<tbody>{lignes}</tbody></table></div>")
 
 
+def bandeau_blessures(semaine):
+    r = CORRECTIONS.get("rapport")
+    if not semaine or r is None:
+        return ""
+    ok = r >= semaine
+    corr = sum(len(v) for v in CORRECTIONS["absents"].values()) + sum(len(v) for v in CORRECTIONS["presents"].values())
+    txt = f"🩹 Rapport blessures : semaine {r}" + (f" · {corr} correction(s) manuelle(s)" if corr else "")
+    coul = "#1e5631" if ok else "#5a1e1e"
+    return f'<div style="background:{coul};border-radius:10px;padding:10px 14px;font-weight:700;margin-bottom:8px">{txt}</div>'
+
+
 def generer_html(p, modele, semaine, courante, df, tout, tab, fichier=FICHIER_HTML):
     """Construit le dashboard autonome (CSS + images base64 + JS inline) et l'ouvre."""
     print("5) Génération du dashboard HTML…")
@@ -746,15 +938,20 @@ def generer_html(p, modele, semaine, courante, df, tout, tab, fichier=FICHIER_HT
     img_marge = graphique_marges(tout)
     img_elo = graphique_elo(df, courante)
     titre = f"NFL {courante} — Semaine {semaine}" if semaine else f"NFL {courante}"
-    section_semaine = tableau_semaine(p, modele) if p is not None else ""
+    hist = historique_paris(tout)
+    h60 = historique_ml60(tout)
+    section_semaine = (f"<h2>Paris de la semaine</h2>{bloc_paris(hist)}"
+                       f"<h2>Sélections moneyline ≥ 60 %</h2>{bloc_ml60(h60)}"
+                       f"<h2>Tous les matchs</h2>{cartes_semaine(p, modele)}") if p is not None else ""
     page = f"""<!DOCTYPE html>
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(titre)}</title><style>{CSS}</style></head>
 <body><div class="page">
 <h1>🏈 {html.escape(titre)}</h1>
+{bandeau_blessures(semaine)}
 {section_semaine}
-<h2>Elo</h2>
+<h2>Elo des équipes</h2>
 <div class="full"><img alt="Elo" src="data:image/png;base64,{img_elo}"></div>
 <h2>Backtest {SAISONS_BACKTEST[0]}–{SAISONS_BACKTEST[-1]}</h2>
 {tableau_backtest(tab)}
@@ -836,6 +1033,25 @@ def main():
     joueurs = stats_joueurs(pbp, snaps, rosters)
     absents, semaines_rapport = absents_par_semaine(blessures, rosters)
     del pbp
+    # Semaine à venir + corrections manuelles d'absences
+    a_venir = matchs[(matchs["season"] == courante) & matchs["result"].isna()]
+    if not a_venir.empty:
+        cible = (courante, int(a_venir["week"].min()))
+        CORRECTIONS["cible"] = cible
+        rapports = blessures[blessures["season"] == courante]["week"]
+        CORRECTIONS["rapport"] = int(rapports.max()) if len(rapports) else None
+        if os.path.exists(FICHIER_ABSENCES):
+            with open(FICHIER_ABSENCES, encoding="utf-8") as f:
+                brut = json.load(f)
+            noms = rosters[rosters["season"] == courante].dropna(subset=["gsis_id"])
+            noms = noms.drop_duplicates("full_name", keep="last").set_index("full_name")["gsis_id"]
+            for cle in ("absents", "presents"):
+                for eq_, liste in brut.get(cle, {}).items():
+                    ids = {noms[n] for n in liste if n in noms}
+                    for n in liste:
+                        if n not in noms:
+                            print(f"  ⚠ {FICHIER_ABSENCES} : joueur inconnu « {n} »")
+                    CORRECTIONS[cle][eq_] = ids
     print("3) Calcul semaine par semaine (Elo, EPA, blessures)…")
     df = construire_features(matchs, eq, joueurs, absents, semaines_rapport)
     print("4) Backtest…")
