@@ -3,3 +3,6 @@ __pycache__/
 _in.json
 _out.json
 a_analyser.json
+elo-v3/nfl_cache/
+elo-v3/*.csv
+elo-v3/*.png
