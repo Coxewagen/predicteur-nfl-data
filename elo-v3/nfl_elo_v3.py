@@ -69,7 +69,7 @@ STATUTS_BLESSURE_ABSENT = {"Out", "Doubtful"}
 STATUTS_ROSTER_ABSENT = {"RES"}      # réserve / IR
 
 # --- Calibration ---
-CALIBRATION = "isotonic"             # calibration du modèle actuel (l'ancien modèle reste en Platt)
+CALIBRATION = "isotonic"             # calibration des probabilités
 PROBA_MIN, PROBA_MAX = 0.30, 0.75    # plafond de confiance sur la proba de victoire du domicile
 SEUIL_CONFIANCE_2 = 0.60             # second seuil pour le % ATS
 SEUIL_CONFIANCE = 0.55               # pour le % ATS "quand P >= 55 %"
@@ -92,8 +92,15 @@ URL_BLESSURES = URL_REL + "injuries/injuries_{s}.csv"
 RENOMMAGE = {"STL": "LA", "SD": "LAC", "OAK": "LV", "LAR": "LA"}
 COLONNES_PBP = ["game_id", "season", "week", "posteam", "defteam", "play_type", "epa",
                 "qb_epa", "qb_dropback", "id", "passer_player_id",
-                "rusher_player_id", "receiver_player_id"]
-FEATURES = ["elo_diff_pts", "epa_diff", "points_diff", "malus_diff", "domicile"]
+                "rusher_player_id", "receiver_player_id",
+                "interception", "fumble", "fumble_lost", "fixed_drive", "fixed_drive_result",
+                "yardline_100", "third_down_converted", "third_down_failed"]
+# v4 (ancienne version, gardée pour la comparaison du backtest)
+FEATURES_V4 = ["elo_diff_pts", "epa_diff", "points_diff", "malus_diff", "domicile"]
+# v5 : sans avantage domicile spécifique, + turnover rate, red zone TD %, 3rd down % (4 dernières semaines)
+FEATURES = ["elo_diff_pts", "epa_diff", "points_diff", "malus_diff", "to_diff", "rz_diff", "d3_diff"]
+FEATURES_INVERSES = {"to_diff"}      # plus de turnovers = défavorable : signe inversé pour la régression
+FENETRE_4SEM = 4                     # nb de derniers matchs pour turnover / red zone / 3rd down
 FEATURES_TOTAL = ["pf_somme", "pa_somme"]   # points marqués / encaissés pondérés des 2 équipes
 POINTS_MOYENS = 22.0                         # valeur par défaut en semaine 1 (aucune donnée)
 SEUIL_RENTABILITE = 0.524                    # pari à -110 (cote 1.91)
@@ -178,7 +185,50 @@ def stats_equipes(pbp, matchs):
     ext = joues[["season", "week", "away_team", "away_score", "home_score"]].set_axis(
         ["season", "week", "team", "pf", "pa"], axis=1)
     pts = pd.concat([dom, ext]).set_index(["season", "week", "team"])
-    return eq.join(pts, how="inner").reset_index()
+    eq = eq.join(pts, how="inner")
+    return eq.join(stats_situations(pbp), how="left").reset_index()
+
+
+def stats_situations(pbp):
+    """
+    Par (saison, semaine, équipe en attaque) — les composantes brutes (sommes), pour des ratios pondérés :
+      - turnovers : num = interceptions + fumbles perdus ; den = interceptions + fumbles récupérés + drives
+      - red zone  : drives entrés dans les 20 yards adverses, et ceux terminés en touchdown
+      - 3rd down  : 3rd downs convertis / tentés
+    """
+    cle = ["season", "week", "posteam"]
+    p = pbp[pbp["posteam"].notna()].copy()
+    for c in ("interception", "fumble", "fumble_lost", "third_down_converted", "third_down_failed"):
+        p[c] = p[c].fillna(0)
+    p["fumble_recup"] = ((p["fumble"] == 1) & (p["fumble_lost"] == 0)).astype(int)
+    g = p.groupby(cle).agg(int_=("interception", "sum"), fum_perdus=("fumble_lost", "sum"),
+                           fum_recup=("fumble_recup", "sum"),
+                           d3_conv=("third_down_converted", "sum"), d3_rate=("third_down_failed", "sum"))
+    drives = (p.dropna(subset=["fixed_drive"])
+               .groupby(["season", "week", "posteam", "game_id", "fixed_drive"])
+               .agg(rz=("yardline_100", lambda y: bool((y <= 20).any())),
+                    td=("fixed_drive_result", lambda r: (r == "Touchdown").any())).reset_index())
+    drives["rz_td"] = drives["rz"] & drives["td"]          # TD sur un drive passé par la red zone
+    dr = drives.groupby(cle).agg(drives=("fixed_drive", "size"), rz_essais=("rz", "sum"),
+                                 rz_td=("rz_td", "sum"))
+    g = g.join(dr, how="left").fillna(0)
+    g["to_num"] = g["int_"] + g["fum_perdus"]
+    g["to_den"] = g["int_"] + g["fum_recup"] + g["drives"]
+    g["d3_tent"] = g["d3_conv"] + g["d3_rate"]
+    g.index.names = ["season", "week", "team"]
+    return g[["to_num", "to_den", "rz_td", "rz_essais", "d3_conv", "d3_tent"]]
+
+
+def situations_4sem(eq_saison, semaine):
+    """Turnover rate, red zone TD % et 3rd down % sur les 4 derniers matchs, pondération exponentielle."""
+    passe = eq_saison[eq_saison["week"] < semaine]
+    res = {}
+    for t, g in passe.groupby("team"):
+        g = g.sort_values("week").tail(FENETRE_4SEM)
+        w = poids_recence(g["week"], semaine)
+        ratio = lambda num, den: (np.dot(w, g[num]) / np.dot(w, g[den])) if np.dot(w, g[den]) > 0 else np.nan
+        res[t] = (ratio("to_num", "to_den"), ratio("rz_td", "rz_essais"), ratio("d3_conv", "d3_tent"))
+    return res
 
 
 def stats_joueurs(pbp, snaps, rosters):
@@ -371,6 +421,7 @@ def construire_features(matchs, eq, joueurs, absents, semaines_rapport):
         j_s = joueurs[joueurs["season"] == saison]
         for semaine, mw in ms.groupby("week"):
             forces = forces_equipes(eq_s, semaine)
+            situ = situations_4sem(eq_s, semaine)
             v, moy_poste, snaps_eq = valeurs_joueurs(j_s, semaine)
             for g in mw.itertuples(index=False):
                 neutre = str(g.location) == "Neutral"
@@ -385,7 +436,9 @@ def construire_features(matchs, eq, joueurs, absents, semaines_rapport):
                         abs_t = (abs_t | CORRECTIONS["absents"].get(t, set())) - CORRECTIONS["presents"].get(t, set())
                     m, det = malus_equipe(t, v, moy_poste, snaps_eq, abs_t)
                     epa_net, pts, pf, pa = forces.get(t, (0.0, 0.0, POINTS_MOYENS, POINTS_MOYENS))
-                    feats[cote] = dict(elo=elo[t], epa=epa_net, pts=pts, pf=pf, pa=pa, malus=m, det=det)
+                    to_r, rz_r, d3_r = situ.get(t, (np.nan, np.nan, np.nan))
+                    feats[cote] = dict(elo=elo[t], epa=epa_net, pts=pts, pf=pf, pa=pa, malus=m, det=det,
+                                       to=to_r, rz=rz_r, d3=d3_r)
                 d, e = feats["dom"], feats["ext"]
                 lignes.append({
                     "game_id": g.game_id, "season": saison, "week": semaine,
@@ -394,6 +447,9 @@ def construire_features(matchs, eq, joueurs, absents, semaines_rapport):
                     "elo_diff_pts": (d["elo"] - e["elo"]) / ELO_PAR_POINT,
                     "epa_diff": d["epa"] - e["epa"],
                     "points_diff": d["pts"] - e["pts"],
+                    "to_diff": d["to"] - e["to"],            # turnover rate A - B
+                    "rz_diff": d["rz"] - e["rz"],            # red zone TD % A - B
+                    "d3_diff": d["d3"] - e["d3"],            # 3rd down % A - B
                     "malus_dom": d["malus"], "malus_ext": e["malus"],
                     "malus_diff": -(d["malus"] - e["malus"]),    # positif = avantage domicile
                     "absents_dom": "; ".join(d["det"]), "absents_ext": "; ".join(e["det"]),
@@ -424,6 +480,16 @@ class ModeleElo:
       5. proba de couvrir le spread calibrée elle aussi (isotonic)
     """
 
+    def __init__(self, features=None):
+        self.features = list(features or FEATURES)
+
+    def _X(self, df):
+        """Matrice des features ; valeurs manquantes (début de saison) -> 0 ; signe inversé si besoin."""
+        X = df[self.features].astype(float).fillna(0.0).copy()
+        for c in FEATURES_INVERSES & set(self.features):
+            X[c] = -X[c]
+        return X
+
     @staticmethod
     def _x2(m1, spread):
         spread = np.asarray(spread, dtype=float)
@@ -438,10 +504,11 @@ class ModeleElo:
             m = (train["season"] == s_).to_numpy()
             if m.all():
                 continue
-            r = LinearRegression(positive=True).fit(train.loc[~m, FEATURES], train.loc[~m, "marge"])
-            m1_oof[m] = r.predict(train.loc[m, FEATURES])
-        self.reg = LinearRegression(positive=True).fit(train[FEATURES], train["marge"])
-        m1_oof = np.where(np.isnan(m1_oof), self.reg.predict(train[FEATURES]), m1_oof)
+            X = self._X(train)
+            r = LinearRegression(positive=True).fit(X[~m], train.loc[~m, "marge"])
+            m1_oof[m] = r.predict(X[m])
+        self.reg = LinearRegression(positive=True).fit(self._X(train), train["marge"])
+        m1_oof = np.where(np.isnan(m1_oof), self.reg.predict(self._X(train)), m1_oof)
 
         # 2) Marge finale avec l'écart vs spread : le modèle apprend quand sa divergence est fiable
         x2 = self._x2(m1_oof, train["spread_line"])
@@ -470,7 +537,7 @@ class ModeleElo:
 
     def predict(self, df):
         out = df.copy()
-        m1 = self.reg.predict(df[FEATURES])
+        m1 = self.reg.predict(self._X(df))
         out["marge_modele"] = m1
         out["ecart_spread"] = m1 - df["spread_line"]
         out["pred_marge"] = self.reg2.predict(self._x2(m1, df["spread_line"]))
@@ -497,50 +564,6 @@ class ModeleElo:
                 "calc": [list(map(float, self.cal_couvre.X_thresholds_)), list(map(float, self.cal_couvre.y_thresholds_))]}
 
 
-class ModeleEloAvant:
-    """Ancien modèle (v3) : Platt, sans écart vs spread, sans plafond — gardé pour comparaison."""
-    def fit(self, train):
-        """Apprend les poids (positifs) des composantes, l'écart-type et la calibration."""
-        self.reg = LinearRegression(positive=True).fit(train[FEATURES], train["marge"])
-        marge_pred = self.reg.predict(train[FEATURES])
-        self.sigma = float(np.std(train["marge"] - marge_pred, ddof=1))
-        p_brute = proba_elo(marge_pred * ELO_PAR_POINT)
-        # Modèle du total (over/under)
-        tr = train[train["total"].notna()]
-        self.reg_total = LinearRegression().fit(tr[FEATURES_TOTAL], tr["total"])
-        self.sigma_total = float(np.std(tr["total"] - self.reg_total.predict(tr[FEATURES_TOTAL]), ddof=1))
-        y = (train["marge"] > 0).astype(int)
-        ok = train["marge"] != 0                       # on retire les nuls
-        if True:
-            x = np.log(p_brute / (1 - p_brute)).reshape(-1, 1)
-            self.cal = LogisticRegression().fit(x[ok], y[ok])
-        else:
-            self.cal = IsotonicRegression(out_of_bounds="clip", y_min=0.01, y_max=0.99)
-            self.cal.fit(p_brute[ok], y[ok])
-        return self
-
-    def predict(self, df):
-        out = df.copy()
-        out["pred_marge"] = self.reg.predict(df[FEATURES])
-        out["diff_elo_total"] = out["pred_marge"] * ELO_PAR_POINT
-        out["p_brute"] = proba_elo(out["diff_elo_total"])
-        if True:
-            x = np.log(out["p_brute"] / (1 - out["p_brute"])).to_numpy().reshape(-1, 1)
-            out["p_victoire"] = self.cal.predict_proba(x)[:, 1]
-        else:
-            out["p_victoire"] = self.cal.predict(out["p_brute"])
-        # Probabilité que le domicile couvre le spread (loi normale autour de la marge prédite)
-        out["p_couvre"] = [np.nan if pd.isna(s) else 1 - phi((s - m) / self.sigma)
-                           for m, s in zip(out["pred_marge"], out["spread_line"])]
-        out["pred_total"] = self.reg_total.predict(df[FEATURES_TOTAL])
-        out["p_over"] = [np.nan if pd.isna(l) else 1 - phi((l - t) / self.sigma_total)
-                         for t, l in zip(out["pred_total"], out["total_line"])]
-        p_d = out["ml_dom"].apply(proba_moneyline)
-        p_e = out["ml_ext"].apply(proba_moneyline)
-        out["p_book"] = p_d / (p_d + p_e)              # proba bookmaker sans marge
-        return out
-
-
 # =============================================================================
 # 7. BACKTEST WALK-FORWARD
 # =============================================================================
@@ -558,6 +581,7 @@ def metriques(t):
     return {
         "Matchs": len(t),
         "MAE modèle": np.mean(np.abs(t["marge"] - t["pred_marge"])),
+        "MAE modèle seul": np.mean(np.abs(t["marge"] - t["marge_modele"])),
         "MAE book": np.mean(np.abs(t["marge"] - t["spread_line"])),
         "Brier brut": np.mean((t["p_brute"] - issue) ** 2),
         "Brier calibré": np.mean((t["p_victoire"] - issue) ** 2),
@@ -573,7 +597,7 @@ def metriques(t):
 
 def _mise_en_forme(tab):
     tab = tab.copy()
-    for c in ("MAE modèle", "MAE book"):
+    for c in ("MAE modèle", "MAE modèle seul", "MAE book"):
         tab[c] = tab[c].astype(float).round(2)
     for c in ("Brier brut", "Brier calibré", "Brier book"):
         tab[c] = tab[c].astype(float).round(4)
@@ -591,7 +615,7 @@ def backtest(df):
         train = df[(df["season"] < s_) & df["marge"].notna()]
         test = df[(df["season"] == s_) & df["marge"].notna()]
         res_new.append(ModeleElo().fit(train).predict(test))
-        res_old.append(ModeleEloAvant().fit(train).predict(test))
+        res_old.append(ModeleElo(FEATURES_V4).fit(train).predict(test))
     tout, ancien = pd.concat(res_new), pd.concat(res_old)
 
     lignes = {str(s_): metriques(tout[tout["season"] == s_]) for s_ in SAISONS_BACKTEST}
@@ -601,18 +625,18 @@ def backtest(df):
 
     s25 = SAISON_TEST_PRINCIPALE
     comp = _mise_en_forme(pd.DataFrame({
-        f"{s25} avant": metriques(ancien[ancien["season"] == s25]),
-        f"{s25} après": metriques(tout[tout["season"] == s25]),
-        "2022-25 avant": metriques(ancien),
-        "2022-25 après": metriques(tout),
+        f"{s25} v4 (avant)": metriques(ancien[ancien["season"] == s25]),
+        f"{s25} v5 (nouv. features)": metriques(tout[tout["season"] == s25]),
+        "2022-25 v4": metriques(ancien),
+        "2022-25 v5": metriques(tout),
     }).T)
 
     print("\n" + "=" * 110)
-    print("BACKTEST WALK-FORWARD — modèle calibré (isotonic + écart vs spread + plafond)")
+    print("BACKTEST WALK-FORWARD — v5 (calibration isotonic + écart vs spread + plafond)")
     print("=" * 110)
     print(tab.to_string())
     print("\n" + "=" * 110)
-    print("COMPARAISON AVANT / APRÈS")
+    print("COMPARAISON v4 (avec domicile) / v5 (turnover, red zone, 3rd down, sans domicile)")
     print("=" * 110)
     print(comp.to_string())
     t25 = tout[tout["season"] == s25].copy()
@@ -1093,7 +1117,7 @@ def generer_html(p, modele, semaine, courante, df, tout, tab, comp=None, fichier
 <div class="full"><img alt="Elo" src="data:image/png;base64,{img_elo}"></div>
 <h2>Backtest {SAISONS_BACKTEST[0]}–{SAISONS_BACKTEST[-1]}</h2>
 {tableau_backtest(tab)}
-{('<h2>Avant / après calibration</h2>' + tableau_backtest(comp)) if comp is not None else ''}
+{('<h2>v4 / v5</h2>' + tableau_backtest(comp)) if comp is not None else ''}
 <div class="graph full">
  <img alt="Calibration" src="data:image/png;base64,{img_cal}">
  <img alt="Marges" src="data:image/png;base64,{img_marge}">
@@ -1130,7 +1154,7 @@ def predire_semaine(df, courante):
     # Poids et calibration appris sur les saisons passées, appliqués à la saison courante
     modele = ModeleElo().fit(df[(df["season"] < courante) & df["marge"].notna()])
     p = modele.predict(prochains)
-    print("\n  Poids appris :", ", ".join(f"{f}={c:.2f}" for f, c in zip(FEATURES, modele.reg.coef_)))
+    print("\n  Poids appris :", ", ".join(f"{f}={c:.2f}" for f, c in zip(modele.features, modele.reg.coef_)))
     tab = pd.DataFrame({
         "Match": p["dom"] + " vs " + p["ext"],
         "Elo dom": p["elo_dom"].round(0).astype(int),
