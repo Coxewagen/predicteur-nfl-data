@@ -47,8 +47,9 @@ from sklearn.linear_model import LinearRegression, LogisticRegression
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
-SAISON_DEBUT = 2016                  # première saison utilisée pour l'apprentissage
+SAISON_DEBUT = 2015                  # première saison utilisée (train 2015-2024 pour tester 2025)
 SAISONS_BACKTEST = [2022, 2023, 2024, 2025]   # 4 saisons complètes testées en walk-forward
+SAISON_TEST_PRINCIPALE = 2025                  # saison de référence pour la comparaison avant / après
 
 # --- Elo ---
 ELO_PAR_POINT = 25                   # 25 points d'Elo = 1 point de marge (convention 538)
@@ -68,7 +69,9 @@ STATUTS_BLESSURE_ABSENT = {"Out", "Doubtful"}
 STATUTS_ROSTER_ABSENT = {"RES"}      # réserve / IR
 
 # --- Calibration ---
-CALIBRATION = "platt"                # "isotonic" ou "platt" (modifiable par: python nfl_elo_v3.py platt)
+CALIBRATION = "isotonic"             # calibration du modèle actuel (l'ancien modèle reste en Platt)
+PROBA_MIN, PROBA_MAX = 0.30, 0.75    # plafond de confiance sur la proba de victoire du domicile
+SEUIL_CONFIANCE_2 = 0.60             # second seuil pour le % ATS
 SEUIL_CONFIANCE = 0.55               # pour le % ATS "quand P >= 55 %"
 
 # Corrections manuelles des absences de la prochaine semaine (fichier facultatif) :
@@ -412,6 +415,90 @@ def construire_features(matchs, eq, joueurs, absents, semaines_rapport):
 # 6. MODÈLE : poids des composantes + calibration (appris sur le passé uniquement)
 # =============================================================================
 class ModeleElo:
+    """
+    Modèle v4 :
+      1. marge "modèle" = combinaison des composantes Elo/EPA/points/blessures
+      2. feature écart = marge modèle - spread du book ; marge finale = f(marge modèle, écart)
+      3. marge -> diff Elo -> proba brute -> calibration isotonic (apprise hors échantillon)
+      4. proba de victoire plafonnée dans [PROBA_MIN, PROBA_MAX]
+      5. proba de couvrir le spread calibrée elle aussi (isotonic)
+    """
+
+    @staticmethod
+    def _x2(m1, spread):
+        spread = np.asarray(spread, dtype=float)
+        ecart = np.where(np.isnan(spread), 0.0, np.asarray(m1) - spread)   # pas de spread -> écart nul
+        return np.column_stack([m1, ecart])
+
+    def fit(self, train):
+        train = train.reset_index(drop=True)
+        # 1) Marge modèle hors échantillon : chaque saison prédite par un modèle appris sans elle
+        m1_oof = np.full(len(train), np.nan)
+        for s_ in train["season"].unique():
+            m = (train["season"] == s_).to_numpy()
+            if m.all():
+                continue
+            r = LinearRegression(positive=True).fit(train.loc[~m, FEATURES], train.loc[~m, "marge"])
+            m1_oof[m] = r.predict(train.loc[m, FEATURES])
+        self.reg = LinearRegression(positive=True).fit(train[FEATURES], train["marge"])
+        m1_oof = np.where(np.isnan(m1_oof), self.reg.predict(train[FEATURES]), m1_oof)
+
+        # 2) Marge finale avec l'écart vs spread : le modèle apprend quand sa divergence est fiable
+        x2 = self._x2(m1_oof, train["spread_line"])
+        self.reg2 = LinearRegression().fit(x2, train["marge"])
+        m2 = self.reg2.predict(x2)
+        self.sigma = float(np.std(train["marge"] - m2, ddof=1))
+
+        # 3) Calibration isotonic de la proba de victoire
+        p_brute = proba_elo(m2 * ELO_PAR_POINT)
+        ok = (train["marge"] != 0).to_numpy()
+        self.cal = IsotonicRegression(out_of_bounds="clip", y_min=0.01, y_max=0.99)
+        self.cal.fit(p_brute[ok], (train["marge"] > 0).to_numpy()[ok].astype(int))
+
+        # 4) Calibration isotonic de la proba de couvrir le spread
+        sp = train["spread_line"].to_numpy(dtype=float)
+        okc = ~np.isnan(sp) & (train["marge"].to_numpy() != sp)
+        pc_brut = 1 - np.array([phi(x) for x in (sp[okc] - m2[okc]) / self.sigma])
+        self.cal_couvre = IsotonicRegression(out_of_bounds="clip", y_min=0.01, y_max=0.99)
+        self.cal_couvre.fit(pc_brut, (train["marge"].to_numpy()[okc] > sp[okc]).astype(int))
+
+        # Modèle du total (inchangé)
+        tr = train[train["total"].notna()]
+        self.reg_total = LinearRegression().fit(tr[FEATURES_TOTAL], tr["total"])
+        self.sigma_total = float(np.std(tr["total"] - self.reg_total.predict(tr[FEATURES_TOTAL]), ddof=1))
+        return self
+
+    def predict(self, df):
+        out = df.copy()
+        m1 = self.reg.predict(df[FEATURES])
+        out["marge_modele"] = m1
+        out["ecart_spread"] = m1 - df["spread_line"]
+        out["pred_marge"] = self.reg2.predict(self._x2(m1, df["spread_line"]))
+        out["diff_elo_total"] = out["pred_marge"] * ELO_PAR_POINT
+        out["p_brute"] = proba_elo(out["diff_elo_total"])
+        out["p_victoire"] = np.clip(self.cal.predict(out["p_brute"]), PROBA_MIN, PROBA_MAX)
+        pc_brut = [np.nan if pd.isna(sp) else 1 - phi((sp - m) / self.sigma)
+                   for m, sp in zip(out["pred_marge"], out["spread_line"])]
+        out["p_couvre_brute"] = pc_brut
+        out["p_couvre"] = [np.nan if pd.isna(x) else float(self.cal_couvre.predict([x])[0]) for x in pc_brut]
+        out["pred_total"] = self.reg_total.predict(df[FEATURES_TOTAL])
+        out["p_over"] = [np.nan if pd.isna(l) else 1 - phi((l - t) / self.sigma_total)
+                         for t, l in zip(out["pred_total"], out["total_line"])]
+        p_d = out["ml_dom"].apply(proba_moneyline)
+        p_e = out["ml_ext"].apply(proba_moneyline)
+        out["p_book"] = p_d / (p_d + p_e)
+        return out
+
+    def params_js(self):
+        """Paramètres pour recalculer dans la page quand on modifie le spread."""
+        return {"c0": float(self.reg2.intercept_), "a": float(self.reg2.coef_[0]), "b": float(self.reg2.coef_[1]),
+                "sigma": self.sigma, "elo_pt": ELO_PAR_POINT, "pmin": PROBA_MIN, "pmax": PROBA_MAX,
+                "calw": [list(map(float, self.cal.X_thresholds_)), list(map(float, self.cal.y_thresholds_))],
+                "calc": [list(map(float, self.cal_couvre.X_thresholds_)), list(map(float, self.cal_couvre.y_thresholds_))]}
+
+
+class ModeleEloAvant:
+    """Ancien modèle (v3) : Platt, sans écart vs spread, sans plafond — gardé pour comparaison."""
     def fit(self, train):
         """Apprend les poids (positifs) des composantes, l'écart-type et la calibration."""
         self.reg = LinearRegression(positive=True).fit(train[FEATURES], train["marge"])
@@ -424,7 +511,7 @@ class ModeleElo:
         self.sigma_total = float(np.std(tr["total"] - self.reg_total.predict(tr[FEATURES_TOTAL]), ddof=1))
         y = (train["marge"] > 0).astype(int)
         ok = train["marge"] != 0                       # on retire les nuls
-        if CALIBRATION == "platt":
+        if True:
             x = np.log(p_brute / (1 - p_brute)).reshape(-1, 1)
             self.cal = LogisticRegression().fit(x[ok], y[ok])
         else:
@@ -437,7 +524,7 @@ class ModeleElo:
         out["pred_marge"] = self.reg.predict(df[FEATURES])
         out["diff_elo_total"] = out["pred_marge"] * ELO_PAR_POINT
         out["p_brute"] = proba_elo(out["diff_elo_total"])
-        if CALIBRATION == "platt":
+        if True:
             x = np.log(out["p_brute"] / (1 - out["p_brute"])).to_numpy().reshape(-1, 1)
             out["p_victoire"] = self.cal.predict_proba(x)[:, 1]
         else:
@@ -460,10 +547,11 @@ class ModeleElo:
 def metriques(t):
     issue = np.where(t["marge"] > 0, 1.0, np.where(t["marge"] < 0, 0.0, 0.5))
     a = t[t["spread_line"].notna() & (t["marge"] != t["spread_line"])]
-    pick_dom = a["pred_marge"] > a["spread_line"]
+    pick_dom = a["p_couvre"] >= 0.5                                   # côté que le modèle préfère
     gagne = pick_dom == (a["marge"] > a["spread_line"])
     p_cote = np.where(pick_dom, a["p_couvre"], 1 - a["p_couvre"])   # proba du côté choisi
     conf = p_cote >= SEUIL_CONFIANCE
+    conf2 = p_cote >= SEUIL_CONFIANCE_2
     ok_b = t["p_book"].notna()
     o = t[t["total_line"].notna() & (t["total"] != t["total_line"])]
     ou = np.mean((o["pred_total"] > o["total_line"]) == (o["total"] > o["total_line"]))
@@ -477,38 +565,70 @@ def metriques(t):
         "% ATS": gagne.mean(),
         "Paris P≥55%": int(conf.sum()),
         "% ATS P≥55%": gagne[conf].mean() if conf.any() else np.nan,
+        "Paris P≥60%": int(conf2.sum()),
+        "% ATS P≥60%": gagne[conf2].mean() if conf2.any() else np.nan,
         "% O/U": ou,
     }
 
 
-def backtest(df):
-    resultats = []
-    for s in SAISONS_BACKTEST:
-        train = df[(df["season"] < s) & df["marge"].notna()]
-        test = df[(df["season"] == s) & df["marge"].notna()]
-        modele = ModeleElo().fit(train)
-        resultats.append(modele.predict(test))
-    tout = pd.concat(resultats)
-
-    lignes = {str(s): metriques(tout[tout["season"] == s]) for s in SAISONS_BACKTEST}
-    lignes["TOTAL"] = metriques(tout)
-    lignes["TOTAL sem. ≥ 4"] = metriques(tout[tout["week"] >= 4])
-    tab = pd.DataFrame(lignes).T
+def _mise_en_forme(tab):
+    tab = tab.copy()
     for c in ("MAE modèle", "MAE book"):
         tab[c] = tab[c].astype(float).round(2)
     for c in ("Brier brut", "Brier calibré", "Brier book"):
         tab[c] = tab[c].astype(float).round(4)
-    for c in ("% ATS", "% ATS P≥55%", "% O/U"):
-        tab[c] = tab[c].astype(float).map(lambda x: f"{x:.1%}")
-    tab["Matchs"] = tab["Matchs"].astype(int)
-    tab["Paris P≥55%"] = tab["Paris P≥55%"].astype(int)
+    for c in ("% ATS", "% ATS P≥55%", "% ATS P≥60%", "% O/U"):
+        tab[c] = tab[c].astype(float).map(lambda x: "" if pd.isna(x) else f"{x:.1%}")
+    for c in ("Matchs", "Paris P≥55%", "Paris P≥60%"):
+        tab[c] = tab[c].astype(int)
+    return tab
 
-    print("\n" + "=" * 100)
-    print(f"BACKTEST WALK-FORWARD (chaque saison testée avec un modèle appris sur les saisons d'avant)")
-    print("=" * 100)
+
+def backtest(df):
+    """Walk-forward : chaque saison testée avec un modèle appris sur les saisons d'avant (2025 -> 2015-2024)."""
+    res_new, res_old = [], []
+    for s_ in SAISONS_BACKTEST:
+        train = df[(df["season"] < s_) & df["marge"].notna()]
+        test = df[(df["season"] == s_) & df["marge"].notna()]
+        res_new.append(ModeleElo().fit(train).predict(test))
+        res_old.append(ModeleEloAvant().fit(train).predict(test))
+    tout, ancien = pd.concat(res_new), pd.concat(res_old)
+
+    lignes = {str(s_): metriques(tout[tout["season"] == s_]) for s_ in SAISONS_BACKTEST}
+    lignes["TOTAL"] = metriques(tout)
+    lignes["TOTAL sem. ≥ 4"] = metriques(tout[tout["week"] >= 4])
+    tab = _mise_en_forme(pd.DataFrame(lignes).T)
+
+    s25 = SAISON_TEST_PRINCIPALE
+    comp = _mise_en_forme(pd.DataFrame({
+        f"{s25} avant": metriques(ancien[ancien["season"] == s25]),
+        f"{s25} après": metriques(tout[tout["season"] == s25]),
+        "2022-25 avant": metriques(ancien),
+        "2022-25 après": metriques(tout),
+    }).T)
+
+    print("\n" + "=" * 110)
+    print("BACKTEST WALK-FORWARD — modèle calibré (isotonic + écart vs spread + plafond)")
+    print("=" * 110)
     print(tab.to_string())
+    print("\n" + "=" * 110)
+    print("COMPARAISON AVANT / APRÈS")
+    print("=" * 110)
+    print(comp.to_string())
+    t25 = tout[tout["season"] == s25].copy()
+    a = t25[t25["spread_line"].notna() & (t25["marge"] != t25["spread_line"])]
+    p_cote = np.maximum(a["p_couvre"], 1 - a["p_couvre"])
+    r60 = ((a["p_couvre"] >= 0.5) == (a["marge"] > a["spread_line"]))[p_cote >= 0.60]
+    verdict = "EXPLOITABLE" if len(r60) and r60.mean() > 0.55 else "PAS EXPLOITABLE"
+    print(f"\n  % ATS {s25} quand P ≥ 60 % : {r60.mean():.1%} sur {len(r60)} paris -> {verdict} (seuil 55 %)")
+    print("  Calibration victoire " + str(s25) + " (proba prédite -> fréquence réelle) :")
+    t = t25[t25["marge"] != 0]
+    for lo, hi in ((0.3, 0.4), (0.4, 0.5), (0.5, 0.6), (0.6, 0.7), (0.7, 0.76)):
+        m = (t["p_victoire"] >= lo) & (t["p_victoire"] < hi)
+        if m.sum():
+            print(f"    {lo:.0%}-{min(hi,0.75):.0%} : prédit {t['p_victoire'][m].mean():.1%} / réel {(t['marge'][m] > 0).mean():.1%} ({m.sum()} matchs)")
     print("  Seuil de rentabilité ATS à -110 : 52,4 %")
-    return tout, tab
+    return tout, tab, comp
 
 
 def ml_vers_decimale(ml):
@@ -690,11 +810,23 @@ function barre(p){const c=p>0.55?'vert':(p>=0.5?'orange':'rouge');
  return '<div class="barre"><span class="'+c+'" style="width:'+(p*100).toFixed(1)+'%"></span><b>'+pc(p)+'</b></div>'}
 function verdict(ok){return '<span class="verdict '+(ok?'jouer':'passer')+'">'+(ok?'✅ JOUER':'❌ PASSER')+'</span>'}
 function val(i,cl){return parseFloat(document.querySelector('#c'+i+' .'+cl).value.replace(',','.'))}
+const P=JSON.parse(document.getElementById('params').textContent);
+function interp(x,c){const X=c[0],Y=c[1];if(x<=X[0])return Y[0];if(x>=X[X.length-1])return Y[Y.length-1];
+ let k=1;while(X[k]<x)k++;const t=(x-X[k-1])/((X[k]-X[k-1])||1);return Y[k-1]+t*(Y[k]-Y[k-1])}
+// Recalcule tout depuis le handicap saisi : écart vs spread -> marge finale -> probas calibrées
+function etat(m,i){
+ const h=val(i,'in-hand'), sp=isNaN(h)?NaN:-h, ec=isNaN(sp)?0:m.m1-sp;
+ const marge=P.c0+P.a*m.m1+P.b*ec;
+ const pb=1/(1+Math.pow(10,-marge*P.elo_pt/400));
+ const pvic=Math.min(P.pmax,Math.max(P.pmin,interp(pb,P.calw)));
+ const pcouv=isNaN(sp)?NaN:interp(1-phi((sp-marge)/P.sigma),P.calc);
+ return {marge:marge,pvic:pvic,pcouv:pcouv};
+}
 
 function analyse(m,i){
  const r={i:i,paris:[]};
  // Vainqueur (moneyline)
- const cd=val(i,'in-cd'), ce=val(i,'in-ce'), pd=m.pvic;
+ const E=etat(m,i), cd=val(i,'in-cd'), ce=val(i,'in-ce'), pd=E.pvic;
  const fav=pd>=0.5?m.dom:m.ext, pf=Math.max(pd,1-pd);
  r.vain={fav:fav,p:pf};
  if(!isNaN(cd)&&!isNaN(ce)){
@@ -707,7 +839,7 @@ function analyse(m,i){
  // Handicap : saisi comme le handicap de l'équipe à domicile (ex. -2.5 = domicile favori de 2,5)
  const h=val(i,'in-hand');
  if(!isNaN(h)){
-   const pdom=1-phi((-h-m.marge)/m.sigma);           // domicile gagne de plus que -h
+   const pdom=E.pcouv;                                // proba calibrée que le domicile couvre
    const dom=pdom>=0.5, p=dom?pdom:1-pdom, hh=dom?h:-h;
    const ta=tranche('hand',p); r.ats={eq:dom?m.dom:m.ext, hand:hh, p:p, t:ta, ok:!!(ta&&ta.ok)};
    if(r.ats.ok) r.paris.push({quoi:r.ats.eq+' '+sg(hh), type:'Handicap', p:p,
@@ -745,24 +877,28 @@ function tout(){
  z.innerHTML=liste.map((p,k)=>'<div class="pari"><div class="rang">'+(k+1)+'</div><div><div class="quoi">'+p.quoi
    +'</div><div class="type">'+p.type+'</div></div><div class="chiffres">'+pc(p.p)+'<br>'+p.detail+'</div></div>').join('');
 }
-// --- Sélections moneyline >= 60 % ---
+// --- Sélections moneyline >= 60 % (après calibration) ---
 const H60=JSON.parse(document.getElementById('histo60').textContent);
+function ev60(tr){const p=+tr.dataset.p, c=parseFloat(tr.querySelector('input').value.replace(',','.'));
+ const td=tr.querySelector('.ev');if(isNaN(c)){td.innerHTML='';return}const ev=p*c-1;
+ td.innerHTML='<span class="'+(ev>0?'bon':'mauvais')+'">'+sg((ev*100).toFixed(1))+' %</span>'}
 function ml60(){
  const L=[];
- M.forEach((m,i)=>{const dom=m.pvic>=0.5, p=dom?m.pvic:1-m.pvic; if(p<%SEL%)return;
-   const c=val(i,dom?'in-cd':'in-ce'); L.push({eq:dom?m.dom:m.ext, adv:dom?m.ext:m.dom, p:p, c:c, ev:isNaN(c)?NaN:p*c-1})});
+ M.forEach((m,i)=>{const E=etat(m,i), dom=E.pvic>=0.5, p=dom?E.pvic:1-E.pvic; if(p<%SEL%)return;
+   L.push({i:i, cl:dom?'in-cd':'in-ce', eq:dom?m.dom:m.ext, adv:dom?m.ext:m.dom, p:p, c:val(i,dom?'in-cd':'in-ce')})});
  L.sort((a,b)=>b.p-a.p);
  const z=document.getElementById('ml60');
- if(!L.length){z.innerHTML='<div class="aucun">Aucune sélection ≥ 60 %</div>';return}
- z.innerHTML='<div id="paris-ml" style="display:grid;gap:12px">'+L.map((x,k)=>'<div class="pari sel"><div class="rang">'+(k+1)+'</div><div><div class="quoi">'+x.eq
-   +' gagne</div><div class="type">contre '+x.adv+'</div></div><div class="chiffres">'+pc(x.p)+'<br>'
-   +(isNaN(x.c)?'':'cote '+String(x.c).replace('.',',')+' · EV <span class="'+(x.ev>0?'bon':'mauvais')+'">'+sg((x.ev*100).toFixed(1))+' %</span>')
-   +'</div></div>').join('')+'</div>';
+ if(!L.length){z.innerHTML='<div class="aucun">Aucune sélection cette semaine</div>';return}
+ z.innerHTML='<div class="tab"><table><thead><tr><th>Équipe</th><th>Adversaire</th><th>Proba calibrée</th><th>Cote book</th><th>EV</th></tr></thead><tbody>'
+  +L.map(x=>'<tr data-i="'+x.i+'" data-cl="'+x.cl+'" data-p="'+x.p+'"><td class="match">'+x.eq+'</td><td>'+x.adv+'</td><td style="min-width:150px">'+barre(x.p)
+  +'</td><td><input type="number" step="0.01" value="'+(isNaN(x.c)?'':x.c)+'"></td><td class="ev num"></td></tr>').join('')+'</tbody></table></div>';
+ z.querySelectorAll('tbody tr').forEach(tr=>{ev60(tr);tr.querySelector('input').addEventListener('input',()=>{
+   document.querySelector('#c'+tr.dataset.i+' .'+tr.dataset.cl).value=tr.querySelector('input').value; ev60(tr); tout()})});
 }
 function majTout(){tout();ml60()}
 document.querySelectorAll('#cartes input').forEach(x=>x.addEventListener('input',majTout));
-ml60();
 tout();
+ml60();
 """.replace("%SEUIL%", str(SEUIL_PARI)).replace("%SEL%", "0.60").replace("%SEUIL_EV%", str(SEUIL_EV_ML)).replace(
     "%RENTA%", str(SEUIL_RENTABILITE))
 
@@ -877,7 +1013,7 @@ def cartes_semaine(p, modele):
     donnees, cartes = [], []
     for i, r in enumerate(p.itertuples(index=False)):
         cd, ce = ml_vers_decimale(r.ml_dom), ml_vers_decimale(r.ml_ext)
-        donnees.append({"dom": r.dom, "ext": r.ext, "marge": round(r.pred_marge, 3),
+        donnees.append({"dom": r.dom, "ext": r.ext, "marge": round(r.pred_marge, 3), "m1": round(r.marge_modele, 4),
                         "sigma": round(modele.sigma, 3), "total": round(r.pred_total, 3),
                         "sigmat": round(modele.sigma_total, 3), "pvic": round(r.p_victoire, 4)})
         hand = "" if pd.isna(r.spread_line) else fmt(-r.spread_line)   # handicap du domicile
@@ -895,7 +1031,9 @@ def cartes_semaine(p, modele):
  {f'<div class="blesse">{blessures}</div>' if blessures else ''}
 </div>""")
     json_txt = json.dumps(donnees, ensure_ascii=False).replace("</", "<\\/")
-    return (f'<script type="application/json" id="donnees">{json_txt}</script>'
+    params = json.dumps(modele.params_js()).replace("</", "<\\/")
+    return (f'<script type="application/json" id="params">{params}</script>'
+            f'<script type="application/json" id="donnees">{json_txt}</script>'
             f'<div id="cartes">{"".join(cartes)}</div>')
 
 
@@ -931,7 +1069,7 @@ def bandeau_blessures(semaine):
     return f'<div style="background:{coul};border-radius:10px;padding:10px 14px;font-weight:700;margin-bottom:8px">{txt}</div>'
 
 
-def generer_html(p, modele, semaine, courante, df, tout, tab, fichier=FICHIER_HTML):
+def generer_html(p, modele, semaine, courante, df, tout, tab, comp=None, fichier=FICHIER_HTML):
     """Construit le dashboard autonome (CSS + images base64 + JS inline) et l'ouvre."""
     print("5) Génération du dashboard HTML…")
     img_cal = graphique_calibration(tout)
@@ -940,8 +1078,8 @@ def generer_html(p, modele, semaine, courante, df, tout, tab, fichier=FICHIER_HT
     titre = f"NFL {courante} — Semaine {semaine}" if semaine else f"NFL {courante}"
     hist = historique_paris(tout)
     h60 = historique_ml60(tout)
-    section_semaine = (f"<h2>Paris de la semaine</h2>{bloc_paris(hist)}"
-                       f"<h2>Sélections moneyline ≥ 60 %</h2>{bloc_ml60(h60)}"
+    section_semaine = (f"<h2>Sélections moneyline ≥ 60 %</h2>{bloc_ml60(h60)}"
+                       f"<h2>Paris de la semaine</h2>{bloc_paris(hist)}"
                        f"<h2>Tous les matchs</h2>{cartes_semaine(p, modele)}") if p is not None else ""
     page = f"""<!DOCTYPE html>
 <html lang="fr"><head><meta charset="utf-8">
@@ -955,6 +1093,7 @@ def generer_html(p, modele, semaine, courante, df, tout, tab, fichier=FICHIER_HT
 <div class="full"><img alt="Elo" src="data:image/png;base64,{img_elo}"></div>
 <h2>Backtest {SAISONS_BACKTEST[0]}–{SAISONS_BACKTEST[-1]}</h2>
 {tableau_backtest(tab)}
+{('<h2>Avant / après calibration</h2>' + tableau_backtest(comp)) if comp is not None else ''}
 <div class="graph full">
  <img alt="Calibration" src="data:image/png;base64,{img_cal}">
  <img alt="Marges" src="data:image/png;base64,{img_marge}">
@@ -1055,10 +1194,10 @@ def main():
     print("3) Calcul semaine par semaine (Elo, EPA, blessures)…")
     df = construire_features(matchs, eq, joueurs, absents, semaines_rapport)
     print("4) Backtest…")
-    tout, tab = backtest(df)
+    tout, tab, comp = backtest(df)
     tout.to_csv("backtest_elo.csv", index=False)
     p, modele, semaine = predire_semaine(df, courante)
-    generer_html(p, modele, semaine, courante, df, tout, tab)
+    generer_html(p, modele, semaine, courante, df, tout, tab, comp)
 
 
 if __name__ == "__main__":
