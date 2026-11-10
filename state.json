@@ -511,7 +511,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Jauan Jennings, mollet)",
+     "pos": "receveur titulaire (Jauan Jennings, mollet, rapport précédent)",
      "lane": "pass",
      "gp": 6
     },
@@ -531,25 +531,11 @@
    "qbTier": "titulaire",
    "qbGp": 6,
    "qbName": "Kyler Murray",
-   "qbWhy": "ischio-jambiers",
+   "qbWhy": "ischio-jambiers, rapport précédent",
    "qbReplacementTier": "standard",
    "qbReplacementName": "Carson Wentz",
-   "qbReplacementStarts": 100,
-   "watch": [
-    {
-     "name": "Christian Darrisaw",
-     "pos": "ailier gauche",
-     "etat": "absent à l’entraînement",
-     "why": "épaule"
-    },
-    {
-     "name": "Theo Jackson",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "quadriceps"
-    }
-   ],
-   "injReport": "final",
+   "qbReplacementStarts": 101,
+   "injReport": "provisoire",
    "injWeek": 9
   },
   "New England Patriots": {
@@ -1010,27 +996,7 @@
    "injWeek": 9
   },
   "Buffalo Bills": {
-   "watch": [
-    {
-     "name": "Dion Dawkins",
-     "pos": "ailier gauche",
-     "etat": "incertain pour le match",
-     "why": "rib"
-    },
-    {
-     "name": "DJ Moore",
-     "pos": "receveur",
-     "etat": "entraînement limité",
-     "why": "épaule"
-    },
-    {
-     "name": "Keon Coleman",
-     "pos": "receveur",
-     "etat": "entraînement limité",
-     "why": "épaule"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 9
   },
   "Pittsburgh Steelers": {
@@ -2938,6 +2904,191 @@
    "expAway": 21,
    "computedAt": "2026-11-09T21:56:23Z",
    "spread": -2.01,
+   "frozen": true,
+   "homeScore": 6,
+   "awayScore": 23,
+   "correct": true
+  },
+  "2026_10_WAS_NYG": {
+   "week": 10,
+   "home": "New York Giants",
+   "away": "Washington Commanders",
+   "kickoff": "2026-11-13T01:15:00Z",
+   "pHome": 0.5763,
+   "pAway": 0.4197,
+   "expHome": 24,
+   "expAway": 21,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": 2.54,
+   "frozen": false
+  },
+  "2026_10_NE_DET": {
+   "week": 10,
+   "home": "Detroit Lions",
+   "away": "New England Patriots",
+   "kickoff": "2026-11-15T14:30:00Z",
+   "pHome": 0.5311,
+   "pAway": 0.4649,
+   "expHome": 26,
+   "expAway": 25,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": 1.07,
+   "frozen": false
+  },
+  "2026_10_KC_ATL": {
+   "week": 10,
+   "home": "Atlanta Falcons",
+   "away": "Kansas City Chiefs",
+   "kickoff": "2026-11-15T18:00:00Z",
+   "pHome": 0.3541,
+   "pAway": 0.6419,
+   "expHome": 20,
+   "expAway": 25,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": -4.75,
+   "frozen": false
+  },
+  "2026_10_HOU_CLE": {
+   "week": 10,
+   "home": "Cleveland Browns",
+   "away": "Houston Texans",
+   "kickoff": "2026-11-15T18:00:00Z",
+   "pHome": 0.3463,
+   "pAway": 0.6497,
+   "expHome": 21,
+   "expAway": 26,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": -5.01,
+   "frozen": false
+  },
+  "2026_10_MIN_GB": {
+   "week": 10,
+   "home": "Green Bay Packers",
+   "away": "Minnesota Vikings",
+   "kickoff": "2026-11-15T18:00:00Z",
+   "pHome": 0.5685,
+   "pAway": 0.4275,
+   "expHome": 17,
+   "expAway": 15,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": 2.28,
+   "frozen": false
+  },
+  "2026_10_MIA_IND": {
+   "week": 10,
+   "home": "Indianapolis Colts",
+   "away": "Miami Dolphins",
+   "kickoff": "2026-11-15T18:00:00Z",
+   "pHome": 0.6056,
+   "pAway": 0.3904,
+   "expHome": 24,
+   "expAway": 21,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": 3.51,
+   "frozen": false
+  },
+  "2026_10_CAR_NO": {
+   "week": 10,
+   "home": "New Orleans Saints",
+   "away": "Carolina Panthers",
+   "kickoff": "2026-11-15T18:00:00Z",
+   "pHome": 0.6535,
+   "pAway": 0.3425,
+   "expHome": 30,
+   "expAway": 25,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": 5.15,
+   "frozen": false
+  },
+  "2026_10_BUF_NYJ": {
+   "week": 10,
+   "home": "New York Jets",
+   "away": "Buffalo Bills",
+   "kickoff": "2026-11-15T18:00:00Z",
+   "pHome": 0.2348,
+   "pAway": 0.7612,
+   "expHome": 21,
+   "expAway": 30,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": -9.22,
+   "frozen": false
+  },
+  "2026_10_JAX_TEN": {
+   "week": 10,
+   "home": "Tennessee Titans",
+   "away": "Jacksonville Jaguars",
+   "kickoff": "2026-11-15T18:00:00Z",
+   "pHome": 0.2002,
+   "pAway": 0.7958,
+   "expHome": 16,
+   "expAway": 26,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": -10.72,
+   "frozen": false
+  },
+  "2026_10_LA_ARI": {
+   "week": 10,
+   "home": "Arizona Cardinals",
+   "away": "Los Angeles Rams",
+   "kickoff": "2026-11-15T21:05:00Z",
+   "pHome": 0.2986,
+   "pAway": 0.6974,
+   "expHome": 20,
+   "expAway": 27,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": -6.72,
+   "frozen": false
+  },
+  "2026_10_SEA_LV": {
+   "week": 10,
+   "home": "Las Vegas Raiders",
+   "away": "Seattle Seahawks",
+   "kickoff": "2026-11-15T21:05:00Z",
+   "pHome": 0.5451,
+   "pAway": 0.4509,
+   "expHome": 24,
+   "expAway": 22,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": 1.52,
+   "frozen": false
+  },
+  "2026_10_SF_DAL": {
+   "week": 10,
+   "home": "Dallas Cowboys",
+   "away": "San Francisco 49ers",
+   "kickoff": "2026-11-15T21:25:00Z",
+   "pHome": 0.42,
+   "pAway": 0.576,
+   "expHome": 25,
+   "expAway": 28,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": -2.53,
+   "frozen": false
+  },
+  "2026_10_PIT_CIN": {
+   "week": 10,
+   "home": "Cincinnati Bengals",
+   "away": "Pittsburgh Steelers",
+   "kickoff": "2026-11-16T01:20:00Z",
+   "pHome": 0.5921,
+   "pAway": 0.4039,
+   "expHome": 25,
+   "expAway": 22,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": 3.06,
+   "frozen": false
+  },
+  "2026_10_LAC_BAL": {
+   "week": 10,
+   "home": "Baltimore Ravens",
+   "away": "Los Angeles Chargers",
+   "kickoff": "2026-11-17T01:15:00Z",
+   "pHome": 0.5518,
+   "pAway": 0.4442,
+   "expHome": 21,
+   "expAway": 19,
+   "computedAt": "2026-11-10T05:57:13Z",
+   "spread": 1.74,
    "frozen": false
   }
  }
