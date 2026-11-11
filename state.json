@@ -569,62 +569,6 @@
    "injReport": "provisoire",
    "injWeek": 9
   },
-  "New York Giants": {
-   "offAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "coureur titulaire (Cam Skattebo, ischio-jambiers, rapport précédent)",
-     "lane": "rush",
-     "gp": 7
-    },
-    {
-     "tier": "rotation",
-     "pos": "receveur titulaire (Calvin Austin III, IR)",
-     "lane": "pass",
-     "gp": 0
-    },
-    {
-     "tier": "rotation",
-     "pos": "coureur titulaire (Tyrone Tracy Jr., IR)",
-     "lane": "rush",
-     "gp": 7
-    }
-   ],
-   "defAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "défenseur de ligne titulaire (Roy Robertson-Harris, IR)",
-     "gp": 0
-    },
-    {
-     "tier": "titulaire",
-     "pos": "linebacker titulaire (Tremaine Edmunds, IR)",
-     "gp": 6
-    },
-    {
-     "tier": "titulaire",
-     "pos": "edge rusher titulaire (Brian Burns, IR)",
-     "lane": "pass",
-     "gp": 3
-    },
-    {
-     "tier": "rotation",
-     "pos": "edge rusher titulaire (Chauncey Golston, IR)",
-     "lane": "pass",
-     "gp": 4
-    }
-   ],
-   "qbOut": true,
-   "qbTier": "titulaire",
-   "qbGp": 2,
-   "qbName": "Jaxson Dart",
-   "qbWhy": "IR",
-   "qbReplacementTier": "standard",
-   "qbReplacementName": "Jameis Winston",
-   "qbReplacementStarts": 96,
-   "injReport": "provisoire",
-   "injWeek": 9
-  },
   "New York Jets": {
    "defAbsences": [
     {
@@ -859,6 +803,78 @@
      "tier": "rotation",
      "pos": "linebacker titulaire (Leo Chenal, IR)",
      "gp": 3
+    }
+   ],
+   "watch": [
+    {
+     "name": "Lucas Patrick",
+     "pos": "garde gauche",
+     "etat": "absent à l’entraînement",
+     "why": "commotion"
+    }
+   ],
+   "injReport": "provisoire",
+   "injWeek": 9
+  },
+  "New York Giants": {
+   "defAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "défenseur de ligne titulaire (Roy Robertson-Harris, IR)",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
+     "pos": "linebacker titulaire (Tremaine Edmunds, IR)",
+     "gp": 6
+    },
+    {
+     "tier": "titulaire",
+     "pos": "edge rusher titulaire (Brian Burns, IR)",
+     "lane": "pass",
+     "gp": 3
+    },
+    {
+     "tier": "rotation",
+     "pos": "edge rusher titulaire (Chauncey Golston, IR)",
+     "lane": "pass",
+     "gp": 4
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "receveur titulaire (Calvin Austin III, IR)",
+     "lane": "pass",
+     "gp": 0
+    },
+    {
+     "tier": "rotation",
+     "pos": "coureur titulaire (Tyrone Tracy Jr., IR)",
+     "lane": "rush",
+     "gp": 7
+    }
+   ],
+   "qbOut": true,
+   "qbTier": "titulaire",
+   "qbGp": 2,
+   "qbName": "Jaxson Dart",
+   "qbWhy": "IR",
+   "qbReplacementTier": "standard",
+   "qbReplacementName": "Jameis Winston",
+   "qbReplacementStarts": 96,
+   "watch": [
+    {
+     "name": "Abdul Carter",
+     "pos": "edge rusher",
+     "etat": "entraînement limité",
+     "why": "genou"
+    },
+    {
+     "name": "Colton Hood",
+     "pos": "cornerback",
+     "etat": "entraînement limité",
+     "why": "doigt"
     }
    ],
    "injReport": "provisoire",
@@ -2901,12 +2917,12 @@
    "home": "New York Giants",
    "away": "Washington Commanders",
    "kickoff": "2026-11-13T01:15:00Z",
-   "pHome": 0.5763,
-   "pAway": 0.4197,
+   "pHome": 0.5862,
+   "pAway": 0.4098,
    "expHome": 24,
    "expAway": 21,
-   "computedAt": "2026-11-11T04:44:12Z",
-   "spread": 2.54,
+   "computedAt": "2026-11-11T13:34:16Z",
+   "spread": 2.87,
    "frozen": false
   },
   "2026_10_NE_DET": {
@@ -2918,7 +2934,7 @@
    "pAway": 0.4649,
    "expHome": 26,
    "expAway": 25,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": 1.07,
    "frozen": false
   },
@@ -2931,7 +2947,7 @@
    "pAway": 0.6419,
    "expHome": 20,
    "expAway": 25,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": -4.75,
    "frozen": false
   },
@@ -2944,7 +2960,7 @@
    "pAway": 0.6497,
    "expHome": 21,
    "expAway": 26,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": -5.01,
    "frozen": false
   },
@@ -2957,7 +2973,7 @@
    "pAway": 0.4275,
    "expHome": 17,
    "expAway": 15,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": 2.28,
    "frozen": false
   },
@@ -2970,7 +2986,7 @@
    "pAway": 0.3904,
    "expHome": 24,
    "expAway": 21,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": 3.51,
    "frozen": false
   },
@@ -2983,7 +2999,7 @@
    "pAway": 0.3425,
    "expHome": 30,
    "expAway": 25,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": 5.15,
    "frozen": false
   },
@@ -2996,7 +3012,7 @@
    "pAway": 0.7612,
    "expHome": 21,
    "expAway": 30,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": -9.22,
    "frozen": false
   },
@@ -3009,7 +3025,7 @@
    "pAway": 0.8089,
    "expHome": 15,
    "expAway": 27,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": -11.33,
    "frozen": false
   },
@@ -3022,7 +3038,7 @@
    "pAway": 0.6974,
    "expHome": 20,
    "expAway": 27,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": -6.72,
    "frozen": false
   },
@@ -3035,7 +3051,7 @@
    "pAway": 0.4509,
    "expHome": 24,
    "expAway": 22,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": 1.52,
    "frozen": false
   },
@@ -3048,7 +3064,7 @@
    "pAway": 0.576,
    "expHome": 25,
    "expAway": 28,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": -2.53,
    "frozen": false
   },
@@ -3061,7 +3077,7 @@
    "pAway": 0.3898,
    "expHome": 25,
    "expAway": 22,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": 3.53,
    "frozen": false
   },
@@ -3074,7 +3090,7 @@
    "pAway": 0.4385,
    "expHome": 21,
    "expAway": 19,
-   "computedAt": "2026-11-11T04:44:12Z",
+   "computedAt": "2026-11-11T13:34:16Z",
    "spread": 1.93,
    "frozen": false
   }
