@@ -1034,7 +1034,7 @@
     },
     {
      "tier": "titulaire",
-     "pos": "garde gauche titulaire (Lucas Patrick, commotion)",
+     "pos": "garde gauche titulaire (Lucas Patrick, commotion, rapport précédent)",
      "lane": "line",
      "gp": 6
     },
@@ -1062,21 +1062,7 @@
      "gp": 3
     }
    ],
-   "watch": [
-    {
-     "name": "Amik Robertson",
-     "pos": "cornerback",
-     "etat": "entraînement limité",
-     "why": "cheville"
-    },
-    {
-     "name": "Treylon Burks",
-     "pos": "receveur",
-     "etat": "absent à l’entraînement",
-     "why": "pied"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 10
   },
   "Los Angeles Rams": {
@@ -1201,7 +1187,7 @@
    "qbReplacementTier": "standard",
    "qbReplacementName": "Jameis Winston",
    "qbReplacementStarts": 96,
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 10
   },
   "Jacksonville Jaguars": {
@@ -3470,7 +3456,10 @@
    "expAway": 21,
    "computedAt": "2026-11-12T21:43:40Z",
    "spread": 2.87,
-   "frozen": false
+   "frozen": true,
+   "homeScore": 21,
+   "awayScore": 24,
+   "correct": false
   },
   "2026_10_NE_DET": {
    "week": 10,
@@ -3481,7 +3470,7 @@
    "pAway": 0.4539,
    "expHome": 27,
    "expAway": 26,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": 1.43,
    "frozen": false
   },
@@ -3494,7 +3483,7 @@
    "pAway": 0.6514,
    "expHome": 20,
    "expAway": 25,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": -5.07,
    "frozen": false
   },
@@ -3507,7 +3496,7 @@
    "pAway": 0.6497,
    "expHome": 21,
    "expAway": 26,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": -5.01,
    "frozen": false
   },
@@ -3520,7 +3509,7 @@
    "pAway": 0.4275,
    "expHome": 17,
    "expAway": 15,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": 2.28,
    "frozen": false
   },
@@ -3533,7 +3522,7 @@
    "pAway": 0.2784,
    "expHome": 24,
    "expAway": 17,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": 7.48,
    "frozen": false
   },
@@ -3546,7 +3535,7 @@
    "pAway": 0.3569,
    "expHome": 30,
    "expAway": 25,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": 4.65,
    "frozen": false
   },
@@ -3559,7 +3548,7 @@
    "pAway": 0.7612,
    "expHome": 21,
    "expAway": 30,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": -9.22,
    "frozen": false
   },
@@ -3572,7 +3561,7 @@
    "pAway": 0.8089,
    "expHome": 15,
    "expAway": 27,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": -11.33,
    "frozen": false
   },
@@ -3585,7 +3574,7 @@
    "pAway": 0.7207,
    "expHome": 19,
    "expAway": 26,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": -7.6,
    "frozen": false
   },
@@ -3598,7 +3587,7 @@
    "pAway": 0.4639,
    "expHome": 24,
    "expAway": 23,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": 1.1,
    "frozen": false
   },
@@ -3611,7 +3600,7 @@
    "pAway": 0.576,
    "expHome": 25,
    "expAway": 28,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": -2.53,
    "frozen": false
   },
@@ -3624,7 +3613,7 @@
    "pAway": 0.3898,
    "expHome": 25,
    "expAway": 22,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": 3.53,
    "frozen": false
   },
@@ -3637,7 +3626,7 @@
    "pAway": 0.4385,
    "expHome": 21,
    "expAway": 19,
-   "computedAt": "2026-11-12T21:43:40Z",
+   "computedAt": "2026-11-13T05:05:52Z",
    "spread": 1.93,
    "frozen": false
   }
