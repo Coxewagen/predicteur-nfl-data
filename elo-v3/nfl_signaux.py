@@ -364,20 +364,38 @@ def statut_equipes(joues_reg, calendrier_reg):
 _cache_meteo = {}
 
 
+def precharger_meteo(equipes):
+    """Une seule requête Open-Meteo pour tous les stades (plusieurs coordonnées), avec 3 tentatives."""
+    equipes = [t for t in sorted(set(equipes)) if t in STADES and t not in _cache_meteo]
+    if not equipes:
+        return
+    lat = ",".join(str(STADES[t][0]) for t in equipes)
+    lon = ",".join(str(STADES[t][1]) for t in equipes)
+    url = URL_METEO.format(lat=lat, lon=lon)
+    for essai in range(3):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=90) as r:
+                d = json.loads(r.read())
+            d = d if isinstance(d, list) else [d]
+            for t, x in zip(equipes, d):
+                _cache_meteo[t] = dict(zip(x["hourly"]["time"], x["hourly"]["wind_speed_10m"]))
+            print(f"  météo : prévisions récupérées pour {len(equipes)} stades")
+            return
+        except Exception as e:
+            print(f"  ⚠ météo, essai {essai + 1}/3 : {e}")
+            time.sleep(5 * (essai + 1))
+    for t in equipes:
+        _cache_meteo[t] = {}
+    print("  ⚠ météo indisponible : pas de signal vent pour les matchs à venir")
+
+
 def vent_prevu(equipe, jour, heure):
     """Vent prévu (km/h) au stade de l'équipe à domicile, à l'heure du coup d'envoi (heure de New York)."""
     if equipe not in STADES:
         return np.nan
     if equipe not in _cache_meteo:
-        lat, lon = STADES[equipe]
-        try:
-            req = urllib.request.Request(URL_METEO.format(lat=lat, lon=lon), headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=30) as r:
-                d = json.loads(r.read())["hourly"]
-            _cache_meteo[equipe] = dict(zip(d["time"], d["wind_speed_10m"]))
-        except Exception as e:
-            print(f"  ⚠ météo indisponible pour {equipe} ({e})")
-            _cache_meteo[equipe] = {}
+        precharger_meteo([equipe])
     try:
         debut = datetime.strptime(f"{jour} {heure}", "%Y-%m-%d %H:%M")
     except (ValueError, TypeError):
@@ -472,7 +490,8 @@ def detecter_signaux(matchs, joueurs, absents, semaines_rapport, courante):
                 # --- c) vent > 30 km/h en extérieur (total : under) ---
                 if stade_exterieur(g) and str(g.location) != "Neutral":
                     vent = g.wind * 1.609 if joue and not pd.isna(g.wind) else (
-                        vent_prevu(g.home_team, g.gameday, g.gametime) if not joue else np.nan)
+                        vent_prevu(g.home_team, g.gameday, g.gametime)
+                        if not joue and g.home_team in _cache_meteo else np.nan)
                     if not pd.isna(vent) and vent > SEUIL_VENT_KMH:
                         signaux.append({**base, "type": "vent", "favorise": "under", "taille": vent,
                                         "equipe": g.home_team, "texte": f"Vent {vent:.0f} km/h à {g.home_team}"})
@@ -790,6 +809,11 @@ def main():
         noms_joueurs[r.gsis_id] = r.full_name
     charger_corrections(matchs, rosters, blessures, courante)
 
+    a_venir = matchs[(matchs["season"] == courante) & matchs["result"].isna()]
+    if len(a_venir):
+        prochains = a_venir[a_venir["week"] == a_venir["week"].min()]
+        precharger_meteo([g.home_team for g in prochains.itertuples(index=False)
+                          if stade_exterieur(g) and str(g.location) != "Neutral"])
     print("3) Détection des signaux, semaine par semaine…")
     sig = detecter_signaux(matchs, joueurs, absents, semaines_rapport, courante)
     h = preparer_historique(sig)
