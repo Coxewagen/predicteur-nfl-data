@@ -1,4 +1,4 @@
-name: Dashboard NFL Elo v3
+name: Dashboard NFL signaux d'edge
 
 on:
   schedule:
@@ -38,7 +38,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Lance le modèle et génère le dashboard
-        run: python nfl_elo_v3.py
+        run: python nfl_signaux.py
 
       - name: Publie le dashboard
         run: |
@@ -48,6 +48,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Rien de nouveau à publier."
           else
-            git commit -m "Mise à jour automatique du dashboard Elo v3"
+            git commit -m "Mise à jour automatique des signaux d'edge NFL"
             git pull --rebase origin "${GITHUB_REF_NAME}" && git push
           fi
