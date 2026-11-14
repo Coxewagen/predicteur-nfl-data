@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NFL 2026 — Semaine 10</title><style>
+<title>NFL 2026</title><style>
 *{box-sizing:border-box}
 body{margin:0;background:#1a1a2e;color:#fff;font-family:Segoe UI,Roboto,Arial,sans-serif;font-size:18px}
 .page{max-width:1200px;margin:auto;padding:16px}
@@ -36,7 +36,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
 .onglet{flex:1;font-size:20px;font-weight:800;padding:13px;border-radius:12px;border:2px solid #4cc9f0;
         background:#22223b;color:#fff;cursor:pointer}
 .onglet.actif{background:#4cc9f0;color:#0b1d2b}
-#liste-matchs{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}
+.liste-matchs{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}
 .mt{background:#22223b;border:2px solid #33335a;border-radius:16px;padding:14px}
 .mt.sur{border-color:#2ecc71}
 .mt-haut{font-size:15px;color:#9ad6f0;font-weight:700;margin-bottom:6px}
@@ -49,14 +49,26 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
 .vert{background:#2ecc71}.orange{background:#f39c12}.rouge{background:#e74c3c}
 .eq input{width:78px}
 .alerte{margin-top:8px;font-size:16px;font-weight:700;color:#ffcf70}
-@media (max-width:700px){#liste-matchs{grid-template-columns:1fr}.onglet{font-size:18px}}
+.onglets{flex-wrap:wrap}.onglet{flex:1 0 auto;min-width:76px}
+.onglet.sig-o{border-color:#f39c12}.onglet.sig-o.actif{background:#f39c12}
+.score{float:right;font-size:18px;font-weight:800;color:#fff}
+.eq.gagnant .nom::after{content:" ✅"}
+@media (max-width:700px){.liste-matchs{grid-template-columns:1fr}.onglet{font-size:17px;padding:10px}}
 </style></head>
 <body><div class="page">
-<h1>🏈 NFL 2026 — Semaine 10</h1>
-<div class="onglets"><button class="onglet" data-o="p-matchs">Matchs</button><button class="onglet" data-o="p-signaux">Signaux</button></div>
-<div class="panneau" id="p-matchs"><div id="liste-matchs">
+<h1>🏈 NFL 2026</h1>
+<div class="onglets"><button class="onglet" data-o="j10">J10</button><button class="onglet" data-o="j11">J11</button><button class="onglet" data-o="j12">J12</button><button class="onglet" data-o="j13">J13</button><button class="onglet" data-o="j14">J14</button><button class="onglet" data-o="j15">J15</button><button class="onglet" data-o="j16">J16</button><button class="onglet" data-o="j17">J17</button><button class="onglet" data-o="j18">J18</button><button class="onglet sig-o" data-o="p-signaux">Signaux</button></div>
+<div class="panneau" id="j10"><div class="liste-matchs">
+<div class="mt" data-ordre="0" data-gagnant="ext">
+ <div class="mt-haut"><span class="quand">ven. 13/11 · 02 h 15</span><span class="score">24 – 21</span></div>
+ <div class="eq"><div class="nom">WAS</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="2.02"></div>
+ <div class="eq"><div class="nom">🏠 NYG</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.82"></div>
+ 
+</div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">dim. 15 h 30</span></div>
+ <div class="mt-haut"><span class="quand">dim. 15/11 · 15 h 30</span></div>
  <div class="eq"><div class="nom">NE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.24"></div>
  <div class="eq"><div class="nom">🏠 DET</div><div class="barre"><span></span><b></b></div>
@@ -64,7 +76,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  
 </div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span></div>
  <div class="eq"><div class="nom">KC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.57"></div>
  <div class="eq"><div class="nom">🏠 ATL</div><div class="barre"><span></span><b></b></div>
@@ -72,7 +84,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  
 </div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span></div>
  <div class="eq"><div class="nom">HOU</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.42"></div>
  <div class="eq"><div class="nom">🏠 CLE</div><div class="barre"><span></span><b></b></div>
@@ -80,7 +92,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  
 </div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span></div>
  <div class="eq"><div class="nom">MIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.24"></div>
  <div class="eq"><div class="nom">🏠 GB</div><div class="barre"><span></span><b></b></div>
@@ -88,7 +100,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="alerte">⚠️ MIN : QB Kirk Cousins au lieu de Carson Wentz (+5.7 pts)</div>
 </div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span></div>
  <div class="eq"><div class="nom">MIA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.80"></div>
  <div class="eq"><div class="nom">🏠 IND</div><div class="barre"><span></span><b></b></div>
@@ -96,7 +108,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  
 </div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span></div>
  <div class="eq"><div class="nom">CAR</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.14"></div>
  <div class="eq"><div class="nom">🏠 NO</div><div class="barre"><span></span><b></b></div>
@@ -104,7 +116,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  
 </div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span></div>
  <div class="eq"><div class="nom">BUF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.24"></div>
  <div class="eq"><div class="nom">🏠 NYJ</div><div class="barre"><span></span><b></b></div>
@@ -112,7 +124,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  
 </div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span></div>
  <div class="eq"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.14"></div>
  <div class="eq"><div class="nom">🏠 TEN</div><div class="barre"><span></span><b></b></div>
@@ -120,7 +132,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  
 </div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">dim. 22 h 05</span></div>
+ <div class="mt-haut"><span class="quand">dim. 15/11 · 22 h 05</span></div>
  <div class="eq"><div class="nom">LA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.20"></div>
  <div class="eq"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
@@ -128,7 +140,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="alerte">⚠️ LA sans Puka Nacua (-2.9), Davante Adams (-0.7) : -3.6 pts</div>
 </div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">dim. 22 h 05</span></div>
+ <div class="mt-haut"><span class="quand">dim. 15/11 · 22 h 05</span></div>
  <div class="eq"><div class="nom">SEA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.33"></div>
  <div class="eq"><div class="nom">🏠 LV</div><div class="barre"><span></span><b></b></div>
@@ -136,7 +148,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="alerte">⚠️ LV : QB Fernando Mendoza au lieu de Kirk Cousins (-4.1 pts)</div>
 </div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">dim. 22 h 25</span></div>
+ <div class="mt-haut"><span class="quand">dim. 15/11 · 22 h 25</span></div>
  <div class="eq"><div class="nom">SF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.46"></div>
  <div class="eq"><div class="nom">🏠 DAL</div><div class="barre"><span></span><b></b></div>
@@ -144,7 +156,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  
 </div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">lun. 02 h 20</span></div>
+ <div class="mt-haut"><span class="quand">lun. 16/11 · 02 h 20</span></div>
  <div class="eq"><div class="nom">PIT</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.54"></div>
  <div class="eq"><div class="nom">🏠 CIN</div><div class="barre"><span></span><b></b></div>
@@ -152,12 +164,988 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  
 </div>
 <div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">mar. 02 h 15</span></div>
+ <div class="mt-haut"><span class="quand">mar. 17/11 · 02 h 15</span></div>
  <div class="eq"><div class="nom">LAC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.80"></div>
  <div class="eq"><div class="nom">🏠 BAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.46"></div>
  
+</div></div></div><div class="panneau" id="j11"><div class="liste-matchs">
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">ven. 20/11 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">IND</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="4.50"></div>
+ <div class="eq"><div class="nom">🏠 HOU</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.22"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">MIA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="10.50"></div>
+ <div class="eq"><div class="nom">🏠 BUF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.06"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">BAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="2.05"></div>
+ <div class="eq"><div class="nom">🏠 CAR</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.80"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">NO</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="4.70"></div>
+ <div class="eq"><div class="nom">🏠 CHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.21"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">TEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="4.30"></div>
+ <div class="eq"><div class="nom">🏠 DAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.24"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">TB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="2.50"></div>
+ <div class="eq"><div class="nom">🏠 DET</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.56"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">ARI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="7.50"></div>
+ <div class="eq"><div class="nom">🏠 KC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.10"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="1.38"></div>
+ <div class="eq"><div class="nom">🏠 NYG</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="3.15"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22/11 · 22 h 05</span></div>
+ <div class="eq"><div class="nom">NYJ</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="2.05"></div>
+ <div class="eq"><div class="nom">🏠 LAC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.80"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22/11 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">LV</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="4.40"></div>
+ <div class="eq"><div class="nom">🏠 DEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.23"></div>
+ <div class="alerte">⚠️ LV : QB Fernando Mendoza au lieu de Kirk Cousins (-3.8 pts)</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22/11 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">PIT</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="1.51"></div>
+ <div class="eq"><div class="nom">🏠 PHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="2.64"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">lun. 23/11 · 02 h 20</span></div>
+ <div class="eq"><div class="nom">MIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="2.70"></div>
+ <div class="eq"><div class="nom">🏠 SF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.49"></div>
+ <div class="alerte">⚠️ MIN : QB Kirk Cousins au lieu de Carson Wentz (+5.1 pts)</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">mar. 24/11 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">CIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="1.49"></div>
+ <div class="eq"><div class="nom">🏠 WAS</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="2.70"></div>
+ 
+</div></div></div><div class="panneau" id="j12"><div class="liste-matchs">
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">jeu. 26/11 · 02 h 00</span></div>
+ <div class="eq"><div class="nom">GB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 LA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">jeu. 26/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">CHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 DET</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">jeu. 26/11 · 22 h 30</span></div>
+ <div class="eq"><div class="nom">PHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 DAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">ven. 27/11 · 02 h 20</span></div>
+ <div class="eq"><div class="nom">KC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 BUF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">ven. 27/11 · 21 h 00</span></div>
+ <div class="eq"><div class="nom">DEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 PIT</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 29/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">NO</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 29/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">LV</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CLE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 29/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">BAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 HOU</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 29/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">NYG</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 IND</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 29/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">NYJ</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 MIA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 29/11 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">ATL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 MIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 29/11 · 22 h 05</span></div>
+ <div class="eq"><div class="nom">TEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 JAX</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 29/11 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">WAS</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 29/11 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">SEA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 SF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">lun. 30/11 · 02 h 20</span></div>
+ <div class="eq"><div class="nom">NE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 LAC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">mar. 01/12 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">CAR</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 TB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div></div></div><div class="panneau" id="j13"><div class="liste-matchs">
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">ven. 04/12 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">KC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 LA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">DET</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 ATL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">CIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CLE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">GB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NO</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">SF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NYG</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">LAC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 TB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">WAS</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 TEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 06/12 · 22 h 05</span></div>
+ <div class="eq"><div class="nom">PHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 06/12 · 22 h 05</span></div>
+ <div class="eq"><div class="nom">MIA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 DEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 06/12 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">CAR</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 MIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 06/12 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">BUF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">lun. 07/12 · 02 h 20</span></div>
+ <div class="eq"><div class="nom">HOU</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 PIT</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">mar. 08/12 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">DAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 SEA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div></div></div><div class="panneau" id="j14"><div class="liste-matchs">
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">ven. 11/12 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">MIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">TB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 BAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">NO</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CAR</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">ATL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CLE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">TEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 DET</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">CHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 MIA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">DEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NYJ</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">IND</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 PHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">HOU</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 WAS</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 13/12 · 22 h 05</span></div>
+ <div class="eq"><div class="nom">LAC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 LV</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 13/12 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">KC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 13/12 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">NYG</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 SEA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 13/12 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">LA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 SF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">lun. 14/12 · 02 h 20</span></div>
+ <div class="eq"><div class="nom">BUF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 GB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">mar. 15/12 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">PIT</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 JAX</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div></div></div><div class="panneau" id="j15"><div class="liste-matchs">
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">ven. 18/12 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">SF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 LAC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ <div class="alerte">⚠️ LAC déjà éliminée, SF encore en course</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">sam. 19/12 · 23 h 00</span></div>
+ <div class="eq"><div class="nom">SEA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 PHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 20/12 · 02 h 20</span></div>
+ <div class="eq"><div class="nom">CHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 BUF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">CIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CAR</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">MIA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 GB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 HOU</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">CLE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NYG</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">BAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 PIT</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">NO</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 TB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">IND</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 TEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">ATL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 WAS</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 20/12 · 22 h 05</span></div>
+ <div class="eq"><div class="nom">NYJ</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 20/12 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">DAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 LA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 20/12 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">DEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 LV</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">lun. 21/12 · 02 h 20</span></div>
+ <div class="eq"><div class="nom">DET</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 MIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">mar. 22/12 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">NE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 KC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div></div></div><div class="panneau" id="j16"><div class="liste-matchs">
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">ven. 25/12 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">HOU</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 PHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">ven. 25/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">GB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">ven. 25/12 · 22 h 30</span></div>
+ <div class="eq"><div class="nom">BUF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 DEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">sam. 26/12 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">LA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 SEA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">TB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 ATL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">CLE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 BAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">CIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 IND</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">LAC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 MIA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">WAS</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 MIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">ARI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NO</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">NE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NYJ</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">CAR</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 PIT</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 27/12 · 22 h 05</span></div>
+ <div class="eq"><div class="nom">TEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 LV</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ <div class="alerte">⚠️ TEN déjà éliminée, LV encore en course</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 27/12 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">SF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 KC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">lun. 28/12 · 02 h 20</span></div>
+ <div class="eq"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 DAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">mar. 29/12 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">NYG</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 DET</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div></div></div><div class="panneau" id="j17"><div class="liste-matchs">
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">ven. 01/01 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">BAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">NO</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 ATL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">SEA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CAR</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">IND</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CLE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ <div class="alerte">⚠️ IND déjà éliminée, CLE encore en course</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">NYG</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 DAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">WAS</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 JAX</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ <div class="alerte">⚠️ JAX déjà qualifiée, WAS encore en course</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">KC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 LAC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ <div class="alerte">⚠️ LAC déjà éliminée, KC encore en course</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">BUF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 MIA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ <div class="alerte">⚠️ MIA déjà éliminée, BUF encore en course</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">DEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">MIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NYJ</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ <div class="alerte">⚠️ NYJ déjà éliminée, MIN encore en course</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">LA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 TB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">PIT</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 TEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ <div class="alerte">⚠️ TEN déjà éliminée, PIT encore en course</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 22 h 05</span></div>
+ <div class="eq"><div class="nom">LV</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 03/01 · 22 h 25</span></div>
+ <div class="eq"><div class="nom">DET</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">lun. 04/01 · 02 h 20</span></div>
+ <div class="eq"><div class="nom">PHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 SF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ <div class="alerte">⚠️ PHI déjà éliminée, SF encore en course</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">mar. 05/01 · 02 h 15</span></div>
+ <div class="eq"><div class="nom">HOU</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 GB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div></div></div><div class="panneau" id="j18"><div class="liste-matchs">
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">SF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">PIT</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 BAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">NYJ</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 BUF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">ATL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CAR</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">CLE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 CIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">LAC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 DEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ <div class="alerte">⚠️ LAC déjà éliminée, DEN encore en course</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">DET</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 GB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">TEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 HOU</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 IND</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">LV</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 KC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">SEA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 LA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">CHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 MIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">MIA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ <div class="alerte">⚠️ MIA déjà éliminée, NE encore en course</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">TB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NO</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">PHI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 NYG</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span></div>
+ <div class="eq"><div class="nom">DAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value=""></div>
+ <div class="eq"><div class="nom">🏠 WAS</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value=""></div>
+ <div class="alerte">⚠️ WAS déjà éliminée, DAL encore en course</div>
 </div></div></div>
 <div class="panneau" id="p-signaux">
 <div class="bandeau" style="background:#1e5631">🩹 Rapport blessures : semaine 10</div>
@@ -232,6 +1220,8 @@ function calc(el){
 document.querySelectorAll('.sig').forEach(el=>{el.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>calc(el)));calc(el)});
 
 function majMatch(el){
+ const g=el.dataset.gagnant;
+ if(g){el.querySelectorAll('.eq')[g==='dom'?1:0].classList.add('gagnant')}
  const cd=parseFloat(el.querySelector('.cote-d').value.replace(',','.')), ce=parseFloat(el.querySelector('.cote-e').value.replace(',','.'));
  if(isNaN(cd)||isNaN(ce)||cd<=1||ce<=1)return;
  const pd=(1/cd)/((1/cd)+(1/ce)), pe=1-pd, eqs=el.querySelectorAll('.eq');
@@ -243,8 +1233,8 @@ function majMatch(el){
  });
  el.dataset.ordre=Math.max(pd,pe); el.classList.toggle('sur',Math.max(pd,pe)>=0.65);
 }
-function trier(){const L=document.getElementById('liste-matchs');if(!L)return;
- [...L.children].sort((a,b)=>b.dataset.ordre-a.dataset.ordre).forEach(x=>L.appendChild(x))}
+function trier(){document.querySelectorAll('.liste-matchs').forEach(L=>
+ [...L.children].sort((a,b)=>b.dataset.ordre-a.dataset.ordre).forEach(x=>L.appendChild(x)))}
 document.querySelectorAll('.mt').forEach(el=>{majMatch(el);el.querySelectorAll('input').forEach(i=>{
  i.addEventListener('input',()=>majMatch(el)); i.addEventListener('change',trier)})});
 trier();
@@ -252,6 +1242,7 @@ function onglet(n){document.querySelectorAll('.onglet').forEach(x=>x.classList.t
  document.querySelectorAll('.panneau').forEach(x=>x.style.display=x.id===n?'block':'none');
  try{localStorage.setItem('onglet_nfl',n)}catch(e){}}
 document.querySelectorAll('.onglet').forEach(b=>b.addEventListener('click',()=>onglet(b.dataset.o)));
-let o0='p-matchs';try{o0=localStorage.getItem('onglet_nfl')||o0}catch(e){}
+let o0=document.querySelector('.onglet').dataset.o;
+try{const x=localStorage.getItem('onglet_nfl');if(x&&document.getElementById(x))o0=x}catch(e){}
 onglet(o0);
 </script></body></html>

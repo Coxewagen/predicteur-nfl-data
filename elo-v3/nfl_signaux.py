@@ -742,39 +742,52 @@ def bandeau_blessures(semaine):
 SEUIL_FAVORI = 0.65                           # onglet Matchs : favori mis en avant au-dessus de ce %
 
 
-def onglet_matchs(matchs, sig, semaine, courante):
-    """Onglet « Matchs » : % de victoire de chaque équipe d'après les cotes (marge du book retirée)."""
+def carte_match(g, sig):
+    """Une carte match : % de victoire de chaque équipe d'après les cotes (marge du book retirée)."""
     from zoneinfo import ZoneInfo
-    m = matchs[(matchs["season"] == courante) & (matchs["week"] == semaine) & matchs["result"].isna()]
-    if m.empty:
-        return '<div class="compte zero">Aucun match à venir</div>'
     e = html.escape
     jours = ["lun.", "mar.", "mer.", "jeu.", "ven.", "sam.", "dim."]
-    lignes = []
-    for g in m.itertuples(index=False):
-        cd, ce = am_vers_dec(g.home_moneyline), am_vers_dec(g.away_moneyline)
-        try:   # heure de New York -> heure de Paris
-            dt = datetime.strptime(f"{g.gameday} {g.gametime}", "%Y-%m-%d %H:%M").replace(
-                tzinfo=ZoneInfo("America/New_York")).astimezone(ZoneInfo("Europe/Paris"))
-            quand = f"{jours[dt.weekday()]} {dt.strftime('%H:%M').replace(':', ' h ')}"
-        except (ValueError, TypeError):
-            quand = ""
-        alertes = sig[(sig["game_id"] == g.game_id)] if len(sig) else sig
-        alerte = "".join(f'<div class="alerte">⚠️ {e(t)}</div>' for t in alertes["texte"]) if len(alertes) else ""
-        lignes.append(f"""
-<div class="mt" data-ordre="0">
- <div class="mt-haut"><span class="quand">{e(quand)}</span></div>
+    cd = "" if pd.isna(g.home_moneyline) else f"{am_vers_dec(g.home_moneyline):.2f}"
+    ce = "" if pd.isna(g.away_moneyline) else f"{am_vers_dec(g.away_moneyline):.2f}"
+    try:   # heure de New York -> heure de Paris
+        dt = datetime.strptime(f"{g.gameday} {g.gametime}", "%Y-%m-%d %H:%M").replace(
+            tzinfo=ZoneInfo("America/New_York")).astimezone(ZoneInfo("Europe/Paris"))
+        quand = f"{jours[dt.weekday()]} {dt.strftime('%d/%m')} · {dt.strftime('%H:%M').replace(':', ' h ')}"
+    except (ValueError, TypeError):
+        quand = ""
+    score = ""
+    if not pd.isna(g.result):                      # match déjà joué : score final
+        score = f'<span class="score">{int(g.away_score)} – {int(g.home_score)}</span>'
+    alertes = sig[sig["game_id"] == g.game_id] if sig is not None and len(sig) else []
+    alerte = "".join(f'<div class="alerte">⚠️ {e(t)}</div>' for t in alertes["texte"]) if len(alertes) else ""
+    joue = "" if pd.isna(g.result) else (' data-gagnant="dom"' if g.result > 0 else ' data-gagnant="ext"')
+    return f"""
+<div class="mt" data-ordre="0"{joue}>
+ <div class="mt-haut"><span class="quand">{e(quand)}</span>{score}</div>
  <div class="eq"><div class="nom">{e(g.away_team)}</div><div class="barre"><span></span><b></b></div>
-   <input class="cote-e" type="number" step="0.01" value="{ce:.2f}"></div>
+   <input class="cote-e" type="number" step="0.01" value="{ce}"></div>
  <div class="eq"><div class="nom">🏠 {e(g.home_team)}</div><div class="barre"><span></span><b></b></div>
-   <input class="cote-d" type="number" step="0.01" value="{cd:.2f}"></div>
+   <input class="cote-d" type="number" step="0.01" value="{cd}"></div>
  {alerte}
-</div>""")
-    return f'<div id="liste-matchs">{"".join(lignes)}</div>'
+</div>"""
+
+
+def onglets_journees(matchs, sig, semaine, courante):
+    """Un onglet par journée (de la journée en cours à la fin de la saison), les matchs dedans."""
+    m = matchs[(matchs["season"] == courante) & (matchs["week"] >= semaine)]
+    boutons, panneaux = [], []
+    for w, mw in m.groupby("week"):
+        mw = mw.sort_values(["gameday", "gametime"])
+        boutons.append(f'<button class="onglet" data-o="j{w}">J{w}</button>')
+        cartes = "".join(carte_match(g, sig) for g in mw.itertuples(index=False))
+        panneaux.append(f'<div class="panneau" id="j{w}"><div class="liste-matchs">{cartes}</div></div>')
+    return boutons, panneaux
 
 
 JS_MATCHS = """
 function majMatch(el){
+ const g=el.dataset.gagnant;
+ if(g){el.querySelectorAll('.eq')[g==='dom'?1:0].classList.add('gagnant')}
  const cd=parseFloat(el.querySelector('.cote-d').value.replace(',','.')), ce=parseFloat(el.querySelector('.cote-e').value.replace(',','.'));
  if(isNaN(cd)||isNaN(ce)||cd<=1||ce<=1)return;
  const pd=(1/cd)/((1/cd)+(1/ce)), pe=1-pd, eqs=el.querySelectorAll('.eq');
@@ -786,8 +799,8 @@ function majMatch(el){
  });
  el.dataset.ordre=Math.max(pd,pe); el.classList.toggle('sur',Math.max(pd,pe)>=%FAV%);
 }
-function trier(){const L=document.getElementById('liste-matchs');if(!L)return;
- [...L.children].sort((a,b)=>b.dataset.ordre-a.dataset.ordre).forEach(x=>L.appendChild(x))}
+function trier(){document.querySelectorAll('.liste-matchs').forEach(L=>
+ [...L.children].sort((a,b)=>b.dataset.ordre-a.dataset.ordre).forEach(x=>L.appendChild(x)))}
 document.querySelectorAll('.mt').forEach(el=>{majMatch(el);el.querySelectorAll('input').forEach(i=>{
  i.addEventListener('input',()=>majMatch(el)); i.addEventListener('change',trier)})});
 trier();
@@ -795,7 +808,8 @@ function onglet(n){document.querySelectorAll('.onglet').forEach(x=>x.classList.t
  document.querySelectorAll('.panneau').forEach(x=>x.style.display=x.id===n?'block':'none');
  try{localStorage.setItem('onglet_nfl',n)}catch(e){}}
 document.querySelectorAll('.onglet').forEach(b=>b.addEventListener('click',()=>onglet(b.dataset.o)));
-let o0='p-matchs';try{o0=localStorage.getItem('onglet_nfl')||o0}catch(e){}
+let o0=document.querySelector('.onglet').dataset.o;
+try{const x=localStorage.getItem('onglet_nfl');if(x&&document.getElementById(x))o0=x}catch(e){}
 onglet(o0);
 """.replace("%FAV%", str(SEUIL_FAVORI))
 
@@ -804,7 +818,7 @@ CSS_MATCHS = """
 .onglet{flex:1;font-size:20px;font-weight:800;padding:13px;border-radius:12px;border:2px solid #4cc9f0;
         background:#22223b;color:#fff;cursor:pointer}
 .onglet.actif{background:#4cc9f0;color:#0b1d2b}
-#liste-matchs{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}
+.liste-matchs{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}
 .mt{background:#22223b;border:2px solid #33335a;border-radius:16px;padding:14px}
 .mt.sur{border-color:#2ecc71}
 .mt-haut{font-size:15px;color:#9ad6f0;font-weight:700;margin-bottom:6px}
@@ -817,17 +831,22 @@ CSS_MATCHS = """
 .vert{background:#2ecc71}.orange{background:#f39c12}.rouge{background:#e74c3c}
 .eq input{width:78px}
 .alerte{margin-top:8px;font-size:16px;font-weight:700;color:#ffcf70}
-@media (max-width:700px){#liste-matchs{grid-template-columns:1fr}.onglet{font-size:18px}}
+.onglets{flex-wrap:wrap}.onglet{flex:1 0 auto;min-width:76px}
+.onglet.sig-o{border-color:#f39c12}.onglet.sig-o.actif{background:#f39c12}
+.score{float:right;font-size:18px;font-weight:800;color:#fff}
+.eq.gagnant .nom::after{content:" ✅"}
+@media (max-width:700px){.liste-matchs{grid-template-columns:1fr}.onglet{font-size:17px;padding:10px}}
 """
 
 
 def generer_html(semaine_df, semaine, courante, hist_tab, matchs=None, sig=None, fichier=FICHIER_HTML):
     print("5) Génération du dashboard HTML…")
+    boutons, panneaux = onglets_journees(matchs, sig, semaine, courante) if matchs is not None and semaine else ([], [])
     # Edge = signal dont l'historique donne un ajustement > 0 ; les autres sont déjà dans la ligne du book
     edge = semaine_df[semaine_df["ajust"] > 0.05] if len(semaine_df) else semaine_df
     autres = semaine_df[semaine_df["ajust"] <= 0.05] if len(semaine_df) else semaine_df
     n = len(edge)
-    titre = f"NFL {courante} — Semaine {semaine}" if semaine else f"NFL {courante}"
+    titre = f"NFL {courante}"
     if semaine is None:
         compte = '<div class="compte zero">Aucun match à venir</div>'
     elif n == 0:
@@ -849,8 +868,8 @@ def generer_html(semaine_df, semaine, courante, hist_tab, matchs=None, sig=None,
 <title>{html.escape(titre)}</title><style>{CSS}{CSS_MATCHS}</style></head>
 <body><div class="page">
 <h1>🏈 {html.escape(titre)}</h1>
-<div class="onglets"><button class="onglet" data-o="p-matchs">Matchs</button><button class="onglet" data-o="p-signaux">Signaux</button></div>
-<div class="panneau" id="p-matchs">{onglet_matchs(matchs, sig, semaine, courante) if matchs is not None and semaine else ''}</div>
+<div class="onglets">{"".join(boutons)}<button class="onglet sig-o" data-o="p-signaux">Signaux</button></div>
+{"".join(panneaux)}
 <div class="panneau" id="p-signaux">
 {bandeau_blessures(semaine)}
 {compte}
