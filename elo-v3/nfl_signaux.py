@@ -62,7 +62,7 @@ COTE_DEFAUT = 1.91                            # cote -110 si le book n'en donne 
 SEUIL_RENTABILITE = 0.524
 
 FICHIER_HTML = "dashboard_nfl.html"
-VERSION_PAGE = "2.4"                          # à augmenter à chaque modification de la page
+VERSION_PAGE = "2.5"                          # à augmenter à chaque modification de la page
 FICHIER_ABSENCES = "absences.json"
 CORRECTIONS = {"absents": {}, "presents": {}}
 
@@ -824,7 +824,8 @@ def recap_html(w):
  <div class="recap-liste"></div>
  <div class="recap-calc">
   <div class="case"><div class="lib">Mise (€)</div><div class="val"><input class="mise" type="number" step="1" value="10"></div></div>
-  <div class="case"><div class="lib">Boost combiné (%)</div><div class="val"><input class="boost" type="number" step="1" value="0"></div></div>
+  <div class="case"><div class="lib">Boost par match</div><div class="val"><input class="boost" type="number" step="0.01" value="0.01"></div></div>
+  <div class="case"><div class="lib">Cote du ticket</div><div class="val"><input class="ticket" type="number" step="0.01" placeholder="auto"></div></div>
   <div class="case"><div class="lib">Combiné : cote</div><div class="val r-ctot"></div></div>
   <div class="case"><div class="lib">Combiné : proba</div><div class="val r-proba"></div></div>
   <div class="case"><div class="lib">Combiné : gains</div><div class="val r-comb"></div></div>
@@ -962,24 +963,31 @@ function majRecap(R){
    const ligne=document.createElement('div'); ligne.className='r-ligne';
    ligne.innerHTML='<div class="r-eq">'+eq+' <span>vs '+adv+'</span>'+(contreMarche(el,c)?' <em class="r-contre">⚠️ Contre le marché</em>':'')+'</div>'
      +'<div class="r-p">'+(isNaN(P.p)?'':fr(P.p*100,1)+' %')+'</div>'
-     +'<div class="r-cote-fixe">🔒 '+(isNaN(P.valeur)?'—':fr(P.valeur))+'</div><button class="r-x">✕</button>';
+     +'<div class="r-cote-fixe">🔒 '+(isNaN(P.valeur)?'—':fr(P.valeur))+'<span class="r-bst"></span></div><button class="r-x">✕</button>';
+   ligne.dataset.v=P.valeur;
    ligne.querySelector('.r-x').addEventListener('click',()=>{delete PARIS[el.dataset.g];ecrireLS('paris_nfl',PARIS);majBoutons(el);majRecap(R)});
    L.appendChild(ligne);
  });
  calcRecap(R);
 }
+// Multiboost Betclic (comme M3) : + « boost par match » (0,01 par défaut) sur chaque cote d'au moins 1,20
+function coteBoostee(v,b){return (!isNaN(v)&&b>0&&v>=1.2)?Math.round((v+b)*100)/100:v}
 function calcRecap(R){
  const w=R.dataset.sem, mise=parseFloat(R.querySelector('.mise').value.replace(',','.'))||0;
- const boost=parseFloat(R.querySelector('.boost').value.replace(',','.'))||0;
+ const braw=R.querySelector('.boost').value.replace(',','.'), boost=braw===''?0:(parseFloat(braw)||0);
+ const ticket=parseFloat(R.querySelector('.ticket').value.replace(',','.'));
  let prodC=1, prodP=1, n=0;
  [...document.querySelectorAll('#j'+w+' .mt')].filter(el=>PARIS[el.dataset.g]).forEach(el=>{
-   const P=PARIS[el.dataset.g]; if(!isNaN(P.valeur)){prodC*=P.valeur;n++} if(!isNaN(P.p))prodP*=P.p;
+   const P=PARIS[el.dataset.g]; if(!isNaN(P.valeur)){prodC*=coteBoostee(P.valeur,boost);n++} if(!isNaN(P.p))prodP*=P.p;
  });
- const coteB=prodC*(1+boost/100);
- R.querySelector('.r-ctot').textContent=n?fr(coteB):'';
+ R.querySelectorAll('.r-ligne').forEach(l=>{const v=parseFloat(l.dataset.v), vb=coteBoostee(v,boost);
+   l.querySelector('.r-bst').textContent=(vb!==v&&!isNaN(v))?' → '+fr(vb):''});
+ const cote=!isNaN(ticket)&&ticket>1?ticket:prodC;
+ R.querySelector('.ticket').placeholder=n?fr(prodC):'auto';
+ R.querySelector('.r-ctot').textContent=n?fr(cote):'';
  R.querySelector('.r-proba').textContent=n?fr(prodP*100,1)+' %':'';
- R.querySelector('.r-comb').textContent=n?fr(mise*coteB)+' €':'';
- const S=lireLS('mises_nfl');S[w]={mise:mise,boost:boost};ecrireLS('mises_nfl',S);
+ R.querySelector('.r-comb').textContent=n?fr(mise*cote)+' €':'';
+ const S=lireLS('mises_nfl');S[w]={mise:mise,boostMatch:braw,ticket:R.querySelector('.ticket').value};ecrireLS('mises_nfl',S);
 }
 function sauverCote(el,inp){const k=el.dataset.g+'_'+(inp.classList.contains('cote-d')?'d':'e');
  if(inp.value&&inp.value!==inp.dataset.init)COTES[k]={v:inp.value,base:inp.dataset.init};else delete COTES[k];ecrireLS('cotes_betclic_nfl',COTES)}
@@ -1004,8 +1012,10 @@ document.querySelectorAll('.mt').forEach(el=>{
  el.addEventListener('click',ev=>{if(ev.target.closest('input,button,label'))return; ouvrirFiche(el)});
 });
 document.querySelectorAll('.recap').forEach(R=>{
- const S=lireLS('mises_nfl')[R.dataset.sem]; if(S){R.querySelector('.mise').value=S.mise;R.querySelector('.boost').value=S.boost}
- R.querySelectorAll('.mise,.boost').forEach(i=>i.addEventListener('input',()=>calcRecap(R)));
+ const S=lireLS('mises_nfl')[R.dataset.sem];
+ if(S){R.querySelector('.mise').value=S.mise; if(S.boostMatch!==undefined)R.querySelector('.boost').value=S.boostMatch;
+   if(S.ticket)R.querySelector('.ticket').value=S.ticket}
+ R.querySelectorAll('.mise,.boost,.ticket').forEach(i=>i.addEventListener('input',()=>calcRecap(R)));
  majRecap(R)});
 trier();
 
@@ -1077,9 +1087,9 @@ CSS_MATCHS = """
 .recap{background:#16324f;border:2px solid #4cc9f0;border-radius:16px;padding:6px 16px 16px;margin-top:22px}
 .recap h2{margin:14px 0 10px;border:none;padding:0}
 .recap-vide{font-size:19px;font-weight:700;color:#c8c8e0;padding:6px 0}
-.r-ligne{display:grid;grid-template-columns:1fr 90px 110px 44px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #2d5a80}
+.r-ligne{display:grid;grid-template-columns:1fr 90px 160px 44px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #2d5a80}
 .r-eq{font-size:21px;font-weight:800}.r-eq span{font-size:16px;color:#c8c8e0;font-weight:600}
-.r-p{font-size:18px;font-weight:700}.r-cote-fixe{font-size:20px;font-weight:800}
+.r-p{font-size:18px;font-weight:700}.r-cote-fixe{font-size:20px;font-weight:800;white-space:nowrap}.r-bst{color:#2ecc71}
 .r-x{background:#5a1e1e;color:#fff;border:none;border-radius:8px;font-size:18px;padding:6px;cursor:pointer}
 .r-cote{width:84px}
 .recap-calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:12px}
@@ -1108,7 +1118,7 @@ CSS_MATCHS = """
 @media (max-width:760px){.liste-matchs{grid-template-columns:1fr}.onglet{font-size:17px;padding:10px}
  .eq{grid-template-columns:62px 1fr 64px 92px;gap:6px}.eq .nom{font-size:19px}.eq input{width:66px}
  .d-grille{grid-template-columns:1fr}.d-chiffres{grid-template-columns:repeat(2,1fr)}
- .r-ligne{grid-template-columns:1fr 64px 84px 36px}}
+ .r-ligne{grid-template-columns:1fr 60px 130px 36px}}
 """
 
 
