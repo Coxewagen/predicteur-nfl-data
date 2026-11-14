@@ -54,6 +54,7 @@ STATUTS_ROSTER_ABSENT = {"RES"}
 
 SEUIL_QB_PTS = 1.0                            # a) écart de valeur minimum entre les deux QB (pts)
 SEUIL_BLESSURE_PTS = 3.0                      # b) écart titulaire / remplaçant minimum (pts)
+BLESSURE_CUMUL = True                         # b) additionner les absences d'une même équipe (hors QB)
 SEUIL_VENT_KMH = 30.0                         # c) vent minimum en extérieur
 SEMAINE_MIN_COAST = 12                        # d) on ne cherche les équipes "coast" qu'en fin de saison
 RETRECISSEMENT = 50                           # c, d : ajustement x n / (n + 50)
@@ -475,12 +476,22 @@ def detecter_signaux(matchs, joueurs, absents, semaines_rapport, courante):
                                             "texte": f"{t} : QB {nom_c} au lieu de {nom_p} "
                                                      f"({'-' if perd else '+'}{abs(ecart):.1f} pts)"})
 
-                    # --- b) titulaire absent avec un remplaçant nettement moins bon (hors QB) ---
-                    for i in items:
-                        if i["poste"] != "QB" and i["pts"] >= SEUIL_BLESSURE_PTS:
-                            signaux.append({**base, "type": "blessure", "favorise": autre, "taille": i["pts"],
-                                            "equipe": t, "texte": f"{t} : {i['nom']} ({i['poste']}) absent, "
-                                                                  f"remplaçant {i['rempl']} (-{i['pts']:.1f} pts)"})
+                    # --- b) titulaires absents (hors QB) avec des remplaçants nettement moins bons ---
+                    hors_qb = [i for i in items if i["poste"] != "QB" and i["pts"] > 0]
+                    if BLESSURE_CUMUL:
+                        # Cumul par équipe : plusieurs absences moyennes peuvent faire un signal
+                        total = sum(i["pts"] for i in hors_qb)
+                        if total >= SEUIL_BLESSURE_PTS:
+                            noms = ", ".join(f"{i['nom']} (-{i['pts']:.1f})" for i in
+                                             sorted(hors_qb, key=lambda x: -x["pts"]) if i["pts"] >= 0.3)
+                            signaux.append({**base, "type": "blessure", "favorise": autre, "taille": total,
+                                            "equipe": t, "texte": f"{t} sans {noms} : -{total:.1f} pts"})
+                    else:
+                        for i in hors_qb:
+                            if i["pts"] >= SEUIL_BLESSURE_PTS:
+                                signaux.append({**base, "type": "blessure", "favorise": autre, "taille": i["pts"],
+                                                "equipe": t, "texte": f"{t} : {i['nom']} ({i['poste']}) absent, "
+                                                                      f"remplaçant {i['rempl']} (-{i['pts']:.1f} pts)"})
 
                     # --- d) équipe "coast" contre une équipe en course ---
                     if statut.get(t) in ("qualifiée", "éliminée") and statut.get(adv) == "en course":
