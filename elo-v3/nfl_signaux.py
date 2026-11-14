@@ -761,14 +761,35 @@ def carte_match(g, sig):
     alertes = sig[sig["game_id"] == g.game_id] if sig is not None and len(sig) else []
     alerte = "".join(f'<div class="alerte">⚠️ {e(t)}</div>' for t in alertes["texte"]) if len(alertes) else ""
     joue = "" if pd.isna(g.result) else (' data-gagnant="dom"' if g.result > 0 else ' data-gagnant="ext"')
+    gid = e(g.game_id)
     return f"""
-<div class="mt" data-ordre="0"{joue}>
- <div class="mt-haut"><span class="quand">{e(quand)}</span>{score}</div>
- <div class="eq"><div class="nom">{e(g.away_team)}</div><div class="barre"><span></span><b></b></div>
-   <input class="cote-e" type="number" step="0.01" value="{ce}"></div>
- <div class="eq"><div class="nom">🏠 {e(g.home_team)}</div><div class="barre"><span></span><b></b></div>
-   <input class="cote-d" type="number" step="0.01" value="{cd}"></div>
+<div class="mt" data-ordre="0" data-g="{gid}" data-dom="{e(g.home_team)}" data-ext="{e(g.away_team)}"{joue}>
+ <div class="mt-haut"><span class="quand">{e(quand)}</span>{score}<span class="fiche">📋</span></div>
+ <div class="eq" data-cote="e"><div class="nom">{e(g.away_team)}</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="{ce}" data-defaut="{ce}" placeholder="Betclic" title="Cote Betclic">
+   <button class="pari" data-cote="e">Parier</button></div>
+ <div class="eq" data-cote="d"><div class="nom">🏠 {e(g.home_team)}</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="{cd}" data-defaut="{cd}" placeholder="Betclic" title="Cote Betclic">
+   <button class="pari" data-cote="d">Parier</button></div>
  {alerte}
+</div>"""
+
+
+def recap_html(w):
+    """Récap des paris de la journée : cotes et boost modifiables, mise, gains potentiels."""
+    return f"""
+<div class="recap" data-sem="{w}">
+ <h2>Mes paris J{w}</h2>
+ <div class="recap-vide">Aucun pari</div>
+ <div class="recap-liste"></div>
+ <div class="recap-calc">
+  <div class="case"><div class="lib">Mise (€)</div><div class="val"><input class="mise" type="number" step="1" value="10"></div></div>
+  <div class="case"><div class="lib">Boost combiné (%)</div><div class="val"><input class="boost" type="number" step="1" value="0"></div></div>
+  <div class="case"><div class="lib">Simples : gains</div><div class="val r-simple"></div></div>
+  <div class="case"><div class="lib">Combiné : cote</div><div class="val r-ctot"></div></div>
+  <div class="case"><div class="lib">Combiné : proba</div><div class="val r-proba"></div></div>
+  <div class="case"><div class="lib">Combiné : gains</div><div class="val r-comb"></div></div>
+ </div>
 </div>"""
 
 
@@ -780,17 +801,97 @@ def onglets_journees(matchs, sig, semaine, courante):
         mw = mw.sort_values(["gameday", "gametime"])
         boutons.append(f'<button class="onglet" data-o="j{w}">J{w}</button>')
         cartes = "".join(carte_match(g, sig) for g in mw.itertuples(index=False))
-        panneaux.append(f'<div class="panneau" id="j{w}"><div class="liste-matchs">{cartes}</div></div>')
+        panneaux.append(f'<div class="panneau" id="j{w}"><div class="liste-matchs">{cartes}</div>{recap_html(w)}</div>')
     return boutons, panneaux
 
 
+def fiches_matchs(matchs, blessures, rosters, joueurs, absents, semaines_rapport, courante, semaine):
+    """
+    Fiche de chaque match à venir : série de victoires/défaites, bilan, points pour/contre,
+    joueurs absents (rapport de blessures + IR) avec le coût des titulaires.
+    """
+    s = matchs[matchs["season"] == courante]
+    joues = s[s["result"].notna()].sort_values(["week", "gameday", "gametime"])
+    j_s = joueurs[joueurs["season"] == courante]
+    v, moy_poste, snaps_eq = valeurs_joueurs(j_s, semaine)
+    part = v.set_index("gsis_id")["share"].to_dict() if len(v) else {}
+    b = blessures[blessures["season"] == courante]
+    sem_rapport = int(b["week"].max()) if len(b) else None
+    ros = rosters[rosters["season"] == courante]
+    sem_ros = ros["week"].max() if len(ros) else None
+    ir = ros[(ros["week"] == sem_ros) & ros["status"].isin(STATUTS_ROSTER_ABSENT)] if sem_ros else ros.iloc[0:0]
+
+    def forme(t, avant):
+        g = joues[((joues["home_team"] == t) | (joues["away_team"] == t)) & (joues["week"] < avant)]
+        out = []
+        for x in g.itertuples(index=False):
+            dom = x.home_team == t
+            pf, pa = (x.home_score, x.away_score) if dom else (x.away_score, x.home_score)
+            out.append({"s": int(x.week), "adv": x.away_team if dom else x.home_team, "dom": bool(dom),
+                        "pf": int(pf), "pa": int(pa), "r": "V" if pf > pa else ("D" if pf < pa else "N")})
+        return out
+
+    def absences(t, w):
+        sr = min(w, sem_rapport) if sem_rapport else None
+        abs_t = set(absents.get((courante, sr, t), set())) if sr else set()
+        if (courante, w) == CORRECTIONS.get("cible"):
+            abs_t = (abs_t | CORRECTIONS["absents"].get(t, set())) - CORRECTIONS["presents"].get(t, set())
+        couts = {i["nom"]: i for i in absences_detaillees(t, v, moy_poste, snaps_eq, abs_t)}
+        liste, vus = [], set()
+        rep = b[(b["team"] == t) & (b["week"] == sr) & b["report_status"].isin(["Out", "Doubtful", "Questionable"])] if sr else b.iloc[0:0]
+        for x in rep.itertuples(index=False):
+            vus.add(x.gsis_id)
+            liste.append({"nom": x.full_name, "pos": x.position, "statut": x.report_status,
+                          "blessure": "" if pd.isna(x.report_primary_injury) else str(x.report_primary_injury)})
+        for x in ir[ir["team"] == t].itertuples(index=False):
+            if x.gsis_id not in vus and part.get(x.gsis_id, 0) >= 0.30:      # titulaires sur IR seulement
+                liste.append({"nom": x.full_name, "pos": x.position, "statut": "IR", "blessure": ""})
+        for a in liste:
+            c = couts.get(a["nom"])
+            if c and c["pts"] >= 0.1:
+                a["cout"] = round(c["pts"], 1)
+                a["rempl"] = c["rempl"]
+        ordre = {"Out": 0, "IR": 1, "Doubtful": 2, "Questionable": 3}
+        return sorted(liste, key=lambda a: (-a.get("cout", 0), ordre.get(a["statut"], 9)))
+
+    fiches = {}
+    for g in s[(s["week"] >= semaine) & s["result"].isna()].itertuples(index=False):
+        f = {}
+        for cote, t in (("dom", g.home_team), ("ext", g.away_team)):
+            fo = forme(t, g.week)
+            v_, d_ = sum(x["r"] == "V" for x in fo), sum(x["r"] == "D" for x in fo)
+            serie = ""
+            if fo:
+                dern = fo[-1]["r"]
+                n = 0
+                for x in reversed(fo):
+                    if x["r"] != dern:
+                        break
+                    n += 1
+                serie = f"{n} {dern}"
+            pts_pour = round(sum(x["pf"] for x in fo) / len(fo), 1) if fo else None
+            pts_contre = round(sum(x["pa"] for x in fo) / len(fo), 1) if fo else None
+            f[cote] = {"eq": t, "bilan": f"{v_}-{d_}", "serie": serie, "pour": pts_pour, "contre": pts_contre,
+                       "derniers": fo[-5:][::-1], "absents": absences(t, g.week)}
+        f["rapport"] = sem_rapport
+        fiches[g.game_id] = f
+    return fiches
+
+
 JS_MATCHS = """
+const FICHES=JSON.parse(document.getElementById('fiches').textContent);
+function lireLS(k){try{return JSON.parse(localStorage.getItem(k)||'{}')}catch(e){return {}}}
+function ecrireLS(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let PARIS=lireLS('paris_nfl'), COTES=lireLS('cotes_betclic_nfl');
+const fr=(x,d)=>x.toFixed(d===undefined?2:d).replace('.',',');
+
 function majMatch(el){
  const g=el.dataset.gagnant;
  if(g){el.querySelectorAll('.eq')[g==='dom'?1:0].classList.add('gagnant')}
  const cd=parseFloat(el.querySelector('.cote-d').value.replace(',','.')), ce=parseFloat(el.querySelector('.cote-e').value.replace(',','.'));
  if(isNaN(cd)||isNaN(ce)||cd<=1||ce<=1)return;
  const pd=(1/cd)/((1/cd)+(1/ce)), pe=1-pd, eqs=el.querySelectorAll('.eq');
+ el.dataset.pd=pd;
  [[eqs[0],pe],[eqs[1],pd]].forEach(([q,p])=>{
    const c=p>=%FAV%?'vert':(p>=0.5?'orange':'rouge');
    q.querySelector('.barre span').className=c; q.querySelector('.barre span').style.width=(p*100).toFixed(1)+'%';
@@ -801,9 +902,95 @@ function majMatch(el){
 }
 function trier(){document.querySelectorAll('.liste-matchs').forEach(L=>
  [...L.children].sort((a,b)=>b.dataset.ordre-a.dataset.ordre).forEach(x=>L.appendChild(x)))}
-document.querySelectorAll('.mt').forEach(el=>{majMatch(el);el.querySelectorAll('input').forEach(i=>{
- i.addEventListener('input',()=>majMatch(el)); i.addEventListener('change',trier)})});
+
+// --- Paris : bouton "Parier" -> "✓ Parié", récap par journée ---
+function majBoutons(el){const p=PARIS[el.dataset.g];
+ el.querySelectorAll('.pari').forEach(b=>{const on=!!(p&&p.cote===b.dataset.cote);b.classList.toggle('on',on);b.textContent=on?'✓ Parié':'Parier'})}
+function majRecap(R){
+ const w=R.dataset.sem, L=R.querySelector('.recap-liste'); L.innerHTML='';
+ const mats=[...document.querySelectorAll('#j'+w+' .mt')].filter(el=>PARIS[el.dataset.g]);
+ R.querySelector('.recap-vide').style.display=mats.length?'none':'block';
+ R.querySelector('.recap-calc').style.display=mats.length?'grid':'none';
+ let prodC=1, prodP=1, simple=0, ok=true;
+ const mise=parseFloat(R.querySelector('.mise').value.replace(',','.'))||0;
+ const boost=parseFloat(R.querySelector('.boost').value.replace(',','.'))||0;
+ mats.forEach(el=>{
+   const c=PARIS[el.dataset.g].cote, eq=c==='d'?el.dataset.dom:el.dataset.ext, adv=c==='d'?el.dataset.ext:el.dataset.dom;
+   const inp=el.querySelector(c==='d'?'.cote-d':'.cote-e'), cote=parseFloat(inp.value.replace(',','.'));
+   const pd=parseFloat(el.dataset.pd), p=isNaN(pd)?NaN:(c==='d'?pd:1-pd);
+   const ligne=document.createElement('div'); ligne.className='r-ligne';
+   ligne.innerHTML='<div class="r-eq">'+eq+' <span>vs '+adv+'</span></div><div class="r-p">'+(isNaN(p)?'':fr(p*100,1)+' %')
+     +'</div><input class="r-cote" type="number" step="0.01" value="'+(isNaN(cote)?'':inp.value)+'"><div class="r-gain">'+(isNaN(cote)?'':fr(mise*cote)+' €')
+     +'</div><button class="r-x">✕</button>';
+   ligne.querySelector('.r-cote').addEventListener('input',e=>{inp.value=e.target.value;sauverCote(el,inp);majMatch(el);
+     const v=parseFloat(e.target.value.replace(',','.'));ligne.querySelector('.r-gain').textContent=isNaN(v)?'':fr(mise*v)+' €';calcRecap(R)});
+   ligne.querySelector('.r-x').addEventListener('click',()=>{delete PARIS[el.dataset.g];ecrireLS('paris_nfl',PARIS);majBoutons(el);majRecap(R)});
+   L.appendChild(ligne);
+ });
+ calcRecap(R);
+}
+function calcRecap(R){
+ const w=R.dataset.sem, mise=parseFloat(R.querySelector('.mise').value.replace(',','.'))||0;
+ const boost=parseFloat(R.querySelector('.boost').value.replace(',','.'))||0;
+ let prodC=1, prodP=1, simple=0, n=0;
+ [...document.querySelectorAll('#j'+w+' .mt')].filter(el=>PARIS[el.dataset.g]).forEach(el=>{
+   const c=PARIS[el.dataset.g].cote, cote=parseFloat(el.querySelector(c==='d'?'.cote-d':'.cote-e').value.replace(',','.'));
+   const pd=parseFloat(el.dataset.pd), p=c==='d'?pd:1-pd;
+   if(!isNaN(cote)){prodC*=cote;simple+=mise*cote;n++} if(!isNaN(p))prodP*=p;
+ });
+ R.querySelectorAll('.r-ligne').forEach(l=>{const v=parseFloat(l.querySelector('.r-cote').value.replace(',','.'));l.querySelector('.r-gain').textContent=isNaN(v)?'':fr(mise*v)+' €'});
+ const coteB=prodC*(1+boost/100);
+ R.querySelector('.r-simple').textContent=n?fr(simple)+' € (mise '+fr(mise*n,0)+' €)':'';
+ R.querySelector('.r-ctot').textContent=n>1?fr(coteB):'';
+ R.querySelector('.r-proba').textContent=n>1?fr(prodP*100,1)+' %':'';
+ R.querySelector('.r-comb').textContent=n>1?fr(mise*coteB)+' €':'';
+ const S=lireLS('mises_nfl');S[w]={mise:mise,boost:boost};ecrireLS('mises_nfl',S);
+}
+function sauverCote(el,inp){const k=el.dataset.g+'_'+(inp.classList.contains('cote-d')?'d':'e');
+ if(inp.value&&inp.value!==inp.dataset.defaut)COTES[k]=inp.value;else delete COTES[k];ecrireLS('cotes_betclic_nfl',COTES)}
+function recapDe(el){return el.closest('.panneau').querySelector('.recap')}
+
+document.querySelectorAll('.mt').forEach(el=>{
+ ['d','e'].forEach(c=>{const k=el.dataset.g+'_'+c, inp=el.querySelector('.cote-'+c); if(COTES[k])inp.value=COTES[k];});
+ majMatch(el); majBoutons(el);
+ el.querySelectorAll('input').forEach(i=>{
+   i.addEventListener('input',()=>{majMatch(el);sauverCote(el,i);majRecap(recapDe(el))}); i.addEventListener('change',trier)});
+ el.querySelectorAll('.pari').forEach(b=>b.addEventListener('click',ev=>{ev.stopPropagation();
+   const g=el.dataset.g; if(PARIS[g]&&PARIS[g].cote===b.dataset.cote)delete PARIS[g]; else PARIS[g]={cote:b.dataset.cote};
+   ecrireLS('paris_nfl',PARIS); majBoutons(el); majRecap(recapDe(el))}));
+ el.addEventListener('click',ev=>{if(ev.target.closest('input,button'))return; ouvrirFiche(el)});
+});
+document.querySelectorAll('.recap').forEach(R=>{
+ const S=lireLS('mises_nfl')[R.dataset.sem]; if(S){R.querySelector('.mise').value=S.mise;R.querySelector('.boost').value=S.boost}
+ R.querySelectorAll('.mise,.boost').forEach(i=>i.addEventListener('input',()=>calcRecap(R)));
+ majRecap(R)});
 trier();
+
+// --- Fiche match ---
+function colEquipe(f,titre){
+ const der=f.derniers.map(x=>'<div class="d-l"><span class="pastille '+x.r+'">'+x.r+'</span> J'+x.s+' '+(x.dom?'vs ':'@ ')+x.adv
+   +' <b>'+x.pf+'-'+x.pa+'</b></div>').join('')||'<div class="d-l">—</div>';
+ const abs=f.absents.map(a=>'<div class="d-abs"><span class="st st-'+a.statut+'">'+a.statut+'</span> <b>'+a.nom+'</b> '+a.pos
+   +(a.blessure?' · '+a.blessure:'')+(a.cout?' <span class="cout">-'+fr(a.cout,1)+' pts</span>':'')+'</div>').join('')||'<div class="d-l">—</div>';
+ return '<div class="d-col"><div class="d-eq">'+titre+'</div>'
+  +'<div class="d-chiffres"><div><div class="lib">Bilan</div><div class="val">'+f.bilan+'</div></div>'
+  +'<div><div class="lib">Série</div><div class="val">'+(f.serie||'—')+'</div></div>'
+  +'<div><div class="lib">Pts pour</div><div class="val">'+(f.pour===null?'—':fr(f.pour,1))+'</div></div>'
+  +'<div><div class="lib">Pts contre</div><div class="val">'+(f.contre===null?'—':fr(f.contre,1))+'</div></div></div>'
+  +'<div class="d-titre">5 derniers matchs</div>'+der+'<div class="d-titre">Absents</div>'+abs+'</div>';
+}
+function ouvrirFiche(el){
+ const f=FICHES[el.dataset.g]; if(!f)return;
+ document.getElementById('fiche-contenu').innerHTML='<div class="d-haut">'+el.dataset.ext+' @ '+el.dataset.dom
+   +'<span class="d-rap">🩹 Rapport J'+(f.rapport||'—')+'</span></div><div class="d-grille">'
+   +colEquipe(f.ext,el.dataset.ext)+colEquipe(f.dom,'🏠 '+el.dataset.dom)+'</div>';
+ document.getElementById('fiche').style.display='flex';
+}
+function fermerFiche(){document.getElementById('fiche').style.display='none'}
+document.getElementById('fiche').addEventListener('click',e=>{if(e.target.id==='fiche')fermerFiche()});
+document.getElementById('fiche-x').addEventListener('click',fermerFiche);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')fermerFiche()});
+
 function onglet(n){document.querySelectorAll('.onglet').forEach(x=>x.classList.toggle('actif',x.dataset.o===n));
  document.querySelectorAll('.panneau').forEach(x=>x.style.display=x.id===n?'block':'none');
  try{localStorage.setItem('onglet_nfl',n)}catch(e){}}
@@ -814,32 +1001,67 @@ onglet(o0);
 """.replace("%FAV%", str(SEUIL_FAVORI))
 
 CSS_MATCHS = """
-.onglets{display:flex;gap:8px;margin:4px 0 18px}
-.onglet{flex:1;font-size:20px;font-weight:800;padding:13px;border-radius:12px;border:2px solid #4cc9f0;
+.onglets{display:flex;gap:8px;margin:4px 0 18px;flex-wrap:wrap}
+.onglet{flex:1 0 auto;min-width:76px;font-size:20px;font-weight:800;padding:13px;border-radius:12px;border:2px solid #4cc9f0;
         background:#22223b;color:#fff;cursor:pointer}
 .onglet.actif{background:#4cc9f0;color:#0b1d2b}
-.liste-matchs{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}
-.mt{background:#22223b;border:2px solid #33335a;border-radius:16px;padding:14px}
+.onglet.sig-o{border-color:#f39c12}.onglet.sig-o.actif{background:#f39c12}
+.liste-matchs{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px}
+.mt{background:#22223b;border:2px solid #33335a;border-radius:16px;padding:14px;cursor:pointer}
+.mt:hover{background:#2a2a48}
 .mt.sur{border-color:#2ecc71}
-.mt-haut{font-size:15px;color:#9ad6f0;font-weight:700;margin-bottom:6px}
-.eq{display:grid;grid-template-columns:95px 1fr 80px;gap:10px;align-items:center;padding:7px 0}
+.mt-haut{font-size:15px;color:#9ad6f0;font-weight:700;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.mt-haut .fiche{margin-left:auto;font-size:18px}
+.score{font-size:18px;font-weight:800;color:#fff}
+.eq{display:grid;grid-template-columns:90px 1fr 74px 88px;gap:8px;align-items:center;padding:7px 0}
 .eq .nom{font-size:22px;font-weight:800;white-space:nowrap}
 .eq.fav .nom{color:#2ecc71}
+.eq.gagnant .nom::after{content:" ✅"}
 .eq .barre{position:relative;background:#3a3a5a;border-radius:8px;height:32px;overflow:hidden}
 .eq .barre span{position:absolute;left:0;top:0;bottom:0;border-radius:8px}
 .eq .barre b{position:relative;display:block;text-align:center;line-height:32px;font-size:19px;text-shadow:0 0 4px #000}
 .vert{background:#2ecc71}.orange{background:#f39c12}.rouge{background:#e74c3c}
-.eq input{width:78px}
+.eq input{width:74px}
+.pari{font-size:15px;font-weight:800;padding:8px 4px;border-radius:9px;border:2px solid #8888aa;background:#1a1a2e;color:#fff;cursor:pointer}
+.pari.on{background:#2ecc71;border-color:#2ecc71;color:#0b2914}
 .alerte{margin-top:8px;font-size:16px;font-weight:700;color:#ffcf70}
-.onglets{flex-wrap:wrap}.onglet{flex:1 0 auto;min-width:76px}
-.onglet.sig-o{border-color:#f39c12}.onglet.sig-o.actif{background:#f39c12}
-.score{float:right;font-size:18px;font-weight:800;color:#fff}
-.eq.gagnant .nom::after{content:" ✅"}
-@media (max-width:700px){.liste-matchs{grid-template-columns:1fr}.onglet{font-size:17px;padding:10px}}
+.recap{background:#16324f;border:2px solid #4cc9f0;border-radius:16px;padding:6px 16px 16px;margin-top:22px}
+.recap h2{margin:14px 0 10px;border:none;padding:0}
+.recap-vide{font-size:19px;font-weight:700;color:#c8c8e0;padding:6px 0}
+.r-ligne{display:grid;grid-template-columns:1fr 80px 90px 110px 44px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #2d5a80}
+.r-eq{font-size:21px;font-weight:800}.r-eq span{font-size:16px;color:#c8c8e0;font-weight:600}
+.r-p{font-size:18px;font-weight:700}.r-gain{font-size:19px;font-weight:800;color:#2ecc71}
+.r-x{background:#5a1e1e;color:#fff;border:none;border-radius:8px;font-size:18px;padding:6px;cursor:pointer}
+.r-cote{width:84px}
+.recap-calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:12px}
+.recap-calc .case{background:#1a1a2e}
+.r-comb,.r-simple{color:#2ecc71}
+#fiche{position:fixed;inset:0;background:rgba(5,5,15,.85);display:none;align-items:flex-start;justify-content:center;z-index:50;overflow:auto;padding:20px 10px}
+#fiche-boite{background:#1f1f38;border:2px solid #4cc9f0;border-radius:18px;max-width:1000px;width:100%;padding:18px;position:relative}
+#fiche-x{position:absolute;top:10px;right:12px;font-size:26px;background:none;border:none;color:#fff;cursor:pointer}
+.d-haut{font-size:27px;font-weight:800;margin-bottom:14px;padding-right:40px}
+.d-rap{font-size:15px;font-weight:700;color:#9ad6f0;margin-left:14px}
+.d-grille{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.d-col{background:#22223b;border-radius:14px;padding:14px}
+.d-eq{font-size:24px;font-weight:800;margin-bottom:10px}
+.d-chiffres{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.d-chiffres .lib{font-size:14px;color:#9ad6f0;font-weight:700}.d-chiffres .val{font-size:22px;font-weight:800}
+.d-titre{font-size:16px;color:#9ad6f0;font-weight:800;margin:12px 0 6px;text-transform:uppercase}
+.d-l{font-size:18px;padding:4px 0}
+.pastille{display:inline-block;width:28px;text-align:center;border-radius:6px;font-weight:800;color:#0b1d2b}
+.pastille.V{background:#2ecc71}.pastille.D{background:#e74c3c;color:#fff}.pastille.N{background:#aaa}
+.d-abs{font-size:17px;padding:5px 0;border-top:1px solid #33335a}
+.st{display:inline-block;font-size:13px;font-weight:800;padding:2px 7px;border-radius:6px;background:#555}
+.st-Out,.st-IR{background:#e74c3c}.st-Doubtful{background:#f39c12;color:#111}.st-Questionable{background:#f1c40f;color:#111}
+.cout{color:#ff8a8a;font-weight:800}
+@media (max-width:760px){.liste-matchs{grid-template-columns:1fr}.onglet{font-size:17px;padding:10px}
+ .eq{grid-template-columns:72px 1fr 66px 78px;gap:6px}.eq .nom{font-size:19px}.eq input{width:66px}
+ .d-grille{grid-template-columns:1fr}.d-chiffres{grid-template-columns:repeat(2,1fr)}
+ .r-ligne{grid-template-columns:1fr 70px 80px 36px}.r-gain{display:none}}
 """
 
 
-def generer_html(semaine_df, semaine, courante, hist_tab, matchs=None, sig=None, fichier=FICHIER_HTML):
+def generer_html(semaine_df, semaine, courante, hist_tab, matchs=None, sig=None, fiches=None, fichier=FICHIER_HTML):
     print("5) Génération du dashboard HTML…")
     boutons, panneaux = onglets_journees(matchs, sig, semaine, courante) if matchs is not None and semaine else ([], [])
     # Edge = signal dont l'historique donne un ajustement > 0 ; les autres sont déjà dans la ligne du book
@@ -877,7 +1099,10 @@ def generer_html(semaine_df, semaine, courante, hist_tab, matchs=None, sig=None,
 <h2>Historique des signaux {SAISON_DEBUT}–{courante - 1}</h2>
 {tab}
 </div>
-</div><script>{JS}{JS_MATCHS}</script></body></html>"""
+</div>
+<div id="fiche"><div id="fiche-boite"><button id="fiche-x">✕</button><div id="fiche-contenu"></div></div></div>
+<script type="application/json" id="fiches">{json.dumps(fiches or {}, ensure_ascii=False).replace("</", "<\\/")}</script>
+<script>{JS}{JS_MATCHS}</script></body></html>"""
     with open(fichier, "w", encoding="utf-8") as f:
         f.write(page)
     chemin = os.path.abspath(fichier)
@@ -957,7 +1182,8 @@ def main():
         print("   Aucun signal.")
     h.to_csv("historique_signaux.csv", index=False)
     a_venir_sig = sig[(sig["season"] == courante) & ~sig["joue"]] if len(sig) else sig
-    generer_html(sem_df, semaine, courante, hist_tab, matchs, a_venir_sig)
+    fiches = fiches_matchs(matchs, blessures, rosters, joueurs, absents, semaines_rapport, courante, semaine) if semaine else {}
+    generer_html(sem_df, semaine, courante, hist_tab, matchs, a_venir_sig, fiches)
 
 
 if __name__ == "__main__":
