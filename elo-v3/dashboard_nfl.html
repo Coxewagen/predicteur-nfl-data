@@ -44,7 +44,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
 .mt-haut{font-size:15px;color:#9ad6f0;font-weight:700;margin-bottom:6px;display:flex;gap:10px;align-items:center}
 .mt-haut .fiche{margin-left:auto;font-size:18px}
 .score{font-size:18px;font-weight:800;color:#fff}
-.eq{display:grid;grid-template-columns:90px 1fr 74px 88px;gap:8px;align-items:center;padding:7px 0}
+.eq{display:grid;grid-template-columns:90px 1fr 74px 104px;gap:8px;align-items:center;padding:7px 0}
 .eq .nom{font-size:22px;font-weight:800;white-space:nowrap}
 .eq.fav .nom{color:#2ecc71}
 .eq.gagnant .nom::after{content:" ✅"}
@@ -53,20 +53,27 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
 .eq .barre b{position:relative;display:block;text-align:center;line-height:32px;font-size:19px;text-shadow:0 0 4px #000}
 .vert{background:#2ecc71}.orange{background:#f39c12}.rouge{background:#e74c3c}
 .eq input{width:74px}
-.pari{font-size:15px;font-weight:800;padding:8px 4px;border-radius:9px;border:2px solid #8888aa;background:#1a1a2e;color:#fff;cursor:pointer}
+.pari{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;padding:5px 6px;border-radius:9px;
+       border:2px solid #8888aa;background:#1a1a2e;color:#fff;cursor:pointer;line-height:1.1}
+.pari .chk{width:22px;height:22px;accent-color:#2ecc71;cursor:pointer;flex:none}
 .pari.on{background:#2ecc71;border-color:#2ecc71;color:#0b2914}
+.contre-tag{display:none;margin-top:8px;font-size:17px;font-weight:800;color:#ff8a8a}
+.mt.contre{border-color:#e74c3c}.mt.contre .contre-tag{display:block}
+.r-contre{font-style:normal;font-size:15px;color:#ff8a8a;font-weight:800}
 .alerte{margin-top:8px;font-size:16px;font-weight:700;color:#ffcf70}
 .recap{background:#16324f;border:2px solid #4cc9f0;border-radius:16px;padding:6px 16px 16px;margin-top:22px}
 .recap h2{margin:14px 0 10px;border:none;padding:0}
 .recap-vide{font-size:19px;font-weight:700;color:#c8c8e0;padding:6px 0}
-.r-ligne{display:grid;grid-template-columns:1fr 80px 90px 110px 44px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #2d5a80}
+.r-ligne{display:grid;grid-template-columns:1fr 90px 110px 44px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #2d5a80}
 .r-eq{font-size:21px;font-weight:800}.r-eq span{font-size:16px;color:#c8c8e0;font-weight:600}
-.r-p{font-size:18px;font-weight:700}.r-gain{font-size:19px;font-weight:800;color:#2ecc71}
+.r-p{font-size:18px;font-weight:700}.r-cote-fixe{font-size:20px;font-weight:800}
 .r-x{background:#5a1e1e;color:#fff;border:none;border-radius:8px;font-size:18px;padding:6px;cursor:pointer}
 .r-cote{width:84px}
 .recap-calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:12px}
 .recap-calc .case{background:#1a1a2e}
-.r-comb,.r-simple{color:#2ecc71}
+.r-comb{color:#2ecc71}
+.version{font-size:16px;font-weight:700;color:#9ad6f0;margin-left:12px;white-space:nowrap}
+@media (max-width:760px){.version{display:block;margin:4px 0 0}}
 #fiche{position:fixed;inset:0;background:rgba(5,5,15,.85);display:none;align-items:flex-start;justify-content:center;z-index:50;overflow:auto;padding:20px 10px}
 #fiche-boite{background:#1f1f38;border:2px solid #4cc9f0;border-radius:18px;max-width:1000px;width:100%;padding:18px;position:relative}
 #fiche-x{position:absolute;top:10px;right:12px;font-size:26px;background:none;border:none;color:#fff;cursor:pointer}
@@ -86,152 +93,166 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
 .st-Out,.st-IR{background:#e74c3c}.st-Doubtful{background:#f39c12;color:#111}.st-Questionable{background:#f1c40f;color:#111}
 .cout{color:#ff8a8a;font-weight:800}
 @media (max-width:760px){.liste-matchs{grid-template-columns:1fr}.onglet{font-size:17px;padding:10px}
- .eq{grid-template-columns:72px 1fr 66px 78px;gap:6px}.eq .nom{font-size:19px}.eq input{width:66px}
+ .eq{grid-template-columns:62px 1fr 64px 92px;gap:6px}.eq .nom{font-size:19px}.eq input{width:66px}
  .d-grille{grid-template-columns:1fr}.d-chiffres{grid-template-columns:repeat(2,1fr)}
- .r-ligne{grid-template-columns:1fr 70px 80px 36px}.r-gain{display:none}}
+ .r-ligne{grid-template-columns:1fr 64px 84px 36px}}
 </style></head>
 <body><div class="page">
-<h1>🏈 NFL 2026</h1>
+<h1>🏈 NFL 2026<span class="version">v2.3 · sam. 14/11 17 h 46</span></h1>
 <div class="onglets"><button class="onglet" data-o="j10">J10</button><button class="onglet" data-o="j11">J11</button><button class="onglet" data-o="j12">J12</button><button class="onglet" data-o="j13">J13</button><button class="onglet" data-o="j14">J14</button><button class="onglet" data-o="j15">J15</button><button class="onglet" data-o="j16">J16</button><button class="onglet" data-o="j17">J17</button><button class="onglet" data-o="j18">J18</button><button class="onglet sig-o" data-o="p-signaux">Signaux</button></div>
 <div class="panneau" id="j10"><div class="liste-matchs">
 <div class="mt" data-ordre="0" data-g="2026_10_WAS_NYG" data-dom="NYG" data-ext="WAS" data-gagnant="ext">
  <div class="mt-haut"><span class="quand">ven. 13/11 · 02 h 15</span><span class="score">24 – 21</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">WAS</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.02" data-defaut="2.02" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NYG</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.82" data-defaut="1.82" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_NE_DET" data-dom="DET" data-ext="NE">
  <div class="mt-haut"><span class="quand">dim. 15/11 · 15 h 30</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.24" data-defaut="2.24" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DET</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.68" data-defaut="1.68" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_KC_ATL" data-dom="ATL" data-ext="KC">
  <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">KC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.57" data-defaut="1.57" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 ATL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="2.45" data-defaut="2.45" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_HOU_CLE" data-dom="CLE" data-ext="HOU">
  <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">HOU</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.42" data-defaut="1.42" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CLE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="2.95" data-defaut="2.95" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_MIN_GB" data-dom="GB" data-ext="MIN">
  <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">MIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.24" data-defaut="2.24" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 GB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.68" data-defaut="1.68" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ MIN : QB Kirk Cousins au lieu de Carson Wentz (+5.7 pts)</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_MIA_IND" data-dom="IND" data-ext="MIA">
  <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">MIA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.80" data-defaut="2.80" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 IND</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.46" data-defaut="1.46" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_CAR_NO" data-dom="NO" data-ext="CAR">
  <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CAR</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.14" data-defaut="2.14" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NO</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.74" data-defaut="1.74" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_BUF_NYJ" data-dom="NYJ" data-ext="BUF">
  <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">BUF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.24" data-defaut="1.24" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NYJ</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="4.30" data-defaut="4.30" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_JAX_TEN" data-dom="TEN" data-ext="JAX">
  <div class="mt-haut"><span class="quand">dim. 15/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.14" data-defaut="1.14" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 TEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="6.00" data-defaut="6.00" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_LA_ARI" data-dom="ARI" data-ext="LA">
  <div class="mt-haut"><span class="quand">dim. 15/11 · 22 h 05</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.20" data-defaut="1.20" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="4.80" data-defaut="4.80" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ LA sans Puka Nacua (-2.9), Davante Adams (-0.7) : -3.6 pts</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_SEA_LV" data-dom="LV" data-ext="SEA">
  <div class="mt-haut"><span class="quand">dim. 15/11 · 22 h 05</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">SEA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.33" data-defaut="1.33" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 LV</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="3.45" data-defaut="3.45" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ LV : QB Fernando Mendoza au lieu de Kirk Cousins (-4.1 pts)</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_SF_DAL" data-dom="DAL" data-ext="SF">
  <div class="mt-haut"><span class="quand">dim. 15/11 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">SF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.46" data-defaut="1.46" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="2.80" data-defaut="2.80" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_PIT_CIN" data-dom="CIN" data-ext="PIT">
  <div class="mt-haut"><span class="quand">lun. 16/11 · 02 h 20</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">PIT</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.54" data-defaut="2.54" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.54" data-defaut="1.54" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_10_LAC_BAL" data-dom="BAL" data-ext="LAC">
  <div class="mt-haut"><span class="quand">mar. 17/11 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LAC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.80" data-defaut="2.80" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 BAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.46" data-defaut="1.46" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div></div>
 <div class="recap" data-sem="10">
@@ -241,7 +262,6 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="recap-calc">
   <div class="case"><div class="lib">Mise (€)</div><div class="val"><input class="mise" type="number" step="1" value="10"></div></div>
   <div class="case"><div class="lib">Boost combiné (%)</div><div class="val"><input class="boost" type="number" step="1" value="0"></div></div>
-  <div class="case"><div class="lib">Simples : gains</div><div class="val r-simple"></div></div>
   <div class="case"><div class="lib">Combiné : cote</div><div class="val r-ctot"></div></div>
   <div class="case"><div class="lib">Combiné : proba</div><div class="val r-proba"></div></div>
   <div class="case"><div class="lib">Combiné : gains</div><div class="val r-comb"></div></div>
@@ -251,130 +271,143 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="mt-haut"><span class="quand">ven. 20/11 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">IND</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="4.50" data-defaut="4.50" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 HOU</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.22" data-defaut="1.22" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_11_MIA_BUF" data-dom="BUF" data-ext="MIA">
  <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">MIA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="10.50" data-defaut="10.50" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 BUF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.06" data-defaut="1.06" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_11_BAL_CAR" data-dom="CAR" data-ext="BAL">
  <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">BAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.05" data-defaut="2.05" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CAR</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.80" data-defaut="1.80" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_11_NO_CHI" data-dom="CHI" data-ext="NO">
  <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NO</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="4.70" data-defaut="4.70" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.21" data-defaut="1.21" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_11_TEN_DAL" data-dom="DAL" data-ext="TEN">
  <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">TEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="4.30" data-defaut="4.30" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.24" data-defaut="1.24" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_11_TB_DET" data-dom="DET" data-ext="TB">
  <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">TB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.50" data-defaut="2.50" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DET</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.56" data-defaut="1.56" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_11_ARI_KC" data-dom="KC" data-ext="ARI">
  <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">ARI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="7.50" data-defaut="7.50" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 KC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.10" data-defaut="1.10" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_11_JAX_NYG" data-dom="NYG" data-ext="JAX">
  <div class="mt-haut"><span class="quand">dim. 22/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.38" data-defaut="1.38" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NYG</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="3.15" data-defaut="3.15" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_11_NYJ_LAC" data-dom="LAC" data-ext="NYJ">
  <div class="mt-haut"><span class="quand">dim. 22/11 · 22 h 05</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NYJ</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.05" data-defaut="2.05" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 LAC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.80" data-defaut="1.80" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_11_LV_DEN" data-dom="DEN" data-ext="LV">
  <div class="mt-haut"><span class="quand">dim. 22/11 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LV</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="4.40" data-defaut="4.40" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.23" data-defaut="1.23" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ LV : QB Fernando Mendoza au lieu de Kirk Cousins (-3.8 pts)</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_11_PIT_PHI" data-dom="PHI" data-ext="PIT">
  <div class="mt-haut"><span class="quand">dim. 22/11 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">PIT</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.51" data-defaut="1.51" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 PHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="2.64" data-defaut="2.64" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_11_MIN_SF" data-dom="SF" data-ext="MIN">
  <div class="mt-haut"><span class="quand">lun. 23/11 · 02 h 20</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">MIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="2.70" data-defaut="2.70" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 SF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="1.49" data-defaut="1.49" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ MIN : QB Kirk Cousins au lieu de Carson Wentz (+5.1 pts)</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_11_CIN_WAS" data-dom="WAS" data-ext="CIN">
  <div class="mt-haut"><span class="quand">mar. 24/11 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="1.49" data-defaut="1.49" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 WAS</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="2.70" data-defaut="2.70" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div></div>
 <div class="recap" data-sem="11">
@@ -384,7 +417,6 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="recap-calc">
   <div class="case"><div class="lib">Mise (€)</div><div class="val"><input class="mise" type="number" step="1" value="10"></div></div>
   <div class="case"><div class="lib">Boost combiné (%)</div><div class="val"><input class="boost" type="number" step="1" value="0"></div></div>
-  <div class="case"><div class="lib">Simples : gains</div><div class="val r-simple"></div></div>
   <div class="case"><div class="lib">Combiné : cote</div><div class="val r-ctot"></div></div>
   <div class="case"><div class="lib">Combiné : proba</div><div class="val r-proba"></div></div>
   <div class="case"><div class="lib">Combiné : gains</div><div class="val r-comb"></div></div>
@@ -394,160 +426,176 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="mt-haut"><span class="quand">jeu. 26/11 · 02 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">GB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 LA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_CHI_DET" data-dom="DET" data-ext="CHI">
  <div class="mt-haut"><span class="quand">jeu. 26/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DET</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_PHI_DAL" data-dom="DAL" data-ext="PHI">
  <div class="mt-haut"><span class="quand">jeu. 26/11 · 22 h 30</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">PHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_KC_BUF" data-dom="BUF" data-ext="KC">
  <div class="mt-haut"><span class="quand">ven. 27/11 · 02 h 20</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">KC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 BUF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_DEN_PIT" data-dom="PIT" data-ext="DEN">
  <div class="mt-haut"><span class="quand">ven. 27/11 · 21 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">DEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 PIT</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_NO_CIN" data-dom="CIN" data-ext="NO">
  <div class="mt-haut"><span class="quand">dim. 29/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NO</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_LV_CLE" data-dom="CLE" data-ext="LV">
  <div class="mt-haut"><span class="quand">dim. 29/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LV</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CLE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_BAL_HOU" data-dom="HOU" data-ext="BAL">
  <div class="mt-haut"><span class="quand">dim. 29/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">BAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 HOU</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_NYG_IND" data-dom="IND" data-ext="NYG">
  <div class="mt-haut"><span class="quand">dim. 29/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NYG</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 IND</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_NYJ_MIA" data-dom="MIA" data-ext="NYJ">
  <div class="mt-haut"><span class="quand">dim. 29/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NYJ</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 MIA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_ATL_MIN" data-dom="MIN" data-ext="ATL">
  <div class="mt-haut"><span class="quand">dim. 29/11 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">ATL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 MIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_TEN_JAX" data-dom="JAX" data-ext="TEN">
  <div class="mt-haut"><span class="quand">dim. 29/11 · 22 h 05</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">TEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 JAX</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_WAS_ARI" data-dom="ARI" data-ext="WAS">
  <div class="mt-haut"><span class="quand">dim. 29/11 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">WAS</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_SEA_SF" data-dom="SF" data-ext="SEA">
  <div class="mt-haut"><span class="quand">dim. 29/11 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">SEA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 SF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_NE_LAC" data-dom="LAC" data-ext="NE">
  <div class="mt-haut"><span class="quand">lun. 30/11 · 02 h 20</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 LAC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_12_CAR_TB" data-dom="TB" data-ext="CAR">
  <div class="mt-haut"><span class="quand">mar. 01/12 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CAR</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 TB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div></div>
 <div class="recap" data-sem="12">
@@ -557,7 +605,6 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="recap-calc">
   <div class="case"><div class="lib">Mise (€)</div><div class="val"><input class="mise" type="number" step="1" value="10"></div></div>
   <div class="case"><div class="lib">Boost combiné (%)</div><div class="val"><input class="boost" type="number" step="1" value="0"></div></div>
-  <div class="case"><div class="lib">Simples : gains</div><div class="val r-simple"></div></div>
   <div class="case"><div class="lib">Combiné : cote</div><div class="val r-ctot"></div></div>
   <div class="case"><div class="lib">Combiné : proba</div><div class="val r-proba"></div></div>
   <div class="case"><div class="lib">Combiné : gains</div><div class="val r-comb"></div></div>
@@ -567,140 +614,154 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="mt-haut"><span class="quand">ven. 04/12 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">KC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 LA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_DET_ATL" data-dom="ATL" data-ext="DET">
  <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">DET</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 ATL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_JAX_CHI" data-dom="CHI" data-ext="JAX">
  <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_CIN_CLE" data-dom="CLE" data-ext="CIN">
  <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CLE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_GB_NO" data-dom="NO" data-ext="GB">
  <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">GB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NO</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_SF_NYG" data-dom="NYG" data-ext="SF">
  <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">SF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NYG</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_LAC_TB" data-dom="TB" data-ext="LAC">
  <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LAC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 TB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_WAS_TEN" data-dom="TEN" data-ext="WAS">
  <div class="mt-haut"><span class="quand">dim. 06/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">WAS</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 TEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_PHI_ARI" data-dom="ARI" data-ext="PHI">
  <div class="mt-haut"><span class="quand">dim. 06/12 · 22 h 05</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">PHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_MIA_DEN" data-dom="DEN" data-ext="MIA">
  <div class="mt-haut"><span class="quand">dim. 06/12 · 22 h 05</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">MIA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_CAR_MIN" data-dom="MIN" data-ext="CAR">
  <div class="mt-haut"><span class="quand">dim. 06/12 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CAR</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 MIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_BUF_NE" data-dom="NE" data-ext="BUF">
  <div class="mt-haut"><span class="quand">dim. 06/12 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">BUF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_HOU_PIT" data-dom="PIT" data-ext="HOU">
  <div class="mt-haut"><span class="quand">lun. 07/12 · 02 h 20</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">HOU</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 PIT</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_13_DAL_SEA" data-dom="SEA" data-ext="DAL">
  <div class="mt-haut"><span class="quand">mar. 08/12 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">DAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 SEA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div></div>
 <div class="recap" data-sem="13">
@@ -710,7 +771,6 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="recap-calc">
   <div class="case"><div class="lib">Mise (€)</div><div class="val"><input class="mise" type="number" step="1" value="10"></div></div>
   <div class="case"><div class="lib">Boost combiné (%)</div><div class="val"><input class="boost" type="number" step="1" value="0"></div></div>
-  <div class="case"><div class="lib">Simples : gains</div><div class="val r-simple"></div></div>
   <div class="case"><div class="lib">Combiné : cote</div><div class="val r-ctot"></div></div>
   <div class="case"><div class="lib">Combiné : proba</div><div class="val r-proba"></div></div>
   <div class="case"><div class="lib">Combiné : gains</div><div class="val r-comb"></div></div>
@@ -720,150 +780,165 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="mt-haut"><span class="quand">ven. 11/12 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">MIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_TB_BAL" data-dom="BAL" data-ext="TB">
  <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">TB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 BAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_NO_CAR" data-dom="CAR" data-ext="NO">
  <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NO</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CAR</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_ATL_CLE" data-dom="CLE" data-ext="ATL">
  <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">ATL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CLE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_TEN_DET" data-dom="DET" data-ext="TEN">
  <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">TEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DET</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_CHI_MIA" data-dom="MIA" data-ext="CHI">
  <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 MIA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_DEN_NYJ" data-dom="NYJ" data-ext="DEN">
  <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">DEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NYJ</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_IND_PHI" data-dom="PHI" data-ext="IND">
  <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">IND</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 PHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_HOU_WAS" data-dom="WAS" data-ext="HOU">
  <div class="mt-haut"><span class="quand">dim. 13/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">HOU</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 WAS</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_LAC_LV" data-dom="LV" data-ext="LAC">
  <div class="mt-haut"><span class="quand">dim. 13/12 · 22 h 05</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LAC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 LV</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_KC_CIN" data-dom="CIN" data-ext="KC">
  <div class="mt-haut"><span class="quand">dim. 13/12 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">KC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_NYG_SEA" data-dom="SEA" data-ext="NYG">
  <div class="mt-haut"><span class="quand">dim. 13/12 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NYG</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 SEA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_LA_SF" data-dom="SF" data-ext="LA">
  <div class="mt-haut"><span class="quand">dim. 13/12 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 SF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_BUF_GB" data-dom="GB" data-ext="BUF">
  <div class="mt-haut"><span class="quand">lun. 14/12 · 02 h 20</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">BUF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 GB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_14_PIT_JAX" data-dom="JAX" data-ext="PIT">
  <div class="mt-haut"><span class="quand">mar. 15/12 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">PIT</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 JAX</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div></div>
 <div class="recap" data-sem="14">
@@ -873,7 +948,6 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="recap-calc">
   <div class="case"><div class="lib">Mise (€)</div><div class="val"><input class="mise" type="number" step="1" value="10"></div></div>
   <div class="case"><div class="lib">Boost combiné (%)</div><div class="val"><input class="boost" type="number" step="1" value="0"></div></div>
-  <div class="case"><div class="lib">Simples : gains</div><div class="val r-simple"></div></div>
   <div class="case"><div class="lib">Combiné : cote</div><div class="val r-ctot"></div></div>
   <div class="case"><div class="lib">Combiné : proba</div><div class="val r-proba"></div></div>
   <div class="case"><div class="lib">Combiné : gains</div><div class="val r-comb"></div></div>
@@ -883,160 +957,176 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="mt-haut"><span class="quand">ven. 18/12 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">SF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 LAC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ LAC déjà éliminée, SF encore en course</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_SEA_PHI" data-dom="PHI" data-ext="SEA">
  <div class="mt-haut"><span class="quand">sam. 19/12 · 23 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">SEA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 PHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_CHI_BUF" data-dom="BUF" data-ext="CHI">
  <div class="mt-haut"><span class="quand">dim. 20/12 · 02 h 20</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 BUF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_CIN_CAR" data-dom="CAR" data-ext="CIN">
  <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CAR</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_MIA_GB" data-dom="GB" data-ext="MIA">
  <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">MIA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 GB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_JAX_HOU" data-dom="HOU" data-ext="JAX">
  <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 HOU</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_CLE_NYG" data-dom="NYG" data-ext="CLE">
  <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CLE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NYG</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_BAL_PIT" data-dom="PIT" data-ext="BAL">
  <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">BAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 PIT</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_NO_TB" data-dom="TB" data-ext="NO">
  <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NO</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 TB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_IND_TEN" data-dom="TEN" data-ext="IND">
  <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">IND</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 TEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_ATL_WAS" data-dom="WAS" data-ext="ATL">
  <div class="mt-haut"><span class="quand">dim. 20/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">ATL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 WAS</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_NYJ_ARI" data-dom="ARI" data-ext="NYJ">
  <div class="mt-haut"><span class="quand">dim. 20/12 · 22 h 05</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NYJ</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_DAL_LA" data-dom="LA" data-ext="DAL">
  <div class="mt-haut"><span class="quand">dim. 20/12 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">DAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 LA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_DEN_LV" data-dom="LV" data-ext="DEN">
  <div class="mt-haut"><span class="quand">dim. 20/12 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">DEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 LV</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_DET_MIN" data-dom="MIN" data-ext="DET">
  <div class="mt-haut"><span class="quand">lun. 21/12 · 02 h 20</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">DET</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 MIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_15_NE_KC" data-dom="KC" data-ext="NE">
  <div class="mt-haut"><span class="quand">mar. 22/12 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 KC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div></div>
 <div class="recap" data-sem="15">
@@ -1046,7 +1136,6 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="recap-calc">
   <div class="case"><div class="lib">Mise (€)</div><div class="val"><input class="mise" type="number" step="1" value="10"></div></div>
   <div class="case"><div class="lib">Boost combiné (%)</div><div class="val"><input class="boost" type="number" step="1" value="0"></div></div>
-  <div class="case"><div class="lib">Simples : gains</div><div class="val r-simple"></div></div>
   <div class="case"><div class="lib">Combiné : cote</div><div class="val r-ctot"></div></div>
   <div class="case"><div class="lib">Combiné : proba</div><div class="val r-proba"></div></div>
   <div class="case"><div class="lib">Combiné : gains</div><div class="val r-comb"></div></div>
@@ -1056,160 +1145,176 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="mt-haut"><span class="quand">ven. 25/12 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">HOU</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 PHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_GB_CHI" data-dom="CHI" data-ext="GB">
  <div class="mt-haut"><span class="quand">ven. 25/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">GB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_BUF_DEN" data-dom="DEN" data-ext="BUF">
  <div class="mt-haut"><span class="quand">ven. 25/12 · 22 h 30</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">BUF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_LA_SEA" data-dom="SEA" data-ext="LA">
  <div class="mt-haut"><span class="quand">sam. 26/12 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 SEA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_TB_ATL" data-dom="ATL" data-ext="TB">
  <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">TB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 ATL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_CLE_BAL" data-dom="BAL" data-ext="CLE">
  <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CLE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 BAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_CIN_IND" data-dom="IND" data-ext="CIN">
  <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 IND</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_LAC_MIA" data-dom="MIA" data-ext="LAC">
  <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LAC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 MIA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_WAS_MIN" data-dom="MIN" data-ext="WAS">
  <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">WAS</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 MIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_ARI_NO" data-dom="NO" data-ext="ARI">
  <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">ARI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NO</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_NE_NYJ" data-dom="NYJ" data-ext="NE">
  <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NYJ</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_CAR_PIT" data-dom="PIT" data-ext="CAR">
  <div class="mt-haut"><span class="quand">dim. 27/12 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CAR</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 PIT</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_TEN_LV" data-dom="LV" data-ext="TEN">
  <div class="mt-haut"><span class="quand">dim. 27/12 · 22 h 05</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">TEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 LV</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ TEN déjà éliminée, LV encore en course</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_SF_KC" data-dom="KC" data-ext="SF">
  <div class="mt-haut"><span class="quand">dim. 27/12 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">SF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 KC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_JAX_DAL" data-dom="DAL" data-ext="JAX">
  <div class="mt-haut"><span class="quand">lun. 28/12 · 02 h 20</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_16_NYG_DET" data-dom="DET" data-ext="NYG">
  <div class="mt-haut"><span class="quand">mar. 29/12 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NYG</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DET</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div></div>
 <div class="recap" data-sem="16">
@@ -1219,7 +1324,6 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="recap-calc">
   <div class="case"><div class="lib">Mise (€)</div><div class="val"><input class="mise" type="number" step="1" value="10"></div></div>
   <div class="case"><div class="lib">Boost combiné (%)</div><div class="val"><input class="boost" type="number" step="1" value="0"></div></div>
-  <div class="case"><div class="lib">Simples : gains</div><div class="val r-simple"></div></div>
   <div class="case"><div class="lib">Combiné : cote</div><div class="val r-ctot"></div></div>
   <div class="case"><div class="lib">Combiné : proba</div><div class="val r-proba"></div></div>
   <div class="case"><div class="lib">Combiné : gains</div><div class="val r-comb"></div></div>
@@ -1229,160 +1333,176 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="mt-haut"><span class="quand">ven. 01/01 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">BAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_NO_ATL" data-dom="ATL" data-ext="NO">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NO</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 ATL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_SEA_CAR" data-dom="CAR" data-ext="SEA">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">SEA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CAR</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_IND_CLE" data-dom="CLE" data-ext="IND">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">IND</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CLE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ IND déjà éliminée, CLE encore en course</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_NYG_DAL" data-dom="DAL" data-ext="NYG">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NYG</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_WAS_JAX" data-dom="JAX" data-ext="WAS">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">WAS</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 JAX</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ JAX déjà qualifiée, WAS encore en course</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_KC_LAC" data-dom="LAC" data-ext="KC">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">KC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 LAC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ LAC déjà éliminée, KC encore en course</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_BUF_MIA" data-dom="MIA" data-ext="BUF">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">BUF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 MIA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ MIA déjà éliminée, BUF encore en course</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_DEN_NE" data-dom="NE" data-ext="DEN">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">DEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_MIN_NYJ" data-dom="NYJ" data-ext="MIN">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">MIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NYJ</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ NYJ déjà éliminée, MIN encore en course</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_LA_TB" data-dom="TB" data-ext="LA">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 TB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_PIT_TEN" data-dom="TEN" data-ext="PIT">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">PIT</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 TEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ TEN déjà éliminée, PIT encore en course</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_LV_ARI" data-dom="ARI" data-ext="LV">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 22 h 05</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LV</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_DET_CHI" data-dom="CHI" data-ext="DET">
  <div class="mt-haut"><span class="quand">dim. 03/01 · 22 h 25</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">DET</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_PHI_SF" data-dom="SF" data-ext="PHI">
  <div class="mt-haut"><span class="quand">lun. 04/01 · 02 h 20</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">PHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 SF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ PHI déjà éliminée, SF encore en course</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_17_HOU_GB" data-dom="GB" data-ext="HOU">
  <div class="mt-haut"><span class="quand">mar. 05/01 · 02 h 15</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">HOU</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 GB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div></div>
 <div class="recap" data-sem="17">
@@ -1392,7 +1512,6 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="recap-calc">
   <div class="case"><div class="lib">Mise (€)</div><div class="val"><input class="mise" type="number" step="1" value="10"></div></div>
   <div class="case"><div class="lib">Boost combiné (%)</div><div class="val"><input class="boost" type="number" step="1" value="0"></div></div>
-  <div class="case"><div class="lib">Simples : gains</div><div class="val r-simple"></div></div>
   <div class="case"><div class="lib">Combiné : cote</div><div class="val r-ctot"></div></div>
   <div class="case"><div class="lib">Combiné : proba</div><div class="val r-proba"></div></div>
   <div class="case"><div class="lib">Combiné : gains</div><div class="val r-comb"></div></div>
@@ -1402,160 +1521,176 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">SF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_PIT_BAL" data-dom="BAL" data-ext="PIT">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">PIT</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 BAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_NYJ_BUF" data-dom="BUF" data-ext="NYJ">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">NYJ</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 BUF</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_ATL_CAR" data-dom="CAR" data-ext="ATL">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">ATL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CAR</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_CLE_CIN" data-dom="CIN" data-ext="CLE">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CLE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 CIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_LAC_DEN" data-dom="DEN" data-ext="LAC">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LAC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 DEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ LAC déjà éliminée, DEN encore en course</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_DET_GB" data-dom="GB" data-ext="DET">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">DET</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 GB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_TEN_HOU" data-dom="HOU" data-ext="TEN">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">TEN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 HOU</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_JAX_IND" data-dom="IND" data-ext="JAX">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 IND</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_LV_KC" data-dom="KC" data-ext="LV">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">LV</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 KC</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_SEA_LA" data-dom="LA" data-ext="SEA">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">SEA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 LA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_CHI_MIN" data-dom="MIN" data-ext="CHI">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">CHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 MIN</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_MIA_NE" data-dom="NE" data-ext="MIA">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">MIA</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NE</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ MIA déjà éliminée, NE encore en course</div>
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_TB_NO" data-dom="NO" data-ext="TB">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">TB</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NO</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_PHI_NYG" data-dom="NYG" data-ext="PHI">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">PHI</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 NYG</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  
 </div>
 <div class="mt" data-ordre="0" data-g="2026_18_DAL_WAS" data-dom="WAS" data-ext="DAL">
  <div class="mt-haut"><span class="quand">dim. 10/01 · 19 h 00</span><span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">DAL</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 WAS</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="" data-defaut="" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  <div class="alerte">⚠️ WAS déjà éliminée, DAL encore en course</div>
 </div></div>
 <div class="recap" data-sem="18">
@@ -1565,7 +1700,6 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
  <div class="recap-calc">
   <div class="case"><div class="lib">Mise (€)</div><div class="val"><input class="mise" type="number" step="1" value="10"></div></div>
   <div class="case"><div class="lib">Boost combiné (%)</div><div class="val"><input class="boost" type="number" step="1" value="0"></div></div>
-  <div class="case"><div class="lib">Simples : gains</div><div class="val r-simple"></div></div>
   <div class="case"><div class="lib">Combiné : cote</div><div class="val r-ctot"></div></div>
   <div class="case"><div class="lib">Combiné : proba</div><div class="val r-proba"></div></div>
   <div class="case"><div class="lib">Combiné : gains</div><div class="val r-comb"></div></div>
@@ -1671,26 +1805,26 @@ function trier(){document.querySelectorAll('.liste-matchs').forEach(L=>
  [...L.children].sort((a,b)=>b.dataset.ordre-a.dataset.ordre).forEach(x=>L.appendChild(x)))}
 
 // --- Paris : bouton "Parier" -> "✓ Parié", récap par journée ---
+// Favori du marché = cotes d'origine (marge retirée), pas les cotes modifiées
+function pMarche(el){const d=parseFloat(el.querySelector('.cote-d').dataset.defaut), e=parseFloat(el.querySelector('.cote-e').dataset.defaut);
+ if(isNaN(d)||isNaN(e))return NaN; return (1/d)/((1/d)+(1/e))}
+function contreMarche(el,cote){const pd=pMarche(el); if(isNaN(pd))return false; return (cote==='d'?pd:1-pd)<0.5}
 function majBoutons(el){const p=PARIS[el.dataset.g];
- el.querySelectorAll('.pari').forEach(b=>{const on=!!(p&&p.cote===b.dataset.cote);b.classList.toggle('on',on);b.textContent=on?'✓ Parié':'Parier'})}
+ el.querySelectorAll('.pari').forEach(b=>{const c=b.querySelector('.chk'), on=!!(p&&p.cote===c.dataset.cote);
+   c.checked=on; b.classList.toggle('on',on)});
+ el.classList.toggle('contre',!!(p&&contreMarche(el,p.cote)))}
 function majRecap(R){
+ // Récap = combiné uniquement ; cotes et probas bloquées au moment où « J'ai parié » est coché
  const w=R.dataset.sem, L=R.querySelector('.recap-liste'); L.innerHTML='';
  const mats=[...document.querySelectorAll('#j'+w+' .mt')].filter(el=>PARIS[el.dataset.g]);
  R.querySelector('.recap-vide').style.display=mats.length?'none':'block';
  R.querySelector('.recap-calc').style.display=mats.length?'grid':'none';
- let prodC=1, prodP=1, simple=0, ok=true;
- const mise=parseFloat(R.querySelector('.mise').value.replace(',','.'))||0;
- const boost=parseFloat(R.querySelector('.boost').value.replace(',','.'))||0;
  mats.forEach(el=>{
-   const c=PARIS[el.dataset.g].cote, eq=c==='d'?el.dataset.dom:el.dataset.ext, adv=c==='d'?el.dataset.ext:el.dataset.dom;
-   const inp=el.querySelector(c==='d'?'.cote-d':'.cote-e'), cote=parseFloat(inp.value.replace(',','.'));
-   const pd=parseFloat(el.dataset.pd), p=isNaN(pd)?NaN:(c==='d'?pd:1-pd);
+   const P=PARIS[el.dataset.g], c=P.cote, eq=c==='d'?el.dataset.dom:el.dataset.ext, adv=c==='d'?el.dataset.ext:el.dataset.dom;
    const ligne=document.createElement('div'); ligne.className='r-ligne';
-   ligne.innerHTML='<div class="r-eq">'+eq+' <span>vs '+adv+'</span></div><div class="r-p">'+(isNaN(p)?'':fr(p*100,1)+' %')
-     +'</div><input class="r-cote" type="number" step="0.01" value="'+(isNaN(cote)?'':inp.value)+'"><div class="r-gain">'+(isNaN(cote)?'':fr(mise*cote)+' €')
-     +'</div><button class="r-x">✕</button>';
-   ligne.querySelector('.r-cote').addEventListener('input',e=>{inp.value=e.target.value;sauverCote(el,inp);majMatch(el);
-     const v=parseFloat(e.target.value.replace(',','.'));ligne.querySelector('.r-gain').textContent=isNaN(v)?'':fr(mise*v)+' €';calcRecap(R)});
+   ligne.innerHTML='<div class="r-eq">'+eq+' <span>vs '+adv+'</span>'+(contreMarche(el,c)?' <em class="r-contre">⚠️ Contre le marché</em>':'')+'</div>'
+     +'<div class="r-p">'+(isNaN(P.p)?'':fr(P.p*100,1)+' %')+'</div>'
+     +'<div class="r-cote-fixe">🔒 '+(isNaN(P.valeur)?'—':fr(P.valeur))+'</div><button class="r-x">✕</button>';
    ligne.querySelector('.r-x').addEventListener('click',()=>{delete PARIS[el.dataset.g];ecrireLS('paris_nfl',PARIS);majBoutons(el);majRecap(R)});
    L.appendChild(ligne);
  });
@@ -1699,18 +1833,14 @@ function majRecap(R){
 function calcRecap(R){
  const w=R.dataset.sem, mise=parseFloat(R.querySelector('.mise').value.replace(',','.'))||0;
  const boost=parseFloat(R.querySelector('.boost').value.replace(',','.'))||0;
- let prodC=1, prodP=1, simple=0, n=0;
+ let prodC=1, prodP=1, n=0;
  [...document.querySelectorAll('#j'+w+' .mt')].filter(el=>PARIS[el.dataset.g]).forEach(el=>{
-   const c=PARIS[el.dataset.g].cote, cote=parseFloat(el.querySelector(c==='d'?'.cote-d':'.cote-e').value.replace(',','.'));
-   const pd=parseFloat(el.dataset.pd), p=c==='d'?pd:1-pd;
-   if(!isNaN(cote)){prodC*=cote;simple+=mise*cote;n++} if(!isNaN(p))prodP*=p;
+   const P=PARIS[el.dataset.g]; if(!isNaN(P.valeur)){prodC*=P.valeur;n++} if(!isNaN(P.p))prodP*=P.p;
  });
- R.querySelectorAll('.r-ligne').forEach(l=>{const v=parseFloat(l.querySelector('.r-cote').value.replace(',','.'));l.querySelector('.r-gain').textContent=isNaN(v)?'':fr(mise*v)+' €'});
  const coteB=prodC*(1+boost/100);
- R.querySelector('.r-simple').textContent=n?fr(simple)+' € (mise '+fr(mise*n,0)+' €)':'';
- R.querySelector('.r-ctot').textContent=n>1?fr(coteB):'';
- R.querySelector('.r-proba').textContent=n>1?fr(prodP*100,1)+' %':'';
- R.querySelector('.r-comb').textContent=n>1?fr(mise*coteB)+' €':'';
+ R.querySelector('.r-ctot').textContent=n?fr(coteB):'';
+ R.querySelector('.r-proba').textContent=n?fr(prodP*100,1)+' %':'';
+ R.querySelector('.r-comb').textContent=n?fr(mise*coteB)+' €':'';
  const S=lireLS('mises_nfl');S[w]={mise:mise,boost:boost};ecrireLS('mises_nfl',S);
 }
 function sauverCote(el,inp){const k=el.dataset.g+'_'+(inp.classList.contains('cote-d')?'d':'e');
@@ -1718,14 +1848,20 @@ function sauverCote(el,inp){const k=el.dataset.g+'_'+(inp.classList.contains('co
 function recapDe(el){return el.closest('.panneau').querySelector('.recap')}
 
 document.querySelectorAll('.mt').forEach(el=>{
+ majMatch(el);
+ const P0=PARIS[el.dataset.g];
+ if(P0&&P0.valeur===undefined){const v=parseFloat(el.querySelector(P0.cote==='d'?'.cote-d':'.cote-e').value), pd=parseFloat(el.dataset.pd);
+   P0.valeur=v; P0.p=isNaN(pd)?NaN:(P0.cote==='d'?pd:1-pd); ecrireLS('paris_nfl',PARIS)}
  ['d','e'].forEach(c=>{const k=el.dataset.g+'_'+c, inp=el.querySelector('.cote-'+c); if(COTES[k])inp.value=COTES[k];});
  majMatch(el); majBoutons(el);
- el.querySelectorAll('input').forEach(i=>{
-   i.addEventListener('input',()=>{majMatch(el);sauverCote(el,i);majRecap(recapDe(el))}); i.addEventListener('change',trier)});
- el.querySelectorAll('.pari').forEach(b=>b.addEventListener('click',ev=>{ev.stopPropagation();
-   const g=el.dataset.g; if(PARIS[g]&&PARIS[g].cote===b.dataset.cote)delete PARIS[g]; else PARIS[g]={cote:b.dataset.cote};
+ el.querySelectorAll('.cote-d,.cote-e').forEach(i=>{
+   i.addEventListener('input',()=>{majMatch(el);sauverCote(el,i)}); i.addEventListener('change',trier)});
+ el.querySelectorAll('.chk').forEach(c=>c.addEventListener('change',()=>{
+   const g=el.dataset.g;
+   if(c.checked){const v=parseFloat(el.querySelector(c.dataset.cote==='d'?'.cote-d':'.cote-e').value.replace(',','.')), pd=parseFloat(el.dataset.pd);
+     PARIS[g]={cote:c.dataset.cote, valeur:v, p:isNaN(pd)?NaN:(c.dataset.cote==='d'?pd:1-pd)}} else delete PARIS[g];
    ecrireLS('paris_nfl',PARIS); majBoutons(el); majRecap(recapDe(el))}));
- el.addEventListener('click',ev=>{if(ev.target.closest('input,button'))return; ouvrirFiche(el)});
+ el.addEventListener('click',ev=>{if(ev.target.closest('input,button,label'))return; ouvrirFiche(el)});
 });
 document.querySelectorAll('.recap').forEach(R=>{
  const S=lireLS('mises_nfl')[R.dataset.sem]; if(S){R.querySelector('.mise').value=S.mise;R.querySelector('.boost').value=S.boost}

@@ -62,6 +62,7 @@ COTE_DEFAUT = 1.91                            # cote -110 si le book n'en donne 
 SEUIL_RENTABILITE = 0.524
 
 FICHIER_HTML = "dashboard_nfl.html"
+VERSION_PAGE = "2.3"                          # à augmenter à chaque modification de la page
 FICHIER_ABSENCES = "absences.json"
 CORRECTIONS = {"absents": {}, "presents": {}}
 
@@ -767,10 +768,11 @@ def carte_match(g, sig):
  <div class="mt-haut"><span class="quand">{e(quand)}</span>{score}<span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">{e(g.away_team)}</div><div class="barre"><span></span><b></b></div>
    <input class="cote-e" type="number" step="0.01" value="{ce}" data-defaut="{ce}" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="e">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 {e(g.home_team)}</div><div class="barre"><span></span><b></b></div>
    <input class="cote-d" type="number" step="0.01" value="{cd}" data-defaut="{cd}" placeholder="Betclic" title="Cote Betclic">
-   <button class="pari" data-cote="d">Parier</button></div>
+   <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
+ <div class="contre-tag">⚠️ Contre le marché</div>
  {alerte}
 </div>"""
 
@@ -785,7 +787,6 @@ def recap_html(w):
  <div class="recap-calc">
   <div class="case"><div class="lib">Mise (€)</div><div class="val"><input class="mise" type="number" step="1" value="10"></div></div>
   <div class="case"><div class="lib">Boost combiné (%)</div><div class="val"><input class="boost" type="number" step="1" value="0"></div></div>
-  <div class="case"><div class="lib">Simples : gains</div><div class="val r-simple"></div></div>
   <div class="case"><div class="lib">Combiné : cote</div><div class="val r-ctot"></div></div>
   <div class="case"><div class="lib">Combiné : proba</div><div class="val r-proba"></div></div>
   <div class="case"><div class="lib">Combiné : gains</div><div class="val r-comb"></div></div>
@@ -904,26 +905,26 @@ function trier(){document.querySelectorAll('.liste-matchs').forEach(L=>
  [...L.children].sort((a,b)=>b.dataset.ordre-a.dataset.ordre).forEach(x=>L.appendChild(x)))}
 
 // --- Paris : bouton "Parier" -> "✓ Parié", récap par journée ---
+// Favori du marché = cotes d'origine (marge retirée), pas les cotes modifiées
+function pMarche(el){const d=parseFloat(el.querySelector('.cote-d').dataset.defaut), e=parseFloat(el.querySelector('.cote-e').dataset.defaut);
+ if(isNaN(d)||isNaN(e))return NaN; return (1/d)/((1/d)+(1/e))}
+function contreMarche(el,cote){const pd=pMarche(el); if(isNaN(pd))return false; return (cote==='d'?pd:1-pd)<0.5}
 function majBoutons(el){const p=PARIS[el.dataset.g];
- el.querySelectorAll('.pari').forEach(b=>{const on=!!(p&&p.cote===b.dataset.cote);b.classList.toggle('on',on);b.textContent=on?'✓ Parié':'Parier'})}
+ el.querySelectorAll('.pari').forEach(b=>{const c=b.querySelector('.chk'), on=!!(p&&p.cote===c.dataset.cote);
+   c.checked=on; b.classList.toggle('on',on)});
+ el.classList.toggle('contre',!!(p&&contreMarche(el,p.cote)))}
 function majRecap(R){
+ // Récap = combiné uniquement ; cotes et probas bloquées au moment où « J'ai parié » est coché
  const w=R.dataset.sem, L=R.querySelector('.recap-liste'); L.innerHTML='';
  const mats=[...document.querySelectorAll('#j'+w+' .mt')].filter(el=>PARIS[el.dataset.g]);
  R.querySelector('.recap-vide').style.display=mats.length?'none':'block';
  R.querySelector('.recap-calc').style.display=mats.length?'grid':'none';
- let prodC=1, prodP=1, simple=0, ok=true;
- const mise=parseFloat(R.querySelector('.mise').value.replace(',','.'))||0;
- const boost=parseFloat(R.querySelector('.boost').value.replace(',','.'))||0;
  mats.forEach(el=>{
-   const c=PARIS[el.dataset.g].cote, eq=c==='d'?el.dataset.dom:el.dataset.ext, adv=c==='d'?el.dataset.ext:el.dataset.dom;
-   const inp=el.querySelector(c==='d'?'.cote-d':'.cote-e'), cote=parseFloat(inp.value.replace(',','.'));
-   const pd=parseFloat(el.dataset.pd), p=isNaN(pd)?NaN:(c==='d'?pd:1-pd);
+   const P=PARIS[el.dataset.g], c=P.cote, eq=c==='d'?el.dataset.dom:el.dataset.ext, adv=c==='d'?el.dataset.ext:el.dataset.dom;
    const ligne=document.createElement('div'); ligne.className='r-ligne';
-   ligne.innerHTML='<div class="r-eq">'+eq+' <span>vs '+adv+'</span></div><div class="r-p">'+(isNaN(p)?'':fr(p*100,1)+' %')
-     +'</div><input class="r-cote" type="number" step="0.01" value="'+(isNaN(cote)?'':inp.value)+'"><div class="r-gain">'+(isNaN(cote)?'':fr(mise*cote)+' €')
-     +'</div><button class="r-x">✕</button>';
-   ligne.querySelector('.r-cote').addEventListener('input',e=>{inp.value=e.target.value;sauverCote(el,inp);majMatch(el);
-     const v=parseFloat(e.target.value.replace(',','.'));ligne.querySelector('.r-gain').textContent=isNaN(v)?'':fr(mise*v)+' €';calcRecap(R)});
+   ligne.innerHTML='<div class="r-eq">'+eq+' <span>vs '+adv+'</span>'+(contreMarche(el,c)?' <em class="r-contre">⚠️ Contre le marché</em>':'')+'</div>'
+     +'<div class="r-p">'+(isNaN(P.p)?'':fr(P.p*100,1)+' %')+'</div>'
+     +'<div class="r-cote-fixe">🔒 '+(isNaN(P.valeur)?'—':fr(P.valeur))+'</div><button class="r-x">✕</button>';
    ligne.querySelector('.r-x').addEventListener('click',()=>{delete PARIS[el.dataset.g];ecrireLS('paris_nfl',PARIS);majBoutons(el);majRecap(R)});
    L.appendChild(ligne);
  });
@@ -932,18 +933,14 @@ function majRecap(R){
 function calcRecap(R){
  const w=R.dataset.sem, mise=parseFloat(R.querySelector('.mise').value.replace(',','.'))||0;
  const boost=parseFloat(R.querySelector('.boost').value.replace(',','.'))||0;
- let prodC=1, prodP=1, simple=0, n=0;
+ let prodC=1, prodP=1, n=0;
  [...document.querySelectorAll('#j'+w+' .mt')].filter(el=>PARIS[el.dataset.g]).forEach(el=>{
-   const c=PARIS[el.dataset.g].cote, cote=parseFloat(el.querySelector(c==='d'?'.cote-d':'.cote-e').value.replace(',','.'));
-   const pd=parseFloat(el.dataset.pd), p=c==='d'?pd:1-pd;
-   if(!isNaN(cote)){prodC*=cote;simple+=mise*cote;n++} if(!isNaN(p))prodP*=p;
+   const P=PARIS[el.dataset.g]; if(!isNaN(P.valeur)){prodC*=P.valeur;n++} if(!isNaN(P.p))prodP*=P.p;
  });
- R.querySelectorAll('.r-ligne').forEach(l=>{const v=parseFloat(l.querySelector('.r-cote').value.replace(',','.'));l.querySelector('.r-gain').textContent=isNaN(v)?'':fr(mise*v)+' €'});
  const coteB=prodC*(1+boost/100);
- R.querySelector('.r-simple').textContent=n?fr(simple)+' € (mise '+fr(mise*n,0)+' €)':'';
- R.querySelector('.r-ctot').textContent=n>1?fr(coteB):'';
- R.querySelector('.r-proba').textContent=n>1?fr(prodP*100,1)+' %':'';
- R.querySelector('.r-comb').textContent=n>1?fr(mise*coteB)+' €':'';
+ R.querySelector('.r-ctot').textContent=n?fr(coteB):'';
+ R.querySelector('.r-proba').textContent=n?fr(prodP*100,1)+' %':'';
+ R.querySelector('.r-comb').textContent=n?fr(mise*coteB)+' €':'';
  const S=lireLS('mises_nfl');S[w]={mise:mise,boost:boost};ecrireLS('mises_nfl',S);
 }
 function sauverCote(el,inp){const k=el.dataset.g+'_'+(inp.classList.contains('cote-d')?'d':'e');
@@ -951,14 +948,20 @@ function sauverCote(el,inp){const k=el.dataset.g+'_'+(inp.classList.contains('co
 function recapDe(el){return el.closest('.panneau').querySelector('.recap')}
 
 document.querySelectorAll('.mt').forEach(el=>{
+ majMatch(el);
+ const P0=PARIS[el.dataset.g];
+ if(P0&&P0.valeur===undefined){const v=parseFloat(el.querySelector(P0.cote==='d'?'.cote-d':'.cote-e').value), pd=parseFloat(el.dataset.pd);
+   P0.valeur=v; P0.p=isNaN(pd)?NaN:(P0.cote==='d'?pd:1-pd); ecrireLS('paris_nfl',PARIS)}
  ['d','e'].forEach(c=>{const k=el.dataset.g+'_'+c, inp=el.querySelector('.cote-'+c); if(COTES[k])inp.value=COTES[k];});
  majMatch(el); majBoutons(el);
- el.querySelectorAll('input').forEach(i=>{
-   i.addEventListener('input',()=>{majMatch(el);sauverCote(el,i);majRecap(recapDe(el))}); i.addEventListener('change',trier)});
- el.querySelectorAll('.pari').forEach(b=>b.addEventListener('click',ev=>{ev.stopPropagation();
-   const g=el.dataset.g; if(PARIS[g]&&PARIS[g].cote===b.dataset.cote)delete PARIS[g]; else PARIS[g]={cote:b.dataset.cote};
+ el.querySelectorAll('.cote-d,.cote-e').forEach(i=>{
+   i.addEventListener('input',()=>{majMatch(el);sauverCote(el,i)}); i.addEventListener('change',trier)});
+ el.querySelectorAll('.chk').forEach(c=>c.addEventListener('change',()=>{
+   const g=el.dataset.g;
+   if(c.checked){const v=parseFloat(el.querySelector(c.dataset.cote==='d'?'.cote-d':'.cote-e').value.replace(',','.')), pd=parseFloat(el.dataset.pd);
+     PARIS[g]={cote:c.dataset.cote, valeur:v, p:isNaN(pd)?NaN:(c.dataset.cote==='d'?pd:1-pd)}} else delete PARIS[g];
    ecrireLS('paris_nfl',PARIS); majBoutons(el); majRecap(recapDe(el))}));
- el.addEventListener('click',ev=>{if(ev.target.closest('input,button'))return; ouvrirFiche(el)});
+ el.addEventListener('click',ev=>{if(ev.target.closest('input,button,label'))return; ouvrirFiche(el)});
 });
 document.querySelectorAll('.recap').forEach(R=>{
  const S=lireLS('mises_nfl')[R.dataset.sem]; if(S){R.querySelector('.mise').value=S.mise;R.querySelector('.boost').value=S.boost}
@@ -1013,7 +1016,7 @@ CSS_MATCHS = """
 .mt-haut{font-size:15px;color:#9ad6f0;font-weight:700;margin-bottom:6px;display:flex;gap:10px;align-items:center}
 .mt-haut .fiche{margin-left:auto;font-size:18px}
 .score{font-size:18px;font-weight:800;color:#fff}
-.eq{display:grid;grid-template-columns:90px 1fr 74px 88px;gap:8px;align-items:center;padding:7px 0}
+.eq{display:grid;grid-template-columns:90px 1fr 74px 104px;gap:8px;align-items:center;padding:7px 0}
 .eq .nom{font-size:22px;font-weight:800;white-space:nowrap}
 .eq.fav .nom{color:#2ecc71}
 .eq.gagnant .nom::after{content:" ✅"}
@@ -1022,20 +1025,27 @@ CSS_MATCHS = """
 .eq .barre b{position:relative;display:block;text-align:center;line-height:32px;font-size:19px;text-shadow:0 0 4px #000}
 .vert{background:#2ecc71}.orange{background:#f39c12}.rouge{background:#e74c3c}
 .eq input{width:74px}
-.pari{font-size:15px;font-weight:800;padding:8px 4px;border-radius:9px;border:2px solid #8888aa;background:#1a1a2e;color:#fff;cursor:pointer}
+.pari{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;padding:5px 6px;border-radius:9px;
+       border:2px solid #8888aa;background:#1a1a2e;color:#fff;cursor:pointer;line-height:1.1}
+.pari .chk{width:22px;height:22px;accent-color:#2ecc71;cursor:pointer;flex:none}
 .pari.on{background:#2ecc71;border-color:#2ecc71;color:#0b2914}
+.contre-tag{display:none;margin-top:8px;font-size:17px;font-weight:800;color:#ff8a8a}
+.mt.contre{border-color:#e74c3c}.mt.contre .contre-tag{display:block}
+.r-contre{font-style:normal;font-size:15px;color:#ff8a8a;font-weight:800}
 .alerte{margin-top:8px;font-size:16px;font-weight:700;color:#ffcf70}
 .recap{background:#16324f;border:2px solid #4cc9f0;border-radius:16px;padding:6px 16px 16px;margin-top:22px}
 .recap h2{margin:14px 0 10px;border:none;padding:0}
 .recap-vide{font-size:19px;font-weight:700;color:#c8c8e0;padding:6px 0}
-.r-ligne{display:grid;grid-template-columns:1fr 80px 90px 110px 44px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #2d5a80}
+.r-ligne{display:grid;grid-template-columns:1fr 90px 110px 44px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #2d5a80}
 .r-eq{font-size:21px;font-weight:800}.r-eq span{font-size:16px;color:#c8c8e0;font-weight:600}
-.r-p{font-size:18px;font-weight:700}.r-gain{font-size:19px;font-weight:800;color:#2ecc71}
+.r-p{font-size:18px;font-weight:700}.r-cote-fixe{font-size:20px;font-weight:800}
 .r-x{background:#5a1e1e;color:#fff;border:none;border-radius:8px;font-size:18px;padding:6px;cursor:pointer}
 .r-cote{width:84px}
 .recap-calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:12px}
 .recap-calc .case{background:#1a1a2e}
-.r-comb,.r-simple{color:#2ecc71}
+.r-comb{color:#2ecc71}
+.version{font-size:16px;font-weight:700;color:#9ad6f0;margin-left:12px;white-space:nowrap}
+@media (max-width:760px){.version{display:block;margin:4px 0 0}}
 #fiche{position:fixed;inset:0;background:rgba(5,5,15,.85);display:none;align-items:flex-start;justify-content:center;z-index:50;overflow:auto;padding:20px 10px}
 #fiche-boite{background:#1f1f38;border:2px solid #4cc9f0;border-radius:18px;max-width:1000px;width:100%;padding:18px;position:relative}
 #fiche-x{position:absolute;top:10px;right:12px;font-size:26px;background:none;border:none;color:#fff;cursor:pointer}
@@ -1055,10 +1065,18 @@ CSS_MATCHS = """
 .st-Out,.st-IR{background:#e74c3c}.st-Doubtful{background:#f39c12;color:#111}.st-Questionable{background:#f1c40f;color:#111}
 .cout{color:#ff8a8a;font-weight:800}
 @media (max-width:760px){.liste-matchs{grid-template-columns:1fr}.onglet{font-size:17px;padding:10px}
- .eq{grid-template-columns:72px 1fr 66px 78px;gap:6px}.eq .nom{font-size:19px}.eq input{width:66px}
+ .eq{grid-template-columns:62px 1fr 64px 92px;gap:6px}.eq .nom{font-size:19px}.eq input{width:66px}
  .d-grille{grid-template-columns:1fr}.d-chiffres{grid-template-columns:repeat(2,1fr)}
- .r-ligne{grid-template-columns:1fr 70px 80px 36px}.r-gain{display:none}}
+ .r-ligne{grid-template-columns:1fr 64px 84px 36px}}
 """
+
+
+def maj_paris():
+    """Date et heure de génération, heure de Paris."""
+    from zoneinfo import ZoneInfo
+    jours = ["lun.", "mar.", "mer.", "jeu.", "ven.", "sam.", "dim."]
+    t = datetime.now(ZoneInfo("Europe/Paris"))
+    return f"{jours[t.weekday()]} {t.strftime('%d/%m %H:%M').replace(':', ' h ')}"
 
 
 def generer_html(semaine_df, semaine, courante, hist_tab, matchs=None, sig=None, fiches=None, fichier=FICHIER_HTML):
@@ -1089,7 +1107,7 @@ def generer_html(semaine_df, semaine, courante, hist_tab, matchs=None, sig=None,
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(titre)}</title><style>{CSS}{CSS_MATCHS}</style></head>
 <body><div class="page">
-<h1>🏈 {html.escape(titre)}</h1>
+<h1>🏈 {html.escape(titre)}<span class="version">v{VERSION_PAGE} · {maj_paris()}</span></h1>
 <div class="onglets">{"".join(boutons)}<button class="onglet sig-o" data-o="p-signaux">Signaux</button></div>
 {"".join(panneaux)}
 <div class="panneau" id="p-signaux">
