@@ -64,7 +64,7 @@ SEUIL_RENTABILITE = 0.524
 FICHIER_HTML = "dashboard_nfl.html"
 VERSION_PAGE = "2.6"                          # à augmenter à chaque modification de la page
 FICHIER_ABSENCES = "absences.json"
-CORRECTIONS = {"absents": {}, "presents": {}}
+CORRECTIONS = {"absents": {}, "presents": {}, "qb": {}}
 
 DOSSIER_CACHE = "nfl_cache"
 CACHE_SAISON_EN_COURS_H = 12
@@ -517,6 +517,8 @@ def detecter_signaux(matchs, joueurs, absents, semaines_rapport, courante):
                     if not joue and confirme and confirme in abs_t:          # annoncé mais blessé
                         rempl = [i for i in items if i["poste"] == "QB"]
                         confirme = rempl[0]["id_rempl"] if rempl else None
+                    if (saison, semaine) == CORRECTIONS.get("cible") and t in CORRECTIONS["qb"]:
+                        confirme = CORRECTIONS["qb"][t]                       # QB titulaire confirmé à la main
                     if probable and confirme and confirme != probable:
                         share = float(v_idx.loc[probable, "share"]) if len(v_idx) and probable in v_idx.index else 1.0
                         ecart = (valeur_qb(v_idx, moy_poste, probable) - valeur_qb(v_idx, moy_poste, confirme)) \
@@ -1375,6 +1377,11 @@ def charger_corrections(matchs, rosters, blessures, courante):
                 if n not in noms:
                     print(f"  ⚠ {FICHIER_ABSENCES} : joueur inconnu « {n} »")
             CORRECTIONS[cle][eq_] = {noms[n] for n in liste if n in noms}
+    for eq_, n in brut.get("qb", {}).items():                 # QB titulaire annoncé (presse)
+        if n in noms:
+            CORRECTIONS["qb"][eq_] = noms[n]
+        else:
+            print(f"  ⚠ {FICHIER_ABSENCES} : QB inconnu « {n} »")
 
 
 def main():

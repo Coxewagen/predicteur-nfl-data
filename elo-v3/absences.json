@@ -1,4 +1,11 @@
 {
+  "_note": "Corrections manuelles pour la prochaine journée. qb = titulaire annoncé par la presse (remplace l'info nflverse).",
   "absents": {},
-  "presents": {}
+  "presents": {},
+  "qb": {
+    "MIN": "Kirk Cousins",
+    "CLE": "Deshaun Watson",
+    "SEA": "Drew Lock",
+    "BAL": "Jacoby Brissett"
+  }
 }
