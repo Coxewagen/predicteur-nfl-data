@@ -37,6 +37,12 @@ jobs:
       - name: Installe les dépendances
         run: pip install -r requirements.txt
 
+      - name: Récupère les cotes Betclic (The Odds API)
+        working-directory: .
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python cotes_betclic.py
+
       - name: Lance le modèle et génère le dashboard
         run: python nfl_signaux.py
 
@@ -45,6 +51,7 @@ jobs:
           git config user.name "predicteur-nfl-bot"
           git config user.email "actions@users.noreply.github.com"
           git add dashboard_nfl.html
+          git add ../cotes_betclic.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Rien de nouveau à publier."
           else

@@ -62,7 +62,7 @@ COTE_DEFAUT = 1.91                            # cote -110 si le book n'en donne 
 SEUIL_RENTABILITE = 0.524
 
 FICHIER_HTML = "dashboard_nfl.html"
-VERSION_PAGE = "2.3"                          # à augmenter à chaque modification de la page
+VERSION_PAGE = "2.4"                          # à augmenter à chaque modification de la page
 FICHIER_ABSENCES = "absences.json"
 CORRECTIONS = {"absents": {}, "presents": {}}
 
@@ -743,13 +743,51 @@ def bandeau_blessures(semaine):
 SEUIL_FAVORI = 0.65                           # onglet Matchs : favori mis en avant au-dessus de ce %
 
 
+FICHIER_BETCLIC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "cotes_betclic.json")
+
+
+def charger_betclic():
+    """Cotes Betclic écrites par cotes_betclic.py : {(dom, ext): [(date, cote_dom, cote_ext)]}."""
+    try:
+        with open(FICHIER_BETCLIC, encoding="utf-8") as f:
+            d = json.load(f)
+    except (OSError, ValueError):
+        return {}
+    out = defaultdict(list)
+    for m in d.get("matchs", []):
+        try:
+            jour = datetime.strptime(m["debut"][:10], "%Y-%m-%d")
+        except (KeyError, ValueError, TypeError):
+            continue
+        out[(m["dom"], m["ext"])].append((jour, float(m["cote_dom"]), float(m["cote_ext"])))
+    return out
+
+
+BETCLIC = {}
+
+
+def cotes_betclic(g):
+    """Cotes Betclic du match (même affiche, date à ±2 jours), sinon None."""
+    try:
+        jour = datetime.strptime(str(g.gameday), "%Y-%m-%d")
+    except ValueError:
+        return None
+    for d, cd, ce in BETCLIC.get((g.home_team, g.away_team), []):
+        if abs((d - jour).days) <= 2:
+            return cd, ce
+    return None
+
+
 def carte_match(g, sig):
     """Une carte match : % de victoire de chaque équipe d'après les cotes (marge du book retirée)."""
     from zoneinfo import ZoneInfo
     e = html.escape
     jours = ["lun.", "mar.", "mer.", "jeu.", "ven.", "sam.", "dim."]
-    cd = "" if pd.isna(g.home_moneyline) else f"{am_vers_dec(g.home_moneyline):.2f}"
+    cd = "" if pd.isna(g.home_moneyline) else f"{am_vers_dec(g.home_moneyline):.2f}"   # marché (référence)
     ce = "" if pd.isna(g.away_moneyline) else f"{am_vers_dec(g.away_moneyline):.2f}"
+    bc = cotes_betclic(g) if pd.isna(g.result) else None
+    vd, ve = (f"{bc[0]:.2f}", f"{bc[1]:.2f}") if bc else (cd, ce)                      # affiché : Betclic si dispo
+    cl_bc = " bc" if bc else ""
     try:   # heure de New York -> heure de Paris
         dt = datetime.strptime(f"{g.gameday} {g.gametime}", "%Y-%m-%d %H:%M").replace(
             tzinfo=ZoneInfo("America/New_York")).astimezone(ZoneInfo("Europe/Paris"))
@@ -767,10 +805,10 @@ def carte_match(g, sig):
 <div class="mt" data-ordre="0" data-g="{gid}" data-dom="{e(g.home_team)}" data-ext="{e(g.away_team)}"{joue}>
  <div class="mt-haut"><span class="quand">{e(quand)}</span>{score}<span class="fiche">📋</span></div>
  <div class="eq" data-cote="e"><div class="nom">{e(g.away_team)}</div><div class="barre"><span></span><b></b></div>
-   <input class="cote-e" type="number" step="0.01" value="{ce}" data-defaut="{ce}" placeholder="Betclic" title="Cote Betclic">
+   <input class="cote-e{cl_bc}" type="number" step="0.01" value="{ve}" data-defaut="{ce}" data-init="{ve}" placeholder="Betclic" title="Cote Betclic">
    <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
  <div class="eq" data-cote="d"><div class="nom">🏠 {e(g.home_team)}</div><div class="barre"><span></span><b></b></div>
-   <input class="cote-d" type="number" step="0.01" value="{cd}" data-defaut="{cd}" placeholder="Betclic" title="Cote Betclic">
+   <input class="cote-d{cl_bc}" type="number" step="0.01" value="{vd}" data-defaut="{cd}" data-init="{vd}" placeholder="Betclic" title="Cote Betclic">
    <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
  <div class="contre-tag">⚠️ Contre le marché</div>
  {alerte}
@@ -944,7 +982,7 @@ function calcRecap(R){
  const S=lireLS('mises_nfl');S[w]={mise:mise,boost:boost};ecrireLS('mises_nfl',S);
 }
 function sauverCote(el,inp){const k=el.dataset.g+'_'+(inp.classList.contains('cote-d')?'d':'e');
- if(inp.value&&inp.value!==inp.dataset.defaut)COTES[k]=inp.value;else delete COTES[k];ecrireLS('cotes_betclic_nfl',COTES)}
+ if(inp.value&&inp.value!==inp.dataset.init)COTES[k]={v:inp.value,base:inp.dataset.init};else delete COTES[k];ecrireLS('cotes_betclic_nfl',COTES)}
 function recapDe(el){return el.closest('.panneau').querySelector('.recap')}
 
 document.querySelectorAll('.mt').forEach(el=>{
@@ -952,7 +990,9 @@ document.querySelectorAll('.mt').forEach(el=>{
  const P0=PARIS[el.dataset.g];
  if(P0&&P0.valeur===undefined){const v=parseFloat(el.querySelector(P0.cote==='d'?'.cote-d':'.cote-e').value), pd=parseFloat(el.dataset.pd);
    P0.valeur=v; P0.p=isNaN(pd)?NaN:(P0.cote==='d'?pd:1-pd); ecrireLS('paris_nfl',PARIS)}
- ['d','e'].forEach(c=>{const k=el.dataset.g+'_'+c, inp=el.querySelector('.cote-'+c); if(COTES[k])inp.value=COTES[k];});
+ // Cote tapée à la main : reprise seulement si la cote d'origine (Betclic ou marché) n'a pas bougé depuis
+ ['d','e'].forEach(c=>{const k=el.dataset.g+'_'+c, inp=el.querySelector('.cote-'+c), s=COTES[k];
+   if(s&&typeof s==='object'&&s.base===inp.dataset.init)inp.value=s.v; else if(s){delete COTES[k];ecrireLS('cotes_betclic_nfl',COTES)}});
  majMatch(el); majBoutons(el);
  el.querySelectorAll('.cote-d,.cote-e').forEach(i=>{
    i.addEventListener('input',()=>{majMatch(el);sauverCote(el,i)}); i.addEventListener('change',trier)});
@@ -1025,6 +1065,7 @@ CSS_MATCHS = """
 .eq .barre b{position:relative;display:block;text-align:center;line-height:32px;font-size:19px;text-shadow:0 0 4px #000}
 .vert{background:#2ecc71}.orange{background:#f39c12}.rouge{background:#e74c3c}
 .eq input{width:74px}
+.eq input.bc{border-color:#2ecc71}
 .pari{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;padding:5px 6px;border-radius:9px;
        border:2px solid #8888aa;background:#1a1a2e;color:#fff;cursor:pointer;line-height:1.1}
 .pari .chk{width:22px;height:22px;accent-color:#2ecc71;cursor:pointer;flex:none}
@@ -1199,6 +1240,8 @@ def main():
     else:
         print("   Aucun signal.")
     h.to_csv("historique_signaux.csv", index=False)
+    BETCLIC.update(charger_betclic())
+    print(f"  cotes Betclic : {sum(len(v) for v in BETCLIC.values())} matchs")
     a_venir_sig = sig[(sig["season"] == courante) & ~sig["joue"]] if len(sig) else sig
     fiches = fiches_matchs(matchs, blessures, rosters, joueurs, absents, semaines_rapport, courante, semaine) if semaine else {}
     generer_html(sem_df, semaine, courante, hist_tab, matchs, a_venir_sig, fiches)

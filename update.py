@@ -79,8 +79,37 @@ def marche(g):
     return out
 
 
+def cotes_betclic():
+    """Cotes Betclic écrites par cotes_betclic.py (robot du dashboard) : {(dom, ext): [(date, cote dom, cote ext)]}."""
+    try:
+        d = json.loads((HERE/'cotes_betclic.json').read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return {}
+    out = {}
+    for m in d.get('matchs', []):
+        out.setdefault((m['dom'], m['ext']), []).append((str(m.get('debut', ''))[:10], m['cote_dom'], m['cote_ext']))
+    return out
+
+
+def betclic_du_match(bc, g):
+    """Cotes Betclic du match (même affiche, date à ±2 jours) -> {'bcHome', 'bcAway'} ou {}."""
+    from datetime import date
+    try:
+        jour = date.fromisoformat(str(g['gameday'])[:10])
+    except ValueError:
+        return {}
+    for d, ch, ca in bc.get((g['home_team'], g['away_team']), []):
+        try:
+            if abs((date.fromisoformat(d) - jour).days) <= 2:
+                return {'bcHome': round(float(ch), 2), 'bcAway': round(float(ca), 2)}
+        except ValueError:
+            continue
+    return {}
+
+
 def main():
     now = datetime.now(timezone.utc)
+    bc = cotes_betclic()
     state = json.loads((HERE/'state.json').read_text(encoding='utf-8'))
     absences, journal = state['absences'], state.setdefault('journal', {})
 
@@ -97,6 +126,7 @@ def main():
             mk = marche(g)
             if mk:
                 row.update(mk)   # mkLine (ligne, + = domicile favori), mkPH (proba domicile sans marge), mkSrc
+            row.update(betclic_du_match(bc, g))   # bcHome / bcAway : cotes Betclic décimales si disponibles
         if g.get('location') == 'Neutral':
             row['neutral'] = True   # match à l'étranger : pas d'avantage du terrain (voir model.js, isNeutralGame)
         games.append(row)
