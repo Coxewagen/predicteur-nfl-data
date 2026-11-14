@@ -739,7 +739,89 @@ def bandeau_blessures(semaine):
     return f'<div class="bandeau" style="background:{coul}">{txt}</div>'
 
 
-def generer_html(semaine_df, semaine, courante, hist_tab, fichier=FICHIER_HTML):
+SEUIL_FAVORI = 0.65                           # onglet Matchs : favori mis en avant au-dessus de ce %
+
+
+def onglet_matchs(matchs, sig, semaine, courante):
+    """Onglet « Matchs » : % de victoire de chaque équipe d'après les cotes (marge du book retirée)."""
+    from zoneinfo import ZoneInfo
+    m = matchs[(matchs["season"] == courante) & (matchs["week"] == semaine) & matchs["result"].isna()]
+    if m.empty:
+        return '<div class="compte zero">Aucun match à venir</div>'
+    e = html.escape
+    jours = ["lun.", "mar.", "mer.", "jeu.", "ven.", "sam.", "dim."]
+    lignes = []
+    for g in m.itertuples(index=False):
+        cd, ce = am_vers_dec(g.home_moneyline), am_vers_dec(g.away_moneyline)
+        try:   # heure de New York -> heure de Paris
+            dt = datetime.strptime(f"{g.gameday} {g.gametime}", "%Y-%m-%d %H:%M").replace(
+                tzinfo=ZoneInfo("America/New_York")).astimezone(ZoneInfo("Europe/Paris"))
+            quand = f"{jours[dt.weekday()]} {dt.strftime('%H:%M').replace(':', ' h ')}"
+        except (ValueError, TypeError):
+            quand = ""
+        alertes = sig[(sig["game_id"] == g.game_id)] if len(sig) else sig
+        alerte = "".join(f'<div class="alerte">⚠️ {e(t)}</div>' for t in alertes["texte"]) if len(alertes) else ""
+        lignes.append(f"""
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">{e(quand)}</span></div>
+ <div class="eq"><div class="nom">{e(g.away_team)}</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="{ce:.2f}"></div>
+ <div class="eq"><div class="nom">🏠 {e(g.home_team)}</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="{cd:.2f}"></div>
+ {alerte}
+</div>""")
+    return f'<div id="liste-matchs">{"".join(lignes)}</div>'
+
+
+JS_MATCHS = """
+function majMatch(el){
+ const cd=parseFloat(el.querySelector('.cote-d').value.replace(',','.')), ce=parseFloat(el.querySelector('.cote-e').value.replace(',','.'));
+ if(isNaN(cd)||isNaN(ce)||cd<=1||ce<=1)return;
+ const pd=(1/cd)/((1/cd)+(1/ce)), pe=1-pd, eqs=el.querySelectorAll('.eq');
+ [[eqs[0],pe],[eqs[1],pd]].forEach(([q,p])=>{
+   const c=p>=%FAV%?'vert':(p>=0.5?'orange':'rouge');
+   q.querySelector('.barre span').className=c; q.querySelector('.barre span').style.width=(p*100).toFixed(1)+'%';
+   q.querySelector('.barre b').textContent=(p*100).toFixed(1).replace('.',',')+' %';
+   q.classList.toggle('fav',p>=%FAV%);
+ });
+ el.dataset.ordre=Math.max(pd,pe); el.classList.toggle('sur',Math.max(pd,pe)>=%FAV%);
+}
+function trier(){const L=document.getElementById('liste-matchs');if(!L)return;
+ [...L.children].sort((a,b)=>b.dataset.ordre-a.dataset.ordre).forEach(x=>L.appendChild(x))}
+document.querySelectorAll('.mt').forEach(el=>{majMatch(el);el.querySelectorAll('input').forEach(i=>{
+ i.addEventListener('input',()=>majMatch(el)); i.addEventListener('change',trier)})});
+trier();
+function onglet(n){document.querySelectorAll('.onglet').forEach(x=>x.classList.toggle('actif',x.dataset.o===n));
+ document.querySelectorAll('.panneau').forEach(x=>x.style.display=x.id===n?'block':'none');
+ try{localStorage.setItem('onglet_nfl',n)}catch(e){}}
+document.querySelectorAll('.onglet').forEach(b=>b.addEventListener('click',()=>onglet(b.dataset.o)));
+let o0='p-matchs';try{o0=localStorage.getItem('onglet_nfl')||o0}catch(e){}
+onglet(o0);
+""".replace("%FAV%", str(SEUIL_FAVORI))
+
+CSS_MATCHS = """
+.onglets{display:flex;gap:8px;margin:4px 0 18px}
+.onglet{flex:1;font-size:20px;font-weight:800;padding:13px;border-radius:12px;border:2px solid #4cc9f0;
+        background:#22223b;color:#fff;cursor:pointer}
+.onglet.actif{background:#4cc9f0;color:#0b1d2b}
+#liste-matchs{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}
+.mt{background:#22223b;border:2px solid #33335a;border-radius:16px;padding:14px}
+.mt.sur{border-color:#2ecc71}
+.mt-haut{font-size:15px;color:#9ad6f0;font-weight:700;margin-bottom:6px}
+.eq{display:grid;grid-template-columns:95px 1fr 80px;gap:10px;align-items:center;padding:7px 0}
+.eq .nom{font-size:22px;font-weight:800;white-space:nowrap}
+.eq.fav .nom{color:#2ecc71}
+.eq .barre{position:relative;background:#3a3a5a;border-radius:8px;height:32px;overflow:hidden}
+.eq .barre span{position:absolute;left:0;top:0;bottom:0;border-radius:8px}
+.eq .barre b{position:relative;display:block;text-align:center;line-height:32px;font-size:19px;text-shadow:0 0 4px #000}
+.vert{background:#2ecc71}.orange{background:#f39c12}.rouge{background:#e74c3c}
+.eq input{width:78px}
+.alerte{margin-top:8px;font-size:16px;font-weight:700;color:#ffcf70}
+@media (max-width:700px){#liste-matchs{grid-template-columns:1fr}.onglet{font-size:18px}}
+"""
+
+
+def generer_html(semaine_df, semaine, courante, hist_tab, matchs=None, sig=None, fichier=FICHIER_HTML):
     print("5) Génération du dashboard HTML…")
     # Edge = signal dont l'historique donne un ajustement > 0 ; les autres sont déjà dans la ligne du book
     edge = semaine_df[semaine_df["ajust"] > 0.05] if len(semaine_df) else semaine_df
@@ -764,15 +846,19 @@ def generer_html(semaine_df, semaine, courante, hist_tab, fichier=FICHIER_HTML):
     page = f"""<!DOCTYPE html>
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{html.escape(titre)}</title><style>{CSS}</style></head>
+<title>{html.escape(titre)}</title><style>{CSS}{CSS_MATCHS}</style></head>
 <body><div class="page">
 <h1>🏈 {html.escape(titre)}</h1>
+<div class="onglets"><button class="onglet" data-o="p-matchs">Matchs</button><button class="onglet" data-o="p-signaux">Signaux</button></div>
+<div class="panneau" id="p-matchs">{onglet_matchs(matchs, sig, semaine, courante) if matchs is not None and semaine else ''}</div>
+<div class="panneau" id="p-signaux">
 {bandeau_blessures(semaine)}
 {compte}
 {cartes}
 <h2>Historique des signaux {SAISON_DEBUT}–{courante - 1}</h2>
 {tab}
-</div><script>{JS}</script></body></html>"""
+</div>
+</div><script>{JS}{JS_MATCHS}</script></body></html>"""
     with open(fichier, "w", encoding="utf-8") as f:
         f.write(page)
     chemin = os.path.abspath(fichier)
@@ -851,7 +937,8 @@ def main():
     else:
         print("   Aucun signal.")
     h.to_csv("historique_signaux.csv", index=False)
-    generer_html(sem_df, semaine, courante, hist_tab)
+    a_venir_sig = sig[(sig["season"] == courante) & ~sig["joue"]] if len(sig) else sig
+    generer_html(sem_df, semaine, courante, hist_tab, matchs, a_venir_sig)
 
 
 if __name__ == "__main__":

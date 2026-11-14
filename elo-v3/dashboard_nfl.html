@@ -31,9 +31,135 @@ th{background:#2d2d50;font-size:16px;text-align:left;padding:12px 10px;white-spa
 td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:nowrap}
 .num{font-variant-numeric:tabular-nums;font-weight:700}
 @media (max-width:700px){body{font-size:17px}.sig .match{font-size:23px}.sig .texte{font-size:19px}}
+
+.onglets{display:flex;gap:8px;margin:4px 0 18px}
+.onglet{flex:1;font-size:20px;font-weight:800;padding:13px;border-radius:12px;border:2px solid #4cc9f0;
+        background:#22223b;color:#fff;cursor:pointer}
+.onglet.actif{background:#4cc9f0;color:#0b1d2b}
+#liste-matchs{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}
+.mt{background:#22223b;border:2px solid #33335a;border-radius:16px;padding:14px}
+.mt.sur{border-color:#2ecc71}
+.mt-haut{font-size:15px;color:#9ad6f0;font-weight:700;margin-bottom:6px}
+.eq{display:grid;grid-template-columns:95px 1fr 80px;gap:10px;align-items:center;padding:7px 0}
+.eq .nom{font-size:22px;font-weight:800;white-space:nowrap}
+.eq.fav .nom{color:#2ecc71}
+.eq .barre{position:relative;background:#3a3a5a;border-radius:8px;height:32px;overflow:hidden}
+.eq .barre span{position:absolute;left:0;top:0;bottom:0;border-radius:8px}
+.eq .barre b{position:relative;display:block;text-align:center;line-height:32px;font-size:19px;text-shadow:0 0 4px #000}
+.vert{background:#2ecc71}.orange{background:#f39c12}.rouge{background:#e74c3c}
+.eq input{width:78px}
+.alerte{margin-top:8px;font-size:16px;font-weight:700;color:#ffcf70}
+@media (max-width:700px){#liste-matchs{grid-template-columns:1fr}.onglet{font-size:18px}}
 </style></head>
 <body><div class="page">
 <h1>🏈 NFL 2026 — Semaine 10</h1>
+<div class="onglets"><button class="onglet" data-o="p-matchs">Matchs</button><button class="onglet" data-o="p-signaux">Signaux</button></div>
+<div class="panneau" id="p-matchs"><div id="liste-matchs">
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 15 h 30</span></div>
+ <div class="eq"><div class="nom">NE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="2.24"></div>
+ <div class="eq"><div class="nom">🏠 DET</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.68"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="eq"><div class="nom">KC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="1.57"></div>
+ <div class="eq"><div class="nom">🏠 ATL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="2.45"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="eq"><div class="nom">HOU</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="1.42"></div>
+ <div class="eq"><div class="nom">🏠 CLE</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="2.95"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="eq"><div class="nom">MIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="2.24"></div>
+ <div class="eq"><div class="nom">🏠 GB</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.68"></div>
+ <div class="alerte">⚠️ MIN : QB Kirk Cousins au lieu de Carson Wentz (+5.7 pts)</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="eq"><div class="nom">MIA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="2.80"></div>
+ <div class="eq"><div class="nom">🏠 IND</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.46"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="eq"><div class="nom">CAR</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="2.14"></div>
+ <div class="eq"><div class="nom">🏠 NO</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.74"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="eq"><div class="nom">BUF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="1.24"></div>
+ <div class="eq"><div class="nom">🏠 NYJ</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="4.30"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 19 h 00</span></div>
+ <div class="eq"><div class="nom">JAX</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="1.14"></div>
+ <div class="eq"><div class="nom">🏠 TEN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="6.00"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22 h 05</span></div>
+ <div class="eq"><div class="nom">LA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="1.20"></div>
+ <div class="eq"><div class="nom">🏠 ARI</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="4.80"></div>
+ <div class="alerte">⚠️ LA sans Puka Nacua (-2.9), Davante Adams (-0.7) : -3.6 pts</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22 h 05</span></div>
+ <div class="eq"><div class="nom">SEA</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="1.33"></div>
+ <div class="eq"><div class="nom">🏠 LV</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="3.45"></div>
+ <div class="alerte">⚠️ LV : QB Fernando Mendoza au lieu de Kirk Cousins (-4.1 pts)</div>
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">dim. 22 h 25</span></div>
+ <div class="eq"><div class="nom">SF</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="1.46"></div>
+ <div class="eq"><div class="nom">🏠 DAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="2.80"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">lun. 02 h 20</span></div>
+ <div class="eq"><div class="nom">PIT</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="2.54"></div>
+ <div class="eq"><div class="nom">🏠 CIN</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.54"></div>
+ 
+</div>
+<div class="mt" data-ordre="0">
+ <div class="mt-haut"><span class="quand">mar. 02 h 15</span></div>
+ <div class="eq"><div class="nom">LAC</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-e" type="number" step="0.01" value="2.80"></div>
+ <div class="eq"><div class="nom">🏠 BAL</div><div class="barre"><span></span><b></b></div>
+   <input class="cote-d" type="number" step="0.01" value="1.46"></div>
+ 
+</div></div></div>
+<div class="panneau" id="p-signaux">
 <div class="bandeau" style="background:#1e5631">🩹 Rapport blessures : semaine 10</div>
 <div class="compte">Cette semaine, 1 signal d'edge détecté</div>
 <div id="signaux">
@@ -81,6 +207,7 @@ td{padding:11px 10px;border-top:1px solid #3a3a5a;font-size:18px;white-space:now
 </div></div>
 <h2>Historique des signaux 2015–2025</h2>
 <div class='tab'><table><thead><tr><th>Signal</th><th>Signaux</th><th>% gagné</th><th>Écart moyen (pts)</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr></thead><tbody><tr><td class='num'>QB</td><td class='num'>436</td><td class='num'>48,6 %</td><td class='num'>-0,4</td><td class='num'>48% (42)</td><td class='num'>55% (47)</td><td class='num'>51% (39)</td><td class='num'>44% (45)</td></tr><tr><td class='num'>Blessure</td><td class='num'>100</td><td class='num'>59,0 %</td><td class='num'>+2,0</td><td class='num'>62% (8)</td><td class='num'>100% (5)</td><td class='num'>41% (17)</td><td class='num'>58% (12)</td></tr><tr><td class='num'>Vent</td><td class='num'>66</td><td class='num'>56,1 %</td><td class='num'>+0,6</td><td class='num'>50% (6)</td><td class='num'>67% (3)</td><td class='num'>50% (2)</td><td class='num'>67% (6)</td></tr><tr><td class='num'>Coast</td><td class='num'>240</td><td class='num'>48,3 %</td><td class='num'>-0,3</td><td class='num'>50% (16)</td><td class='num'>41% (22)</td><td class='num'>57% (28)</td><td class='num'>48% (27)</td></tr></tbody></table></div>
+</div>
 </div><script>
 function erf(x){const s=Math.sign(x);x=Math.abs(x);const t=1/(1+0.3275911*x);
  return s*(1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x))}
@@ -103,4 +230,28 @@ function calc(el){
  el.querySelector('.juste').innerHTML=(d.under==='1'?'Under ':d.pari+' ')+(d.under==='1'?juste.toFixed(1).replace('.',','):sg(juste));
 }
 document.querySelectorAll('.sig').forEach(el=>{el.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>calc(el)));calc(el)});
+
+function majMatch(el){
+ const cd=parseFloat(el.querySelector('.cote-d').value.replace(',','.')), ce=parseFloat(el.querySelector('.cote-e').value.replace(',','.'));
+ if(isNaN(cd)||isNaN(ce)||cd<=1||ce<=1)return;
+ const pd=(1/cd)/((1/cd)+(1/ce)), pe=1-pd, eqs=el.querySelectorAll('.eq');
+ [[eqs[0],pe],[eqs[1],pd]].forEach(([q,p])=>{
+   const c=p>=0.65?'vert':(p>=0.5?'orange':'rouge');
+   q.querySelector('.barre span').className=c; q.querySelector('.barre span').style.width=(p*100).toFixed(1)+'%';
+   q.querySelector('.barre b').textContent=(p*100).toFixed(1).replace('.',',')+' %';
+   q.classList.toggle('fav',p>=0.65);
+ });
+ el.dataset.ordre=Math.max(pd,pe); el.classList.toggle('sur',Math.max(pd,pe)>=0.65);
+}
+function trier(){const L=document.getElementById('liste-matchs');if(!L)return;
+ [...L.children].sort((a,b)=>b.dataset.ordre-a.dataset.ordre).forEach(x=>L.appendChild(x))}
+document.querySelectorAll('.mt').forEach(el=>{majMatch(el);el.querySelectorAll('input').forEach(i=>{
+ i.addEventListener('input',()=>majMatch(el)); i.addEventListener('change',trier)})});
+trier();
+function onglet(n){document.querySelectorAll('.onglet').forEach(x=>x.classList.toggle('actif',x.dataset.o===n));
+ document.querySelectorAll('.panneau').forEach(x=>x.style.display=x.id===n?'block':'none');
+ try{localStorage.setItem('onglet_nfl',n)}catch(e){}}
+document.querySelectorAll('.onglet').forEach(b=>b.addEventListener('click',()=>onglet(b.dataset.o)));
+let o0='p-matchs';try{o0=localStorage.getItem('onglet_nfl')||o0}catch(e){}
+onglet(o0);
 </script></body></html>
