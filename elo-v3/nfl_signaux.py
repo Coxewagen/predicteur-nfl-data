@@ -818,11 +818,27 @@ def charger_betclic():
             jour = datetime.strptime(m["debut"][:10], "%Y-%m-%d")
         except (KeyError, ValueError, TypeError):
             continue
-        out[(m["dom"], m["ext"])].append((jour, float(m["cote_dom"]), float(m["cote_ext"])))
+        if "cote_dom" in m:
+            out[(m["dom"], m["ext"])].append((jour, float(m["cote_dom"]), float(m["cote_ext"])))
+        if "pin_dom" in m:
+            PINNACLE[(m["dom"], m["ext"])].append((jour, float(m["pin_dom"]), float(m["pin_ext"])))
     return out
 
 
 BETCLIC = {}
+PINNACLE = defaultdict(list)                  # cotes Pinnacle (book de référence), même format
+
+
+def cotes_pinnacle(g):
+    """Cotes Pinnacle du match (même affiche, date à ±2 jours), sinon None."""
+    try:
+        jour = datetime.strptime(str(g.gameday), "%Y-%m-%d")
+    except ValueError:
+        return None
+    for d, cd, ce in PINNACLE.get((g.home_team, g.away_team), []):
+        if abs((d - jour).days) <= 2:
+            return cd, ce
+    return None
 
 
 def cotes_betclic(g):
@@ -1253,7 +1269,7 @@ def generer_html(semaine_df, semaine, courante, hist_tab, matchs=None, sig=None,
 # =============================================================================
 # 9. M4 PRÉDICTEUR : même page que M3, % = cotes Betclic (ou marché) corrigées par les absences
 # =============================================================================
-VERSION_M4 = "1.0.0"                          # version de la page M4 (à augmenter à chaque modification)
+VERSION_M4 = "2.0.0"                          # version de la page M4 (à augmenter à chaque modification)
 SIGMA_M4 = 13.5                               # écart-type d'une marge NFL (pts), pour passer % <-> points
 DOSSIER_RACINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 POSTES_FR = {"RB": "running back", "WR": "receveur", "TE": "tight end"}
@@ -1271,6 +1287,91 @@ def beta_absences(matchs, courante):
 
 def p_sans_marge(cd, ce):
     return (1 / cd) / (1 / cd + 1 / ce)
+
+
+def patch_page_m4(page):
+    """Ajouts propres à M4 dans la page de M3 : cotes Pinnacle en direct, étiquette Value, avantage du combiné."""
+    def rep(a, b):
+        nonlocal page
+        if page.count(a) != 1:
+            print(f"  ⚠ M4 : motif introuvable dans la page M3 : {a[:60]}")
+            return
+        page = page.replace(a, b)
+    rep('var BKO_AT = 0;', 'var BKO_AT = 0;\n  var PIN = {};')
+    rep('if (so && so.o) { BKO = so.o; BKO_AT = so.t || 0; }', 'if (so && so.o) { BKO = so.o; BKO_AT = so.t || 0; PIN = so.p || {}; }')
+    rep('  var gameById = (id) => allGames().find((g) => g.id === id);', """  var gameById = (id) => allGames().find((g) => g.id === id);
+  function invN(p) {
+    const a = [-39.69683028665376, 220.9460984245205, -275.9285104469687, 138.357751867269, -30.66479806614716, 2.506628277459239], b = [-54.47609879822406, 161.5858368580409, -155.6989798598866, 66.80131188771972, -13.28068155288572], c = [-0.007784894002430293, -0.3223964580411365, -2.400758277161838, -2.549732539343734, 4.374664141464968, 2.938163982698783], d = [0.007784695709041462, 0.3224671290700398, 2.445134137142996, 3.754408661907416];
+    p = Math.min(Math.max(p, 1e-4), 1 - 1e-4);
+    if (p < 0.02425) { const q = Math.sqrt(-2 * Math.log(p)); return (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) / ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1); }
+    if (p > 1 - 0.02425) return -invN(1 - p);
+    const q = p - 0.5, r = q * q;
+    return (((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) * q / (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1);
+  }
+  // Probabilité = cote Pinnacle sans marge (en direct si plus récente que les données) ; Betclic des données en secours
+  function applyPin() {
+    const fresh = BKO_AT > (Date.parse(D.updatedAt) || 0);
+    allGames().forEach((g) => {
+      if (g.status === "closed") return;
+      if (g.bk && !(BKO[g.id] && BKO[g.id].h)) BKO[g.id] = g.bk;
+      const q = (fresh && PIN[g.id]) || g.pin;
+      if (!q || !(q.h > 1) || !(q.a > 1)) return;
+      const ph = (1 / q.h) / (1 / q.h + 1 / q.a);
+      g.pin = q;
+      g.pred = Object.assign({ hfa: 0 }, g.pred || {}, { pHome: ph, pAway: 1 - ph, margin: (D.sigma || 13.5) * invN(ph) });
+    });
+  }
+  applyPin();
+  function valSide(g, side) {
+    const bo = BKO[g.id], o = bo && bo[side === "home" ? "h" : "a"];
+    if (!o || !g.pin || !g.pred) return null;
+    return o * (side === "home" ? g.pred.pHome : g.pred.pAway) - 1;
+  }
+  var valTxt = (v) => (v > 0 ? "+" : "\u2212") + fr(Math.abs(v) * 100, 1) + " %";
+  function pinHtml(g) {
+    const bo = BKO[g.id], q = g.pin;
+    let h = "";
+    if (q) h += "<p>Pinnacle : <b>" + f2(q.h) + " / " + f2(q.a) + "</b></p>";
+    if (bo && bo.h) h += "<p>Betclic : <b>" + f2(bo.h) + " / " + f2(bo.a) + "</b></p>";
+    const vh = valSide(g, "home"), va = valSide(g, "away");
+    if (vh !== null && va !== null) h += "<p>Value : <b>" + valTxt(vh) + " / " + valTxt(va) + "</b></p>";
+    return h;
+  }""")
+    rep('bookmakers=betclic_fr&apiKey=', 'bookmakers=betclic_fr,pinnacle&apiKey=')
+    i0 = page.find('      const bk = (ev.bookmakers || []).find((b) => b.key === "betclic_fr")')
+    i1 = page.find('    BKO = Object.assign({}, BKO, out);')
+    if i0 < 0 or i1 < 0:
+        print("  ⚠ M4 : bloc de lecture des cotes introuvable dans la page M3")
+    else:
+        page = page[:i0] + """      const g = games.find((x) => sameTeam(x.home, ev.home_team) && sameTeam(x.away, ev.away_team));
+      if (!g) return;
+      const rd = (key) => {
+        const bk = (ev.bookmakers || []).find((b) => b.key === key), mk = bk && (bk.markets || []).find((m) => m.key === "h2h");
+        if (!mk) return null;
+        const ph = (mk.outcomes || []).find((o) => sameTeam(g.home, o.name)), pa = (mk.outcomes || []).find((o) => sameTeam(g.away, o.name));
+        return ph && pa && ph.price > 1 && pa.price > 1 ? { h: ph.price, a: pa.price } : null;
+      };
+      const b1 = rd("betclic_fr"), p1 = rd("pinnacle");
+      if (b1) out[g.id] = b1;
+      if (p1) pin[g.id] = p1;
+    });
+    PIN = Object.assign({}, PIN, pin);
+""" + page[i1:]
+    rep('    const out = {};\n    data.forEach((ev) => {', '    const out = {}, pin = {};\n    data.forEach((ev) => {')
+    rep('localStorage.setItem(ODDS_LS, JSON.stringify({ t: BKO_AT, o: BKO }));', 'localStorage.setItem(ODDS_LS, JSON.stringify({ t: BKO_AT, o: BKO, p: PIN }));')
+    rep('    refreshOddsViews();\n  }\n  document.addEventListener("click", (e) => {\n    if (e.target.closest && e.target.closest("#updBtn")) fetchBetclic(true);',
+        '    applyPin();\n    refreshOddsViews();\n    renderRecap();\n    try { render(); } catch (e) {}\n  }\n  document.addEventListener("click", (e) => {\n    if (e.target.closest && e.target.closest("#updBtn")) fetchBetclic(true);')
+    rep('D = r.data; applyLocks();', 'D = r.data; applyPin(); applyLocks();')
+    rep("""    if (g._live === "in") tag = '<span class="tag live">""",
+        """    const vfav = !done && p && unlocked ? valSide(g, favHome ? "home" : "away") : null;
+    if (vfav !== null) tag += '<span class="tag' + (vfav > 0 ? " ok" : "") + '">Value ' + valTxt(vfav) + "</span>";
+    if (g._live === "in") tag = '<span class="tag live">""")
+    rep('+ txt + extra + "</div>";', '+ pinHtml(g) + "</div>";')
+    rep("""    if (cote && mise) {
+      const gain = mise * cote""", """    if (cote && c.chance != null) { const av = cote * c.chance - 1; h += row("Avantage", valTxt(av), av > 0 ? "okc" : "koc"); }
+    if (cote && mise) {
+      const gain = mise * cote""")
+    return page
 
 
 def generer_m4(matchs, courante):
@@ -1294,29 +1395,33 @@ def generer_m4(matchs, courante):
             if g.get("id") not in infos.index:
                 continue
             r = infos.loc[g["id"]]
-            # 1) % du marché : Betclic si on a la cote (matchs à venir), sinon cotes de clôture nflverse
+            # 1) « vraie » probabilité : Pinnacle sans marge (book de référence) ; à défaut Betclic,
+            #    puis cotes de clôture nflverse (matchs terminés)
             pm, src = None, ""
-            bc = cotes_betclic(r) if g.get("status") != "closed" else None
-            if bc:
+            a_venir = g.get("status") != "closed"
+            bc = cotes_betclic(r) if a_venir else None
+            pin = cotes_pinnacle(r) if a_venir else None
+            g.pop("pin", None)
+            g.pop("bk", None)
+            if pin:
+                pm, src = p_sans_marge(*pin), "Pinnacle"
+                g["pin"] = {"h": pin[0], "a": pin[1]}
+            elif bc:
                 pm, src = p_sans_marge(*bc), "Betclic"
             elif not pd.isna(r.home_moneyline) and not pd.isna(r.away_moneyline):
                 pm, src = p_sans_marge(am_vers_dec(r.home_moneyline), am_vers_dec(r.away_moneyline)), "marché"
+            if bc:
+                g["bk"] = {"h": bc[0], "a": bc[1]}
             if pm is None:
                 g.pop("pred", None)
                 continue
             pm = float(pm)
-            # 2) correction par les absences (titulaires hors QB, coût cumulé par équipe)
-            net = COUTS_ABSENCES.get((g["id"], "ext"), 0) - COUTS_ABSENCES.get((g["id"], "dom"), 0)
-            adj = float(beta * net)
-            m_mk = SIGMA_M4 * N.inv_cdf(min(max(pm, 1e-4), 1 - 1e-4))
-            marge = m_mk + adj
-            ph = N.cdf(marge / SIGMA_M4)
-            g["pred"] = {"pHome": round(ph, 4), "pAway": round(1 - ph, 4), "margin": round(marge, 2), "hfa": 0.0}
+            marge = SIGMA_M4 * N.inv_cdf(min(max(pm, 1e-4), 1 - 1e-4))
+            g["pred"] = {"pHome": round(pm, 4), "pAway": round(1 - pm, 4), "margin": round(marge, 2), "hfa": 0.0}
             mk = g.get("mkt") or {}
-            fav_mk = g["home"] if pm >= 0.5 else g["away"]
-            mk.update({"pH": round(pm, 4), "fav": fav_mk, "contra": bool((ph >= 0.5) != (pm >= 0.5)), "gap": round(abs(adj), 1)})
-            if src == "Betclic":
-                mk["src"] = "Betclic"
+            mk.update({"pH": round(pm, 4), "fav": g["home"] if pm >= 0.5 else g["away"], "contra": False, "gap": 0.0})
+            if src in ("Pinnacle", "Betclic"):
+                mk["src"] = src
             g["mkt"] = mk
             # 3) absences prises en compte par M4 (détail affiché sur la fiche du match)
             if g.get("status") != "closed":
@@ -1329,7 +1434,7 @@ def generer_m4(matchs, courante):
                                                     f" · −{i['pts']:.2f} pt".replace(".", ",")}
                         for i in sorted(items, key=lambda x: -x["pts"]) if i["pts"] >= 0.1]
             nb += 1
-    D["modelLabel"] = f"M4 · cotes Betclic + absences (β {beta:.2f})".replace(".", ",")
+    D["modelLabel"] = "M4 · probabilité Pinnacle · value Betclic"
     D["appVersion"] = VERSION_M4
     from zoneinfo import ZoneInfo
     t = datetime.now(ZoneInfo("Europe/Paris"))
@@ -1345,6 +1450,7 @@ def generer_m4(matchs, courante):
     i0 = page.index("let D = ")
     i1 = page.index("\n", i0)
     page = page[:i0] + "let D = " + json.dumps(D, ensure_ascii=False, separators=(",", ":")) + ";" + page[i1:]
+    page = patch_page_m4(page)
     page = (page.replace("m3/m3_data.json", "m4/m4_data.json").replace("main/m3/index.html", "main/m4/index.html")
                 .replace('"m3_', '"m4_').replace("M3", "M4"))
     import re
@@ -1352,7 +1458,7 @@ def generer_m4(matchs, courante):
     page = re.sub(r'(<span id="appVer" class="osrc ver">)v[^<]*(</span>)', rf'\g<1>v{VERSION_M4}\g<2>', page)
     with open(os.path.join(DOSSIER_RACINE, "m4", "index.html"), "w", encoding="utf-8") as f:
         f.write(page)
-    print(f"  M4 : {nb} matchs, β absences = {beta:.2f}")
+    print(f"  M4 : {nb} matchs")
 
 
 # =============================================================================

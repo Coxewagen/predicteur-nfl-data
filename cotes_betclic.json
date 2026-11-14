@@ -1,97 +1,123 @@
 {
- "maj": "2026-11-14T20:55:00Z",
- "credits_restants": "354",
+ "maj": "2026-11-14T22:35:00Z",
+ "credits_restants": "350",
  "matchs": [
   {
    "dom": "DET",
    "ext": "NE",
    "debut": "2026-11-15T14:30:00Z",
    "cote_dom": 1.62,
-   "cote_ext": 2.15
+   "cote_ext": 2.15,
+   "pin_dom": 1.69,
+   "pin_ext": 2.28
   },
   {
    "dom": "ATL",
    "ext": "KC",
    "debut": "2026-11-15T18:00:00Z",
    "cote_dom": 2.35,
-   "cote_ext": 1.52
+   "cote_ext": 1.52,
+   "pin_dom": 2.48,
+   "pin_ext": 1.6
   },
   {
    "dom": "NYJ",
    "ext": "BUF",
    "debut": "2026-11-15T18:00:00Z",
    "cote_dom": 3.6,
-   "cote_ext": 1.24
+   "cote_ext": 1.24,
+   "pin_dom": 4.37,
+   "pin_ext": 1.24
   },
   {
    "dom": "NO",
    "ext": "CAR",
    "debut": "2026-11-15T18:00:00Z",
-   "cote_dom": 1.68,
-   "cote_ext": 2.1
+   "cote_dom": 1.7,
+   "cote_ext": 2.05,
+   "pin_dom": 1.76,
+   "pin_ext": 2.17
   },
   {
    "dom": "CLE",
    "ext": "HOU",
    "debut": "2026-11-15T18:00:00Z",
    "cote_dom": 2.7,
-   "cote_ext": 1.4
+   "cote_ext": 1.4,
+   "pin_dom": 2.95,
+   "pin_ext": 1.44
   },
   {
    "dom": "GB",
    "ext": "MIN",
    "debut": "2026-11-15T18:00:00Z",
    "cote_dom": 1.62,
-   "cote_ext": 2.15
+   "cote_ext": 2.15,
+   "pin_dom": 1.66,
+   "pin_ext": 2.34
   },
   {
    "dom": "IND",
    "ext": "MIA",
    "debut": "2026-11-15T18:00:00Z",
    "cote_dom": 1.42,
-   "cote_ext": 2.65
+   "cote_ext": 2.65,
+   "pin_dom": 1.5,
+   "pin_ext": 2.74
   },
   {
    "dom": "TEN",
    "ext": "JAX",
    "debut": "2026-11-15T18:00:00Z",
    "cote_dom": 5,
-   "cote_ext": 1.13
+   "cote_ext": 1.13,
+   "pin_dom": 5.3,
+   "pin_ext": 1.18
   },
   {
    "dom": "ARI",
    "ext": "LA",
    "debut": "2026-11-15T21:05:00Z",
    "cote_dom": 4.4,
-   "cote_ext": 1.18
+   "cote_ext": 1.18,
+   "pin_dom": 4.53,
+   "pin_ext": 1.22
   },
   {
    "dom": "LV",
    "ext": "SEA",
    "debut": "2026-11-15T21:05:00Z",
    "cote_dom": 3.2,
-   "cote_ext": 1.3
+   "cote_ext": 1.3,
+   "pin_dom": 3.35,
+   "pin_ext": 1.36
   },
   {
    "dom": "DAL",
    "ext": "SF",
    "debut": "2026-11-15T21:25:00Z",
    "cote_dom": 2.7,
-   "cote_ext": 1.48
+   "cote_ext": 1.48,
+   "pin_dom": 2.76,
+   "pin_ext": 1.5
   },
   {
    "dom": "CIN",
    "ext": "PIT",
    "debut": "2026-11-16T01:20:00Z",
    "cote_dom": 1.5,
-   "cote_ext": 2.4
+   "cote_ext": 2.45,
+   "pin_dom": 1.53,
+   "pin_ext": 2.64
   },
   {
    "dom": "BAL",
    "ext": "LAC",
    "debut": "2026-11-17T01:15:00Z",
    "cote_dom": 1.42,
-   "cote_ext": 2.65
+   "cote_ext": 2.65,
+   "pin_dom": 1.47,
+   "pin_ext": 2.83
   },
   {
    "dom": "HOU",

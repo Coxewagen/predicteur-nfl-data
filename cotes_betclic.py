@@ -6,7 +6,8 @@ Cotes Betclic (France) des matchs NFL à venir, via The Odds API (bookmaker « b
 
 La clé API est lue dans la variable d'environnement ODDS_API_KEY (secret GitHub du même nom).
 Sans clé, ou en cas d'erreur, le fichier existant est gardé tel quel.
-Coût : 1 crédit par appel (1 marché « h2h » x 1 bookmaker).
+Récupère aussi les cotes Pinnacle (book de référence) : M4 en tire la « vraie » probabilité.
+Coût : 1 crédit par appel (1 marché « h2h », jusqu'à 10 bookmakers).
 """
 
 import json
@@ -19,7 +20,7 @@ from pathlib import Path
 
 FICHIER = Path(__file__).with_name("cotes_betclic.json")
 URL = ("https://api.the-odds-api.com/v4/sports/americanfootball_nfl/odds"
-       "?apiKey={cle}&bookmakers=betclic_fr&markets=h2h&oddsFormat=decimal&dateFormat=iso")
+       "?apiKey={cle}&bookmakers=betclic_fr,pinnacle&markets=h2h&oddsFormat=decimal&dateFormat=iso")
 
 # Nom complet (The Odds API) -> abréviation nflverse
 EQUIPES = {
@@ -53,8 +54,9 @@ def main():
         dom, ext = EQUIPES.get(ev.get("home_team")), EQUIPES.get(ev.get("away_team"))
         if not dom or not ext:
             continue
+        cotes = {}
         for b in ev.get("bookmakers", []):
-            if b.get("key") != "betclic_fr":
+            if b.get("key") not in ("betclic_fr", "pinnacle"):
                 continue
             for m in b.get("markets", []):
                 if m.get("key") != "h2h":
@@ -62,15 +64,23 @@ def main():
                 prix = {o["name"]: o["price"] for o in m.get("outcomes", [])}
                 cd, ce = prix.get(ev["home_team"]), prix.get(ev["away_team"])
                 if cd and ce:
-                    matchs.append({"dom": dom, "ext": ext, "debut": ev.get("commence_time"),
-                                   "cote_dom": cd, "cote_ext": ce, "maj_book": b.get("last_update")})
+                    cotes[b["key"]] = (cd, ce)
+        if not cotes:
+            continue
+        m = {"dom": dom, "ext": ext, "debut": ev.get("commence_time")}
+        if "betclic_fr" in cotes:
+            m["cote_dom"], m["cote_ext"] = cotes["betclic_fr"]
+        if "pinnacle" in cotes:
+            m["pin_dom"], m["pin_ext"] = cotes["pinnacle"]
+        matchs.append(m)
     if not matchs:
         print(f"Cotes Betclic : aucune cote Betclic reçue ({len(donnees)} matchs), fichier inchangé.")
         return
     sortie = {"maj": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
               "credits_restants": restants, "matchs": matchs}
     FICHIER.write_text(json.dumps(sortie, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"Cotes Betclic : {len(matchs)} matchs, crédits restants ce mois-ci : {restants}")
+    nb_pin = sum(1 for m in matchs if "pin_dom" in m)
+    print(f"Cotes Betclic : {len(matchs)} matchs ({nb_pin} avec Pinnacle), crédits restants ce mois-ci : {restants}")
 
 
 if __name__ == "__main__":

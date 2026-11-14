@@ -87,6 +87,8 @@ def cotes_betclic():
         return {}
     out = {}
     for m in d.get('matchs', []):
+        if 'cote_dom' not in m:
+            continue
         out.setdefault((m['dom'], m['ext']), []).append((str(m.get('debut', ''))[:10], m['cote_dom'], m['cote_ext']))
     return out
 
