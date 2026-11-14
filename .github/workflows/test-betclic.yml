@@ -1,0 +1,10 @@
+name: test betclic
+on:
+  push:
+    branches: [test-betclic]
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 test_betclic.py
