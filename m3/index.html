@@ -346,6 +346,7 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
 @media (max-width:380px){.lrow .shield,.crest{width:36px;height:36px}.lrow .lsc{font-size:19px;min-width:54px;gap:3px}.lrow .lsc i{font-size:15px}.lrow .pbadge{font-size:12px;padding:2px 3px}.game.lrow{gap:3px;padding:6px}}
 @keyframes livepulse{50%{opacity:.25}}
 :root{color-scheme:dark}
+.pbadge.bc{background:#fff;color:#c8102e;box-shadow:inset 0 0 0 2px #c8102e;margin-right:6px}
 </style>
 </head>
 <body>
@@ -385,7 +386,7 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
       </h2>
       <p class="meta" id="updatedMeta"></p>
       <div class="updbar"><button type="button" id="updBtn" class="ubtn"><svg class="ic"><use href="#i-refresh"/></svg><span>Mettre à jour</span></button><span id="updMsg" role="status" aria-live="polite"></span><span id="liveMsg" role="status"></span></div>
-      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.32</span></div>
+      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.33</span></div>
       <div class="filterbar"><button type="button" id="filterBtn" class="fbtn" aria-pressed="false"><svg class="ic"><use href="#i-star"/></svg><span>Favoris à 60 % et plus seulement</span></button><button type="button" id="liveBtn" class="fbtn" aria-pressed="false"><span class="ldot"></span><span id="liveLbl">En direct</span></button><span id="filterCount" aria-live="polite"></span></div>
       <div class="games" id="games"></div>
       <div class="recap" id="recap"></div>
@@ -722,6 +723,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
   function refreshOddsViews() {
     document.querySelectorAll(".betrow").forEach((r) => paintBet(r.dataset.id));
     renderRecap();
+    try { render(); } catch (e) {}
   }
   async function fetchBetclic(force) {
     if (!force && BKO_AT && Date.now() - BKO_AT < 4 * 3600 * 1000) return;
@@ -796,7 +798,10 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
       const showPct = unlocked && p;
       const prob = side === "home" ? p && p.pHome : p && p.pAway;
       const fav = showPct && (side === "home" ? favHome === true : favHome === false);
-      const badge = showPct ? '<span class="pbadge ' + side + (fav ? " fav" : "") + '">' + pct(prob) + "</span>" : "";
+      const bo = BKO && BKO[g.id];
+      const bcP = bo ? (side === "home" ? (1 / bo.h) / (1 / bo.h + 1 / bo.a) : (1 / bo.a) / (1 / bo.h + 1 / bo.a)) : null;
+      const bcBadge = showPct && bcP !== null ? '<span class="pbadge bc" title="Betclic">' + pct(bcP) + "</span>" : "";
+      const badge = showPct ? bcBadge + '<span class="pbadge ' + side + (fav ? " fav" : "") + '">' + pct(prob) + "</span>" : "";
       const right = done || g._live === "in" ? badge + '<span class="pct' + (fav ? " fav" : "") + '">' + (side === "home" ? g.homeScore : g.awayScore) + "</span>" : showPct ? badge + lockBtn(g) : '<span class="pct">\u2013</span>';
       return '<div class="team">' + crestHtml(D2, name, side === "home" ? g._hl : g._al, "") + '<span class="tname' + (fav ? " fav" : "") + '"><span class="long">' + esc(name) + '</span><span class="short">' + esc(nick(D2, name)) + '</span><span class="role" title="' + (side === "home" ? "À domicile" : "À l’extérieur") + '">' + ic(side === "home" ? "home" : "plane") + "</span>" + chips(g.abs[side]) + (g._live === "in" && g._ps === side ? ballIc() : "") + '</span><span class="pright">' + right + "</span></div>";
     };
@@ -952,7 +957,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
   function setMsg(t, cls) { updMsg.textContent = t; updMsg.className = cls || ""; }
   var FEED_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/m3_data.json";
   var PAGE_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/index.html";
-  var APP_VERSION = "1.0.32";
+  var APP_VERSION = "1.0.33";
   var newV = null;
   function vNum(v) { return String(v || "0").split(".").map((x) => parseInt(x, 10) || 0); }
   function vGt(a, b) {
