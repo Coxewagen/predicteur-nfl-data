@@ -532,6 +532,8 @@ def detecter_signaux(matchs, joueurs, absents, semaines_rapport, courante):
 
                     # --- b) titulaires absents (hors QB) avec des remplaçants nettement moins bons ---
                     hors_qb = [i for i in items if i["poste"] != "QB" and i["pts"] > 0]
+                    COUTS_ABSENCES[(g.game_id, cote)] = sum(i["pts"] for i in hors_qb)   # pour M4
+                    ITEMS_ABSENCES[(g.game_id, cote)] = hors_qb
                     if BLESSURE_CUMUL:
                         # Cumul par équipe : plusieurs absences moyennes peuvent faire un signal
                         total = sum(i["pts"] for i in hors_qb)
@@ -574,6 +576,8 @@ def detecter_signaux(matchs, joueurs, absents, semaines_rapport, courante):
 
 
 noms_joueurs = {}
+COUTS_ABSENCES = {}          # (game_id, 'dom'/'ext') -> coût cumulé des titulaires absents hors QB (pts)
+ITEMS_ABSENCES = {}          # (game_id, 'dom'/'ext') -> détail de ces absences
 
 
 # =============================================================================
@@ -1245,6 +1249,111 @@ def generer_html(semaine_df, semaine, courante, hist_tab, matchs=None, sig=None,
 
 
 # =============================================================================
+# 9. M4 PRÉDICTEUR : même page que M3, % = cotes Betclic (ou marché) corrigées par les absences
+# =============================================================================
+VERSION_M4 = "1.0.0"                          # version de la page M4 (à augmenter à chaque modification)
+SIGMA_M4 = 13.5                               # écart-type d'une marge NFL (pts), pour passer % <-> points
+DOSSIER_RACINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+POSTES_FR = {"RB": "running back", "WR": "receveur", "TE": "tight end"}
+
+
+def beta_absences(matchs, courante):
+    """Part du coût des absences que le book n'intègre pas : régression (résultat - spread) sur l'écart d'absences."""
+    g = matchs[(matchs["season"] < courante) & matchs["result"].notna() & matchs["spread_line"].notna()]
+    net = np.array([COUTS_ABSENCES.get((x, "ext"), 0) - COUTS_ABSENCES.get((x, "dom"), 0) for x in g["game_id"]])
+    res = (g["result"] - g["spread_line"]).to_numpy()
+    if not np.dot(net, net):
+        return 0.0
+    return float(min(max(np.dot(res, net) / np.dot(net, net), 0.0), 1.0))
+
+
+def p_sans_marge(cd, ce):
+    return (1 / cd) / (1 / cd + 1 / ce)
+
+
+def generer_m4(matchs, courante):
+    """Écrit m4/m4_data.json (format de m3_data.json) et m4/index.html (page de M3 adaptée)."""
+    from statistics import NormalDist
+    N = NormalDist()
+    chemin_m3 = os.path.join(DOSSIER_RACINE, "m3")
+    try:
+        with open(os.path.join(chemin_m3, "m3_data.json"), encoding="utf-8") as f:
+            D = json.load(f)
+        with open(os.path.join(chemin_m3, "index.html"), encoding="utf-8") as f:
+            page = f.read()
+    except OSError as e:
+        print(f"  ⚠ M4 : modèle M3 introuvable ({e})")
+        return
+    beta = beta_absences(matchs, courante)
+    infos = matchs[matchs["season"] == courante].set_index("game_id")
+    nb = 0
+    for semaine, liste in D.get("weeks", {}).items():
+        for g in liste:
+            if g.get("id") not in infos.index:
+                continue
+            r = infos.loc[g["id"]]
+            # 1) % du marché : Betclic si on a la cote (matchs à venir), sinon cotes de clôture nflverse
+            pm, src = None, ""
+            bc = cotes_betclic(r) if g.get("status") != "closed" else None
+            if bc:
+                pm, src = p_sans_marge(*bc), "Betclic"
+            elif not pd.isna(r.home_moneyline) and not pd.isna(r.away_moneyline):
+                pm, src = p_sans_marge(am_vers_dec(r.home_moneyline), am_vers_dec(r.away_moneyline)), "marché"
+            if pm is None:
+                g.pop("pred", None)
+                continue
+            pm = float(pm)
+            # 2) correction par les absences (titulaires hors QB, coût cumulé par équipe)
+            net = COUTS_ABSENCES.get((g["id"], "ext"), 0) - COUTS_ABSENCES.get((g["id"], "dom"), 0)
+            adj = float(beta * net)
+            m_mk = SIGMA_M4 * N.inv_cdf(min(max(pm, 1e-4), 1 - 1e-4))
+            marge = m_mk + adj
+            ph = N.cdf(marge / SIGMA_M4)
+            g["pred"] = {"pHome": round(ph, 4), "pAway": round(1 - ph, 4), "margin": round(marge, 2), "hfa": 0.0}
+            mk = g.get("mkt") or {}
+            fav_mk = g["home"] if pm >= 0.5 else g["away"]
+            mk.update({"pH": round(pm, 4), "fav": fav_mk, "contra": bool((ph >= 0.5) != (pm >= 0.5)), "gap": round(abs(adj), 1)})
+            if src == "Betclic":
+                mk["src"] = "Betclic"
+            g["mkt"] = mk
+            # 3) absences prises en compte par M4 (détail affiché sur la fiche du match)
+            if g.get("status") != "closed":
+                for cote, side in (("dom", "home"), ("ext", "away")):
+                    items = ITEMS_ABSENCES.get((g["id"], cote), [])
+                    n_abs = sum(1 for i in items if i["pts"] >= 0.1)
+                    g.setdefault("abs", {})[side] = {"qb": False, "qbq": False, "off": n_abs, "deff": 0}
+                    g.setdefault("absList", {})[side] = [
+                        {"side": "Attaque", "txt": f"{POSTES_FR.get(i['poste'], i['poste'])} titulaire ({i['nom']}, absent)"
+                                                    f" · −{i['pts']:.2f} pt".replace(".", ",")}
+                        for i in sorted(items, key=lambda x: -x["pts"]) if i["pts"] >= 0.1]
+            nb += 1
+    D["modelLabel"] = f"M4 · cotes Betclic + absences (β {beta:.2f})".replace(".", ",")
+    D["appVersion"] = VERSION_M4
+    from zoneinfo import ZoneInfo
+    t = datetime.now(ZoneInfo("Europe/Paris"))
+    jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
+    mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
+    D["updatedAt"] = t.strftime("%Y-%m-%dT%H:%M")
+    D["updatedLabel"] = f"{jours[t.weekday()]} {t.day} {mois[t.month - 1]} {t.year} à {t.hour} h {t.minute:02d}"
+    D["sigma"] = SIGMA_M4
+    os.makedirs(os.path.join(DOSSIER_RACINE, "m4"), exist_ok=True)
+    with open(os.path.join(DOSSIER_RACINE, "m4", "m4_data.json"), "w", encoding="utf-8") as f:
+        json.dump(D, f, ensure_ascii=False, separators=(",", ":"))
+    # Page : celle de M3, renommée, avec ses propres données et sa propre mémoire de paris
+    i0 = page.index("let D = ")
+    i1 = page.index("\n", i0)
+    page = page[:i0] + "let D = " + json.dumps(D, ensure_ascii=False, separators=(",", ":")) + ";" + page[i1:]
+    page = (page.replace("m3/m3_data.json", "m4/m4_data.json").replace("main/m3/index.html", "main/m4/index.html")
+                .replace('"m3_', '"m4_').replace("M3", "M4"))
+    import re
+    page = re.sub(r'var APP_VERSION = "[^"]*"', f'var APP_VERSION = "{VERSION_M4}"', page)
+    page = re.sub(r'(<span id="appVer" class="osrc ver">)v[^<]*(</span>)', rf'\g<1>v{VERSION_M4}\g<2>', page)
+    with open(os.path.join(DOSSIER_RACINE, "m4", "index.html"), "w", encoding="utf-8") as f:
+        f.write(page)
+    print(f"  M4 : {nb} matchs, β absences = {beta:.2f}")
+
+
+# =============================================================================
 # PROGRAMME PRINCIPAL
 # =============================================================================
 def charger_corrections(matchs, rosters, blessures, courante):
@@ -1315,6 +1424,7 @@ def main():
     a_venir_sig = sig[(sig["season"] == courante) & ~sig["joue"]] if len(sig) else sig
     fiches = fiches_matchs(matchs, blessures, rosters, joueurs, absents, semaines_rapport, courante, semaine) if semaine else {}
     generer_html(sem_df, semaine, courante, hist_tab, matchs, a_venir_sig, fiches)
+    generer_m4(matchs, courante)
 
 
 if __name__ == "__main__":
