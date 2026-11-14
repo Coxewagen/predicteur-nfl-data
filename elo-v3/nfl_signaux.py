@@ -62,7 +62,7 @@ COTE_DEFAUT = 1.91                            # cote -110 si le book n'en donne 
 SEUIL_RENTABILITE = 0.524
 
 FICHIER_HTML = "dashboard_nfl.html"
-VERSION_PAGE = "2.5"                          # à augmenter à chaque modification de la page
+VERSION_PAGE = "2.6"                          # à augmenter à chaque modification de la page
 FICHIER_ABSENCES = "absences.json"
 CORRECTIONS = {"absents": {}, "presents": {}}
 
@@ -102,6 +102,59 @@ STADES = {"ARI": (33.528, -112.263), "ATL": (33.755, -84.401), "BAL": (39.278, -
 STADES_COUVERTS = {"ARI", "ATL", "DAL", "DET", "HOU", "IND", "LV", "LAC", "LA", "MIN", "NO"}
 
 TYPES = {"qb": "QB", "blessure": "Blessure", "vent": "Vent", "coast": "Coast"}
+
+# Équipes : nom complet, code du logo ESPN, couleur principale (pastille de secours si le logo ne charge pas)
+EQUIPES_INFO = {
+    "ARI": ("Arizona Cardinals", "ari", "#97233F"),
+    "ATL": ("Atlanta Falcons", "atl", "#A71930"),
+    "BAL": ("Baltimore Ravens", "bal", "#241773"),
+    "BUF": ("Buffalo Bills", "buf", "#00338D"),
+    "CAR": ("Carolina Panthers", "car", "#0085CA"),
+    "CHI": ("Chicago Bears", "chi", "#0B162A"),
+    "CIN": ("Cincinnati Bengals", "cin", "#FB4F14"),
+    "CLE": ("Cleveland Browns", "cle", "#FF3C00"),
+    "DAL": ("Dallas Cowboys", "dal", "#002244"),
+    "DEN": ("Denver Broncos", "den", "#002244"),
+    "DET": ("Detroit Lions", "det", "#0076B6"),
+    "GB": ("Green Bay Packers", "gb", "#203731"),
+    "HOU": ("Houston Texans", "hou", "#03202F"),
+    "IND": ("Indianapolis Colts", "ind", "#002C5F"),
+    "JAX": ("Jacksonville Jaguars", "jax", "#006778"),
+    "KC": ("Kansas City Chiefs", "kc", "#E31837"),
+    "LV": ("Las Vegas Raiders", "lv", "#000000"),
+    "LAC": ("Los Angeles Chargers", "lac", "#007BC7"),
+    "LA": ("Los Angeles Rams", "lar", "#003594"),
+    "MIA": ("Miami Dolphins", "mia", "#008E97"),
+    "MIN": ("Minnesota Vikings", "min", "#4F2683"),
+    "NE": ("New England Patriots", "ne", "#002244"),
+    "NO": ("New Orleans Saints", "no", "#D3BC8D"),
+    "NYG": ("New York Giants", "nyg", "#0B2265"),
+    "NYJ": ("New York Jets", "nyj", "#003F2D"),
+    "PHI": ("Philadelphia Eagles", "phi", "#004C54"),
+    "PIT": ("Pittsburgh Steelers", "pit", "#000000"),
+    "SF": ("San Francisco 49ers", "sf", "#AA0000"),
+    "SEA": ("Seattle Seahawks", "sea", "#002244"),
+    "TB": ("Tampa Bay Buccaneers", "tb", "#A71930"),
+    "TEN": ("Tennessee Titans", "ten", "#4495D2"),
+    "WAS": ("Washington Commanders", "wsh", "#5A1414"),
+}
+URL_LOGO = "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/{code}.png"
+
+
+def nom_complet(a):
+    return EQUIPES_INFO.get(a, (a, "", "#555"))[0]
+
+
+def logo_html(a, taille=34):
+    """Logo ESPN de l'équipe ; si l'image ne charge pas, pastille aux couleurs de l'équipe avec son abréviation."""
+    nom, code, coul = EQUIPES_INFO.get(a, (a, "", "#555"))
+    pastille = (f'<span class=\"pastille-eq\" style=\"background:{coul};width:{taille}px;height:{taille}px;'
+                f'line-height:{taille}px\">{html.escape(a)}</span>')
+    if not code:
+        return pastille
+    return (f'<span class=\"logo-eq\" style=\"width:{taille}px;height:{taille}px\">{pastille}'
+            f'<img src=\"{URL_LOGO.format(code=code)}\" alt=\"\" loading=\"lazy\" onerror=\"this.remove()\"></span>')
+
 
 
 # =============================================================================
@@ -702,7 +755,7 @@ def carte_signal(r):
     return f"""
 <div class="sig" data-ajust="{r['ajust']:.4f}" data-sigma="{r['sigma']:.4f}" data-ligne="{r['ligne']}"
      data-under="{1 if under else 0}" data-pari="{e(str(r['pari']))}">
- <div class="haut"><div class="match">{e(r['dom'])} – {e(r['ext'])}</div><div class="badge">{TYPES[r['type']]}</div></div>
+ <div class="haut"><div class="match">{logo_html(r['ext'], 30)} {e(nom_complet(r['ext']))} @ {logo_html(r['dom'], 30)} {e(nom_complet(r['dom']))}</div><div class="badge">{TYPES[r['type']]}</div></div>
  <div class="texte">{e(r['texte'])}</div>
  <div class="grille">
   <div class="case"><div class="lib">{e(ligne_lib)}</div><div class="val"><input class="in-ligne" type="number" step="0.5" value="{ligne_aff}"></div></div>
@@ -802,12 +855,12 @@ def carte_match(g, sig):
     joue = "" if pd.isna(g.result) else (' data-gagnant="dom"' if g.result > 0 else ' data-gagnant="ext"')
     gid = e(g.game_id)
     return f"""
-<div class="mt" data-ordre="0" data-g="{gid}" data-dom="{e(g.home_team)}" data-ext="{e(g.away_team)}"{joue}>
+<div class="mt" data-ordre="0" data-g="{gid}" data-dom="{e(nom_complet(g.home_team))}" data-ext="{e(nom_complet(g.away_team))}"{joue}>
  <div class="mt-haut"><span class="quand">{e(quand)}</span>{score}<span class="fiche">📋</span></div>
- <div class="eq" data-cote="e"><div class="nom">{e(g.away_team)}</div><div class="barre"><span></span><b></b></div>
+ <div class="eq" data-cote="e"><div class="nom">{logo_html(g.away_team)}<span class="nt">{e(nom_complet(g.away_team))}</span></div><div class="barre"><span></span><b></b></div>
    <input class="cote-e{cl_bc}" type="number" step="0.01" value="{ve}" data-defaut="{ce}" data-init="{ve}" placeholder="Betclic" title="Cote Betclic">
    <label class="pari"><input type="checkbox" class="chk" data-cote="e"><span>J'ai parié</span></label></div>
- <div class="eq" data-cote="d"><div class="nom">🏠 {e(g.home_team)}</div><div class="barre"><span></span><b></b></div>
+ <div class="eq" data-cote="d"><div class="nom">{logo_html(g.home_team)}<span class="nt">{e(nom_complet(g.home_team))} 🏠</span></div><div class="barre"><span></span><b></b></div>
    <input class="cote-d{cl_bc}" type="number" step="0.01" value="{vd}" data-defaut="{cd}" data-init="{vd}" placeholder="Betclic" title="Cote Betclic">
    <label class="pari"><input type="checkbox" class="chk" data-cote="d"><span>J'ai parié</span></label></div>
  <div class="contre-tag">⚠️ Contre le marché</div>
@@ -959,7 +1012,8 @@ function majRecap(R){
  R.querySelector('.recap-vide').style.display=mats.length?'none':'block';
  R.querySelector('.recap-calc').style.display=mats.length?'grid':'none';
  mats.forEach(el=>{
-   const P=PARIS[el.dataset.g], c=P.cote, eq=c==='d'?el.dataset.dom:el.dataset.ext, adv=c==='d'?el.dataset.ext:el.dataset.dom;
+   const P=PARIS[el.dataset.g], c=P.cote, adv=c==='d'?el.dataset.ext:el.dataset.dom;
+   const eq=logoDe(el,c)+(c==='d'?el.dataset.dom:el.dataset.ext);
    const ligne=document.createElement('div'); ligne.className='r-ligne';
    ligne.innerHTML='<div class="r-eq">'+eq+' <span>vs '+adv+'</span>'+(contreMarche(el,c)?' <em class="r-contre">⚠️ Contre le marché</em>':'')+'</div>'
      +'<div class="r-p">'+(isNaN(P.p)?'':fr(P.p*100,1)+' %')+'</div>'
@@ -970,6 +1024,7 @@ function majRecap(R){
  });
  calcRecap(R);
 }
+function logoDe(el,c){const l=el.querySelector('.eq[data-cote="'+c+'"] .logo-eq,.eq[data-cote="'+c+'"] .pastille-eq');return l?l.outerHTML+' ':''}
 // Multiboost Betclic (comme M3) : + « boost par match » (0,01 par défaut) sur chaque cote d'au moins 1,20
 function coteBoostee(v,b){return (!isNaN(v)&&b>0&&v>=1.2)?Math.round((v+b)*100)/100:v}
 function calcRecap(R){
@@ -1034,9 +1089,9 @@ function colEquipe(f,titre){
 }
 function ouvrirFiche(el){
  const f=FICHES[el.dataset.g]; if(!f)return;
- document.getElementById('fiche-contenu').innerHTML='<div class="d-haut">'+el.dataset.ext+' @ '+el.dataset.dom
+ document.getElementById('fiche-contenu').innerHTML='<div class="d-haut">'+logoDe(el,'e')+el.dataset.ext+' @ '+logoDe(el,'d')+el.dataset.dom
    +'<span class="d-rap">🩹 Rapport J'+(f.rapport||'—')+'</span></div><div class="d-grille">'
-   +colEquipe(f.ext,el.dataset.ext)+colEquipe(f.dom,'🏠 '+el.dataset.dom)+'</div>';
+   +colEquipe(f.ext,logoDe(el,'e')+el.dataset.ext)+colEquipe(f.dom,logoDe(el,'d')+el.dataset.dom+' 🏠')+'</div>';
  document.getElementById('fiche').style.display='flex';
 }
 function fermerFiche(){document.getElementById('fiche').style.display='none'}
@@ -1059,15 +1114,20 @@ CSS_MATCHS = """
         background:#22223b;color:#fff;cursor:pointer}
 .onglet.actif{background:#4cc9f0;color:#0b1d2b}
 .onglet.sig-o{border-color:#f39c12}.onglet.sig-o.actif{background:#f39c12}
-.liste-matchs{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px}
+.liste-matchs{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:14px}
 .mt{background:#22223b;border:2px solid #33335a;border-radius:16px;padding:14px;cursor:pointer}
 .mt:hover{background:#2a2a48}
 .mt.sur{border-color:#2ecc71}
 .mt-haut{font-size:15px;color:#9ad6f0;font-weight:700;margin-bottom:6px;display:flex;gap:10px;align-items:center}
 .mt-haut .fiche{margin-left:auto;font-size:18px}
 .score{font-size:18px;font-weight:800;color:#fff}
-.eq{display:grid;grid-template-columns:90px 1fr 74px 104px;gap:8px;align-items:center;padding:7px 0}
-.eq .nom{font-size:22px;font-weight:800;white-space:nowrap}
+.eq{display:grid;grid-template-columns:205px 1fr 74px 104px;gap:8px;align-items:center;padding:7px 0}
+.eq .nom{font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px;line-height:1.15}
+.logo-eq{position:relative;display:inline-block;flex:none;vertical-align:middle}
+.logo-eq img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:transparent}
+.pastille-eq{display:inline-block;flex:none;border-radius:50%;color:#fff;font-size:11px;font-weight:800;text-align:center;vertical-align:middle}
+.logo-eq .pastille-eq{position:absolute;inset:0}
+.r-eq .logo-eq,.d-haut .logo-eq,.d-eq .logo-eq{margin-right:4px}
 .eq.fav .nom{color:#2ecc71}
 .eq.gagnant .nom::after{content:" ✅"}
 .eq .barre{position:relative;background:#3a3a5a;border-radius:8px;height:32px;overflow:hidden}
@@ -1116,7 +1176,7 @@ CSS_MATCHS = """
 .st-Out,.st-IR{background:#e74c3c}.st-Doubtful{background:#f39c12;color:#111}.st-Questionable{background:#f1c40f;color:#111}
 .cout{color:#ff8a8a;font-weight:800}
 @media (max-width:760px){.liste-matchs{grid-template-columns:1fr}.onglet{font-size:17px;padding:10px}
- .eq{grid-template-columns:62px 1fr 64px 92px;gap:6px}.eq .nom{font-size:19px}.eq input{width:66px}
+ .eq{grid-template-columns:1fr 66px 92px;gap:6px 8px}.eq .nom{grid-column:1/-1;font-size:17px}.eq input{width:66px}
  .d-grille{grid-template-columns:1fr}.d-chiffres{grid-template-columns:repeat(2,1fr)}
  .r-ligne{grid-template-columns:1fr 60px 130px 36px}}
 """
