@@ -99,7 +99,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Jaylinn Hawkins, genou, rapport précédent)",
+     "pos": "safety titulaire (Jaylinn Hawkins, genou)",
      "gp": 6
     },
     {
@@ -125,8 +125,8 @@
    "qbReplacementTier": "standard",
    "qbReplacementName": "Jacoby Brissett",
    "qbReplacementStarts": 73,
-   "injReport": "provisoire",
-   "injWeek": 9
+   "injReport": "final",
+   "injWeek": 10
   },
   "Buffalo Bills": {
    "offAbsences": [
@@ -795,55 +795,6 @@
    "injReport": "final",
    "injWeek": 10
   },
-  "Los Angeles Chargers": {
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "tight end titulaire (David Njoku, péroné, rapport précédent)",
-     "gp": 2
-    },
-    {
-     "tier": "titulaire",
-     "pos": "ailier droit titulaire (Kayode Awosika, péroné, rapport précédent)",
-     "lane": "line",
-     "gp": 2
-    },
-    {
-     "tier": "titulaire",
-     "pos": "centre titulaire (Tyler Biadasz, IR)",
-     "lane": "line",
-     "gp": 0
-    },
-    {
-     "tier": "elite",
-     "pos": "ailier gauche titulaire (Rashawn Slater, IR)",
-     "lane": "line",
-     "gp": 4
-    }
-   ],
-   "defAbsences": [
-    {
-     "tier": "rotation",
-     "pos": "linebacker titulaire (Denzel Perryman, IR)",
-     "gp": 0
-    },
-    {
-     "tier": "elite",
-     "pos": "safety titulaire (Derwin James, IR)",
-     "gp": 3
-    }
-   ],
-   "watch": [
-    {
-     "name": "Ladd McConkey",
-     "pos": "receveur",
-     "etat": "absent à l’entraînement",
-     "why": "dos"
-    }
-   ],
-   "injReport": "provisoire",
-   "injWeek": 9
-  },
   "Miami Dolphins": {
    "offAbsences": [
     {
@@ -1377,6 +1328,61 @@
     }
    ],
    "injReport": "provisoire",
+   "injWeek": 10
+  },
+  "Los Angeles Chargers": {
+   "defAbsences": [
+    {
+     "tier": "rotation",
+     "pos": "linebacker titulaire (Denzel Perryman, IR)",
+     "gp": 0
+    },
+    {
+     "tier": "elite",
+     "pos": "safety titulaire (Derwin James, IR)",
+     "gp": 3
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "tight end titulaire (David Njoku, IR)",
+     "gp": 2
+    },
+    {
+     "tier": "titulaire",
+     "pos": "ailier droit titulaire (Trey Pipkins, IR)",
+     "lane": "line",
+     "gp": 1
+    },
+    {
+     "tier": "titulaire",
+     "pos": "centre titulaire (Tyler Biadasz, IR)",
+     "lane": "line",
+     "gp": 0
+    },
+    {
+     "tier": "elite",
+     "pos": "ailier gauche titulaire (Rashawn Slater, IR)",
+     "lane": "line",
+     "gp": 4
+    }
+   ],
+   "watch": [
+    {
+     "name": "Kayode Awosika",
+     "pos": "ailier droit",
+     "etat": "incertain pour le match",
+     "why": "péroné"
+    },
+    {
+     "name": "Ladd McConkey",
+     "pos": "receveur",
+     "etat": "incertain pour le match",
+     "why": "dos"
+    }
+   ],
+   "injReport": "final",
    "injWeek": 10
   },
   "New York Giants": {
@@ -3395,7 +3401,7 @@
    "pAway": 0.4539,
    "expHome": 27,
    "expAway": 26,
-   "computedAt": "2026-11-15T00:45:48Z",
+   "computedAt": "2026-11-15T10:23:50Z",
    "spread": 1.43,
    "frozen": false
   },
@@ -3408,7 +3414,7 @@
    "pAway": 0.6525,
    "expHome": 20,
    "expAway": 25,
-   "computedAt": "2026-11-15T00:45:48Z",
+   "computedAt": "2026-11-15T10:23:50Z",
    "spread": -5.11,
    "frozen": false
   },
@@ -3421,7 +3427,7 @@
    "pAway": 0.5483,
    "expHome": 23,
    "expAway": 24,
-   "computedAt": "2026-11-15T00:45:48Z",
+   "computedAt": "2026-11-15T10:23:50Z",
    "spread": -1.63,
    "frozen": false
   },
@@ -3434,7 +3440,7 @@
    "pAway": 0.3591,
    "expHome": 19,
    "expAway": 15,
-   "computedAt": "2026-11-15T00:45:48Z",
+   "computedAt": "2026-11-15T10:23:50Z",
    "spread": 4.57,
    "frozen": false
   },
@@ -3447,7 +3453,7 @@
    "pAway": 0.2419,
    "expHome": 23,
    "expAway": 14,
-   "computedAt": "2026-11-15T00:45:48Z",
+   "computedAt": "2026-11-15T10:23:50Z",
    "spread": 8.92,
    "frozen": false
   },
@@ -3460,7 +3466,7 @@
    "pAway": 0.4079,
    "expHome": 28,
    "expAway": 25,
-   "computedAt": "2026-11-15T00:45:48Z",
+   "computedAt": "2026-11-15T10:23:50Z",
    "spread": 2.93,
    "frozen": false
   },
@@ -3473,7 +3479,7 @@
    "pAway": 0.6928,
    "expHome": 23,
    "expAway": 29,
-   "computedAt": "2026-11-15T00:45:48Z",
+   "computedAt": "2026-11-15T10:23:50Z",
    "spread": -6.55,
    "frozen": false
   },
@@ -3486,7 +3492,7 @@
    "pAway": 0.8263,
    "expHome": 17,
    "expAway": 29,
-   "computedAt": "2026-11-15T00:45:48Z",
+   "computedAt": "2026-11-15T10:23:50Z",
    "spread": -12.18,
    "frozen": false
   },
@@ -3499,7 +3505,7 @@
    "pAway": 0.6994,
    "expHome": 17,
    "expAway": 24,
-   "computedAt": "2026-11-15T00:45:48Z",
+   "computedAt": "2026-11-15T10:23:50Z",
    "spread": -6.79,
    "frozen": false
   },
@@ -3512,7 +3518,7 @@
    "pAway": 0.4653,
    "expHome": 23,
    "expAway": 22,
-   "computedAt": "2026-11-15T00:45:48Z",
+   "computedAt": "2026-11-15T10:23:50Z",
    "spread": 1.05,
    "frozen": false
   },
@@ -3525,7 +3531,7 @@
    "pAway": 0.6423,
    "expHome": 25,
    "expAway": 29,
-   "computedAt": "2026-11-15T00:45:48Z",
+   "computedAt": "2026-11-15T10:23:50Z",
    "spread": -4.76,
    "frozen": false
   },
@@ -3538,7 +3544,7 @@
    "pAway": 0.3898,
    "expHome": 25,
    "expAway": 22,
-   "computedAt": "2026-11-15T00:45:48Z",
+   "computedAt": "2026-11-15T10:23:50Z",
    "spread": 3.53,
    "frozen": false
   },
@@ -3547,12 +3553,12 @@
    "home": "Baltimore Ravens",
    "away": "Los Angeles Chargers",
    "kickoff": "2026-11-17T01:15:00Z",
-   "pHome": 0.5575,
-   "pAway": 0.4385,
+   "pHome": 0.5564,
+   "pAway": 0.4396,
    "expHome": 21,
    "expAway": 19,
-   "computedAt": "2026-11-15T00:45:48Z",
-   "spread": 1.93,
+   "computedAt": "2026-11-15T10:23:50Z",
+   "spread": 1.89,
    "frozen": false
   }
  }
