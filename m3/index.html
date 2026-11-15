@@ -347,6 +347,12 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
 @keyframes livepulse{50%{opacity:.25}}
 :root{color-scheme:dark}
 .pbadge.bc{background:#fff;color:#c8102e;box-shadow:inset 0 0 0 2px #c8102e;margin-right:6px}
+.pbadge.lv{background:#0b3d1f;color:#7dffa0;box-shadow:inset 0 0 0 2px #2ecc71;margin-left:6px}
+.rlv{font-size:21px;font-weight:800;color:#7dffa0;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rlv.ko{color:#ff8a80}
+.lrow .pbadge.lv{margin:0 3px}
+.team.has3 .long{display:none}.team.has3 .short{display:inline}
+@media (max-width:460px){.team.has3 .pbadge{font-size:14px;padding:4px 4px;margin-left:2px;margin-right:0}.team.has3 .tname{min-width:74px}}
 </style>
 </head>
 <body>
@@ -386,7 +392,7 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
       </h2>
       <p class="meta" id="updatedMeta"></p>
       <div class="updbar"><button type="button" id="updBtn" class="ubtn"><svg class="ic"><use href="#i-refresh"/></svg><span>Mettre à jour</span></button><span id="updMsg" role="status" aria-live="polite"></span><span id="liveMsg" role="status"></span></div>
-      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.34</span></div>
+      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.35</span></div>
       <div class="filterbar"><button type="button" id="filterBtn" class="fbtn" aria-pressed="false"><svg class="ic"><use href="#i-star"/></svg><span>Favoris à 60 % et plus seulement</span></button><button type="button" id="liveBtn" class="fbtn" aria-pressed="false"><span class="ldot"></span><span id="liveLbl">En direct</span></button><span id="filterCount" aria-live="polite"></span></div>
       <div class="games" id="games"></div>
       <div class="recap" id="recap"></div>
@@ -525,13 +531,21 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
       bets[id] = { t: t, o: g ? oddsOf(g, t) : null, s: g ? oddsSrc(g, t) : "", p: pOf(g, t) };
       ch = true;
     });
+    let lk = false;
+    Object.keys(bets).forEach((id) => {
+      const bb = bets[id], g = gameById(id);
+      if (!g || !g.pred || locks[id] || !bb || typeof bb.p !== "number" || !(bb.p > 0 && bb.p < 1)) return;
+      const ph = bb.t === "home" ? bb.p : 1 - bb.p;
+      locks[id] = { pHome: ph, pAway: 1 - ph, margin: Math.round(invPhi(ph) * 1300) / 100, at: Date.now(), b: 1 }; lockGame(g); lk = true;
+    });
+    if (lk) saveLocks();
     if (ch) saveBets();
   }
   function pickHtml(g) {
     if (!bets[g.id]) return "";
     const s = betSide(g);
     const btn = (side) => {
-      const o = side === s ? betBase(g) : oddsOf(g, side);
+      const bk1 = bets[g.id].bk, o = side === s ? betBase(g) : (bk1 && bk1[side === "home" ? "h" : "a"]) || oddsOf(g, side);
       return '<button type="button" class="pk' + (side === s ? " on" : "") + '" data-pick="' + esc(g.id) + '" data-side="' + side + '">' + esc(nick(D, g[side])) + (o ? " " + f2(o) : "") + "</button>";
     };
     return '<span class="pick">' + btn("home") + btn("away") + "</span>";
@@ -547,7 +561,12 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     if (on) {
       const t = g ? favSide(g) : "home";
       bets[id] = { t: t, o: g ? oddsOf(g, t) : null, s: g ? oddsSrc(g, t) : "", p: pOf(g, t) };
-    } else delete bets[id];
+      if (g && BKO[id]) bets[id].bk = { h: BKO[id].h, a: BKO[id].a };
+      if (g && g.pred && !locks[id]) { locks[id] = { pHome: g.pred.pHome, pAway: g.pred.pAway, margin: g.pred.margin, at: Date.now(), b: 1 }; saveLocks(); lockGame(g); }
+    } else {
+      delete bets[id];
+      if (locks[id] && locks[id].b) { delete locks[id]; saveLocks(); if (g) lockGame(g); }
+    }
     saveBets();
     document.querySelectorAll("[data-bet]").forEach((i) => {
       if (i.dataset.bet === id) i.checked = !!on;
@@ -557,11 +576,14 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     });
     paintBet(id);
     renderRecap();
+    try { if (!modalOpen()) render(); } catch (e) {}
   }
   function setSide(id, side) {
     const g = gameById(id);
     if (!g || !bets[id]) return;
-    bets[id] = { t: side, o: oddsOf(g, side), s: oddsSrc(g, side), p: pOf(g, side) };
+    const bk0 = bets[id].bk, k0 = side === "home" ? "h" : "a";
+    bets[id] = { t: side, o: bk0 && bk0[k0] ? bk0[k0] : oddsOf(g, side), s: bk0 && bk0[k0] ? "Betclic" : oddsSrc(g, side), p: pOf(g, side) };
+    if (bk0) bets[id].bk = bk0;
     saveBets();
     paintBet(id);
     renderRecap();
@@ -591,21 +613,35 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     }
     return g._live === "in" ? "direct" : "avenir";
   }
+  function livePH(g0) {
+    const g = ovG(g0), p = g0.pred;
+    if (g.status === "closed" && g.homeScore != null && g.awayScore != null) return g.homeScore > g.awayScore ? 1 : g.homeScore < g.awayScore ? 0 : 0.5;
+    if (g._live !== "in" || !p) return null;
+    const L = (typeof LIVE !== "undefined" && LIVE && LIVE[g0.id]) || {};
+    let rem = L.per > 4 ? 300 : Math.max(0, (4 - (L.per || 1)) * 900 + (L.clk || 0));
+    if (L.stn === "STATUS_HALFTIME") rem = 1800;
+    const tau = Math.max(rem / 3600, 0.004), m = invPhi(Math.min(Math.max(p.pHome, 0.001), 0.999)) * 13, d = g.homeScore - g.awayScore;
+    return phiN((d + m * tau) / (13 * Math.sqrt(tau)));
+  }
+  function liveSide(g0, side) { const x = livePH(g0); return x == null ? null : side === "home" ? x : 1 - x; }
   function pOf(g, side) { return g && g.pred ? (side === "home" ? g.pred.pHome : g.pred.pAway) : null; }
   var legProb = (g) => { const b = bets[g.id]; if (b && typeof b.p === "number") return b.p; return pOf(g, betSide(g)); };
   var STT = { gagne: ["ok", "✓ Gagné"], perdu: ["ko", "✗ Perdu"], nul: ["", "Annulé"], direct: ["live", "En direct"], avenir: ["", "À venir"] };
   function calcCombo(legs) {
-    let cote = 1, chance = 1, miss = false, noP = false, lost = false, open = false, won = 0;
+    let cote = 1, chance = 1, miss = false, noP = false, lost = false, open = false, won = 0, lv = 1, started = false;
     legs.forEach((g) => {
       const st = legState(g), o = betOdds(g), p = legProb(g);
       if (st === "perdu") lost = true;
       else if (st === "avenir" || st === "direct") open = true;
       else if (st === "gagne") won++;
       if (st === "nul") return;
+      if (st !== "avenir") started = true;
+      const lx = st === "gagne" ? 1 : st === "perdu" ? 0 : st === "direct" ? liveSide(g, betSide(g)) : p;
+      if (lx != null) lv *= lx;
       if (o) cote *= o; else miss = true;
       if (p) chance *= p; else noP = true;
     });
-    return { n: legs.length, cote: miss ? null : cote, chance: noP ? null : chance, mini: noP || !chance ? null : 1 / chance, lost: lost, open: open, won: won, etat: lost ? "perdu" : open ? "cours" : won ? "gagne" : "annule" };
+    return { n: legs.length, cote: miss ? null : cote, chance: noP ? null : chance, mini: noP || !chance ? null : 1 / chance, live: started && open && !lost && !noP ? lv : null, lost: lost, open: open, won: won, etat: lost ? "perdu" : open ? "cours" : won ? "gagne" : "annule" };
   }
   var parseNum = (v) => {
     const x = parseFloat(String(v).replace(",", ".").replace(/[^0-9.]/g, ""));
@@ -616,6 +652,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     const row = (l, v, cls) => '<div class="rl"><span>' + l + '</span><b' + (cls ? ' class="' + cls + '"' : "") + ">" + v + "</b></div>";
     let h = "";
     if (c.chance != null) h += row("Chance M3", pct(c.chance));
+    if (c.live != null) h += row("Chance en direct", pct(c.live), c.live >= c.chance ? "okc" : "koc");
     if (c.mini != null) h += row("Cote mini", f2(c.mini));
     if (cote) h += row("Cote retenue", f2(cote) + (c.mini != null ? (cote >= c.mini ? " ✓" : " ✗") : ""), c.mini != null ? (cote >= c.mini ? "okc" : "koc") : "");
     if (cote && mise) {
@@ -624,6 +661,12 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
       else h += row(c.etat === "gagne" ? "Gain" : "Gain possible", f2(tot) + " €", c.etat === "gagne" ? "okc" : "") + row("Bénéfice", "+" + f2(net) + " €", c.etat === "gagne" ? "okc" : "");
     }
     return h;
+  }
+  function lvSpan(g) {
+    const st = legState(g);
+    if (st !== "direct") return "";
+    const x = liveSide(g, betSide(g));
+    return x == null ? "" : '<b class="rlv' + (x < 0.5 ? " ko" : "") + '">' + pct(x) + "</b>";
   }
   function subTxt(g) {
     const bb = bets[g.id], src = bb && typeof bb === "object" ? ((bb.m ? "Ma cote" : (bb.s || "")) + (boosted(g) ? " \xB7 boost +" + f2(boost) : "")) : "", p = legProb(g);
@@ -665,7 +708,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     const seg = days.length > 1 ? '<div class="seg">' + days.concat(["all"]).map((d) => '<button type="button" data-scope="' + esc(d) + '" class="' + (d === scope ? "on" : "") + '">' + (d === "all" ? "Toute la semaine" : esc(d)) + "</button>").join("") + "</div>" : "";
     const items = sel.map((g) => {
       const s = betSide(g), o = betBase(g), st = STT[legState(g)];
-      return '<div class="ritem"><div class="rtop"><b class="rpick">' + esc(nick(D, g[s])) + '</b>' + pcInput(g) + '<input class="rcote-in' + (bets[g.id] && bets[g.id].m ? " man" : "") + '" data-oid="' + esc(g.id) + '" inputmode="decimal" autocomplete="off" aria-label="Cote" placeholder="–" value="' + (o ? f2(o) : "") + '"></div><div class="rsub"><span>' + esc(subTxt(g)) + '</span><span class="rst ' + st[0] + '">' + st[1] + "</span></div></div>";
+      return '<div class="ritem"><div class="rtop"><b class="rpick">' + esc(nick(D, g[s])) + '</b>' + pcInput(g) + lvSpan(g) + '<input class="rcote-in' + (bets[g.id] && bets[g.id].m ? " man" : "") + '" data-oid="' + esc(g.id) + '" inputmode="decimal" autocomplete="off" aria-label="Cote" placeholder="–" value="' + (o ? f2(o) : "") + '"></div><div class="rsub"><span>' + esc(subTxt(g)) + '</span><span class="rst ' + st[0] + '">' + st[1] + "</span></div></div>";
     }).join("");
     const stc = c.etat === "gagne" ? '<span class="rst ok">✓ Gagné</span>' : c.etat === "perdu" ? '<span class="rst ko">✗ Perdu</span>' : c.etat === "annule" ? '<span class="rst">Annulé</span>' : "";
     const head = c.n < 2 ? "Pari simple" : "Combiné \xB7 " + c.n + " matchs";
@@ -799,12 +842,14 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
       const showPct = unlocked && p;
       const prob = side === "home" ? p && p.pHome : p && p.pAway;
       const fav = showPct && (side === "home" ? favHome === true : favHome === false);
-      const bo = BKO && BKO[g.id];
+      const bo = (bets[g.id] && bets[g.id].bk) || (BKO && BKO[g.id]);
       const bcP = bo ? (side === "home" ? (1 / bo.h) / (1 / bo.h + 1 / bo.a) : (1 / bo.a) / (1 / bo.h + 1 / bo.a)) : null;
       const bcBadge = showPct && bcP !== null ? '<span class="pbadge bc" title="Betclic">' + pct(bcP) + "</span>" : "";
-      const badge = showPct ? bcBadge + '<span class="pbadge ' + side + (fav ? " fav" : "") + '">' + pct(prob) + "</span>" : "";
+      const lvP = g._live === "in" && showPct ? liveSide(gameById(g.id) || g, side) : null;
+      const lvBadge = lvP != null ? '<span class="pbadge lv" title="En direct">' + pct(lvP) + "</span>" : "";
+      const badge = showPct ? bcBadge + '<span class="pbadge ' + side + (fav ? " fav" : "") + '">' + pct(prob) + "</span>" + lvBadge : "";
       const right = done || g._live === "in" ? badge + '<span class="pct' + (fav ? " fav" : "") + '">' + (side === "home" ? g.homeScore : g.awayScore) + "</span>" : showPct ? badge + lockBtn(g) : '<span class="pct">\u2013</span>';
-      return '<div class="team">' + crestHtml(D2, name, side === "home" ? g._hl : g._al, "") + '<span class="tname' + (fav ? " fav" : "") + '"><span class="long">' + esc(name) + '</span><span class="short">' + esc(nick(D2, name)) + '</span><span class="role" title="' + (side === "home" ? "À domicile" : "À l’extérieur") + '">' + ic(side === "home" ? "home" : "plane") + "</span>" + chips(g.abs[side]) + (g._live === "in" && g._ps === side ? ballIc() : "") + '</span><span class="pright">' + right + "</span></div>";
+      return '<div class="team' + (lvBadge ? " has3" : "") + '">' + crestHtml(D2, name, side === "home" ? g._hl : g._al, "") + '<span class="tname' + (fav ? " fav" : "") + '"><span class="long">' + esc(name) + '</span><span class="short">' + esc(nick(D2, name)) + '</span><span class="role" title="' + (side === "home" ? "À domicile" : "À l’extérieur") + '">' + ic(side === "home" ? "home" : "plane") + "</span>" + chips(g.abs[side]) + (g._live === "in" && g._ps === side ? ballIc() : "") + '</span><span class="pright">' + right + "</span></div>";
     };
     const foot = [];
     if (done) foot.push("Résultat : <b>" + g.homeScore + " \u2013 " + g.awayScore + "</b>");
@@ -958,7 +1003,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
   function setMsg(t, cls) { updMsg.textContent = t; updMsg.className = cls || ""; }
   var FEED_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/m3_data.json";
   var PAGE_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/index.html";
-  var APP_VERSION = "1.0.34";
+  var APP_VERSION = "1.0.35";
   var newV = null;
   function vNum(v) { return String(v || "0").split(".").map((x) => parseInt(x, 10) || 0); }
   function vGt(a, b) {
@@ -1078,7 +1123,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     const sp = st.split(" "), stHtml = sp.length === 2 && /^\d/.test(sp[1]) ? "<b>" + esc(sp[0]) + "</b><i>" + esc(sp[1]) + "</i>" : esc(st);
     const hl = g.homeScore > g.awayScore, al = g.awayScore > g.homeScore;
     const crest = (side) => crestHtml(D2, g[side], side === "home" ? g._hl : g._al, g._ps === side ? ballIc() : "");
-    const bd = (side) => showPct ? '<span class="pbadge ' + side + ((side === "home" ? favHome === true : favHome === false) ? " fav" : "") + '">' + pct(side === "home" ? p.pHome : p.pAway) + "</span>" : "";
+    const bd = (side) => showPct ? '<span class="pbadge ' + side + ((side === "home" ? favHome === true : favHome === false) ? " fav" : "") + '">' + pct(side === "home" ? p.pHome : p.pAway) + "</span>" + (liveSide(gameById(g.id) || g, side) != null ? '<span class="pbadge lv">' + pct(liveSide(gameById(g.id) || g, side)) + "</span>" : "") : "";
     return '<div class="game lrow clickable' + (bs ? " betted" : "") + '" data-idx="' + idx + '" data-id="' + esc(g.id) + '"><span class="lst">' + stHtml + '</span><span class="lt h' + (bs === "home" ? " pick" : "") + '">' + crest("home") + bd("home") + '</span><span class="lsc"><b class="' + (hl ? "lead" : "") + '">' + g.homeScore + "</b><i>\u2013</i><b class=\"" + (al ? "lead" : "") + '">' + g.awayScore + '</b></span><span class="lt a' + (bs === "away" ? " pick" : "") + '">' + bd("away") + crest("away") + "</span></div>";
   }
   // « Validé » : jamais avant la fin du match ; une fois terminé, seulement si j'ai coché ET que le score confirme la prévision de M3 ; sinon l'encart « Terminé » (le choix coché / décoché se fait par le style, sans réaffichage)
@@ -1201,7 +1246,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
         const st = e.status || {}, state = st.type && st.type.state;
         const sit = c.situation || {}, pid = sit.possession == null ? "" : String(sit.possession), stn = (st.type && st.type.name) || "";
         const ps = state === "in" && pid && stn !== "STATUS_HALFTIME" && stn !== "STATUS_END_PERIOD" ? (pid === String(h.team.id) ? "home" : pid === String(a.team.id) ? "away" : "") : "";
-        if (state === "in" || state === "post") out[id] = { state: state, h: parseInt(h.score, 10) || 0, a: parseInt(a.score, 10) || 0, txt: state === "in" ? liveLabel(st) : "Final", hl: h.team.logo || "", al: a.team.logo || "", ps: ps };
+        if (state === "in" || state === "post") out[id] = { state: state, h: parseInt(h.score, 10) || 0, a: parseInt(a.score, 10) || 0, txt: state === "in" ? liveLabel(st) : "Final", hl: h.team.logo || "", al: a.team.logo || "", ps: ps, per: st.period || 0, clk: st.clock || 0, stn: stn };
       });
       Object.keys(LIVE).forEach((k) => { if (LIVE[k].state === "post" && !out[k]) out[k] = LIVE[k]; });
       return out;
