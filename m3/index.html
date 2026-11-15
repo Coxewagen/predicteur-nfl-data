@@ -352,7 +352,20 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
 .rlv.ko{color:#ff8a80}
 .lrow .pbadge.lv{margin:0 3px}
 .team.has3 .long{display:none}.team.has3 .short{display:inline}
-@media (max-width:460px){.team.has3 .pbadge{font-size:14px;padding:4px 4px;margin-left:2px;margin-right:0}.team.has3 .tname{min-width:74px}}
+.team.has2,.team.has3{flex-wrap:wrap;row-gap:6px}.team.has2 .pright,.team.has3 .pright{margin-left:auto}
+@media (max-width:460px){
+.team.has3 .pbadge{font-size:17px;padding:5px 5px;margin:0;min-width:0}
+.team.has3 .pright{gap:6px}.team.has3 .pct{font-size:24px}
+.team.has2 .pbadge{font-size:18px;padding:5px 6px;margin:0;min-width:0}
+.team.has2 .pright{gap:5px}
+.team.has2 .tname,.team.has3 .tname{min-width:78px}}
+.mybet{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--gold);color:#10240f;flex:none;box-shadow:0 0 0 2px rgba(0,0,0,.35),0 0 10px rgba(255,200,60,.55)}
+.mybet svg{width:19px;height:19px}
+.mybet.ok{background:#2ecc71;box-shadow:0 0 0 2px rgba(0,0,0,.35),0 0 10px rgba(46,204,113,.6)}
+.mybet.ko{background:#ff6b6b}
+.crest .mybet{position:absolute;bottom:-7px;width:22px;height:22px;z-index:3}.crest .mybet svg{width:14px;height:14px}
+.lt.h .crest .mybet{right:-7px}.lt.a .crest .mybet{left:-7px}
+.lrow .pbadge.lv{margin:0}
 </style>
 </head>
 <body>
@@ -392,7 +405,7 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
       </h2>
       <p class="meta" id="updatedMeta"></p>
       <div class="updbar"><button type="button" id="updBtn" class="ubtn"><svg class="ic"><use href="#i-refresh"/></svg><span>Mettre à jour</span></button><span id="updMsg" role="status" aria-live="polite"></span><span id="liveMsg" role="status"></span></div>
-      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.35</span></div>
+      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.36</span></div>
       <div class="filterbar"><button type="button" id="filterBtn" class="fbtn" aria-pressed="false"><svg class="ic"><use href="#i-star"/></svg><span>Favoris à 60 % et plus seulement</span></button><button type="button" id="liveBtn" class="fbtn" aria-pressed="false"><span class="ldot"></span><span id="liveLbl">En direct</span></button><span id="filterCount" aria-live="polite"></span></div>
       <div class="games" id="games"></div>
       <div class="recap" id="recap"></div>
@@ -612,6 +625,14 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
       return (b === "home") === g.homeScore > g.awayScore ? "gagne" : "perdu";
     }
     return g._live === "in" ? "direct" : "avenir";
+  }
+  function myBetIc(g, side) {
+    if (!isBet(g.id) || betSide(g) !== side) return "";
+    const G = ovG(g), live = G._live === "in" || G._live === "post";
+    if (!live) return "";
+    const st = legState(g), x = st === "direct" ? liveSide(g, side) : null;
+    const cls = st === "gagne" ? " ok" : st === "perdu" ? " ko" : x != null ? (x >= 0.5 ? " ok" : " ko") : "";
+    return '<span class="mybet' + cls + '" title="Mon pari"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2.2a2.8 2.8 0 0 0 0 5.6V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2.2a2.8 2.8 0 0 0 0-5.6z"/><path d="M8.5 12.2l2.3 2.3 4.7-4.8" fill="none" stroke="#10240f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
   }
   function livePH(g0) {
     const g = ovG(g0), p = g0.pred;
@@ -849,7 +870,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
       const lvBadge = lvP != null ? '<span class="pbadge lv" title="En direct">' + pct(lvP) + "</span>" : "";
       const badge = showPct ? bcBadge + '<span class="pbadge ' + side + (fav ? " fav" : "") + '">' + pct(prob) + "</span>" + lvBadge : "";
       const right = done || g._live === "in" ? badge + '<span class="pct' + (fav ? " fav" : "") + '">' + (side === "home" ? g.homeScore : g.awayScore) + "</span>" : showPct ? badge + lockBtn(g) : '<span class="pct">\u2013</span>';
-      return '<div class="team' + (lvBadge ? " has3" : "") + '">' + crestHtml(D2, name, side === "home" ? g._hl : g._al, "") + '<span class="tname' + (fav ? " fav" : "") + '"><span class="long">' + esc(name) + '</span><span class="short">' + esc(nick(D2, name)) + '</span><span class="role" title="' + (side === "home" ? "À domicile" : "À l’extérieur") + '">' + ic(side === "home" ? "home" : "plane") + "</span>" + chips(g.abs[side]) + (g._live === "in" && g._ps === side ? ballIc() : "") + '</span><span class="pright">' + right + "</span></div>";
+      return '<div class="team' + (lvBadge ? " has3" : bcBadge ? " has2" : "") + '">' + crestHtml(D2, name, side === "home" ? g._hl : g._al, "") + '<span class="tname' + (fav ? " fav" : "") + '"><span class="long">' + esc(name) + '</span><span class="short">' + esc(nick(D2, name)) + '</span><span class="role" title="' + (side === "home" ? "À domicile" : "À l’extérieur") + '">' + ic(side === "home" ? "home" : "plane") + "</span>" + chips(g.abs[side]) + (g._live === "in" && g._ps === side ? ballIc() : "") + myBetIc(gameById(g.id) || g, side) + '</span><span class="pright">' + right + "</span></div>";
     };
     const foot = [];
     if (done) foot.push("Résultat : <b>" + g.homeScore + " \u2013 " + g.awayScore + "</b>");
@@ -1003,7 +1024,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
   function setMsg(t, cls) { updMsg.textContent = t; updMsg.className = cls || ""; }
   var FEED_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/m3_data.json";
   var PAGE_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/index.html";
-  var APP_VERSION = "1.0.35";
+  var APP_VERSION = "1.0.36";
   var newV = null;
   function vNum(v) { return String(v || "0").split(".").map((x) => parseInt(x, 10) || 0); }
   function vGt(a, b) {
@@ -1122,9 +1143,10 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     const st = String(g._liveTxt || "").replace("Fin du ", "Fin ");
     const sp = st.split(" "), stHtml = sp.length === 2 && /^\d/.test(sp[1]) ? "<b>" + esc(sp[0]) + "</b><i>" + esc(sp[1]) + "</i>" : esc(st);
     const hl = g.homeScore > g.awayScore, al = g.awayScore > g.homeScore;
-    const crest = (side) => crestHtml(D2, g[side], side === "home" ? g._hl : g._al, g._ps === side ? ballIc() : "");
-    const bd = (side) => showPct ? '<span class="pbadge ' + side + ((side === "home" ? favHome === true : favHome === false) ? " fav" : "") + '">' + pct(side === "home" ? p.pHome : p.pAway) + "</span>" + (liveSide(gameById(g.id) || g, side) != null ? '<span class="pbadge lv">' + pct(liveSide(gameById(g.id) || g, side)) + "</span>" : "") : "";
-    return '<div class="game lrow clickable' + (bs ? " betted" : "") + '" data-idx="' + idx + '" data-id="' + esc(g.id) + '"><span class="lst">' + stHtml + '</span><span class="lt h' + (bs === "home" ? " pick" : "") + '">' + crest("home") + bd("home") + '</span><span class="lsc"><b class="' + (hl ? "lead" : "") + '">' + g.homeScore + "</b><i>\u2013</i><b class=\"" + (al ? "lead" : "") + '">' + g.awayScore + '</b></span><span class="lt a' + (bs === "away" ? " pick" : "") + '">' + bd("away") + crest("away") + "</span></div>";
+    const crest = (side) => crestHtml(D2, g[side], side === "home" ? g._hl : g._al, (g._ps === side ? ballIc() : "") + myBetIc(gameById(g.id) || g, side));
+    const bd = (side) => showPct ? '<span class="pbadge ' + side + ((side === "home" ? favHome === true : favHome === false) ? " fav" : "") + '">' + pct(side === "home" ? p.pHome : p.pAway) + "</span>" : "";
+    const bdl = (side) => { const x = showPct ? liveSide(gameById(g.id) || g, side) : null; return x != null ? '<span class="pbadge lv">' + pct(x) + "</span>" : bd(side); };
+    return '<div class="game lrow clickable' + (bs ? " betted" : "") + '" data-idx="' + idx + '" data-id="' + esc(g.id) + '"><span class="lst">' + stHtml + '</span><span class="lt h' + (bs === "home" ? " pick" : "") + '">' + crest("home") + bdl("home") + '</span><span class="lsc"><b class="' + (hl ? "lead" : "") + '">' + g.homeScore + "</b><i>\u2013</i><b class=\"" + (al ? "lead" : "") + '">' + g.awayScore + '</b></span><span class="lt a' + (bs === "away" ? " pick" : "") + '">' + bdl("away") + crest("away") + "</span></div>";
   }
   // « Validé » : jamais avant la fin du match ; une fois terminé, seulement si j'ai coché ET que le score confirme la prévision de M3 ; sinon l'encart « Terminé » (le choix coché / décoché se fait par le style, sans réaffichage)
   function validatedFor(g, ctx) {
