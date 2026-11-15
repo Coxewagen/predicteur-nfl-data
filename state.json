@@ -188,12 +188,6 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Xavier Legette, IR)",
-     "lane": "pass",
-     "gp": 2
-    },
-    {
-     "tier": "titulaire",
      "pos": "ailier droit titulaire (Taylor Moton, IR)",
      "lane": "line",
      "gp": 2
@@ -217,6 +211,12 @@
      "pos": "edge rusher",
      "etat": "incertain pour le match",
      "why": "ischio-jambiers"
+    },
+    {
+     "name": "Xavier Legette",
+     "pos": "receveur",
+     "etat": "incertain pour le match",
+     "why": "genou"
     },
     {
      "name": "Will Lee III",
@@ -353,13 +353,13 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (D.J. Reed, hanche)",
+     "pos": "cornerback titulaire (D.J. Reed, hanche, rapport précédent)",
      "lane": "pass",
      "gp": 7
     },
     {
      "tier": "elite",
-     "pos": "safety titulaire (Kerby Joseph, genou)",
+     "pos": "safety titulaire (Kerby Joseph, genou, rapport précédent)",
      "gp": 0
     },
     {
@@ -394,7 +394,7 @@
     },
     {
      "tier": "titulaire",
-     "pos": "centre titulaire (Cade Mays, cheville)",
+     "pos": "centre titulaire (Cade Mays, cheville, rapport précédent)",
      "lane": "line",
      "gp": 2
     },
@@ -405,15 +405,7 @@
      "gp": 2
     }
    ],
-   "watch": [
-    {
-     "name": "Amon-Ra St. Brown",
-     "pos": "receveur",
-     "etat": "incertain pour le match",
-     "why": "rib"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 10
   },
   "Green Bay Packers": {
@@ -570,12 +562,6 @@
      "tier": "titulaire",
      "pos": "linebacker titulaire (Akeem Davis-Gaither, genou)",
      "gp": 8
-    },
-    {
-     "tier": "titulaire",
-     "pos": "edge rusher titulaire (Arden Key, IR)",
-     "lane": "pass",
-     "gp": 4
     },
     {
      "tier": "titulaire",
@@ -913,7 +899,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Carlton Davis III, genou)",
+     "pos": "cornerback titulaire (Carlton Davis III, genou, rapport précédent)",
      "lane": "pass",
      "gp": 5
     },
@@ -938,7 +924,7 @@
     },
     {
      "tier": "titulaire",
-     "pos": "centre titulaire (Ben Brown, genou)",
+     "pos": "centre titulaire (Ben Brown, genou, rapport précédent)",
      "lane": "line",
      "gp": 6
     },
@@ -949,49 +935,11 @@
      "gp": 6
     }
    ],
-   "watch": [
-    {
-     "name": "Hunter Henry",
-     "pos": "tight end",
-     "etat": "entraînement limité",
-     "why": "pied"
-    },
-    {
-     "name": "Kevin Byard",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "poitrine"
-    },
-    {
-     "name": "A.J. Brown",
-     "pos": "receveur",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    },
-    {
-     "name": "Rhamondre Stevenson",
-     "pos": "coureur",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    },
-    {
-     "name": "Walter Rouse",
-     "pos": "ailier gauche",
-     "etat": "incertain pour le match",
-     "why": "commotion"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 10
   },
   "New Orleans Saints": {
    "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "coureur titulaire (Travis Etienne, IR)",
-     "lane": "rush",
-     "gp": 3
-    },
     {
      "tier": "titulaire",
      "pos": "centre titulaire (Erik McCoy, biceps)",
@@ -1019,6 +967,12 @@
     }
    ],
    "watch": [
+    {
+     "name": "Travis Etienne",
+     "pos": "coureur",
+     "etat": "incertain pour le match",
+     "why": "ischio-jambiers"
+    },
     {
      "name": "Martin Emerson",
      "pos": "cornerback",
@@ -1444,11 +1398,12 @@
      "gp": 3
     }
    ],
-   "defAbsences": [
+   "watch": [
     {
-     "tier": "rotation",
-     "pos": "défenseur de ligne titulaire (Derrick Harmon, IR)",
-     "gp": 4
+     "name": "Derrick Harmon",
+     "pos": "défenseur de ligne",
+     "etat": "incertain pour le match",
+     "why": "pied"
     }
    ],
    "injReport": "final",
@@ -3403,7 +3358,10 @@
    "expAway": 26,
    "computedAt": "2026-11-15T10:23:50Z",
    "spread": 1.43,
-   "frozen": false
+   "frozen": true,
+   "homeScore": 35,
+   "awayScore": 10,
+   "correct": true
   },
   "2026_10_KC_ATL": {
    "week": 10,
@@ -3416,7 +3374,7 @@
    "expAway": 25,
    "computedAt": "2026-11-15T10:23:50Z",
    "spread": -5.11,
-   "frozen": false
+   "frozen": true
   },
   "2026_10_HOU_CLE": {
    "week": 10,
@@ -3429,7 +3387,7 @@
    "expAway": 24,
    "computedAt": "2026-11-15T10:23:50Z",
    "spread": -1.63,
-   "frozen": false
+   "frozen": true
   },
   "2026_10_MIN_GB": {
    "week": 10,
@@ -3442,7 +3400,7 @@
    "expAway": 15,
    "computedAt": "2026-11-15T10:23:50Z",
    "spread": 4.57,
-   "frozen": false
+   "frozen": true
   },
   "2026_10_MIA_IND": {
    "week": 10,
@@ -3455,7 +3413,7 @@
    "expAway": 14,
    "computedAt": "2026-11-15T10:23:50Z",
    "spread": 8.92,
-   "frozen": false
+   "frozen": true
   },
   "2026_10_CAR_NO": {
    "week": 10,
@@ -3468,7 +3426,7 @@
    "expAway": 25,
    "computedAt": "2026-11-15T10:23:50Z",
    "spread": 2.93,
-   "frozen": false
+   "frozen": true
   },
   "2026_10_BUF_NYJ": {
    "week": 10,
@@ -3481,7 +3439,7 @@
    "expAway": 29,
    "computedAt": "2026-11-15T10:23:50Z",
    "spread": -6.55,
-   "frozen": false
+   "frozen": true
   },
   "2026_10_JAX_TEN": {
    "week": 10,
@@ -3494,7 +3452,7 @@
    "expAway": 29,
    "computedAt": "2026-11-15T10:23:50Z",
    "spread": -12.18,
-   "frozen": false
+   "frozen": true
   },
   "2026_10_LA_ARI": {
    "week": 10,
@@ -3505,7 +3463,7 @@
    "pAway": 0.6994,
    "expHome": 17,
    "expAway": 24,
-   "computedAt": "2026-11-15T10:23:50Z",
+   "computedAt": "2026-11-15T18:28:59Z",
    "spread": -6.79,
    "frozen": false
   },
@@ -3518,7 +3476,7 @@
    "pAway": 0.4653,
    "expHome": 23,
    "expAway": 22,
-   "computedAt": "2026-11-15T10:23:50Z",
+   "computedAt": "2026-11-15T18:28:59Z",
    "spread": 1.05,
    "frozen": false
   },
@@ -3531,7 +3489,7 @@
    "pAway": 0.6423,
    "expHome": 25,
    "expAway": 29,
-   "computedAt": "2026-11-15T10:23:50Z",
+   "computedAt": "2026-11-15T18:28:59Z",
    "spread": -4.76,
    "frozen": false
   },
@@ -3540,12 +3498,12 @@
    "home": "Cincinnati Bengals",
    "away": "Pittsburgh Steelers",
    "kickoff": "2026-11-16T01:20:00Z",
-   "pHome": 0.6062,
-   "pAway": 0.3898,
+   "pHome": 0.6012,
+   "pAway": 0.3948,
    "expHome": 25,
    "expAway": 22,
-   "computedAt": "2026-11-15T10:23:50Z",
-   "spread": 3.53,
+   "computedAt": "2026-11-15T18:28:59Z",
+   "spread": 3.36,
    "frozen": false
   },
   "2026_10_LAC_BAL": {
@@ -3557,7 +3515,7 @@
    "pAway": 0.4396,
    "expHome": 21,
    "expAway": 19,
-   "computedAt": "2026-11-15T10:23:50Z",
+   "computedAt": "2026-11-15T18:28:59Z",
    "spread": 1.89,
    "frozen": false
   }
