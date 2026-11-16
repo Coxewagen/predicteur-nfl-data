@@ -106,7 +106,7 @@
      "tier": "titulaire",
      "pos": "ailier droit titulaire (Spencer Brown, cheville, rapport précédent)",
      "lane": "line",
-     "gp": 7
+     "gp": 8
     }
    ],
    "injReport": "provisoire",
@@ -589,8 +589,8 @@
    "qbName": "Malik Willis",
    "qbWhy": "IR",
    "qbReplacementTier": "limite",
-   "qbReplacementName": "Brady Cook",
-   "qbReplacementStarts": 2,
+   "qbReplacementName": "Kyle McCord",
+   "qbReplacementStarts": 1,
    "injReport": "provisoire",
    "injWeek": 10
   },
@@ -3176,7 +3176,7 @@
    "pAway": 0.4396,
    "expHome": 21,
    "expAway": 19,
-   "computedAt": "2026-11-16T10:38:45Z",
+   "computedAt": "2026-11-16T21:38:29Z",
    "spread": 1.89,
    "frozen": false
   }
