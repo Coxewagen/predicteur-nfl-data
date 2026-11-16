@@ -176,25 +176,25 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Jalen Davis, ischio-jambiers)",
+     "pos": "cornerback titulaire (Jalen Davis, ischio-jambiers, rapport précédent)",
      "lane": "pass",
      "gp": 3
     },
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Kyle Dugger, quadriceps)",
+     "pos": "safety titulaire (Kyle Dugger, quadriceps, rapport précédent)",
      "gp": 1
     }
    ],
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Andrei Iosivas, pouce)",
+     "pos": "receveur titulaire (Andrei Iosivas, pouce, rapport précédent)",
      "lane": "pass",
      "gp": 2
     }
    ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 10
   },
   "Cleveland Browns": {
@@ -218,12 +218,12 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Juanyeh Thomas, ischio-jambiers)",
+     "pos": "safety titulaire (Juanyeh Thomas, ischio-jambiers, rapport précédent)",
      "gp": 3
     },
     {
      "tier": "titulaire",
-     "pos": "edge rusher titulaire (Donovan Ezeiruaku, cheville)",
+     "pos": "edge rusher titulaire (Donovan Ezeiruaku, cheville, rapport précédent)",
      "lane": "pass",
      "gp": 9
     },
@@ -236,25 +236,11 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "tight end titulaire (Jake Ferguson, genou)",
+     "pos": "tight end titulaire (Jake Ferguson, genou, rapport précédent)",
      "gp": 9
     }
    ],
-   "watch": [
-    {
-     "name": "DaRon Bland",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    },
-    {
-     "name": "Joey Porter Jr.",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "cheville"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 10
   },
   "Denver Broncos": {
@@ -820,7 +806,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Mike Evans, tendon d’Achille)",
+     "pos": "receveur titulaire (Mike Evans, tendon d’Achille, rapport précédent)",
      "lane": "pass",
      "gp": 6
     },
@@ -839,39 +825,7 @@
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "Trent Williams",
-     "pos": "ailier gauche",
-     "etat": "incertain pour le match",
-     "why": "épaule"
-    },
-    {
-     "name": "Dre Greenlaw",
-     "pos": "linebacker",
-     "etat": "incertain pour le match",
-     "why": "genou"
-    },
-    {
-     "name": "Deommodore Lenoir",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "pied"
-    },
-    {
-     "name": "Renardo Green",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "dos"
-    },
-    {
-     "name": "Upton Stout",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "épaule"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 10
   },
   "Tampa Bay Buccaneers": {
@@ -1088,15 +1042,7 @@
      "gp": 3
     }
    ],
-   "watch": [
-    {
-     "name": "Derrick Harmon",
-     "pos": "défenseur de ligne",
-     "etat": "incertain pour le match",
-     "why": "pied"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 10
   },
   "Chicago Bears": {
@@ -3200,7 +3146,10 @@
    "expAway": 29,
    "computedAt": "2026-11-15T18:28:59Z",
    "spread": -4.76,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 40,
+   "awayScore": 46,
+   "correct": true
   },
   "2026_10_PIT_CIN": {
    "week": 10,
@@ -3213,7 +3162,10 @@
    "expAway": 22,
    "computedAt": "2026-11-16T00:45:55Z",
    "spread": 3.36,
-   "frozen": false
+   "frozen": true,
+   "homeScore": 38,
+   "awayScore": 18,
+   "correct": true
   },
   "2026_10_LAC_BAL": {
    "week": 10,
@@ -3224,7 +3176,7 @@
    "pAway": 0.4396,
    "expHome": 21,
    "expAway": 19,
-   "computedAt": "2026-11-16T00:45:55Z",
+   "computedAt": "2026-11-16T10:38:45Z",
    "spread": 1.89,
    "frozen": false
   }
