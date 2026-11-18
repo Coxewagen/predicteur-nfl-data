@@ -36,6 +36,11 @@
    "defAbsences": [
     {
      "tier": "titulaire",
+     "pos": "safety titulaire (Andrew Wingard, IR)",
+     "gp": 7
+    },
+    {
+     "tier": "titulaire",
      "pos": "cornerback titulaire (Will Johnson, IR)",
      "lane": "pass",
      "gp": 2
@@ -377,22 +382,44 @@
      "pos": "receveur titulaire (Jayden Higgins, IR)",
      "lane": "pass",
      "gp": 0
+    }
+   ],
+   "watch": [
+    {
+     "name": "Kamari Lassiter",
+     "pos": "cornerback",
+     "etat": "absent à l’entraînement",
+     "why": "poignet"
     },
     {
-     "tier": "titulaire",
-     "pos": "centre titulaire (Keylan Rutledge, cou, rapport précédent)",
-     "lane": "line",
-     "gp": 8
+     "name": "Woody Marks",
+     "pos": "coureur",
+     "etat": "absent à l’entraînement",
+     "why": "commotion"
     }
    ],
    "injReport": "provisoire",
    "injWeek": 10
   },
   "Indianapolis Colts": {
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "receveur titulaire (Alec Pierce, IR)",
+     "lane": "pass",
+     "gp": 2
+    },
+    {
+     "tier": "titulaire",
+     "pos": "ailier gauche titulaire (Jalen Travis, genou, rapport précédent)",
+     "lane": "line",
+     "gp": 9
+    }
+   ],
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "linebacker titulaire (Akeem Davis-Gaither, genou, rapport précédent)",
+     "pos": "linebacker titulaire (Akeem Davis-Gaither, IR)",
      "gp": 8
     },
     {
@@ -408,18 +435,24 @@
      "gp": 2
     }
    ],
-   "offAbsences": [
+   "watch": [
     {
-     "tier": "titulaire",
-     "pos": "receveur titulaire (Alec Pierce, IR)",
-     "lane": "pass",
-     "gp": 2
+     "name": "Charvarius Ward",
+     "pos": "cornerback",
+     "etat": "absent à l’entraînement",
+     "why": "genou"
     },
     {
-     "tier": "titulaire",
-     "pos": "ailier gauche titulaire (Jalen Travis, genou, rapport précédent)",
-     "lane": "line",
-     "gp": 9
+     "name": "Sauce Gardner",
+     "pos": "cornerback",
+     "etat": "absent à l’entraînement",
+     "why": "mollet"
+    },
+    {
+     "name": "Bernhard Raimann",
+     "pos": "ailier gauche",
+     "etat": "absent à l’entraînement",
+     "why": "commotion"
     }
    ],
    "injReport": "provisoire",
@@ -530,6 +563,16 @@
      "pos": "cornerback titulaire (Darrell Baker Jr., IR)",
      "lane": "pass",
      "gp": 0
+    },
+    {
+     "tier": "rotation",
+     "pos": "défenseur de ligne titulaire (Jordan Phillips, IR)",
+     "gp": 9
+    },
+    {
+     "tier": "rotation",
+     "pos": "défenseur de ligne titulaire (Zeek Biggers, IR)",
+     "gp": 9
     }
    ],
    "qbOut": true,
@@ -817,6 +860,12 @@
      "pos": "receveur titulaire (Carnell Tate, épaule, rapport précédent)",
      "lane": "pass",
      "gp": 7
+    },
+    {
+     "tier": "titulaire",
+     "pos": "receveur titulaire (Wan'Dale Robinson, IR)",
+     "lane": "pass",
+     "gp": 9
     },
     {
      "tier": "elite",
@@ -3137,12 +3186,12 @@
    "home": "Houston Texans",
    "away": "Indianapolis Colts",
    "kickoff": "2026-11-20T01:15:00Z",
-   "pHome": 0.6273,
-   "pAway": 0.3687,
-   "expHome": 29,
-   "expAway": 24,
-   "computedAt": "2026-11-18T02:43:36Z",
-   "spread": 4.24,
+   "pHome": 0.649,
+   "pAway": 0.347,
+   "expHome": 30,
+   "expAway": 25,
+   "computedAt": "2026-11-18T11:08:23Z",
+   "spread": 4.99,
    "frozen": false
   },
   "2026_11_MIA_BUF": {
@@ -3150,12 +3199,12 @@
    "home": "Buffalo Bills",
    "away": "Miami Dolphins",
    "kickoff": "2026-11-22T18:00:00Z",
-   "pHome": 0.9268,
-   "pAway": 0.0692,
-   "expHome": 31,
+   "pHome": 0.9347,
+   "pAway": 0.0613,
+   "expHome": 32,
    "expAway": 12,
-   "computedAt": "2026-11-18T02:43:36Z",
-   "spread": 18.86,
+   "computedAt": "2026-11-18T11:08:23Z",
+   "spread": 19.64,
    "frozen": false
   },
   "2026_11_BAL_CAR": {
@@ -3167,7 +3216,7 @@
    "pAway": 0.3937,
    "expHome": 27,
    "expAway": 24,
-   "computedAt": "2026-11-18T02:43:36Z",
+   "computedAt": "2026-11-18T11:08:23Z",
    "spread": 3.4,
    "frozen": false
   },
@@ -3180,7 +3229,7 @@
    "pAway": 0.2538,
    "expHome": 28,
    "expAway": 19,
-   "computedAt": "2026-11-18T02:43:36Z",
+   "computedAt": "2026-11-18T11:08:23Z",
    "spread": 8.44,
    "frozen": false
   },
@@ -3193,7 +3242,7 @@
    "pAway": 0.1816,
    "expHome": 32,
    "expAway": 20,
-   "computedAt": "2026-11-18T02:43:36Z",
+   "computedAt": "2026-11-18T11:08:23Z",
    "spread": 11.6,
    "frozen": false
   },
@@ -3206,7 +3255,7 @@
    "pAway": 0.3994,
    "expHome": 28,
    "expAway": 24,
-   "computedAt": "2026-11-18T02:43:36Z",
+   "computedAt": "2026-11-18T11:08:23Z",
    "spread": 3.21,
    "frozen": false
   },
@@ -3215,12 +3264,12 @@
    "home": "Kansas City Chiefs",
    "away": "Arizona Cardinals",
    "kickoff": "2026-11-22T18:00:00Z",
-   "pHome": 0.8883,
-   "pAway": 0.1077,
+   "pHome": 0.8952,
+   "pAway": 0.1008,
    "expHome": 29,
    "expAway": 13,
-   "computedAt": "2026-11-18T02:43:36Z",
-   "spread": 15.79,
+   "computedAt": "2026-11-18T11:08:23Z",
+   "spread": 16.28,
    "frozen": false
   },
   "2026_11_JAX_NYG": {
@@ -3232,7 +3281,7 @@
    "pAway": 0.6731,
    "expHome": 21,
    "expAway": 27,
-   "computedAt": "2026-11-18T02:43:36Z",
+   "computedAt": "2026-11-18T11:08:23Z",
    "spread": -5.84,
    "frozen": false
   },
@@ -3245,7 +3294,7 @@
    "pAway": 0.4474,
    "expHome": 22,
    "expAway": 20,
-   "computedAt": "2026-11-18T02:43:36Z",
+   "computedAt": "2026-11-18T11:08:23Z",
    "spread": 1.64,
    "frozen": false
   },
@@ -3258,7 +3307,7 @@
    "pAway": 0.258,
    "expHome": 30,
    "expAway": 22,
-   "computedAt": "2026-11-18T02:43:36Z",
+   "computedAt": "2026-11-18T11:08:23Z",
    "spread": 8.27,
    "frozen": false
   },
@@ -3271,7 +3320,7 @@
    "pAway": 0.6558,
    "expHome": 16,
    "expAway": 21,
-   "computedAt": "2026-11-18T02:43:36Z",
+   "computedAt": "2026-11-18T11:08:23Z",
    "spread": -5.23,
    "frozen": false
   },
@@ -3284,7 +3333,7 @@
    "pAway": 0.3624,
    "expHome": 21,
    "expAway": 17,
-   "computedAt": "2026-11-18T02:43:36Z",
+   "computedAt": "2026-11-18T11:08:23Z",
    "spread": 4.46,
    "frozen": false
   },
@@ -3297,7 +3346,7 @@
    "pAway": 0.6737,
    "expHome": 23,
    "expAway": 29,
-   "computedAt": "2026-11-18T02:43:36Z",
+   "computedAt": "2026-11-18T11:08:23Z",
    "spread": -5.86,
    "frozen": false
   }
