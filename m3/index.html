@@ -405,7 +405,7 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
       </h2>
       <p class="meta" id="updatedMeta"></p>
       <div class="updbar"><button type="button" id="updBtn" class="ubtn"><svg class="ic"><use href="#i-refresh"/></svg><span>Mettre à jour</span></button><span id="updMsg" role="status" aria-live="polite"></span><span id="liveMsg" role="status"></span></div>
-      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.40</span></div>
+      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.41</span></div>
       <div class="filterbar"><button type="button" id="filterBtn" class="fbtn" aria-pressed="false"><svg class="ic"><use href="#i-star"/></svg><span>Favoris à 60 % et plus seulement</span></button><button type="button" id="liveBtn" class="fbtn" aria-pressed="false"><span class="ldot"></span><span id="liveLbl">En direct</span></button><button type="button" id="myBtn" class="fbtn" aria-pressed="false" hidden><svg class="ic" viewBox="0 0 24 24"><path fill="currentColor" d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2.2a2.8 2.8 0 0 0 0 5.6V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2.2a2.8 2.8 0 0 0 0-5.6z"/></svg><span id="myLbl">Mes paris</span></button><span id="filterCount" aria-live="polite"></span></div>
       <div class="games" id="games"></div>
       <div class="recap" id="recap"></div>
@@ -894,8 +894,9 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
   function absBlockHtml(D2, name, g) {
     const side = g && g.absList ? (g.home === name ? g.absList.home : g.absList.away) : null;
     const items = side || ((D2.absences || []).find((a) => a.team === name) || { items: [] }).items;
-    if (!items.length) return '<p class="meta">Aucune absence notable retenue.</p>';
-    return '<ul class="abs">' + items.map((i) => "<li>" + esc(i.side) + " : " + esc(String(i.txt).replace("titulaires absents d’après l’historique : ", "titulaires absents : ").replace(" au total (", " (")) + "</li>").join("") + "</ul>";
+    const hab = g && g.qbHab ? g.qbHab[g.home === name ? "home" : "away"] : null;
+    if (!items.length && !hab) return '<p class="meta">Aucune absence notable retenue.</p>';
+    return '<ul class="abs">' + (hab ? "<li>QB habituel absent : " + esc(hab) + "</li>" : "") + items.map((i) => "<li>" + esc(i.side) + " : " + esc(String(i.txt).replace("titulaires absents d’après l’historique : ", "titulaires absents : ").replace(" au total (", " (")) + "</li>").join("") + "</ul>";
   }
   var formHtml = (D2, t) => {
     const f = (D2.fiche || {})[t];
@@ -1041,7 +1042,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
   function setMsg(t, cls) { updMsg.textContent = t; updMsg.className = cls || ""; }
   var FEED_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/m3_data.json";
   var PAGE_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/index.html";
-  var APP_VERSION = "1.0.40";
+  var APP_VERSION = "1.0.41";
   var newV = null;
   function vNum(v) { return String(v || "0").split(".").map((x) => parseInt(x, 10) || 0); }
   function vGt(a, b) {
