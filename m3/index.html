@@ -405,7 +405,7 @@ h2.week-head #weekTitle{white-space:normal;overflow:visible;text-overflow:clip;l
       </h2>
       <p class="meta" id="updatedMeta"></p>
       <div class="updbar"><button type="button" id="updBtn" class="ubtn"><svg class="ic"><use href="#i-refresh"/></svg><span>Mettre à jour</span></button><span id="updMsg" role="status" aria-live="polite"></span><span id="liveMsg" role="status"></span></div>
-      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.39</span></div>
+      <div class="osrcbar"><span id="oddsSrc" class="osrc" hidden></span><span id="appVer" class="osrc ver">v1.0.40</span></div>
       <div class="filterbar"><button type="button" id="filterBtn" class="fbtn" aria-pressed="false"><svg class="ic"><use href="#i-star"/></svg><span>Favoris à 60 % et plus seulement</span></button><button type="button" id="liveBtn" class="fbtn" aria-pressed="false"><span class="ldot"></span><span id="liveLbl">En direct</span></button><button type="button" id="myBtn" class="fbtn" aria-pressed="false" hidden><svg class="ic" viewBox="0 0 24 24"><path fill="currentColor" d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2.2a2.8 2.8 0 0 0 0 5.6V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2.2a2.8 2.8 0 0 0 0-5.6z"/></svg><span id="myLbl">Mes paris</span></button><span id="filterCount" aria-live="polite"></span></div>
       <div class="games" id="games"></div>
       <div class="recap" id="recap"></div>
@@ -845,6 +845,13 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     const m = Math.abs(p.margin);
     return m < 0.05 ? "aucun" : esc(nick(D2, p.margin >= 0 ? g.home : g.away)) + " de " + fr(m, 1) + " pt" + (m >= 2 ? "s" : "");
   }
+  function nvTeams(D2, g) {
+    return ["home", "away"].filter((c) => g.nvqb && g.nvqb[c]).map((c) => nick(D2, g[c])).join(" / ");
+  }
+  function nvLine(D2, g) {
+    if (!g.nvqb || g.status === "closed") return "";
+    return ["home", "away"].filter((c) => g.nvqb[c]).map((c) => '<p class="warnline"><span>\u26A0</span><span>Nouveau QB : <b>' + esc(g.nvqb[c]) + "</b> (" + esc(nick(D2, g[c])) + ")</span></p>").join("");
+  }
   function gameCard(D2, ctx, g, idx) {
     g = liveOv(g); if (liveOnly) return liveRow(D2, ctx, g, idx); const p = g.pred, done = g.status === "closed";
     const favHome = p ? p.pHome >= p.pAway : null;
@@ -857,7 +864,8 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
       tag = g.homeScore === g.awayScore ? '<span class="tag">Match nul</span>' : '<span class="tag ' + (ok ? "ok" : "ko") + '">' + ic(ok ? "check" : "x") + (ok ? "Prévision juste" : "Prévision fausse") + "</span>";
     } else if (done) tag = '<span class="tag">Terminé</span>';
     else if (net) tag = '<span class="tag net">' + ic("star") + "Favori net</span>";
-    if (!done && p && unlocked && g.mkt && Math.abs(g.mkt.gap) >= 4) tag += '<span class="tag warn">\u26A0 Gros écart marché</span>';
+    if (!done && p && unlocked && g.nvqb) tag += '<span class="tag warn">\u26A0 Nouveau QB \u00B7 ' + esc(nvTeams(D2, g)) + "</span>";
+    else if (!done && p && unlocked && g.mkt && Math.abs(g.mkt.gap) >= 4) tag += '<span class="tag warn">\u26A0 Gros écart marché</span>';
     else if (!done && p && unlocked && g.mkt && g.mkt.contra) tag += '<span class="tag warn">\u26A0 Contre le marché</span>';
     if (g._live === "in") tag = '<span class="tag live"><span class="dot"></span>En direct \u00B7 ' + esc(g._liveTxt) + "</span>" + tag;
     const chips = (a) => (a.qb ? '<span class="chip qb" title="Quarterback absent">' + ic("cross") + "QB</span>" : "") + (a.qbq ? '<span class="chip qbq" title="Quarterback incertain">' + ic("cross") + "QB ?</span>" : "") + (a.off + a.deff ? '<span class="chip" title="Autres titulaires absents">' + ic("cross") + (a.off + a.deff) + "</span>" : "");
@@ -917,7 +925,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
     if (unlocked && p) {
       const favHome = p.pHome >= p.pAway;
       const verdict = done && g.homeScore !== g.awayScore ? '<p class="verdict ' + (g.homeScore > g.awayScore === favHome ? "yes" : "no") + '">' + ic(g.homeScore > g.awayScore === favHome ? "check" : "x") + (g.homeScore > g.awayScore === favHome ? "Prévision juste" : "Prévision fausse") + " \u2014 résultat " + g.homeScore + " \u2013 " + g.awayScore + " (écart prévu : " + gapTxt(D2, p, g) + ")</p>" : "";
-      pred = '<div class="bigbadges"><span class="pbadge big home' + (favHome ? " fav" : "") + '"><i>Domicile</i>' + pct(p.pHome) + '</span><span class="pbadge big away' + (!favHome ? " fav" : "") + '"><i>Extérieur</i>' + pct(p.pAway) + '</span>' + lockBtn(g, true) + '</div><div class="gfoot"><span>Écart attendu : <b>' + gapTxt(D2, p, g) + "</b></span></div>" + verdict + (g.prov ? '<p class="meta">Prévision provisoire</p>' : "");
+      pred = '<div class="bigbadges"><span class="pbadge big home' + (favHome ? " fav" : "") + '"><i>Domicile</i>' + pct(p.pHome) + '</span><span class="pbadge big away' + (!favHome ? " fav" : "") + '"><i>Extérieur</i>' + pct(p.pAway) + '</span>' + lockBtn(g, true) + '</div><div class="gfoot"><span>Écart attendu : <b>' + gapTxt(D2, p, g) + "</b></span></div>" + nvLine(D2, g) + verdict + (g.prov ? '<p class="meta">Prévision provisoire</p>' : "");
     } else if (done) {
       pred = "";
     } else {
@@ -1033,7 +1041,7 @@ let D = {"version":"1.2","modelLabel":"modèle Elo des joueurs (v4)","statutsPro
   function setMsg(t, cls) { updMsg.textContent = t; updMsg.className = cls || ""; }
   var FEED_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/m3_data.json";
   var PAGE_URL = "https://raw.githubusercontent.com/Coxewagen/predicteur-nfl-data/main/m3/index.html";
-  var APP_VERSION = "1.0.39";
+  var APP_VERSION = "1.0.40";
   var newV = null;
   function vNum(v) { return String(v || "0").split(".").map((x) => parseInt(x, 10) || 0); }
   function vGt(a, b) {
