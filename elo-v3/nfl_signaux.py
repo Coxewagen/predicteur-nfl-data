@@ -1269,7 +1269,7 @@ def generer_html(semaine_df, semaine, courante, hist_tab, matchs=None, sig=None,
 # =============================================================================
 # 9. M4 PRÉDICTEUR : même page que M3, % = cotes Betclic (ou marché) corrigées par les absences
 # =============================================================================
-VERSION_M4 = "2.0.0"                          # version de la page M4 (à augmenter à chaque modification)
+VERSION_M4 = "2.1.0"                          # version de la page M4 (à augmenter à chaque modification)
 SIGMA_M4 = 13.5                               # écart-type d'une marge NFL (pts), pour passer % <-> points
 DOSSIER_RACINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 POSTES_FR = {"RB": "running back", "WR": "receveur", "TE": "tight end"}
@@ -1318,18 +1318,20 @@ def patch_page_m4(page):
       if (!q || !(q.h > 1) || !(q.a > 1)) return;
       const ph = (1 / q.h) / (1 / q.h + 1 / q.a);
       g.pin = q;
-      g.pred = Object.assign({ hfa: 0 }, g.pred || {}, { pHome: ph, pAway: 1 - ph, margin: (D.sigma || 13.5) * invN(ph) });
+      const np = Object.assign({ hfa: 0 }, g._pn || g.pred || {}, { pHome: ph, pAway: 1 - ph, margin: (D.sigma || 13.5) * invN(ph) });
+      g._pn = np;                                            // pourcentage à jour ; la carte garde le % bloqué
+      if (!(typeof locks !== "undefined" && locks && locks[g.id])) g.pred = np;
     });
   }
   applyPin();
   function valSide(g, side) {
-    const bo = BKO[g.id], o = bo && bo[side === "home" ? "h" : "a"];
+    const bo = (bets[g.id] && bets[g.id].bk) || BKO[g.id], o = bo && bo[side === "home" ? "h" : "a"];
     if (!o || !g.pin || !g.pred) return null;
     return o * (side === "home" ? g.pred.pHome : g.pred.pAway) - 1;
   }
   var valTxt = (v) => (v > 0 ? "+" : "\u2212") + fr(Math.abs(v) * 100, 1) + " %";
   function pinHtml(g) {
-    const bo = BKO[g.id], q = g.pin;
+    const bo = (bets[g.id] && bets[g.id].bk) || BKO[g.id], q = g.pin;
     let h = "";
     if (q) h += "<p>Pinnacle : <b>" + f2(q.h) + " / " + f2(q.a) + "</b></p>";
     if (bo && bo.h) h += "<p>Betclic : <b>" + f2(bo.h) + " / " + f2(bo.a) + "</b></p>";
