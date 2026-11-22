@@ -3460,7 +3460,7 @@
    "expAway": 16,
    "computedAt": "2026-11-22T10:42:45Z",
    "spread": 17.71,
-   "frozen": false
+   "frozen": true
   },
   "2026_11_BAL_CAR": {
    "week": 11,
@@ -3473,7 +3473,7 @@
    "expAway": 24,
    "computedAt": "2026-11-22T10:42:45Z",
    "spread": 5.17,
-   "frozen": false
+   "frozen": true
   },
   "2026_11_NO_CHI": {
    "week": 11,
@@ -3486,7 +3486,7 @@
    "expAway": 19,
    "computedAt": "2026-11-22T10:42:45Z",
    "spread": 10.0,
-   "frozen": false
+   "frozen": true
   },
   "2026_11_TEN_DAL": {
    "week": 11,
@@ -3499,7 +3499,7 @@
    "expAway": 21,
    "computedAt": "2026-11-22T10:42:45Z",
    "spread": 8.33,
-   "frozen": false
+   "frozen": true
   },
   "2026_11_TB_DET": {
    "week": 11,
@@ -3512,7 +3512,7 @@
    "expAway": 25,
    "computedAt": "2026-11-22T10:42:45Z",
    "spread": 3.55,
-   "frozen": false
+   "frozen": true
   },
   "2026_11_ARI_KC": {
    "week": 11,
@@ -3525,18 +3525,18 @@
    "expAway": 14,
    "computedAt": "2026-11-22T10:42:45Z",
    "spread": 13.61,
-   "frozen": false
+   "frozen": true
   },
   "2026_11_JAX_NYG": {
    "week": 11,
    "home": "New York Giants",
    "away": "Jacksonville Jaguars",
-   "kickoff": "2026-11-22T18:00:00Z",
+   "kickoff": "2026-11-22T21:25:00Z",
    "pHome": 0.2873,
    "pAway": 0.7087,
    "expHome": 18,
    "expAway": 25,
-   "computedAt": "2026-11-22T10:42:45Z",
+   "computedAt": "2026-11-22T19:02:09Z",
    "spread": -7.14,
    "frozen": false
   },
@@ -3549,7 +3549,7 @@
    "pAway": 0.4585,
    "expHome": 22,
    "expAway": 20,
-   "computedAt": "2026-11-22T10:42:45Z",
+   "computedAt": "2026-11-22T19:02:09Z",
    "spread": 1.28,
    "frozen": false
   },
@@ -3562,7 +3562,7 @@
    "pAway": 0.2326,
    "expHome": 30,
    "expAway": 21,
-   "computedAt": "2026-11-22T10:42:45Z",
+   "computedAt": "2026-11-22T19:02:09Z",
    "spread": 9.31,
    "frozen": false
   },
@@ -3577,7 +3577,7 @@
    "expAway": 21,
    "computedAt": "2026-11-22T10:42:45Z",
    "spread": -4.7,
-   "frozen": false
+   "frozen": true
   },
   "2026_11_MIN_SF": {
    "week": 11,
@@ -3588,7 +3588,7 @@
    "pAway": 0.3982,
    "expHome": 20,
    "expAway": 17,
-   "computedAt": "2026-11-22T10:42:45Z",
+   "computedAt": "2026-11-22T19:02:09Z",
    "spread": 3.25,
    "frozen": false
   },
@@ -3601,7 +3601,7 @@
    "pAway": 0.638,
    "expHome": 23,
    "expAway": 28,
-   "computedAt": "2026-11-22T10:42:45Z",
+   "computedAt": "2026-11-22T19:02:09Z",
    "spread": -4.61,
    "frozen": false
   }
