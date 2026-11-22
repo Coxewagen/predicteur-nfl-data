@@ -256,6 +256,52 @@
    "injReport": "final",
    "injWeek": 11
   },
+  "Cincinnati Bengals": {
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Jalen Davis, ischio-jambiers)",
+     "lane": "pass",
+     "gp": 3
+    }
+   ],
+   "offAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "receveur titulaire (Andrei Iosivas, pouce)",
+     "lane": "pass",
+     "gp": 2
+    },
+    {
+     "tier": "titulaire",
+     "pos": "garde gauche titulaire (Dalton Risner, genou)",
+     "lane": "line",
+     "gp": 9
+    }
+   ],
+   "watch": [
+    {
+     "name": "Kyle Dugger",
+     "pos": "safety",
+     "etat": "incertain pour le match",
+     "why": "quadriceps"
+    },
+    {
+     "name": "Daxton Hill",
+     "pos": "cornerback",
+     "etat": "incertain pour le match",
+     "why": "maladie"
+    },
+    {
+     "name": "Dylan Fairchild",
+     "pos": "garde gauche",
+     "etat": "incertain pour le match",
+     "why": "oblique"
+    }
+   ],
+   "injReport": "final",
+   "injWeek": 11
+  },
   "Cleveland Browns": {
    "defAbsences": [
     {
@@ -1057,26 +1103,26 @@
    ],
    "watch": [
     {
+     "name": "Lucas Patrick",
+     "pos": "garde gauche",
+     "etat": "incertain pour le match",
+     "why": "commotion"
+    },
+    {
+     "name": "Amik Robertson",
+     "pos": "cornerback",
+     "etat": "incertain pour le match",
+     "why": "cheville"
+    },
+    {
      "name": "Rachaad White",
      "pos": "coureur",
-     "etat": "entraînement limité",
+     "etat": "incertain pour le match",
      "why": "heel"
-    },
-    {
-     "name": "Treylon Burks",
-     "pos": "receveur",
-     "etat": "absent à l’entraînement",
-     "why": "pied"
-    },
-    {
-     "name": "Quan Martin",
-     "pos": "safety",
-     "etat": "entraînement limité",
-     "why": "épaule"
     }
    ],
-   "injReport": "provisoire",
-   "injWeek": 10
+   "injReport": "final",
+   "injWeek": 11
   },
   "New York Giants": {
    "defAbsences": [
@@ -1131,46 +1177,6 @@
      "pos": "tight end",
      "etat": "absent à l’entraînement",
      "why": "aine"
-    }
-   ],
-   "injReport": "provisoire",
-   "injWeek": 10
-  },
-  "Cincinnati Bengals": {
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Jalen Davis, IR)",
-     "lane": "pass",
-     "gp": 3
-    }
-   ],
-   "offAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "receveur titulaire (Andrei Iosivas, IR)",
-     "lane": "pass",
-     "gp": 2
-    }
-   ],
-   "watch": [
-    {
-     "name": "Dalton Risner",
-     "pos": "garde gauche",
-     "etat": "absent à l’entraînement",
-     "why": "genou"
-    },
-    {
-     "name": "Daxton Hill",
-     "pos": "cornerback",
-     "etat": "absent à l’entraînement",
-     "why": "maladie"
-    },
-    {
-     "name": "Dylan Fairchild",
-     "pos": "garde gauche",
-     "etat": "entraînement limité",
-     "why": "oblique"
     }
    ],
    "injReport": "provisoire",
@@ -3452,7 +3458,7 @@
    "pAway": 0.0823,
    "expHome": 34,
    "expAway": 16,
-   "computedAt": "2026-11-22T00:57:07Z",
+   "computedAt": "2026-11-22T10:42:45Z",
    "spread": 17.71,
    "frozen": false
   },
@@ -3465,7 +3471,7 @@
    "pAway": 0.3418,
    "expHome": 29,
    "expAway": 24,
-   "computedAt": "2026-11-22T00:57:07Z",
+   "computedAt": "2026-11-22T10:42:45Z",
    "spread": 5.17,
    "frozen": false
   },
@@ -3478,7 +3484,7 @@
    "pAway": 0.2164,
    "expHome": 29,
    "expAway": 19,
-   "computedAt": "2026-11-22T00:57:07Z",
+   "computedAt": "2026-11-22T10:42:45Z",
    "spread": 10.0,
    "frozen": false
   },
@@ -3491,7 +3497,7 @@
    "pAway": 0.2565,
    "expHome": 29,
    "expAway": 21,
-   "computedAt": "2026-11-22T00:57:07Z",
+   "computedAt": "2026-11-22T10:42:45Z",
    "spread": 8.33,
    "frozen": false
   },
@@ -3504,7 +3510,7 @@
    "pAway": 0.3892,
    "expHome": 28,
    "expAway": 25,
-   "computedAt": "2026-11-22T00:57:07Z",
+   "computedAt": "2026-11-22T10:42:45Z",
    "spread": 3.55,
    "frozen": false
   },
@@ -3517,7 +3523,7 @@
    "pAway": 0.1429,
    "expHome": 27,
    "expAway": 14,
-   "computedAt": "2026-11-22T00:57:07Z",
+   "computedAt": "2026-11-22T10:42:45Z",
    "spread": 13.61,
    "frozen": false
   },
@@ -3530,7 +3536,7 @@
    "pAway": 0.7087,
    "expHome": 18,
    "expAway": 25,
-   "computedAt": "2026-11-22T00:57:07Z",
+   "computedAt": "2026-11-22T10:42:45Z",
    "spread": -7.14,
    "frozen": false
   },
@@ -3543,7 +3549,7 @@
    "pAway": 0.4585,
    "expHome": 22,
    "expAway": 20,
-   "computedAt": "2026-11-22T00:57:07Z",
+   "computedAt": "2026-11-22T10:42:45Z",
    "spread": 1.28,
    "frozen": false
   },
@@ -3556,7 +3562,7 @@
    "pAway": 0.2326,
    "expHome": 30,
    "expAway": 21,
-   "computedAt": "2026-11-22T00:57:07Z",
+   "computedAt": "2026-11-22T10:42:45Z",
    "spread": 9.31,
    "frozen": false
   },
@@ -3569,7 +3575,7 @@
    "pAway": 0.6408,
    "expHome": 16,
    "expAway": 21,
-   "computedAt": "2026-11-22T00:57:07Z",
+   "computedAt": "2026-11-22T10:42:45Z",
    "spread": -4.7,
    "frozen": false
   },
@@ -3582,7 +3588,7 @@
    "pAway": 0.3982,
    "expHome": 20,
    "expAway": 17,
-   "computedAt": "2026-11-22T00:57:07Z",
+   "computedAt": "2026-11-22T10:42:45Z",
    "spread": 3.25,
    "frozen": false
   },
@@ -3591,12 +3597,12 @@
    "home": "Washington Commanders",
    "away": "Cincinnati Bengals",
    "kickoff": "2026-11-24T01:15:00Z",
-   "pHome": 0.3308,
-   "pAway": 0.6652,
-   "expHome": 24,
-   "expAway": 29,
-   "computedAt": "2026-11-22T00:57:07Z",
-   "spread": -5.56,
+   "pHome": 0.358,
+   "pAway": 0.638,
+   "expHome": 23,
+   "expAway": 28,
+   "computedAt": "2026-11-22T10:42:45Z",
+   "spread": -4.61,
    "frozen": false
   }
  }
