@@ -138,12 +138,6 @@
      "gp": 7
     },
     {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Mike Jackson, IR)",
-     "lane": "pass",
-     "gp": 3
-    },
-    {
      "tier": "elite",
      "pos": "cornerback titulaire (Jaycee Horn, IR)",
      "lane": "pass",
@@ -575,12 +569,6 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "ailier droit titulaire (Trey Pipkins, IR)",
-     "lane": "line",
-     "gp": 1
-    },
-    {
-     "tier": "titulaire",
      "pos": "centre titulaire (Tyler Biadasz, IR)",
      "lane": "line",
      "gp": 0
@@ -606,12 +594,6 @@
      "tier": "titulaire",
      "pos": "défenseur de ligne titulaire (Zach Sieler, IR)",
      "gp": 8
-    },
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Darrell Baker Jr., IR)",
-     "lane": "pass",
-     "gp": 0
     },
     {
      "tier": "rotation",
@@ -647,7 +629,7 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Jordan Addison, pouce)",
+     "pos": "receveur titulaire (Jordan Addison, pouce, rapport précédent)",
      "lane": "pass",
      "gp": 7
     },
@@ -667,19 +649,11 @@
    "qbTier": "titulaire",
    "qbGp": 6,
    "qbName": "Kyler Murray",
-   "qbWhy": "ischio-jambiers",
+   "qbWhy": "ischio-jambiers, rapport précédent",
    "qbReplacementTier": "standard",
    "qbReplacementName": "Kirk Cousins",
-   "qbReplacementStarts": 177,
-   "watch": [
-    {
-     "name": "Isaiah Rodgers",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "quadriceps"
-    }
-   ],
-   "injReport": "final",
+   "qbReplacementStarts": 178,
+   "injReport": "provisoire",
    "injWeek": 11
   },
   "New England Patriots": {
@@ -1041,33 +1015,7 @@
      "gp": 0
     }
    ],
-   "watch": [
-    {
-     "name": "Mike Evans",
-     "pos": "receveur",
-     "etat": "incertain pour le match",
-     "why": "tendon d’Achille"
-    },
-    {
-     "name": "Dre Greenlaw",
-     "pos": "linebacker",
-     "etat": "incertain pour le match",
-     "why": "cou"
-    },
-    {
-     "name": "Mac Jones",
-     "pos": "quarterback",
-     "etat": "incertain pour le match",
-     "why": "maladie"
-    },
-    {
-     "name": "Upton Stout",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "épaule"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 11
   },
   "Denver Broncos": {
@@ -3408,7 +3356,10 @@
    "expAway": 17,
    "computedAt": "2026-11-22T19:02:09Z",
    "spread": 3.25,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 35,
+   "awayScore": 10,
+   "correct": true
   },
   "2026_11_CIN_WAS": {
    "week": 11,
@@ -3419,7 +3370,7 @@
    "pAway": 0.638,
    "expHome": 23,
    "expAway": 28,
-   "computedAt": "2026-11-23T01:24:09Z",
+   "computedAt": "2026-11-23T11:47:51Z",
    "spread": -4.61,
    "frozen": false
   }
