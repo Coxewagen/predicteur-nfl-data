@@ -40,14 +40,6 @@
      "gp": 2
     }
    ],
-   "qbOut": true,
-   "qbTier": "limite",
-   "qbGp": 2,
-   "qbName": "Gardner Minshew",
-   "qbWhy": "IR",
-   "qbReplacementTier": "aucune_experience",
-   "qbReplacementName": "Carson Beck",
-   "qbReplacementStarts": 0,
    "injReport": "provisoire",
    "injWeek": 11
   },
@@ -57,6 +49,18 @@
      "tier": "titulaire",
      "pos": "linebacker titulaire (Divine Deablo, avant-bras, rapport précédent)",
      "gp": 7
+    },
+    {
+     "tier": "rotation",
+     "pos": "edge rusher titulaire (Da'Shawn Hand, IR)",
+     "lane": "pass",
+     "gp": 1
+    },
+    {
+     "tier": "rotation",
+     "pos": "edge rusher titulaire (Jalon Walker, IR)",
+     "lane": "pass",
+     "gp": 0
     }
    ],
    "injReport": "provisoire",
@@ -65,7 +69,7 @@
   "Baltimore Ravens": {
    "defAbsences": [
     {
-     "tier": "elite",
+     "tier": "titulaire",
      "pos": "cornerback titulaire (Marlon Humphrey, hors blessure, rapport précédent)",
      "lane": "pass",
      "gp": 10
@@ -272,6 +276,12 @@
      "tier": "titulaire",
      "pos": "safety titulaire (Ronnie Hickman Jr., commotion, rapport précédent)",
      "gp": 9
+    },
+    {
+     "tier": "rotation",
+     "pos": "edge rusher titulaire (Alex Wright, IR)",
+     "lane": "pass",
+     "gp": 0
     }
    ],
    "injReport": "provisoire",
@@ -373,6 +383,16 @@
      "pos": "edge rusher titulaire (Micah Parsons, genou, rapport précédent)",
      "lane": "pass",
      "gp": 0
+    },
+    {
+     "tier": "rotation",
+     "pos": "défenseur de ligne titulaire (Javon Hargrave, IR)",
+     "gp": 4
+    },
+    {
+     "tier": "titulaire",
+     "pos": "linebacker titulaire (Edgerrin Cooper, IR)",
+     "gp": 4
     }
    ],
    "offAbsences": [
@@ -387,6 +407,12 @@
      "pos": "centre titulaire (Sean Rhyan, cheville, rapport précédent)",
      "lane": "line",
      "gp": 7
+    },
+    {
+     "tier": "titulaire",
+     "pos": "ailier droit titulaire (Zach Bako-Bewele, IR)",
+     "lane": "line",
+     "gp": 2
     }
    ],
    "injReport": "provisoire",
@@ -545,9 +571,40 @@
    "offAbsences": [
     {
      "tier": "titulaire",
+     "pos": "receveur titulaire (Davante Adams, IR)",
+     "lane": "pass",
+     "gp": 6
+    },
+    {
+     "tier": "titulaire",
+     "pos": "receveur titulaire (Puka Nacua, IR)",
+     "lane": "pass",
+     "gp": 7
+    },
+    {
+     "tier": "titulaire",
      "pos": "garde gauche titulaire (Steve Avila, ischio-jambiers, rapport précédent)",
      "lane": "line",
      "gp": 9
+    },
+    {
+     "tier": "titulaire",
+     "pos": "centre titulaire (Justin Dedich, IR)",
+     "lane": "line",
+     "gp": 0
+    }
+   ],
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Jaylen Watson, IR)",
+     "lane": "pass",
+     "gp": 7
+    },
+    {
+     "tier": "titulaire",
+     "pos": "défenseur de ligne titulaire (Kobie Turner, IR)",
+     "gp": 6
     }
    ],
    "injReport": "provisoire",
@@ -663,12 +720,35 @@
      "pos": "cornerback titulaire (Carlton Davis III, genou, rapport précédent)",
      "lane": "pass",
      "gp": 5
+    },
+    {
+     "tier": "titulaire",
+     "pos": "edge rusher titulaire (Harold Landry III, IR)",
+     "lane": "pass",
+     "gp": 0
     }
    ],
    "offAbsences": [
     {
      "tier": "titulaire",
+     "pos": "receveur titulaire (Romeo Doubs, IR)",
+     "lane": "pass",
+     "gp": 6
+    },
+    {
+     "tier": "rotation",
+     "pos": "tight end titulaire (Julian Hill, IR)",
+     "gp": 0
+    },
+    {
+     "tier": "titulaire",
      "pos": "centre titulaire (Ben Brown, genou, rapport précédent)",
+     "lane": "line",
+     "gp": 6
+    },
+    {
+     "tier": "titulaire",
+     "pos": "garde droit titulaire (Alijah Vera-Tucker, IR)",
      "lane": "line",
      "gp": 6
     }
@@ -680,7 +760,8 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Justin Reid, hors blessure, rapport précédent)",
+     "pos": "cornerback titulaire (Justin Reid, hors blessure, rapport précédent)",
+     "lane": "pass",
      "gp": 9
     },
     {
@@ -809,7 +890,7 @@
    "qbName": "Sam Darnold",
    "qbWhy": "côtes, rapport précédent",
    "qbReplacementTier": "standard",
-   "qbReplacementName": "00-0035704",
+   "qbReplacementName": "Drew Lock",
    "qbReplacementStarts": 31,
    "injReport": "provisoire",
    "injWeek": 10
@@ -3370,7 +3451,7 @@
    "pAway": 0.638,
    "expHome": 23,
    "expAway": 28,
-   "computedAt": "2026-11-23T11:47:51Z",
+   "computedAt": "2026-11-23T23:23:21Z",
    "spread": -4.61,
    "frozen": false
   }
