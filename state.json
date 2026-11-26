@@ -226,18 +226,10 @@
    "injWeek": 12
   },
   "Cincinnati Bengals": {
-   "defAbsences": [
-    {
-     "tier": "titulaire",
-     "pos": "cornerback titulaire (Jalen Davis, ischio-jambiers, rapport précédent)",
-     "lane": "pass",
-     "gp": 3
-    }
-   ],
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Andrei Iosivas, pouce, rapport précédent)",
+     "pos": "receveur titulaire (Andrei Iosivas, IR)",
      "lane": "pass",
      "gp": 2
     },
@@ -246,6 +238,14 @@
      "pos": "garde gauche titulaire (Dalton Risner, genou, rapport précédent)",
      "lane": "line",
      "gp": 9
+    }
+   ],
+   "defAbsences": [
+    {
+     "tier": "titulaire",
+     "pos": "cornerback titulaire (Jalen Davis, IR)",
+     "lane": "pass",
+     "gp": 3
     }
    ],
    "injReport": "provisoire",
@@ -574,6 +574,44 @@
      "pos": "ailier gauche titulaire (Rashawn Slater, IR)",
      "lane": "line",
      "gp": 4
+    }
+   ],
+   "watch": [
+    {
+     "name": "Dalvin Tomlinson",
+     "pos": "défenseur de ligne",
+     "etat": "absent à l’entraînement",
+     "why": "genou"
+    },
+    {
+     "name": "David Njoku",
+     "pos": "tight end",
+     "etat": "absent à l’entraînement",
+     "why": "épaule"
+    },
+    {
+     "name": "Justin Herbert",
+     "pos": "quarterback",
+     "etat": "absent à l’entraînement",
+     "why": "commotion"
+    },
+    {
+     "name": "Tuli Tuipulotu",
+     "pos": "edge rusher",
+     "etat": "absent à l’entraînement",
+     "why": "cheville"
+    },
+    {
+     "name": "Tarheeb Still",
+     "pos": "cornerback",
+     "etat": "absent à l’entraînement",
+     "why": "cheville"
+    },
+    {
+     "name": "Akheem Mesidor",
+     "pos": "edge rusher",
+     "etat": "absent à l’entraînement",
+     "why": "cheville"
     }
    ],
    "injReport": "provisoire",
@@ -911,14 +949,44 @@
      "gp": 7
     }
    ],
-   "qbOut": true,
-   "qbTier": "titulaire",
-   "qbGp": 7,
-   "qbName": "Sam Darnold",
-   "qbWhy": "côtes, rapport précédent",
-   "qbReplacementTier": "standard",
-   "qbReplacementName": "Drew Lock",
-   "qbReplacementStarts": 31,
+   "watch": [
+    {
+     "name": "DeMarcus Lawrence",
+     "pos": "edge rusher",
+     "etat": "absent à l’entraînement",
+     "why": "épaule"
+    },
+    {
+     "name": "Drew Lock",
+     "pos": "quarterback",
+     "etat": "entraînement limité",
+     "why": "coude"
+    },
+    {
+     "name": "Ernest Jones",
+     "pos": "linebacker",
+     "etat": "entraînement limité",
+     "why": "genou"
+    },
+    {
+     "name": "Abraham Lucas",
+     "pos": "ailier droit",
+     "etat": "absent à l’entraînement",
+     "why": "cheville"
+    },
+    {
+     "name": "Jaxon Smith-Njigba",
+     "pos": "receveur",
+     "etat": "entraînement limité",
+     "why": "cheville"
+    },
+    {
+     "name": "Anthony Bradford",
+     "pos": "garde droit",
+     "etat": "entraînement limité",
+     "why": "genou"
+    }
+   ],
    "injReport": "provisoire",
    "injWeek": 10
   },
@@ -1290,6 +1358,44 @@
      "pos": "edge rusher titulaire (Sam Okuayinonu, IR)",
      "lane": "pass",
      "gp": 0
+    }
+   ],
+   "watch": [
+    {
+     "name": "Mike Evans",
+     "pos": "receveur",
+     "etat": "absent à l’entraînement",
+     "why": "tendon d’Achille"
+    },
+    {
+     "name": "Dre Greenlaw",
+     "pos": "linebacker",
+     "etat": "entraînement limité",
+     "why": "cou"
+    },
+    {
+     "name": "Deommodore Lenoir",
+     "pos": "cornerback",
+     "etat": "entraînement limité",
+     "why": "pied"
+    },
+    {
+     "name": "Brock Purdy",
+     "pos": "quarterback",
+     "etat": "absent à l’entraînement",
+     "why": "cheville"
+    },
+    {
+     "name": "Upton Stout",
+     "pos": "safety",
+     "etat": "entraînement limité",
+     "why": "épaule"
+    },
+    {
+     "name": "Jordan Watkins",
+     "pos": "receveur",
+     "etat": "absent à l’entraînement",
+     "why": "aine"
     }
    ],
    "injReport": "provisoire",
@@ -3815,7 +3921,7 @@
    "expAway": 26,
    "computedAt": "2026-11-26T11:53:29Z",
    "spread": 1.27,
-   "frozen": false
+   "frozen": true
   },
   "2026_12_PHI_DAL": {
    "week": 12,
@@ -3826,7 +3932,7 @@
    "pAway": 0.269,
    "expHome": 30,
    "expAway": 22,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": 7.84,
    "frozen": false
   },
@@ -3839,7 +3945,7 @@
    "pAway": 0.4181,
    "expHome": 25,
    "expAway": 22,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": 2.59,
    "frozen": false
   },
@@ -3852,7 +3958,7 @@
    "pAway": 0.5352,
    "expHome": 20,
    "expAway": 21,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": -1.2,
    "frozen": false
   },
@@ -3865,7 +3971,7 @@
    "pAway": 0.2249,
    "expHome": 28,
    "expAway": 19,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": 9.63,
    "frozen": false
   },
@@ -3878,7 +3984,7 @@
    "pAway": 0.2486,
    "expHome": 30,
    "expAway": 22,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": 8.65,
    "frozen": false
   },
@@ -3891,7 +3997,7 @@
    "pAway": 0.517,
    "expHome": 23,
    "expAway": 24,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": -0.61,
    "frozen": false
   },
@@ -3904,7 +4010,7 @@
    "pAway": 0.674,
    "expHome": 17,
    "expAway": 23,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": -5.87,
    "frozen": false
   },
@@ -3917,7 +4023,7 @@
    "pAway": 0.3322,
    "expHome": 20,
    "expAway": 15,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": 5.51,
    "frozen": false
   },
@@ -3930,7 +4036,7 @@
    "pAway": 0.0822,
    "expHome": 31,
    "expAway": 13,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": 17.71,
    "frozen": false
   },
@@ -3943,7 +4049,7 @@
    "pAway": 0.5901,
    "expHome": 20,
    "expAway": 23,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": -3.0,
    "frozen": false
   },
@@ -3956,7 +4062,7 @@
    "pAway": 0.6344,
    "expHome": 20,
    "expAway": 25,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": -4.49,
    "frozen": false
   },
@@ -3965,12 +4071,12 @@
    "home": "San Francisco 49ers",
    "away": "Seattle Seahawks",
    "kickoff": "2026-11-29T21:25:00Z",
-   "pHome": 0.7084,
-   "pAway": 0.2876,
-   "expHome": 24,
-   "expAway": 17,
-   "computedAt": "2026-11-26T11:53:29Z",
-   "spread": 7.13,
+   "pHome": 0.6677,
+   "pAway": 0.3283,
+   "expHome": 25,
+   "expAway": 19,
+   "computedAt": "2026-11-26T20:55:32Z",
+   "spread": 5.65,
    "frozen": false
   },
   "2026_12_LV_CLE": {
@@ -3982,7 +4088,7 @@
    "pAway": 0.4136,
    "expHome": 26,
    "expAway": 23,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": 2.74,
    "frozen": false
   },
@@ -3995,7 +4101,7 @@
    "pAway": 0.3561,
    "expHome": 28,
    "expAway": 23,
-   "computedAt": "2026-11-26T11:53:29Z",
+   "computedAt": "2026-11-26T20:55:32Z",
    "spread": 4.68,
    "frozen": false
   }
