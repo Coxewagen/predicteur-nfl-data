@@ -185,7 +185,7 @@
    "defAbsences": [
     {
      "tier": "rotation",
-     "pos": "cornerback titulaire (Kyler Gordon, épaule)",
+     "pos": "cornerback titulaire (Kyler Gordon, épaule, rapport précédent)",
      "lane": "pass",
      "gp": 4
     },
@@ -214,15 +214,7 @@
      "gp": 3
     }
    ],
-   "watch": [
-    {
-     "name": "Tyrique Stevenson",
-     "pos": "cornerback",
-     "etat": "incertain pour le match",
-     "why": "aine"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 12
   },
   "Cincinnati Bengals": {
@@ -255,12 +247,12 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "tight end titulaire (Jake Ferguson, genou)",
+     "pos": "tight end titulaire (Jake Ferguson, genou, rapport précédent)",
      "gp": 9
     },
     {
      "tier": "titulaire",
-     "pos": "garde gauche titulaire (Tyler Booker, cheville)",
+     "pos": "garde gauche titulaire (Tyler Booker, cheville, rapport précédent)",
      "lane": "line",
      "gp": 10
     }
@@ -273,15 +265,7 @@
      "gp": 10
     }
    ],
-   "watch": [
-    {
-     "name": "Jalen Thompson",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "ischio-jambiers"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 12
   },
   "Denver Broncos": {
@@ -898,7 +882,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "cornerback titulaire (Jonathan Jones, cheville)",
+     "pos": "cornerback titulaire (Jonathan Jones, cheville, rapport précédent)",
      "lane": "pass",
      "gp": 6
     },
@@ -924,7 +908,7 @@
    "qbReplacementTier": "limite",
    "qbReplacementName": "Tanner McKee",
    "qbReplacementStarts": 4,
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 12
   },
   "Seattle Seahawks": {
@@ -1282,21 +1266,7 @@
      "gp": 2
     }
    ],
-   "watch": [
-    {
-     "name": "Chuck Clark",
-     "pos": "safety",
-     "etat": "incertain pour le match",
-     "why": "ischio-jambiers"
-    },
-    {
-     "name": "DJ Wonnum",
-     "pos": "edge rusher",
-     "etat": "incertain pour le match",
-     "why": "dos"
-    }
-   ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 12
   },
   "Pittsburgh Steelers": {
@@ -3921,7 +3891,10 @@
    "expAway": 26,
    "computedAt": "2026-11-26T11:53:29Z",
    "spread": 1.27,
-   "frozen": true
+   "frozen": true,
+   "homeScore": 35,
+   "awayScore": 39,
+   "correct": false
   },
   "2026_12_PHI_DAL": {
    "week": 12,
@@ -3934,7 +3907,10 @@
    "expAway": 22,
    "computedAt": "2026-11-26T20:55:32Z",
    "spread": 7.84,
-   "frozen": false
+   "frozen": true,
+   "homeScore": 38,
+   "awayScore": 39,
+   "correct": false
   },
   "2026_12_KC_BUF": {
    "week": 12,
@@ -3947,7 +3923,7 @@
    "expAway": 22,
    "computedAt": "2026-11-26T20:55:32Z",
    "spread": 2.59,
-   "frozen": false
+   "frozen": true
   },
   "2026_12_DEN_PIT": {
    "week": 12,
@@ -3958,7 +3934,7 @@
    "pAway": 0.5352,
    "expHome": 20,
    "expAway": 21,
-   "computedAt": "2026-11-26T20:55:32Z",
+   "computedAt": "2026-11-27T03:29:25Z",
    "spread": -1.2,
    "frozen": false
   },
@@ -3971,7 +3947,7 @@
    "pAway": 0.2249,
    "expHome": 28,
    "expAway": 19,
-   "computedAt": "2026-11-26T20:55:32Z",
+   "computedAt": "2026-11-27T03:29:25Z",
    "spread": 9.63,
    "frozen": false
   },
@@ -3984,7 +3960,7 @@
    "pAway": 0.2486,
    "expHome": 30,
    "expAway": 22,
-   "computedAt": "2026-11-26T20:55:32Z",
+   "computedAt": "2026-11-27T03:29:25Z",
    "spread": 8.65,
    "frozen": false
   },
@@ -3997,7 +3973,7 @@
    "pAway": 0.517,
    "expHome": 23,
    "expAway": 24,
-   "computedAt": "2026-11-26T20:55:32Z",
+   "computedAt": "2026-11-27T03:29:25Z",
    "spread": -0.61,
    "frozen": false
   },
@@ -4010,7 +3986,7 @@
    "pAway": 0.674,
    "expHome": 17,
    "expAway": 23,
-   "computedAt": "2026-11-26T20:55:32Z",
+   "computedAt": "2026-11-27T03:29:25Z",
    "spread": -5.87,
    "frozen": false
   },
@@ -4023,7 +3999,7 @@
    "pAway": 0.3322,
    "expHome": 20,
    "expAway": 15,
-   "computedAt": "2026-11-26T20:55:32Z",
+   "computedAt": "2026-11-27T03:29:25Z",
    "spread": 5.51,
    "frozen": false
   },
@@ -4036,7 +4012,7 @@
    "pAway": 0.0822,
    "expHome": 31,
    "expAway": 13,
-   "computedAt": "2026-11-26T20:55:32Z",
+   "computedAt": "2026-11-27T03:29:25Z",
    "spread": 17.71,
    "frozen": false
   },
@@ -4049,7 +4025,7 @@
    "pAway": 0.5901,
    "expHome": 20,
    "expAway": 23,
-   "computedAt": "2026-11-26T20:55:32Z",
+   "computedAt": "2026-11-27T03:29:25Z",
    "spread": -3.0,
    "frozen": false
   },
@@ -4062,7 +4038,7 @@
    "pAway": 0.6344,
    "expHome": 20,
    "expAway": 25,
-   "computedAt": "2026-11-26T20:55:32Z",
+   "computedAt": "2026-11-27T03:29:25Z",
    "spread": -4.49,
    "frozen": false
   },
@@ -4075,7 +4051,7 @@
    "pAway": 0.3283,
    "expHome": 25,
    "expAway": 19,
-   "computedAt": "2026-11-26T20:55:32Z",
+   "computedAt": "2026-11-27T03:29:25Z",
    "spread": 5.65,
    "frozen": false
   },
@@ -4088,7 +4064,7 @@
    "pAway": 0.4136,
    "expHome": 26,
    "expAway": 23,
-   "computedAt": "2026-11-26T20:55:32Z",
+   "computedAt": "2026-11-27T03:29:25Z",
    "spread": 2.74,
    "frozen": false
   },
@@ -4101,7 +4077,7 @@
    "pAway": 0.3561,
    "expHome": 28,
    "expAway": 23,
-   "computedAt": "2026-11-26T20:55:32Z",
+   "computedAt": "2026-11-27T03:29:25Z",
    "spread": 4.68,
    "frozen": false
   }
