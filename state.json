@@ -280,7 +280,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "safety titulaire (Taylor Rapp, quadriceps)",
+     "pos": "safety titulaire (Taylor Rapp, quadriceps, rapport précédent)",
      "gp": 5
     },
     {
@@ -303,7 +303,7 @@
      "gp": 10
     }
    ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 12
   },
   "Houston Texans": {
@@ -903,7 +903,7 @@
    "defAbsences": [
     {
      "tier": "titulaire",
-     "pos": "edge rusher titulaire (Alex Highsmith, cheville)",
+     "pos": "edge rusher titulaire (Alex Highsmith, cheville, rapport précédent)",
      "lane": "pass",
      "gp": 10
     }
@@ -911,18 +911,12 @@
    "offAbsences": [
     {
      "tier": "titulaire",
-     "pos": "receveur titulaire (Michael Pittman, IR)",
-     "lane": "pass",
-     "gp": 3
-    },
-    {
-     "tier": "titulaire",
      "pos": "garde gauche titulaire (Mason McCormick, IR)",
      "lane": "line",
      "gp": 9
     }
    ],
-   "injReport": "final",
+   "injReport": "provisoire",
    "injWeek": 12
   },
   "Seattle Seahawks": {
@@ -3909,7 +3903,10 @@
    "expAway": 22,
    "computedAt": "2026-11-27T16:09:30Z",
    "spread": -2.03,
-   "frozen": false
+   "frozen": true,
+   "homeScore": 27,
+   "awayScore": 5,
+   "correct": false
   },
   "2026_12_NO_CIN": {
    "week": 12,
@@ -3920,7 +3917,7 @@
    "pAway": 0.2413,
    "expHome": 28,
    "expAway": 20,
-   "computedAt": "2026-11-27T16:09:30Z",
+   "computedAt": "2026-11-28T01:05:50Z",
    "spread": 8.95,
    "frozen": false
   },
@@ -3933,7 +3930,7 @@
    "pAway": 0.2358,
    "expHome": 31,
    "expAway": 22,
-   "computedAt": "2026-11-27T16:09:30Z",
+   "computedAt": "2026-11-28T01:05:50Z",
    "spread": 9.17,
    "frozen": false
   },
@@ -3946,7 +3943,7 @@
    "pAway": 0.517,
    "expHome": 23,
    "expAway": 24,
-   "computedAt": "2026-11-27T16:09:30Z",
+   "computedAt": "2026-11-28T01:05:50Z",
    "spread": -0.61,
    "frozen": false
   },
@@ -3959,7 +3956,7 @@
    "pAway": 0.6833,
    "expHome": 17,
    "expAway": 23,
-   "computedAt": "2026-11-27T16:09:30Z",
+   "computedAt": "2026-11-28T01:05:50Z",
    "spread": -6.21,
    "frozen": false
   },
@@ -3972,7 +3969,7 @@
    "pAway": 0.3322,
    "expHome": 20,
    "expAway": 15,
-   "computedAt": "2026-11-27T16:09:30Z",
+   "computedAt": "2026-11-28T01:05:50Z",
    "spread": 5.51,
    "frozen": false
   },
@@ -3985,7 +3982,7 @@
    "pAway": 0.0822,
    "expHome": 31,
    "expAway": 13,
-   "computedAt": "2026-11-27T16:09:30Z",
+   "computedAt": "2026-11-28T01:05:50Z",
    "spread": 17.71,
    "frozen": false
   },
@@ -3998,7 +3995,7 @@
    "pAway": 0.5901,
    "expHome": 20,
    "expAway": 23,
-   "computedAt": "2026-11-27T16:09:30Z",
+   "computedAt": "2026-11-28T01:05:50Z",
    "spread": -3.0,
    "frozen": false
   },
@@ -4011,7 +4008,7 @@
    "pAway": 0.6344,
    "expHome": 20,
    "expAway": 25,
-   "computedAt": "2026-11-27T16:09:30Z",
+   "computedAt": "2026-11-28T01:05:50Z",
    "spread": -4.49,
    "frozen": false
   },
@@ -4024,7 +4021,7 @@
    "pAway": 0.3661,
    "expHome": 25,
    "expAway": 21,
-   "computedAt": "2026-11-27T16:09:30Z",
+   "computedAt": "2026-11-28T01:05:50Z",
    "spread": 4.33,
    "frozen": false
   },
@@ -4037,7 +4034,7 @@
    "pAway": 0.4136,
    "expHome": 26,
    "expAway": 23,
-   "computedAt": "2026-11-27T16:09:30Z",
+   "computedAt": "2026-11-28T01:05:50Z",
    "spread": 2.74,
    "frozen": false
   },
@@ -4050,7 +4047,7 @@
    "pAway": 0.3561,
    "expHome": 28,
    "expAway": 23,
-   "computedAt": "2026-11-27T16:09:30Z",
+   "computedAt": "2026-11-28T01:05:50Z",
    "spread": 4.68,
    "frozen": false
   }
